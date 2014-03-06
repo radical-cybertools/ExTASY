@@ -1,0 +1,24 @@
+title                    = alanine
+;cpp                      = /lib/cpp
+;include                  = -I../top
+;define                   = 
+constraints              = none
+
+integrator               = steep
+nsteps                   = 2000
+
+emtol                    = 500
+emstep                   = 0.001
+
+nstcomm                  = 1
+nstlist                  = 1
+ns_type                  = grid
+rlist                    = 15.0
+coulombtype              = cut-off
+rcoulomb                 = 15.0
+rvdw                     = 20.0
+
+tcoupl                   = no
+Pcoupl                   = no
+gen_vel                  = no
+

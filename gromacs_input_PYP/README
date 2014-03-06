@@ -1,0 +1,25 @@
+16 jan 2014, rohrdanz, mary: rohrdanz@rice.edu
+
+This directory contains the needed force field and parameter 
+files to run PYP using the setup from Professor Bolhuis's group.
+See Vreede, et al., Biophysical Journal, vol. 88, p. 3525 (2005)
+    Vreede, et al., Proteins, vol. 72, p. 136 (2008)
+    Vreede, et al., PNAS, vol. 107, p. 2397 (2010)
+They were kind enough to share their gromacs setup with us.
+
+There is a bash script, MDRun.sh that runs grompp and mdrun.
+All the files have their default names.
+
+There are also the results of a very short test run performed with
+these input files.
+
+I ran this test run with gromacs 4.6.2. 
+
+Just for reference, I made a .gro file of the resulting trajectory in traj.gro,
+using the command:
+
+trjconv -f traj.xtc -o test.gro -center -s topol.tpr -ur compact -pbc mol -n index.ndx
+
+Do please let me know if something looks wrong or doesn't work, or doesn't work with
+whatever version of groamcs you are using.
+

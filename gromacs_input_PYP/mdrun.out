@@ -1,0 +1,156 @@
+                         :-)  G  R  O  M  A  C  S  (-:
+
+                   Groningen Machine for Chemical Simulation
+
+                            :-)  VERSION 4.6.2  (-:
+
+        Contributions from Mark Abraham, Emile Apol, Rossen Apostolov, 
+           Herman J.C. Berendsen, Aldert van Buuren, Pär Bjelkmar,  
+     Rudi van Drunen, Anton Feenstra, Gerrit Groenhof, Christoph Junghans, 
+        Peter Kasson, Carsten Kutzner, Per Larsson, Pieter Meulenhoff, 
+           Teemu Murtola, Szilard Pall, Sander Pronk, Roland Schulz, 
+                Michael Shirts, Alfons Sijbers, Peter Tieleman,
+
+               Berk Hess, David van der Spoel, and Erik Lindahl.
+
+       Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+         Copyright (c) 2001-2012,2013, The GROMACS development team at
+        Uppsala University & The Royal Institute of Technology, Sweden.
+            check out http://www.gromacs.org for more information.
+
+         This program is free software; you can redistribute it and/or
+       modify it under the terms of the GNU Lesser General Public License
+        as published by the Free Software Foundation; either version 2.1
+             of the License, or (at your option) any later version.
+
+                                :-)  mdrun  (-:
+
+Option     Filename  Type         Description
+------------------------------------------------------------
+  -s      topol.tpr  Input        Run input file: tpr tpb tpa
+  -o       traj.trr  Output       Full precision trajectory: trr trj cpt
+  -x       traj.xtc  Output, Opt. Compressed trajectory (portable xdr format)
+-cpi      state.cpt  Input, Opt.  Checkpoint file
+-cpo      state.cpt  Output, Opt. Checkpoint file
+  -c    confout.gro  Output       Structure file: gro g96 pdb etc.
+  -e       ener.edr  Output       Energy file
+  -g         md.log  Output       Log file
+-dhdl      dhdl.xvg  Output, Opt. xvgr/xmgr file
+-field    field.xvg  Output, Opt. xvgr/xmgr file
+-table    table.xvg  Input, Opt.  xvgr/xmgr file
+-tabletf    tabletf.xvg  Input, Opt.  xvgr/xmgr file
+-tablep  tablep.xvg  Input, Opt.  xvgr/xmgr file
+-tableb   table.xvg  Input, Opt.  xvgr/xmgr file
+-rerun    rerun.xtc  Input, Opt.  Trajectory: xtc trr trj gro g96 pdb cpt
+-tpi        tpi.xvg  Output, Opt. xvgr/xmgr file
+-tpid   tpidist.xvg  Output, Opt. xvgr/xmgr file
+ -ei        sam.edi  Input, Opt.  ED sampling input
+ -eo      edsam.xvg  Output, Opt. xvgr/xmgr file
+  -j       wham.gct  Input, Opt.  General coupling stuff
+ -jo        bam.gct  Output, Opt. General coupling stuff
+-ffout      gct.xvg  Output, Opt. xvgr/xmgr file
+-devout   deviatie.xvg  Output, Opt. xvgr/xmgr file
+-runav  runaver.xvg  Output, Opt. xvgr/xmgr file
+ -px      pullx.xvg  Output, Opt. xvgr/xmgr file
+ -pf      pullf.xvg  Output, Opt. xvgr/xmgr file
+ -ro   rotation.xvg  Output, Opt. xvgr/xmgr file
+ -ra  rotangles.log  Output, Opt. Log file
+ -rs   rotslabs.log  Output, Opt. Log file
+ -rt  rottorque.log  Output, Opt. Log file
+-mtx         nm.mtx  Output, Opt. Hessian matrix
+ -dn     dipole.ndx  Output, Opt. Index file
+-multidir    rundir  Input, Opt., Mult. Run directory
+-membed  membed.dat  Input, Opt.  Generic data file
+ -mp     membed.top  Input, Opt.  Topology file
+ -mn     membed.ndx  Input, Opt.  Index file
+
+Option       Type   Value   Description
+------------------------------------------------------
+-[no]h       bool   no      Print help info and quit
+-[no]version bool   no      Print version info and quit
+-nice        int    0       Set the nicelevel
+-deffnm      string         Set the default filename for all file options
+-xvg         enum   xmgrace  xvg plot formatting: xmgrace, xmgr or none
+-[no]pd      bool   no      Use particle decompostion
+-dd          vector 0 0 0   Domain decomposition grid, 0 is optimize
+-ddorder     enum   interleave  DD node order: interleave, pp_pme or cartesian
+-npme        int    -1      Number of separate nodes to be used for PME, -1
+                            is guess
+-nt          int    0       Total number of threads to start (0 is guess)
+-ntmpi       int    0       Number of thread-MPI threads to start (0 is guess)
+-ntomp       int    0       Number of OpenMP threads per MPI process/thread
+                            to start (0 is guess)
+-ntomp_pme   int    0       Number of OpenMP threads per MPI process/thread
+                            to start (0 is -ntomp)
+-pin         enum   auto    Fix threads (or processes) to specific cores:
+                            auto, on or off
+-pinoffset   int    0       The starting logical core number for pinning to
+                            cores; used to avoid pinning threads from
+                            different mdrun instances to the same core
+-pinstride   int    0       Pinning distance in logical cores for threads,
+                            use 0 to minimize the number of threads per
+                            physical core
+-gpu_id      string         List of GPU id's to use
+-[no]ddcheck bool   yes     Check for all bonded interactions with DD
+-rdd         real   0       The maximum distance for bonded interactions with
+                            DD (nm), 0 is determine from initial coordinates
+-rcon        real   0       Maximum distance for P-LINCS (nm), 0 is estimate
+-dlb         enum   auto    Dynamic load balancing (with DD): auto, no or yes
+-dds         real   0.8     Minimum allowed dlb scaling of the DD cell size
+-gcom        int    -1      Global communication frequency
+-nb          enum   auto    Calculate non-bonded interactions on: auto, cpu,
+                            gpu or gpu_cpu
+-[no]tunepme bool   yes     Optimize PME load between PP/PME nodes or GPU/CPU
+-[no]testverlet bool   no      Test the Verlet non-bonded scheme
+-[no]v       bool   no      Be loud and noisy
+-[no]compact bool   yes     Write a compact log file
+-[no]seppot  bool   no      Write separate V and dVdl terms for each
+                            interaction type and node to the log file(s)
+-pforce      real   -1      Print all forces larger than this (kJ/mol nm)
+-[no]reprod  bool   no      Try to avoid optimizations that affect binary
+                            reproducibility
+-cpt         real   15      Checkpoint interval (minutes)
+-[no]cpnum   bool   no      Keep and number checkpoint files
+-[no]append  bool   yes     Append to previous output files when continuing
+                            from checkpoint instead of adding the simulation
+                            part number to all file names
+-nsteps      step   -2      Run this number of steps, overrides .mdp file
+                            option
+-maxh        real   -1      Terminate after 0.99 times this time (hours)
+-multi       int    0       Do multiple simulations in parallel
+-replex      int    0       Attempt replica exchange periodically with this
+                            period (steps)
+-nex         int    0       Number of random exchanges to carry out each
+                            exchange interval (N^3 is one suggestion).  -nex
+                            zero or not specified gives neighbor replica
+                            exchange.
+-reseed      int    -1      Seed for replica exchange, -1 is generate a seed
+-[no]ionize  bool   no      Do a simulation including the effect of an X-Ray
+                            bombardment on your system
+
+Reading file topol.tpr, VERSION 4.6.2 (single precision)
+Using 12 MPI threads
+starting mdrun ''
+1000 steps,      2.0 ps.
+
+Writing final coordinates.
+
+
+Received the second INT/TERM signal, stopping at the next step
+
+
+ Average load imbalance: 8.3 %
+ Part of the total run time spent waiting due to load imbalance: 3.8 %
+
+
+NOTE: 10 % of the run time was spent communicating energies,
+      you might want to use the -gcom option of mdrun
+
+
+               Core t (s)   Wall t (s)        (%)
+       Time:       54.890        4.706     1166.4
+                 (ns/day)    (hour/ns)
+Performance:       36.758        0.653
+
+Thanx for Using GROMACS - Have a Nice Day
+
