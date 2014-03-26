@@ -18,7 +18,9 @@ To install the EnsembleAPI framework, create a virtual environment and use pip t
 ```
 virtualenv $HOME/test
 source $HOME/test/bin/activate
-pip install ensembleapi
+git clone https://github.com/radical-cybertools/MDEnsemble.git
+cd MDEnsemble
+python setup.py install
 ```
 
 To verify the installation, check the current version
