@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="627926b0-7d68-4dd5-8b41-0cde283342f0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="MDEnsemble.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,7 +28,7 @@
       <file leaf-file-name="README.md" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="156" column="109" selection-start="4728" selection-end="4728" vertical-scroll-proportion="0.9480969" vertical-offset="1792" max-vertical-offset="2445">
+            <state line="163" column="0" selection-start="4729" selection-end="4729" vertical-scroll-proportion="0.9480969" vertical-offset="1897" max-vertical-offset="2535">
               <folding />
             </state>
           </provider>
@@ -229,7 +226,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="156" column="109" selection-start="4728" selection-end="4728" vertical-scroll-proportion="0.9480969" vertical-offset="1792" max-vertical-offset="2445">
+        <state line="163" column="0" selection-start="4729" selection-end="4729" vertical-scroll-proportion="0.9480969" vertical-offset="1897" max-vertical-offset="2535">
           <folding />
         </state>
       </provider>

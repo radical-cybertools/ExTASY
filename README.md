@@ -131,8 +131,10 @@ This mode is to check whether the necessary modules are present and loaded in th
 To run a environment check on the intended remote host, use the --checkenv argument
 ```ensembleapi --config ../config/config.py --checkenv```
 
-Note : ```--config``` should be followed by the complete path of the config.py file
-     : Be sure to have the config.py file and JSON resource configuration files set before running the tests.
+**Note**
+
+* ```--config``` should be followed by the complete path of the config.py file
+* Be sure to have the config.py file and JSON resource configuration files set before running the tests.
 
 
 * testjob
@@ -142,8 +144,10 @@ This mode is to submit a basic dummy gromacs task on to the specified remote hos
 To run a simple testjob on the intended remote host, use the --testjob argument
 ```ensembleapi --config ../config/config.py --testjob```
 
-Note : ```--config``` should be followed by the complete path of the config.py file
-     : Be sure to have the config.py file and JSON resource configuration files set before running the tests.
+**Note**
+
+* ```--config``` should be followed by the complete path of the config.py file
+* Be sure to have the config.py file and JSON resource configuration files set before running the tests.
 
 
 Running the workload
@@ -153,5 +157,7 @@ To run the particular workload of your experiment. Setup the TASK definitions in
 
 ```ensembleapi --config ../config/config.py --workload```
 
-Note : ```--config``` should be followed by the complete path of the config.py file
-     : Be sure to have the config.py file and JSON resource configuration files set before running the tests.
+**Note**
+
+* ```--config``` should be followed by the complete path of the config.py file
+* Be sure to have the config.py file and JSON resource configuration files set before running the tests.
