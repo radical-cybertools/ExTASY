@@ -1,5 +1,6 @@
 import sys
-import gromacs_bjasync
+import mdAPI
+import imp
 import argparse
 
 if __name__ == "__main__":
@@ -17,15 +18,15 @@ if __name__ == "__main__":
         parser.error("Please define a config file.")
     
     else:
-        config = __import__(args.config.split(".")[0])
+        config = imp.load_source('config',args.config)
 
-        from config import RESOURCE
+        from config import RESOURCE,RCONF,DBURL
 
         #One object per Remote Host
-        obj1=gromacs_bjasync.simple()
+        obj1=mdAPI.simple(DBURL=DBURL)
 
         #Resource started at the Remote Host as defined by RESOURCE
-        obj1.startResource(resource_info=RESOURCE)
+        obj1.startResource(resource_info=RESOURCE,RCONF=RCONF)
 
         if args.checkenv is True:
             #Run test job to check environment

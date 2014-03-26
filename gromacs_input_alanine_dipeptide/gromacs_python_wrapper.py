@@ -18,6 +18,7 @@ def run_gromacs():
     
 
 if __name__ == "__main__":
+    #path=sys.argv[1]
     #pdbfile = sys.argv[1]
     #runfile = sys.argv[2]
     #emfile  = sys.argv[3]
