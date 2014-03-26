@@ -71,7 +71,7 @@ def get_version():
     return short_version, long_version
 
 
-short_version, long_version = get_version ()
+#short_version, long_version = get_version ()
 
 #-----------------------------------------------------------------------------
 # check python version. we need > 2.5, <3.x
@@ -86,7 +86,7 @@ def read(*rnames):
 #-----------------------------------------------------------------------------
 setup_args = {
     'name' : 'radical.ensemblemd.ensembleapi',
-    'version' : '0.1',
+    'version' : 0.1,
     'description' :" A library to run bulk gromacs tasks on DCI.",
     #'long_description' : (read('README.md') + '\n\n' + read('CHANGES.md')),
     'author' : 'RADICAL Group at Rutgers University',
