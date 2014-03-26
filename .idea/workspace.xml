@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="627926b0-7d68-4dd5-8b41-0cde283342f0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/ensembleapi/bin/runme.py" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/ensembleapi/bin/runme.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/setup.py" afterPath="$PROJECT_DIR$/setup.py" />
     </list>
     <ignored path="MDEnsemble.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,7 +37,7 @@
       <file leaf-file-name="setup.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/setup.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="90" column="4" selection-start="2712" selection-end="2712" vertical-scroll-proportion="0.5329949" vertical-offset="990" max-vertical-offset="2100">
+            <state line="72" column="0" selection-start="1992" selection-end="1992" vertical-scroll-proportion="0.07614213" vertical-offset="990" max-vertical-offset="2100">
               <folding />
             </state>
           </provider>
@@ -62,8 +62,8 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/src/radical/ensemblemd/ensembleapi/bin/runme.py" />
+        <option value="$PROJECT_DIR$/setup.py" />
       </list>
     </option>
   </component>
@@ -295,7 +295,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/setup.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="90" column="4" selection-start="2712" selection-end="2712" vertical-scroll-proportion="0.5329949" vertical-offset="990" max-vertical-offset="2100">
+        <state line="72" column="0" selection-start="1992" selection-end="1992" vertical-scroll-proportion="0.07614213" vertical-offset="990" max-vertical-offset="2100">
           <folding />
         </state>
       </provider>
