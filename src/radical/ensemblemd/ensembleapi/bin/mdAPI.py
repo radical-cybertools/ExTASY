@@ -57,7 +57,7 @@ class simple:
 
         #Check for valid files in RCONF, if not display error and exit.
 
-        for i in range(0,RCONF):
+        for i in range(0,len(RCONF)):
             if os.path.isfile(RCONF[i]) is False:
                 print "ERROR: RCONF file %s does not exit"%RCONF[i]
                 sys.exit(1)
