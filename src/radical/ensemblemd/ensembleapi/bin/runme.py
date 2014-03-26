@@ -3,7 +3,7 @@ import mdAPI
 import imp
 import argparse
 
-if __name__ == "__main__":
+def main():
 
     usage = 'usage: %prog --config [--checkenv, --testjob, --workload, --help]'
     parser = argparse.ArgumentParser()
