@@ -132,7 +132,6 @@ To run a environment check on the intended remote host, use the --checkenv argum
 ```ensembleapi --config ../config/config.py --checkenv```
 
 **Note**
-
 * ```--config``` should be followed by the complete path of the config.py file
 * Be sure to have the config.py file and JSON resource configuration files set before running the tests.
 
@@ -145,7 +144,6 @@ To run a simple testjob on the intended remote host, use the --testjob argument
 ```ensembleapi --config ../config/config.py --testjob```
 
 **Note**
-
 * ```--config``` should be followed by the complete path of the config.py file
 * Be sure to have the config.py file and JSON resource configuration files set before running the tests.
 
@@ -158,6 +156,5 @@ To run the particular workload of your experiment. Setup the TASK definitions in
 ```ensembleapi --config ../config/config.py --workload```
 
 **Note**
-
 * ```--config``` should be followed by the complete path of the config.py file
 * Be sure to have the config.py file and JSON resource configuration files set before running the tests.
