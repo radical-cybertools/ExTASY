@@ -114,9 +114,9 @@ setup_args = {
         'Operating System :: Unix'
     ],
 
-    #'entry_points': {
-    # 'console_scripts':
-    #},
+    'entry_points': {
+     'console_scripts': ['ensembleapi = radical.ensemblemd.ensembleapi.bin.runme:main']
+    },
 
     #'dependency_links': ['https://github.com/saga-project/saga-pilot/tarball/master#egg=sagapilot'],
 
