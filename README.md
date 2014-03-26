@@ -157,4 +157,4 @@ To run the particular workload of your experiment. Setup the TASK definitions in
 
 **Note**
 * ```--config``` should be followed by the complete path of the config.py file
-* Be sure to have the config.py file and JSON resource configuration files set before running the tests.
+* Be sure to have the config.py file and JSON resource configuration files set before running the workload.
