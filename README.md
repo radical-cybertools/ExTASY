@@ -26,7 +26,7 @@ python setup.py install
 To verify the installation, check the current version
 
 ```
-python -c 'import radical.ensemblemd.ensembleapi; print ensembleapi.version'
+python -c 'import radical.ensemblemd.ensembleapi as ensembleapi; print ensembleapi.version'
 ```
 
 USAGE
@@ -40,7 +40,7 @@ The various resources to be used are added to a JSON file. The resources are ref
  configurations can be found in
 
  ```
- https://github.com/vivek-bala/Gromacs_sagapilot/tree/master/config
+ https://github.com/radical-cybertools/MDEnsemble/tree/master/config
  ```
 
 Resource config files for XSEDE & FUTUREGRID have been added as part of the config. To write your own resource configuration files, refer
@@ -55,7 +55,7 @@ Config file
 -------------
 
 ```
-https://github.com/vivek-bala/Gromacs_sagapilot/blob/master/config/config.py
+https://github.com/radical-cybertools/MDEnsemble/tree/master/config/config.py
 ```
 
 

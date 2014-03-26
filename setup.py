@@ -118,7 +118,6 @@ setup_args = {
      'console_scripts': ['ensembleapi = radical.ensemblemd.ensembleapi.bin.runme:main']
     },
 
-    #'dependency_links': ['https://github.com/saga-project/saga-pilot/tarball/master#egg=sagapilot'],
 
     'namespace_packages': ['radical', 'radical.ensemblemd'],
     'packages' : find_packages('src'),
