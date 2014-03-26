@@ -29,7 +29,7 @@ TASK = {
 
     }
 
-RCONF  = ["file://localhost/home/vivek/Research/Gromacs_sagapilot/config/my-futuregrid.json",
-          "file://localhost/home/vivek/Research/Gromacs_sagapilot/config/my-xsede.json"]
+RCONF  = ["file://localhost/home/vivek/MDEnsemble/config/my-futuregrid.json",
+          "file://localhost/home/vivek/MDEnsemble/config/my-xsede.json"]
 
 DBURL = "mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/"
