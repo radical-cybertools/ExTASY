@@ -124,7 +124,7 @@ Running the tests
 The API provides two modes of running tests. **checkenv** and **testjob**. Both the tests are recommended before submitting large workloads.
 
 
-* checkenv
+1) checkenv
 
 This mode is to check whether the necessary modules are present and loaded in the remote host before workload submission.
 
@@ -137,7 +137,7 @@ To run a environment check on the intended remote host, use the --checkenv argum
 * Be sure to have the config.py file and JSON resource configuration files set before running the tests.
 
 
-* testjob
+2) testjob
 
 This mode is to submit a basic dummy gromacs task on to the specified remote host to make sure the execution is complete and usable.
 
