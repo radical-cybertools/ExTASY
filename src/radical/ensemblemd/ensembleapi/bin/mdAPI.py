@@ -59,7 +59,8 @@ class simple:
 
         for i in range(0,len(RCONF)):
 
-            if (os.path.exists(RCONF[i])):
+            if (os.path.exists(RCONF[i])) or os.path.isfile(RCONF[i]):
+                print (os.path.exists(RCONF[i])), os.path.isfile(RCONF[i])
                 continue
             else:
                 print "ERROR: RCONF file %s does not exit"%RCONF[i]
