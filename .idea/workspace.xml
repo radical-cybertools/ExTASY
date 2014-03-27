@@ -28,10 +28,19 @@
       <file leaf-file-name="mdAPI.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/ensembleapi/bin/mdAPI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="61" column="70" selection-start="2005" selection-end="2005" vertical-scroll-proportion="0.7785467" vertical-offset="465" max-vertical-offset="3495">
+            <state line="57" column="0" selection-start="1823" selection-end="1823" vertical-scroll-proportion="0.3633218" vertical-offset="645" max-vertical-offset="3330">
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/config.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="31" column="0" selection-start="885" selection-end="1035" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="615">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -178,6 +187,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MDEnsemble" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MDEnsemble" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -288,9 +311,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="0" selection-start="885" selection-end="1035" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="615">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/ensembleapi/bin/mdAPI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="70" selection-start="2005" selection-end="2005" vertical-scroll-proportion="0.7785467" vertical-offset="465" max-vertical-offset="3495">
+        <state line="57" column="0" selection-start="1823" selection-end="1823" vertical-scroll-proportion="0.3633218" vertical-offset="645" max-vertical-offset="3330">
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>

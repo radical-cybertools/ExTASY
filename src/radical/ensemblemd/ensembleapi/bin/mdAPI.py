@@ -55,17 +55,6 @@ class simple:
 	
     def startResource(self,resource_info,RCONF):
 
-        #Check for valid files in RCONF, if not display error and exit.
-
-        for i in range(0,len(RCONF)):
-
-            print (os.path.exists(RCONF[i])), os.path.isfile(RCONF[i])
-            if (os.path.exists(RCONF[i])) or os.path.isfile(RCONF[i]):
-                continue
-            else:
-                print "ERROR: RCONF file %s does not exit"%RCONF[i]
-                sys.exit(1)
-
         self.resource_info = resource_info
 
         # Add a Pilot Manager. Pilot managers manage one or more ComputePilots.
