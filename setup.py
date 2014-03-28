@@ -115,7 +115,7 @@ setup_args = {
     ],
 
     'entry_points': {
-     'console_scripts': ['ensembleapi = radical.ensemblemd.ensembleapi.bin.runme:main']
+     'console_scripts': ['ensemble = radical.ensemblemd.ensembleapi.bin.runme:main']
     },
 
 
