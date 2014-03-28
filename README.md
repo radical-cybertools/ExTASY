@@ -129,7 +129,7 @@ The API provides two modes of running tests. **checkenv** and **testjob**. Both 
 This mode is to check whether the necessary modules are present and loaded in the remote host before workload submission.
 
 To run a environment check on the intended remote host, use the --checkenv argument
-```ensembleapi --config ../config/config.py --checkenv```
+```ensemble --config ../config/config.py --checkenv```
 
 **Note**
 * ```--config``` should be followed by the complete path of the config.py file
@@ -141,7 +141,7 @@ To run a environment check on the intended remote host, use the --checkenv argum
 This mode is to submit a basic dummy gromacs task on to the specified remote host to make sure the execution is complete and usable.
 
 To run a simple testjob on the intended remote host, use the --testjob argument
-```ensembleapi --config ../config/config.py --testjob```
+```ensemble --config ../config/config.py --testjob```
 
 **Note**
 * ```--config``` should be followed by the complete path of the config.py file
@@ -153,7 +153,7 @@ Running the workload
 
 To run the particular workload of your experiment. Setup the TASK definitions in the config file and use the --workload or --w argument.
 
-```ensembleapi --config ../config/config.py --workload```
+```ensemble --config ../config/config.py --workload```
 
 **Note**
 * ```--config``` should be followed by the complete path of the config.py file

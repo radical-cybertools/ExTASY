@@ -205,12 +205,12 @@ class simple:
         units = self.umgr.submit_units(gromacs_tasks)
 
         # Wait for all compute units to finish.
-        self.umgr.wait_units()
+        #self.umgr.wait_units()
 
         # Cancel all pilots.
-        self.pmgr.cancel_pilots()
+        #self.pmgr.cancel_pilots()
 
         # Remove session from database
-        self.session.destroy()
+        self.session.close()
 
         return 0
