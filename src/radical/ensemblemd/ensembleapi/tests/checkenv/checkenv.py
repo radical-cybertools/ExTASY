@@ -40,3 +40,7 @@ class Remote_Checkenv(unittest.TestCase):
         obj.startResource(resource_info=RESOURCE,RCONF=RCONF)
         result = obj.checkEnv()
         self.assertEquals(result,0)
+
+
+if __name__ == '__main__':
+    unittest.main()

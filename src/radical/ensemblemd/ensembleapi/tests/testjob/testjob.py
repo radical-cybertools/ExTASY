@@ -48,3 +48,8 @@ class Remote_Testjob(unittest.TestCase):
         result = obj.startTestJob()
 
         self.assertEquals(result,0)
+
+
+
+if __name__ == '__main__':
+    unittest.main()
