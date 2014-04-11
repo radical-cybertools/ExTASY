@@ -3,6 +3,7 @@ __author__ = 'vivek'
 import radical.ensemblemd.ensembleapi.bin.mdAPI as ensembleapi
 import os
 import unittest
+import sys
 
 DBURL = os.getenv('ENSEMBLE_DBURL')
 if DBURL is None:
