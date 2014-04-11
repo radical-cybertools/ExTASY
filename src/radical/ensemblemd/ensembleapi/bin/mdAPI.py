@@ -60,7 +60,7 @@ class simple:
         # Add a Pilot Manager. Pilot managers manage one or more ComputePilots.
         self.pmgr = sagapilot.PilotManager(session=self.session, resource_configurations=RCONF)
 
-        #pmgr.register_callback(pilot_state_cb)
+        self.pmgr.register_callback(pilot_state_cb)
 
         # Start a pilot at the remote host as per the configs
         pdesc = sagapilot.ComputePilotDescription()
