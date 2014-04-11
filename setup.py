@@ -127,7 +127,7 @@ setup_args = {
     'install_requires' : ['setuptools>=1',
                           'radical.pilot'
                          ],
-    'tests_require' : ['setuptools','nose'],
+    'tests_require' : ['setuptools>=1','nose'],
     'test_suite' : 'radical.ensemblemd.ensembleapi.tests',
 
     'zip_safe' : False,
