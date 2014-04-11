@@ -46,4 +46,5 @@ class Remote_Testjob(unittest.TestCase):
                 }
         obj.startResource(resource_info=RESOURCE,RCONF=RCONF)
         result = obj.startTestJob()
-        sys.exit(result)
+
+        self.assertEquals(result,0)

@@ -27,12 +27,6 @@ class Remote_Checkenv(unittest.TestCase):
     def tearDown(self):
         print 'Checkenv test successful'
 
-    def failUnless(self, expr):
-        return self.assertTrue(expr)
-
-    def failIf(self, expr):
-        return self.assertFalse(expr)
-
     def EnvCheck(self):
         obj = ensembleapi.simple(DBURL=DBURL)
         RESOURCE= {
@@ -45,4 +39,4 @@ class Remote_Checkenv(unittest.TestCase):
                 }
         obj.startResource(resource_info=RESOURCE,RCONF=RCONF)
         result = obj.checkEnv()
-        sys.exit(result)
+        self.assertEquals(result,0)

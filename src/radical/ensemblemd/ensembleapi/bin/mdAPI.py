@@ -117,6 +117,8 @@ class simple:
         # Remove session from database
         self.session.destroy()
 
+        return 0
+
 
 
     def startTestJob(self):
