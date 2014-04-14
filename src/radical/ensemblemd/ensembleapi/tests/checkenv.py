@@ -1,45 +1,30 @@
-__author__ = 'vivek'
-
-import radical.ensemblemd.ensembleapi.bin.mdAPI as ensembleapi
-import os
+import random
 import unittest
-import sys
 
-DBURL = os.getenv('ENSEMBLE_DBURL')
-if DBURL is None:
-    print "ERROR: ENSEMBLE_DBURL (MongoDB server URL) is not defined."
-    sys.exit(1)
-
-
-RCONF = os.getenv('ENSEMBLE_RCONF',["file://localhost/home/vivek/MDEnsemble/config/my-futuregrid.json",
-          "file://localhost/home/vivek/MDEnsemble/config/my-xsede.json"])
-
-class Remote_Checkenv(unittest.TestCase):
+class TestSequenceFunctions(unittest.TestCase):
 
     def setUp(self):
+        self.seq = range(10)
 
-        self.resource_name = os.getenv('ENSEMBLE_RNAME','localhost')
-        self.uname = os.getenv('ENSEMBLE_UNAME')
-        self.workdir = os.getenv('ENSEMBLE_WORKDIR','/tmp/ensembleapi.sandbox')
-        self.pilotsize = os.getenv('ENSEMBLE_NUM_OF_CORES')
+    def test_shuffle(self):
+        # make sure the shuffled sequence does not lose any elements
+        random.shuffle(self.seq)
+        self.seq.sort()
+        self.assertEqual(self.seq, range(10))
 
-    def tearDown(self):
-        print 'Checkenv test successful'
+        # should raise an exception for an immutable sequence
+        self.assertRaises(TypeError, random.shuffle, (1,2,3))
 
-    def EnvCheck(self):
-        obj = ensembleapi.simple(DBURL=DBURL)
-        RESOURCE= {
-                    #Resource related inputs	--MANDATORY
-                    'remote_host' : self.resource_name,
-                    'remote_directory' : self.workdir,
-                    'username' : self.uname,
-                    'number_of_cores' : self.pilotsize,
-                    'walltime' : 5
-                }
-        obj.startResource(resource_info=RESOURCE,RCONF=RCONF)
-        result = obj.checkEnv()
-        self.assertEquals(result,0)
+    def test_choice(self):
+        element = random.choice(self.seq)
+        self.assertTrue(element in self.seq)
 
+    def test_sample(self):
+        with self.assertRaises(ValueError):
+            random.sample(self.seq, 20)
+        for element in random.sample(self.seq, 5):
+            self.assertTrue(element in self.seq)
 
 if __name__ == '__main__':
     unittest.main()
+
