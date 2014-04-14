@@ -22,7 +22,6 @@ class Remote_Checkenv(unittest.TestCase):
         self.uname = os.getenv('ENSEMBLE_UNAME')
         self.workdir = os.getenv('ENSEMBLE_WORKDIR','/tmp/ensembleapi.sandbox')
         self.pilotsize = os.getenv('ENSEMBLE_NUM_OF_CORES')
-        self.numofcus = os.getenv('ENSEMBLE_NUM_OF_TASKS')
 
     def tearDown(self):
         print 'Checkenv test successful'

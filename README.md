@@ -148,6 +148,27 @@ To run a simple testjob on the intended remote host, use the --testjob argument
 * Be sure to have the config.py file and JSON resource configuration files set before running the tests.
 
 
+Running a unit test before installation of the tool
+---------------------------------------------------
+
+You can run a simple unit test of the tool without installation by cloning the repository and running the test command.
+
+```
+git clone https://github.com/radical-cybertools/MDEnsemble.git
+cd MDEnsemble
+python setup.py test
+```
+
+But before running the ```python setup.py test``` command, you will have to set up a few environment variables.
+
+*ENSEMBLE_DBURL - the url to the database to be used for coordination
+*ENSEMBLE_RCONF - url to the JSON resource configuration file. (https:// or file://)
+*ENSEMBLE_RNAME - name of the target resource (should match one of the keys in the resource config file)
+*ENSEMBLE_UNAME - username to login the target resource
+*ENSEMBLE_WORKDIR - working directory in the target resource to be used for testing
+*ENSEMBLE_NUM_OF_CORES - number of cores to be reserved in the target resource
+
+
 Running the workload
 --------------------
 
