@@ -162,10 +162,15 @@ python setup.py test
 But before running the ```python setup.py test``` command, you will have to set up a few environment variables.
 
 *ENSEMBLE_DBURL - the url to the database to be used for coordination
+
 *ENSEMBLE_RCONF - url to the JSON resource configuration file. (https:// or file://)
+
 *ENSEMBLE_RNAME - name of the target resource (should match one of the keys in the resource config file)
+
 *ENSEMBLE_UNAME - username to login the target resource
+
 *ENSEMBLE_WORKDIR - working directory in the target resource to be used for testing
+
 *ENSEMBLE_NUM_OF_CORES - number of cores to be reserved in the target resource
 
 
