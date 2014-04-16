@@ -10,8 +10,8 @@ Requirements
 * Python >= 2.5
 
 
-Radical-pilot Installation
-========================
+Installation
+=============
 
 To install the EnsembleAPI framework, create a virtual environment and use pip to install the package
 
