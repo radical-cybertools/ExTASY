@@ -24,7 +24,7 @@ class Remote_Testjob(unittest.TestCase):
         self.pilotsize = os.getenv('ENSEMBLE_NUM_OF_CORES')
 
     def tearDown(self):
-        print 'TestJob test successful'
+        print 'TestJob test successfully finished'
 
     def failUnless(self, expr):
         return self.assertTrue(expr)
