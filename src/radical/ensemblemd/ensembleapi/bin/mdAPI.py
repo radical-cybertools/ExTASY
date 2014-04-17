@@ -112,10 +112,10 @@ class simple:
             print "  STDERR: {0}".format(unit.stderr)
 
         # Cancel all pilots.
-        self.pmgr.cancel_pilots()
+        #self.pmgr.cancel_pilots()
 
         # Remove session from database
-        self.session.destroy()
+        self.session.close()
 
         return 0
 
@@ -125,10 +125,10 @@ class simple:
         '''Run a simple job which executes a sample gromacs task'''
 
         inpfiles = {
-            "aladip.pdb" : "http://repex2.tacc.utexas.edu/cybertools/sampledata/gromacs/aladip.pdb",
-            "run.mdp" : "http://repex2.tacc.utexas.edu/cybertools/sampledata/gromacs/run.mdp",
-            "em.mdp" : "http://repex2.tacc.utexas.edu/cybertools/sampledata/gromacs/em.mdp",
-            "gromacs_python_wrapper.py" : "http://repex2.tacc.utexas.edu/cybertools/sampledata/gromacs/gromacs_python_wrapper.py",
+            "aladip.pdb" : "https://github.com/radical-cybertools/MDEnsemble/blob/master/gromacs_input_alanine_dipeptide/aladip.pdb",
+            "run.mdp" : "https://github.com/radical-cybertools/MDEnsemble/blob/master/gromacs_input_alanine_dipeptide/run.mdp",
+            "em.mdp" : "https://github.com/radical-cybertools/MDEnsemble/blob/master/gromacs_input_alanine_dipeptide/em.mdp",
+            "gromacs_python_wrapper.py" : "https://github.com/radical-cybertools/MDEnsemble/blob/master/gromacs_input_alanine_dipeptide/gromacs_python_wrapper.py",
             }
 
         try:
@@ -159,10 +159,10 @@ class simple:
             print "  STDERR: {0}".format(unit.stderr)
 
         # Cancel all pilots.
-        self.pmgr.cancel_pilots()
+        #self.pmgr.cancel_pilots()
 
         # Remove session from database
-        self.session.destroy()
+        self.session.close()
 
         return 0
 
