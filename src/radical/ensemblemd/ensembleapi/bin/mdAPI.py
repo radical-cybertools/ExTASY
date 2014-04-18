@@ -104,7 +104,9 @@ class simple:
         # assigning ComputeUnits to the ComputePilots.
         self.umgr.submit_units(compute_units)
         # Wait for all compute units to finish.
+        print 'Check Env started'
         self.umgr.wait_units()
+        print 'Check Env done'
 
         for unit in self.umgr.get_units():
             # Get the stdout and stderr streams of the ComputeUnit.
@@ -151,7 +153,9 @@ class simple:
         self.umgr.submit_units(compute_units)
 
         # Wait for all compute units to finish.
+        print 'Test Job started'
         self.umgr.wait_units()
+        print 'Test job dones'
 
         for unit in self.umgr.get_units():
             # Get the stdout and stderr streams of the ComputeUnit.
