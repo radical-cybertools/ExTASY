@@ -20,10 +20,10 @@ def main():
     else:
         config = imp.load_source('config',args.config)
 
-        from config import RESOURCE,RCONF,DBURL
+        from config import RESOURCE,RCONF,DBURL,UNAME
 
         #One object per Remote Host
-        obj1=mdAPI.simple(DBURL=DBURL)
+        obj1=mdAPI.simple(DBURL=DBURL,uname=UNAME)
 
         #Resource started at the Remote Host as defined by RESOURCE
         obj1.startResource(resource_info=RESOURCE,RCONF=RCONF)

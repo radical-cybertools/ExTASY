@@ -29,12 +29,11 @@ class TestCheckenv(unittest.TestCase):
         print 'Checkenv test successful'
 
     def test_EnvCheck(self):
-        obj = ensembleapi.simple(DBURL=DBURL)
+        obj = ensembleapi.simple(DBURL=DBURL,uname=self.uname)
         RESOURCE= {
                     #Resource related inputs	--MANDATORY
                     'remote_host' : self.resource_name,
                     'remote_directory' : self.workdir,
-                    'username' : self.uname,
                     'number_of_cores' : self.pilotsize,
                     'walltime' : 5
                 }

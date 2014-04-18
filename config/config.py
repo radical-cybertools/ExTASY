@@ -7,7 +7,6 @@ RESOURCE = {
         #Resource related inputs	--MANDATORY
         'remote_host' : 'sierra.futuregrid.org',
         'remote_directory' : '/N/u/vivek91/output/',
-        'username' : 'vivek91',
         'number_of_cores' : 2,
         'walltime' : 5
     }
@@ -28,6 +27,8 @@ TASK = {
         'number_of_tasks' : 2,
 
     }
+
+UNAME = 'vivek91'
 
 srcroot = os.path.dirname(os.path.abspath(__file__))
 

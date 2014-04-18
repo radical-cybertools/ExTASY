@@ -33,7 +33,7 @@ def unit_state_change_cb(unit, state):
 
 class simple:
 
-    def __init__(self,DBURL):
+    def __init__(self,DBURL,uname):
         # Create a new session. A session is the 'root' object for all other
         # SAGA-Pilot objects. It encapsualtes the MongoDB connection(s) as
         # well as security crendetials.
@@ -47,7 +47,7 @@ class simple:
 
         # Add an ssh identity to the session.
         cred = sagapilot.SSHCredential()
-        cred.user_id = "vivek91"
+        cred.user_id = uname
         self.session.add_credential(cred)
         return
 		

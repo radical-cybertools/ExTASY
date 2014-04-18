@@ -10,9 +10,11 @@ if DBURL is None:
     print "ERROR: ENSEMBLE_DBURL (MongoDB server URL) is not defined."
     sys.exit(1)
 
-srcroot = os.path.dirname(os.path.abspath(__file__))
+srcroot = (os.path.dirname(os.path.abspath(__file__)))
+for i in range(0,5):
+    srcroot = os.path.dirname(srcroot)
 
-RCONF = ["file://%s/my-futuregrid.json"%srcroot,"file://%s/my-xsede.json"%srcroot]
+RCONF = ["file://%s/config/my-futuregrid.json"%srcroot,"file://%s/config/my-xsede.json"%srcroot]
 
 class Remote_Testjob(unittest.TestCase):
 
@@ -33,13 +35,12 @@ class Remote_Testjob(unittest.TestCase):
         return self.assertFalse(expr)
 
     def test_TestJobCheck(self):
-        obj = ensembleapi.simple(DBURL=DBURL)
+        obj = ensembleapi.simple(DBURL=DBURL,uname=self.uname)
 
         RESOURCE= {
                     #Resource related inputs	--MANDATORY
                     'remote_host' : self.resource_name,
                     'remote_directory' : self.workdir,
-                    'username' : self.uname,
                     'number_of_cores' : self.pilotsize,
                     'walltime' : 5
                 }
