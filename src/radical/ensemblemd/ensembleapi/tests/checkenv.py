@@ -10,9 +10,9 @@ if DBURL is None:
     print "ERROR: ENSEMBLE_DBURL (MongoDB server URL) is not defined."
     sys.exit(1)
 
+srcroot = os.path.dirname(os.path.abspath(__file__))
 
-RCONF = os.getenv('ENSEMBLE_RCONF',["file://localhost/home/vivek/MDEnsemble/config/my-futuregrid.json",
-          "file://localhost/home/vivek/MDEnsemble/config/my-xsede.json"])
+RCONF = ["file://%s/my-futuregrid.json"%srcroot,"file://%s/my-xsede.json"%srcroot]
 
 class TestCheckenv(unittest.TestCase):
 

@@ -5,8 +5,8 @@ import os
 
 RESOURCE = {
         #Resource related inputs	--MANDATORY
-        'remote_host' : 'stampede.tacc.utexas.edu',
-        'remote_directory' : '/home1/02734/vivek91/output/',
+        'remote_host' : 'sierra.futuregrid.org',
+        'remote_directory' : '/N/u/vivek91/output/',
         'username' : 'vivek91',
         'number_of_cores' : 2,
         'walltime' : 5
@@ -29,7 +29,9 @@ TASK = {
 
     }
 
-RCONF  = ["file://localhost/home/vivek/MDEnsemble/config/my-futuregrid.json",
-          "file://localhost/home/vivek/MDEnsemble/config/my-xsede.json"]
+srcroot = os.path.dirname(os.path.abspath(__file__))
+
+RCONF  = ["file://%s/my-futuregrid.json"%srcroot,
+          "file://%s/my-xsede.json"%srcroot]
 
 DBURL = "mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/"
