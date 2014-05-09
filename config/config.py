@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+import os
 
 RESOURCE = {
         #Resource related inputs	--MANDATORY
