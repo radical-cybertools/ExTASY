@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-import os
-# ----------------------------------------------------------------------------
-# MAIN DESCRIPTION
+
 
 RESOURCE = {
         #Resource related inputs	--MANDATORY
@@ -15,7 +13,7 @@ TASK = {
         #Task related inputs		--MANDATORY
 
         #Paths/Directories involved
-        'source_directory' : '/home/vivek/Research/saga-pilot/Gromacs/gromacs_input_alanine_dipeptide/',
+        'source_directory' : '/home/vivek/Research/saga-pilot/Gromacs/gromacs_input_PYP/',
         'output_directory' : "",
 
         #kernel/wrapper names

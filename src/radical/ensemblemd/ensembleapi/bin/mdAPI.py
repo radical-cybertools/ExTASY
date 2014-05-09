@@ -127,10 +127,10 @@ class simple:
         '''Run a simple job which executes a sample gromacs task'''
 
         inpfiles = {
-            "aladip.pdb" : "https://github.com/radical-cybertools/MDEnsemble/blob/master/gromacs_input_alanine_dipeptide/aladip.pdb",
-            "run.mdp" : "https://github.com/radical-cybertools/MDEnsemble/blob/master/gromacs_input_alanine_dipeptide/run.mdp",
-            "em.mdp" : "https://github.com/radical-cybertools/MDEnsemble/blob/master/gromacs_input_alanine_dipeptide/em.mdp",
-            "gromacs_python_wrapper.py" : "https://github.com/radical-cybertools/MDEnsemble/blob/master/gromacs_input_alanine_dipeptide/gromacs_python_wrapper.py",
+            "aladip.pdb" : "http://testing.saga-project.org/cybertools/sampledata/gromacs/aladip.pdb",
+            "run.mdp" : "http://testing.saga-project.org/cybertools/sampledata/gromacs/run.mdp",
+            "em.mdp" : "http://testing.saga-project.org/cybertools/sampledata/gromacs/em.mdp",
+            "gromacs_python_wrapper.py" : "http://testing.saga-project.org/cybertools/sampledata/gromacs/gromacs_python_wrapper.py",
             }
 
         try:
