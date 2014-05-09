@@ -19,8 +19,8 @@ TASK = {
         'output_directory' : "",
 
         #kernel/wrapper names
-        'kernel_type' : 'python',       #/bin/bash or python
-        'app_kernel' : 'gromacs_python_wrapper.py',
+        'kernel_type' : '/bin/bash',       #/bin/bash or python
+        'kernel' : 'MDRun.sh',
 
         #Resource requirement and number of tasks
         'cores_per_task' : 1,
