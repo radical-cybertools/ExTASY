@@ -202,7 +202,7 @@ class simple:
         for i in range(0,self.task_info['number_of_tasks']):
             gromacs_task = sagapilot.ComputeUnitDescription()
             gromacs_task.executable = "python"
-            gromacs.arguments = ["linker.py %s %s %s" % (shared_input_url, self.task_info['kernel_type'], self.task_info['kernel'])]
+            gromacs_task.arguments = ["linker.py %s %s %s" % (shared_input_url, self.task_info['kernel_type'], self.task_info['kernel'])]
             gromacs_task.input_data = ['linker.py']
             gromacs_task.cores = self.task_info['cores_per_task']
 
