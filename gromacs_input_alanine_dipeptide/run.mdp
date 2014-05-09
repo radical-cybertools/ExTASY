@@ -1,0 +1,68 @@
+title                    = alanine
+; system name
+
+integrator               = sd
+; stochastic dynamics
+
+dt                       = 0.001
+; time step
+
+nsteps                   = 10000
+; total number of steps
+
+nstxout                  = 100       
+; number of steps to record the data
+
+nstvout                  = 0 
+; number of steps to record the velocity
+
+nstlog                   = 0 
+; number of steps to record the log file
+
+nstenergy                = 100 
+; number of steps to record the energy
+
+nstxtcout                = 0
+; number of steps to record compressed trajectory with three digits
+; 0 means do not record
+
+xtc_grps                 = Protein
+; group to record trajectory, only one group in this system
+
+energygrps               = Protein 
+; group to record energy
+
+nstlist                  = 1
+; number of steps to calculate the neighbors
+
+nstcalcenergy		 = 1
+; number of steps to calculate the energy
+
+ns_type                  = grid
+; neighbor search type
+
+rlist                    = 15.0
+coulombtype              = cut-off
+rcoulomb                 = 15.0
+rvdw                     = 20.0
+; coulomb and van der wales iteractions parameter
+
+
+; TEMPERATURE COUPLING
+tcoupl                   = 
+tc-grps                  = Protein      
+; temperature coupling group
+tau_t                    = 2
+; friction
+ref_t                    = 300 
+; temperature
+
+gen_vel                  = yes
+; if to generate initial velocity
+gen_temp                 = 300
+; initial velocity temperature
+gen_seed                 = -1
+; initial velocity random seed
+
+ld-seed                  = -1 
+; langevin dynamics random seed
