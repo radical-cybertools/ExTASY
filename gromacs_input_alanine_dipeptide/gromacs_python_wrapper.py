@@ -18,17 +18,5 @@ def run_gromacs():
     
 
 if __name__ == "__main__":
-    #path=sys.argv[1]
-    #pdbfile = sys.argv[1]
-    #runfile = sys.argv[2]
-    #emfile  = sys.argv[3]
-    #ff = sys.argv[4]
-    #water = sys.argv[5]
-    t1=time.time()
-    #run_gromacs(pdbfile,runfile,emfile,ff,water)
-    run_gromacs()
-    t2=time.time()
-    f1=open('/N/u/vivek91/tryout/exectime.txt','a')
-    f1.write(str(t1)+'\n'+str(t2)+'\n')
-    f1.close()
+    run_gromacs()    
 
