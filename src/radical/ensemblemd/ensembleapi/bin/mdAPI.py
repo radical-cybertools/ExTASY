@@ -1,5 +1,4 @@
 import urllib
-import time
 import sys
 import os
 import radical.pilot as sagapilot
@@ -168,7 +167,7 @@ class simple:
 
         self.task_info=task_info
         print('Starting Tasks')
-        print os.path.dirname(os.path.abspath(__file__))
+        curdir = os.path.dirname(os.path.abspath(__file__))
 
         #Aggregate all input filenames into list
         inputfiles = os.listdir(self.task_info['source_directory'])
@@ -195,10 +194,10 @@ class simple:
 
         gromacs_tasks = []
 
-        for i in range(0,self.task_info['number_of_tasks']):
+        for i in range(0, self.task_info['number_of_tasks']):
             gromacs_task = sagapilot.ComputeUnitDescription()
             gromacs_task.executable = "python"
-            gromacs_task.arguments = ["linker.py %s %s %s" % (shared_input_url, self.task_info['kernel_type'], self.task_info['kernel'])]
+            gromacs_task.arguments = ["%s/linker.py %s %s %s" % (curdir, shared_input_url, self.task_info['kernel_type'], self.task_info['kernel'])]
             gromacs_task.input_data = ['linker.py']
             gromacs_task.cores = self.task_info['cores_per_task']
 
