@@ -50,9 +50,9 @@ class simple:
         cred.user_id = uname
         self.session.add_credential(cred)
         return
-		
+
     # ----------------------------------------------------------------------------
-	
+
     def startResource(self,resource_info,RCONF):
 
         self.resource_info = resource_info
@@ -86,8 +86,8 @@ class simple:
         # Add the previsouly created ComputePilot to the UnitManager.
         self.umgr.add_pilots(pilot)
         print('Resource Allocation Done')
-		
-		
+
+
     def checkEnv(self):
         '''Run a simple job which returns the version of gromacs'''
 
@@ -99,11 +99,10 @@ class simple:
 
         compute_units.append(cu)
 
-        # Submit the previously created ComputeUnit descriptions to the
-        # PilotManager. This will trigger the selected scheduler to start
-        # assigning ComputeUnits to the ComputePilots.
         self.umgr.submit_units(compute_units)
         # Wait for all compute units to finish.
+
+
         print 'Check Env started'
         self.umgr.wait_units()
         print 'Check Env done'
@@ -112,9 +111,6 @@ class simple:
             # Get the stdout and stderr streams of the ComputeUnit.
             print "  STDOUT: {0}".format(unit.stdout)
             print "  STDERR: {0}".format(unit.stderr)
-
-        # Cancel all pilots.
-        #self.pmgr.cancel_pilots()
 
         # Remove session from database
         self.session.close()
@@ -162,9 +158,6 @@ class simple:
             print "  STDOUT: {0}".format(unit.stdout)
             print "  STDERR: {0}".format(unit.stderr)
 
-        # Cancel all pilots.
-        #self.pmgr.cancel_pilots()
-
         # Remove session from database
         self.session.close()
 
@@ -194,6 +187,8 @@ class simple:
         # Wait for data transfer task to finish.
         self.umgr.wait_units()
 
+        print 'Shared data transferred'
+
         #get the path of the shared data directory
         shared_input_url = saga.Url(units.working_directory).path
 
@@ -211,10 +206,7 @@ class simple:
         units = self.umgr.submit_units(gromacs_tasks)
 
         # Wait for all compute units to finish.
-        #self.umgr.wait_units()
-
-        # Cancel all pilots.
-        #self.pmgr.cancel_pilots()
+        self.umgr.wait_units()
 
         # Remove session from database
         self.session.close()
