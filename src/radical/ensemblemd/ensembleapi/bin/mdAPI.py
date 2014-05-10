@@ -168,6 +168,7 @@ class simple:
 
         self.task_info=task_info
         print('Starting Tasks')
+        print os.path.dirname(os.path.abspath(__file__))
 
         #Aggregate all input filenames into list
         inputfiles = os.listdir(self.task_info['source_directory'])
