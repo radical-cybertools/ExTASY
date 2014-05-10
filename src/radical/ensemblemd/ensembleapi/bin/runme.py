@@ -42,8 +42,7 @@ def main():
             #Tasks started at the Remote Host as defined by TASK
             from config import TASK
             result=obj1.startTasks(task_info=TASK)
-            print (result)
-            sys.exit(0)
+            sys.exit(result)
 
         else:
             print('Please enter a valid parameter (--checkenv, --testjob, --workload, --h for help)')

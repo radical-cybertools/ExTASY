@@ -1,7 +1,7 @@
 import urllib
 import sys
 import os
-import radical.pilot as sagapilot
+import radical.pilot
 import saga
 
 #------------------------------------------------------------------------------
@@ -13,7 +13,7 @@ def pilot_state_cb(pilot, state):
     print "[Callback]: ComputePilot '{0}' state changed to {1}.".format(
         pilot.uid, state)
 
-    if state == sagapilot.states.FAILED:
+    if state == radical.pilot.states.FAILED:
         sys.exit(1)
 
 #------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ def unit_state_change_cb(unit, state):
     """
     print "[Callback]: ComputeUnit '{0}' state changed to {1}.".format(
         unit.uid, state)
-    if state == sagapilot.states.FAILED:
+    if state == radical.pilot.states.FAILED:
         print "            Log: %s" % unit.log[-1]
 
 #---------------------------------------------------------------------------------
@@ -38,31 +38,31 @@ class simple:
         # well as security crendetials.
 
         if DBURL is None:
-            print "ERROR: SAGAPILOT_DBURL (MongoDB server URL) is not defined."
+            print "ERROR: RADICAL_PILOT_DBURL (MongoDB server URL) is not defined."
             sys.exit(1)
 
-        self.session = sagapilot.Session(database_url=DBURL)
+        self.session = radical.pilot.Session(database_url=DBURL)
         print "Session UID: {0} ".format(self.session.uid)
 
         # Add an ssh identity to the session.
-        cred = sagapilot.SSHCredential()
+        cred = radical.pilot.SSHCredential()
         cred.user_id = uname
         self.session.add_credential(cred)
         return
 
     # ----------------------------------------------------------------------------
 
-    def startResource(self,resource_info,RCONF):
+    def startResource(self,resource_info, RCONF):
 
         self.resource_info = resource_info
 
         # Add a Pilot Manager. Pilot managers manage one or more ComputePilots.
-        self.pmgr = sagapilot.PilotManager(session=self.session, resource_configurations=RCONF)
+        self.pmgr = radical.pilot.PilotManager(session=self.session, resource_configurations=RCONF)
 
         self.pmgr.register_callback(pilot_state_cb)
 
         # Start a pilot at the remote host as per the configs
-        pdesc = sagapilot.ComputePilotDescription()
+        pdesc = radical.pilot.ComputePilotDescription()
         pdesc.resource = self.resource_info['remote_host']
         pdesc.runtime = self.resource_info['walltime']
         pdesc.cores = self.resource_info['number_of_cores']
@@ -76,7 +76,7 @@ class simple:
         print "Pilot UID       : {0} ".format(pilot.uid )
 
 
-        self.umgr = sagapilot.UnitManager(session=self.session,scheduler=sagapilot.SCHED_DIRECT_SUBMISSION)
+        self.umgr = radical.pilot.UnitManager(session=self.session, scheduler=radical.pilot.SCHED_DIRECT_SUBMISSION)
         # Register our callback with the UnitManager. This callback will get
         # called every time any of the units managed by the UnitManager
         # change their state.
@@ -91,9 +91,9 @@ class simple:
         '''Run a simple job which returns the version of gromacs'''
 
         compute_units = []
-        cu = sagapilot.ComputeUnitDescription()
+        cu = radical.pilot.ComputeUnitDescription()
         cu.executable = "/bin/bash"
-        cu.arguments = ["-l","-c",'"module load gromacs && pdb2gmx -version"']
+        cu.arguments = ["-l", "-c", '"module load gromacs && pdb2gmx -version"']
         cu.cores = 1
 
         compute_units.append(cu)
@@ -125,7 +125,7 @@ class simple:
             "aladip.pdb" : "http://testing.saga-project.org/cybertools/sampledata/gromacs/aladip.pdb",
             "run.mdp" : "http://testing.saga-project.org/cybertools/sampledata/gromacs/run.mdp",
             "em.mdp" : "http://testing.saga-project.org/cybertools/sampledata/gromacs/em.mdp",
-            "gromacs_python_wrapper.py" : "http://testing.saga-project.org/cybertools/sampledata/gromacs/gromacs_python_wrapper.py",
+            "gromacs_python_wrapper.py" : "http://testing.saga-project.org/cybertools/sampledata/gromacs/gromacs_python_wrapper.py"
             }
 
         try:
@@ -137,7 +137,7 @@ class simple:
             return 1
 
         compute_units = []
-        cu = sagapilot.ComputeUnitDescription()
+        cu = radical.pilot.ComputeUnitDescription()
         cu.executable = "python"
         cu.arguments = ['gromacs_python_wrapper.py','aladip.pdb','run.mdp','em.mdp','amber03','none']
         cu.cores = 1
@@ -165,7 +165,7 @@ class simple:
 
     def startTasks(self,task_info):
 
-        self.task_info=task_info
+        self.task_info = task_info
         print('Starting Tasks')
         curdir = os.path.dirname(os.path.abspath(__file__))
 
@@ -177,7 +177,7 @@ class simple:
             input_to_data_transfer_task.append(temp)
 
         #SHARED INPUT TASK
-        data_transfer_task = sagapilot.ComputeUnitDescription()
+        data_transfer_task = radical.pilot.ComputeUnitDescription()
         data_transfer_task.executable = "/bin/true"
         data_transfer_task.cores = 1
         data_transfer_task.input_data = input_to_data_transfer_task
@@ -195,7 +195,7 @@ class simple:
         gromacs_tasks = []
 
         for i in range(0, self.task_info['number_of_tasks']):
-            gromacs_task = sagapilot.ComputeUnitDescription()
+            gromacs_task = radical.pilot.ComputeUnitDescription()
             gromacs_task.executable = "python"
             gromacs_task.arguments = ["linker.py %s %s %s" % (shared_input_url, self.task_info['kernel_type'], self.task_info['kernel'])]
             gromacs_task.input_data = ['%s/linker.py' % curdir]

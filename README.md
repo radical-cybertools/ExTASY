@@ -123,6 +123,12 @@ Running the tests
 
 The API provides two modes of running tests. **checkenv** and **testjob**. Both the tests are recommended before submitting large workloads.
 
+You will have to two ENV variables.
+
+* RADICAL_PILOT_USERNAME  - username on the remote/target machine
+
+* RADICAL_PILOT_DBURL     - URL to the mongo db instance to be used for coordination of services
+
 
 1) checkenv
 
@@ -147,31 +153,6 @@ To run a simple testjob on the intended remote host, use the --testjob argument
 * ```--config``` should be followed by the complete path of the config.py file
 * Be sure to have the config.py file and JSON resource configuration files set before running the tests.
 
-
-Running a unit test before installation of the tool
----------------------------------------------------
-
-You can run a simple unit test of the tool without installation by cloning the repository and running the test command.
-
-```
-git clone https://github.com/radical-cybertools/MDEnsemble.git
-cd MDEnsemble
-python setup.py test
-```
-
-But before running the ```python setup.py test``` command, you will have to set up a few environment variables.
-
-* ENSEMBLE_DBURL - the url to the database to be used for coordination
-
-* ENSEMBLE_RCONF - url to the JSON resource configuration file. (https:// or file://)
-
-* ENSEMBLE_RNAME - name of the target resource (should match one of the keys in the resource config file)
-
-* ENSEMBLE_UNAME - username to login the target resource
-
-* ENSEMBLE_WORKDIR - working directory in the target resource to be used for testing
-
-* ENSEMBLE_NUM_OF_CORES - number of cores to be reserved in the target resource
 
 
 Running the workload
