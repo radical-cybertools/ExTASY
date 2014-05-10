@@ -1,13 +1,14 @@
 EnsembleAPI
 ============
 
-Provides an easy-to-use interface based on Radical pilot and provides functional support to simulate Ensembles
+Provides a command line interface to run multiple Molecular Dynamics simulations using Radical pilot as the underlying API.
 
 
 Requirements
 ============
 
 * Python >= 2.5
+* Passwordless ssh login to remote machine
 
 
 Installation
@@ -64,28 +65,30 @@ This is the primary configuration file that needs to modified by the user. This 
 1) Specify resource details
 
 * select the target resource (machine + working directory) from the bulk of resources present in the JSON config files.
+* define the working directory in the remote host (if required, otherwise leave it as '')
 * define the number of cores to be reserved for the totality of the experiment (aka pilot size)
 * define the time for which you want to reserve the cores
-* define credentials for remote host access
+
 
 ```
 
 RESOURCE = {
         #Resource related inputs	--MANDATORY
-        'remote_host' : 'stampede.tacc.utexas.edu',
-        'remote_directory' : '/home1/02734/vivek91/output/',
-        'username' : 'vivek91',
+        'remote_host' : 'sierra.futuregrid.org',
+        'remote_directory' : '/N/u/vivek91/output/',
         'number_of_cores' : 2,
         'walltime' : 5
     }
+
 
 ```
 
 2) Specify task details
 
-* specify the source directory from which the data has to be transfered + output directory to hold the output back on the local machine
+* specify the source directory from which the data has to be transfered
+* specify the output directory (if remote_directory has been specified in resource) to hold the output back on the local machine
 * the name and type of the kernel to be executed as the task
-* number of tasks/ensembles to executed
+* number of tasks (or ensembles) to be executed
 * number of cores out of the total cores to allocated to each task
 
 
@@ -94,19 +97,23 @@ TASK = {
         #Task related inputs		--MANDATORY
 
         #Paths/Directories involved
-        'source_directory' : '../gromacs_input_alanine_dipeptide/',
-        'output_directory' : "",    #None would bring the output to the current directory
+        #Keep the kernel and the files accessed by the kernel/that need to be transferred in the source_directory
+        'source_directory' : '/home/vivek/Research/saga-pilot/Gromacs/gromacs_input_PYP/',
+        'output_directory' : "",
 
         #kernel/wrapper names
-        'kernel_type' : 'python',       #/bin/bash or python
-        'kernel_name' : 'gromacs_python_wrapper.py',
+        'kernel_type' : '/bin/bash',       #/bin/bash or python
+        'kernel' : 'MDRun.sh',      #this file should contain all the bash level commands/functions that are executed
 
         #Resource requirement and number of tasks
         'cores_per_task' : 1,
         'number_of_tasks' : 2,
-
     }
 ```
+
+3) UNAME
+
+Username to login the remote target (leave as '' if running as localhost)
 
 3) RCONF
 

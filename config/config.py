@@ -24,7 +24,6 @@ TASK = {
         #Resource requirement and number of tasks
         'cores_per_task' : 1,
         'number_of_tasks' : 2,
-
     }
 
 UNAME = os.getenv('RADICAL_PILOT_USERNAME')
