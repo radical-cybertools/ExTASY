@@ -7,7 +7,9 @@ Provides a command line interface to run multiple Molecular Dynamics simulations
 Requirements
 ============
 
-* Python >= 2.5
+* python >= 2.5
+* virtualenv >= 1.11
+* pip >= 1.5
 * Passwordless ssh login to remote machine
 
 
