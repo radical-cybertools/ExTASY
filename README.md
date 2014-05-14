@@ -21,8 +21,8 @@ To install the EnsembleAPI framework, create a virtual environment and use pip t
 ```
 virtualenv $HOME/test
 source $HOME/test/bin/activate
-git clone https://github.com/radical-cybertools/MDEnsemble.git
-cd MDEnsemble
+git clone https://github.com/radical-cybertools/ExTASY.git
+cd ExTASY
 python setup.py install
 ```
 
@@ -43,7 +43,7 @@ The various resources to be used are added to a JSON file. The resources are ref
  configurations can be found in
 
  ```
- https://github.com/radical-cybertools/MDEnsemble/tree/master/config
+ https://github.com/radical-cybertools/ExTASY/tree/master/config
  ```
 
 Resource config files for XSEDE & FUTUREGRID have been added as part of the config. To write your own resource configuration files, refer
