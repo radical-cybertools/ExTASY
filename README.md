@@ -1,7 +1,9 @@
 Coupled Simulation-Analysis Execution (ExTASY)
-============
+===============================================
 
-Provides a command line interface to run multiple Molecular Dynamics simulations coupled with Analysis tools.
+Provides a command line interface to run multiple Molecular Dynamics simulations coupled with Analysis tools. This will initially
+support Gromacs as the "Simulator" and LSDMap as the "Analyzer". ExTASY will have a plugin based architecture such that it is
+expandable as to support more Simulators and Analyzers.
 
 
 Requirements
