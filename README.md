@@ -1,7 +1,7 @@
 Ensemble API
 ============
 
-Provides a command line interface to run multiple Molecular Dynamics simulations using Radical pilot as the underlying API.
+Provides a command line interface to run multiple Molecular Dynamics simulations using Radical pilot as the underlying API coupled with Analysis tools.
 
 
 Requirements
