@@ -40,7 +40,7 @@ python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
 > export CONFIG=$HOME/ExTASY/config
 > ```
 
-USAGE
+Usage
 ======
 
 
