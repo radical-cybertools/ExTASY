@@ -21,6 +21,7 @@ To install the EnsembleAPI framework, create a virtual environment and use pip t
 ```
 virtualenv $HOME/test
 source $HOME/test/bin/activate
+cd $HOME
 git clone https://github.com/radical-cybertools/ExTASY.git
 cd ExTASY
 python setup.py install
@@ -31,6 +32,11 @@ To verify the installation, check the current version
 ```
 python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
 ```
+
+> You can set an Environement variable CONFIG to point to the configuration folder in the cloned repository.
+> ```
+> export CONFIG=$HOME/ExTASY/config
+> ```
 
 USAGE
 ======
@@ -139,27 +145,27 @@ You will have to two ENV variables.
 * RADICAL_PILOT_DBURL     - URL to the mongo db instance to be used for coordination of services
 
 
-1) checkenv
+1) **checkenv**
 
 This mode is to check whether the necessary modules are present and loaded in the remote host before workload submission.
 
 To run a environment check on the intended remote host, use the --checkenv argument
-```ensemble --config ../config/config.py --checkenv```
+```ensemble --config $CONFIG/config.py --checkenv```
 
 **Note**
-* ```--config``` should be followed by the complete path of the config.py file
+* ```--config``` should be followed by the complete path of the config.py file or $CONFIG/config.py if CONFIG has been set.
 * Be sure to have the config.py file and JSON resource configuration files set before running the tests.
 
 
-2) testjob
+2) **testjob**
 
 This mode is to submit a basic dummy gromacs task on to the specified remote host to make sure the execution is complete and usable.
 
 To run a simple testjob on the intended remote host, use the --testjob argument
-```ensemble --config ../config/config.py --testjob```
+```ensemble --config $CONFIG/config.py --testjob```
 
 **Note**
-* ```--config``` should be followed by the complete path of the config.py file
+* ```--config``` should be followed by the complete path of the config.py file or $CONFIG/config.py if CONFIG has been set.
 * Be sure to have the config.py file and JSON resource configuration files set before running the tests.
 
 
@@ -169,8 +175,8 @@ Running the workload
 
 To run the particular workload of your experiment. Setup the TASK definitions in the config file and use the --workload or --w argument.
 
-```ensemble --config ../config/config.py --workload```
+```ensemble --config $CONFIG/config.py --workload```
 
 **Note**
-* ```--config``` should be followed by the complete path of the config.py file
+* ```--config``` should be followed by the complete path of the config.py file or $CONFIG/config.py if CONFIG has been set.
 * Be sure to have the config.py file and JSON resource configuration files set before running the workload.

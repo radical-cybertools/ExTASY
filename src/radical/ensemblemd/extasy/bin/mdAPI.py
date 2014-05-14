@@ -29,6 +29,10 @@ def unit_state_change_cb(unit, state):
 
 #---------------------------------------------------------------------------------
 
+def analyzer():
+    #Analyzer Stage -- LSDMap, Coco
+    print 'There will be an Analyzer stage here'
+
 
 class simple:
 
@@ -210,5 +214,9 @@ class simple:
 
         # Remove session from database
         self.session.close()
+
+        print 'MD Simulations done'
+
+        analyzer()
 
         return 0
