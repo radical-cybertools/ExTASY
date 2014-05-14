@@ -29,7 +29,7 @@ python setup.py install
 To verify the installation, check the current version
 
 ```
-python -c 'import radical.ensemblemd.ensembleapi as ensembleapi; print ensembleapi.version'
+python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
 ```
 
 USAGE
@@ -58,7 +58,7 @@ Config file
 -------------
 
 ```
-https://github.com/radical-cybertools/MDEnsemble/tree/master/config/config.py
+https://github.com/radical-cybertools/ExTASY/tree/master/config/config.py
 ```
 
 
