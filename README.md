@@ -88,7 +88,7 @@ This is the primary configuration file that needs to modified by the user. This 
 
 RESOURCE = {
         #Resource related inputs	--MANDATORY
-        'remote_host' : 'sierra.futuregrid.org',
+        'remote_host' : 'stampede.tacc.utexas.edu',
         'number_of_cores' : 2,
         'walltime' : 5
     }
