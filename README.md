@@ -95,7 +95,7 @@ RESOURCE = {
 
 2) Specify task details
 
-* specify the source directory from which the data has to be transfered
+* specify the source directory from which the data has to be transfered. All the files which are commonly shared/accessed by individual tasks need to be in this folder; all the files in this folder are transferred to the remote host.
 * specify the output directory (if remote_directory has been specified in resource) to hold the output back on the local machine
 * the name and type of the kernel to be executed as the task
 * number of tasks (or ensembles) to be executed

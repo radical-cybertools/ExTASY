@@ -204,6 +204,7 @@ class simple:
             gromacs_task.executable = "python"
             gromacs_task.arguments = ["linker.py %s %s %s" % (shared_input_url, self.task_info['kernel_type'], self.task_info['kernel'])]
             gromacs_task.input_data = ['%s/linker.py' % curdir]
+            gromacs_task.output_data = ['md.log > md_%s.log' % i]
             gromacs_task.cores = self.task_info['cores_per_task']
 
             gromacs_tasks.append(gromacs_task)
