@@ -70,7 +70,8 @@ class simple:
         pdesc.resource = self.resource_info['remote_host']
         pdesc.runtime = self.resource_info['walltime']
         pdesc.cores = self.resource_info['number_of_cores']
-        pdesc.sandbox = self.resource_info['remote_directory']
+        if self.resource_info.has_key('remote_directory')
+            pdesc.sandbox = self.resource_info['remote_directory']
 
 
         # Launch the pilot.

@@ -4,7 +4,6 @@ import os
 RESOURCE = {
         #Resource related inputs	--MANDATORY
         'remote_host' : 'sierra.futuregrid.org',
-        'remote_directory' : '/N/u/vivek91/output/',
         'number_of_cores' : 2,
         'walltime' : 5
     }
@@ -30,7 +29,6 @@ UNAME = os.getenv('RADICAL_PILOT_USERNAME')
 
 srcroot = os.path.dirname(os.path.abspath(__file__))
 
-RCONF  = ["file://%s/my-futuregrid.json"%srcroot,
-          "file://%s/my-xsede.json"%srcroot]
+RCONF  = ['https://raw.githubusercontent.com/radical-cybertools/radical.pilot/master/configs/xsede.json','https://raw.githubusercontent.com/radical-cybertools/radical.pilot/master/configs/futuregrid.json']
 
-DBURL = os.getenv('RADICAL_PILOT_DBURL')
+DBURL = 'mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/'

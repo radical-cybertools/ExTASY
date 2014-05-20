@@ -9,7 +9,7 @@ expandable as to support more Simulators and Analyzers.
 Requirements
 ============
 
-* python >= 2.5
+* python >= 2.6
 * virtualenv >= 1.11
 * pip >= 1.5
 * Passwordless ssh login to remote machine
@@ -18,12 +18,11 @@ Requirements
 Installation
 =============
 
-To install the EnsembleAPI framework, create a virtual environment and use pip to install the package
+To install the ExTASY framework, create a virtual environment and use pip to install the package
 
 ```
 virtualenv $HOME/test
 source $HOME/test/bin/activate
-cd $HOME
 git clone https://github.com/radical-cybertools/ExTASY.git
 cd ExTASY
 python setup.py install
@@ -75,7 +74,6 @@ This is the primary configuration file that needs to modified by the user. This 
 1) Specify resource details
 
 * select the target resource (machine + working directory) from the bulk of resources present in the JSON config files.
-* define the working directory in the remote host (if required, otherwise leave it as '')
 * define the number of cores to be reserved for the totality of the experiment (aka pilot size)
 * define the time for which you want to reserve the cores
 
@@ -85,7 +83,6 @@ This is the primary configuration file that needs to modified by the user. This 
 RESOURCE = {
         #Resource related inputs	--MANDATORY
         'remote_host' : 'sierra.futuregrid.org',
-        'remote_directory' : '/N/u/vivek91/output/',
         'number_of_cores' : 2,
         'walltime' : 5
     }
@@ -140,11 +137,10 @@ Running the tests
 
 The API provides two modes of running tests. **checkenv** and **testjob**. Both the tests are recommended before submitting large workloads.
 
-You will have to two ENV variables.
+You will have to set an ENV variable.
 
 * RADICAL_PILOT_USERNAME  - username on the remote/target machine
 
-* RADICAL_PILOT_DBURL     - URL to the mongo db instance to be used for coordination of services
 
 
 1) **checkenv**
