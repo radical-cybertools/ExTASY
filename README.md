@@ -99,7 +99,7 @@ RESOURCE = {
 2) Specify task details
 
 * specify the source directory from which the data has to be transfered. All the files which are commonly shared/accessed by individual tasks need to be in this folder; all the files in this folder are transferred to the remote host.
-* specify the output directory (if remote_directory has been specified in resource) to hold the output back on the local machine
+* specify the output file to be transferred back to the local machine.
 * the name and type of the kernel to be executed as the task
 * number of tasks (or ensembles) to be executed
 * number of cores out of the total cores to allocated to each task
@@ -112,7 +112,7 @@ TASK = {
         #Paths/Directories involved
         #Keep the kernel and the files accessed by the kernel/that need to be transferred in the source_directory
         'source_directory' : '/home/vivek/Research/saga-pilot/Gromacs/gromacs_input_PYP/',
-        'output_directory' : "",
+        'output' : "md.log",
 
         #kernel/wrapper names
         'kernel_type' : '/bin/bash',       #/bin/bash or python
