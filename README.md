@@ -69,11 +69,12 @@ Resource config files for XSEDE & FUTUREGRID have been added as part of the conf
 Config file
 -------------
 
+This section is mainly to explain the format of the config file. Skip ahead for running sample tests.
+
 ```
 https://github.com/radical-cybertools/ExTASY/tree/master/config/config.py
 ```
 
-This section is mainly to explain the format of the config file. Skip ahead for running sample tests.
 This is the primary configuration file that needs to modified by the user. This file allows the user to :-
 
 1) Specify resource details
