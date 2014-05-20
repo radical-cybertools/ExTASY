@@ -13,7 +13,7 @@ TASK = {
 
         #Paths/Directories involved
         #Keep the kernel and the files accessed by the kernel/that need to be transferred in the source_directory
-        'source_directory' : '/home/vivek/Research/saga-pilot/Gromacs/gromacs_input_PYP/',
+        'source_directory' : '/tmp/ExTASY/gromacs_input_PYP/',
         'output' : "md.log",
 
         #kernel/wrapper names

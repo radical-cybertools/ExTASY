@@ -26,8 +26,9 @@ Installation
 To install the ExTASY framework, create a virtual environment and use pip to install the package
 
 ```
-virtualenv $HOME/test
-source $HOME/test/bin/activate
+virtualenv /tmp/test
+source /tmp/test/bin/activate
+cd /tmp/
 git clone https://github.com/radical-cybertools/ExTASY.git
 cd ExTASY
 python setup.py install
@@ -41,7 +42,7 @@ python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
 
 > You can set an Environement variable CONFIG to point to the configuration folder in the cloned repository.
 > ```
-> export CONFIG=$HOME/ExTASY/config
+> export CONFIG=/tmp/ExTASY/config
 > ```
 
 Usage
@@ -111,7 +112,7 @@ TASK = {
 
         #Paths/Directories involved
         #Keep the kernel and the files accessed by the kernel/that need to be transferred in the source_directory
-        'source_directory' : '/home/vivek/Research/saga-pilot/Gromacs/gromacs_input_PYP/',
+        'source_directory' : '/tmp/ExTASY/gromacs_input_PYP/',
         'output' : "md.log",
 
         #kernel/wrapper names
