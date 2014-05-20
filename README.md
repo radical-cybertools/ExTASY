@@ -12,7 +12,10 @@ Requirements
 * python >= 2.6
 * virtualenv >= 1.11
 * pip >= 1.5
-* Passwordless ssh login to remote machine
+* Password-less ssh login to remote machine
+
+> Some tips to setup a password-less login
+> ```http://www.linuxproblem.org/art_9.html```
 
 
 Installation
