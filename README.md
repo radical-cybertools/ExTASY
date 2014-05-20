@@ -73,7 +73,7 @@ Config file
 https://github.com/radical-cybertools/ExTASY/tree/master/config/config.py
 ```
 
-
+This section is mainly to explain the format of the config file. Skip ahead for running sample tests.
 This is the primary configuration file that needs to modified by the user. This file allows the user to :-
 
 1) Specify resource details
@@ -142,9 +142,17 @@ Running the tests
 
 The API provides two modes of running tests. **checkenv** and **testjob**. Both the tests are recommended before submitting large workloads.
 
-You will have to set an ENV variable.
+You will have to do things.
 
-* RADICAL_PILOT_USERNAME  - username on the remote/target machine
+* Set an Environment variable "RADICAL_PILOT_USERNAME"  - username on the remote/target machine
+* Open the config.py file inside $CONFIG, and set the target machine in remote_host. By default, it is set to Stampede.
+
+> For more possible values for "remote_host", see
+> ```
+> https://raw.githubusercontent.com/radical-cybertools/radical.pilot/master/configs/xsede.json
+
+> https://raw.githubusercontent.com/radical-cybertools/radical.pilot/master/configs/futuregrid.json
+> ```
 
 
 
