@@ -29,6 +29,6 @@ UNAME = os.getenv('RADICAL_PILOT_USERNAME')
 
 srcroot = os.path.dirname(os.path.abspath(__file__))
 
-RCONF  = ['https://raw.githubusercontent.com/radical-cybertools/radical.pilot/master/configs/xsede.json','https://raw.githubusercontent.com/radical-cybertools/radical.pilot/master/configs/futuregrid.json']
+RCONF  = ['file://%s/my-xsede.json','file://%s/my-futuregrid.json']
 
 DBURL = 'mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/'
