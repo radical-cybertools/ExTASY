@@ -9,6 +9,16 @@
         "valid_roots"        : ["/home1", "/scratch", "/work"]
     },
 
+     "stampede.tacc.utexas.edu-devel": {
+        "URL"                : "slurm+ssh://stampede.tacc.utexas.edu",
+        "filesystem"         : "sftp://stampede.tacc.utexas.edu/",
+        "default_queue"      : "development",
+        "python_interpreter" : "/opt/apps/python/epd/7.3.2/bin/python",
+        "pre_bootstrap"      : ["module purge", "module load TACC", "module load cluster", "module load python/2.7.3-epd-7.3.2"],
+        "task_launch_mode"   : "SSH",
+        "valid_roots"        : ["/home1", "/scratch", "/work"]
+    },
+
     "lonestar.tacc.xsede.org": {
         "URL"                : "sge+ssh://lonestar.tacc.utexas.edu",
         "filesystem"         : "sftp://lonestar.tacc.utexas.edu/",
