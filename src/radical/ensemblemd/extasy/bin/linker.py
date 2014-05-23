@@ -15,6 +15,7 @@ if __name__ =="__main__":
     #os.environ["PATH"] += os.pathsep + which_path
 
     os.system('/bin/bash -l -c "module load gromacs"')
+    os.system('/bin/bash -l -c "echo $PATH"')
 
     for i in range(0,len(files)):
         os.system('/bin/bash -l -c "ln -s %s/%s ."'%(path,files[i]))
