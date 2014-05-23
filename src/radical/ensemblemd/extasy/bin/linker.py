@@ -8,11 +8,13 @@ if __name__ =="__main__":
     kernel_type = sys.argv[2]
     kernel = sys.argv[3]
 
-    proc = subprocess.Popen(["which grompp"], stdout=subprocess.PIPE, shell=True)
-    (which_path, err) = proc.communicate()
-    print "path : ", which_path
+    #proc = subprocess.Popen(["which grompp"], stdout=subprocess.PIPE, shell=True)
+    #(which_path, err) = proc.communicate()
+    #print "path : ", which_path
 
-    os.environ["PATH"] += os.pathsep + which_path
+    #os.environ["PATH"] += os.pathsep + which_path
+
+    os.system('/bin/bash -l -c "module load gromacs"')
 
     for i in range(0,len(files)):
         os.system('/bin/bash -l -c "ln -s %s/%s ."'%(path,files[i]))
