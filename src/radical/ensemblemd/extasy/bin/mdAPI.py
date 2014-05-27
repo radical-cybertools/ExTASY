@@ -3,6 +3,7 @@ import sys
 import os
 import radical.pilot
 import saga
+from exec_env import PATH
 
 #------------------------------------------------------------------------------
 #
@@ -80,6 +81,8 @@ class simple:
         #
         print "Pilot UID       : {0} ".format(pilot.uid )
 
+        self.module_path = PATH[self.resource_info['remote_host']]
+
 
         self.umgr = radical.pilot.UnitManager(session=self.session, scheduler=radical.pilot.SCHED_DIRECT_SUBMISSION)
         # Register our callback with the UnitManager. This callback will get
@@ -155,7 +158,7 @@ class simple:
         # Wait for all compute units to finish.
         print 'Test Job started'
         self.umgr.wait_units()
-        print 'Test job dones'
+        print 'Test job done'
 
         for unit in self.umgr.get_units():
             # Get the stdout and stderr streams of the ComputeUnit.
@@ -202,7 +205,7 @@ class simple:
         for i in range(0, self.task_info['number_of_tasks']):
             gromacs_task = radical.pilot.ComputeUnitDescription()
             gromacs_task.executable = "python"
-            gromacs_task.arguments = ["linker.py %s %s %s" % (shared_input_url, self.task_info['kernel_type'], self.task_info['kernel'])]
+            gromacs_task.arguments = ["linker.py %s %s %s %s" % (shared_input_url, self.task_info['kernel_type'], self.task_info['kernel'],self.module_path)]
             gromacs_task.input_data = ['%s/linker.py' % curdir]
             gromacs_task.output_data = ['%s > %s_%s' % (self.task_info['output'], i, self.task_info['output'])]
             gromacs_task.cores = self.task_info['cores_per_task']
