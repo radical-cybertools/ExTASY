@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""Setup file for EnsembleAPI
+"""Setup file for ExTASY
 """
 
 __author__ = "Vivek"
@@ -60,7 +60,7 @@ def get_version():
 
         # make sure the version files exist for the runtime version inspection
         open ('%s/VERSION' % srcroot, 'w').write (long_version+"\n")
-        open ('%s/src/radical/ensemblemd/ensembleapi/VERSION' % srcroot, 'w').write (long_version+"\n")
+        open ('%s/src/radical/ensemblemd/extasy/VERSION' % srcroot, 'w').write (long_version+"\n")
 
 
     except Exception as e :
@@ -76,7 +76,7 @@ short_version, long_version = get_version ()
 #-----------------------------------------------------------------------------
 # check python version. we need > 2.5, <3.x
 if sys.hexversion < 0x02050000 or sys.hexversion >= 0x03000000:
-    raise RuntimeError("EnsembleAPI requires Python 2.x (2.5 or higher)")
+    raise RuntimeError("ExTASY requires Python 2.x (2.5 or higher)")
 
 #-----------------------------------------------------------------------------
 #
@@ -85,9 +85,9 @@ def read(*rnames):
 
 #-----------------------------------------------------------------------------
 setup_args = {
-    'name' : 'radical.ensemblemd.ensembleapi',
+    'name' : 'radical.ensemblemd.extasy',
     'version' : short_version,
-    'description' :" A library to run bulk gromacs tasks on DCI.",
+    'description' :" A library to run bulk Coupled Simulator-Analyzer tasks on DCI.",
     'long_description' : (read('README.md') + '\n\n' + read('CHANGES.md')),
     'author' : 'RADICAL Group at Rutgers University',
     'author_email' : 'vivek.balasubramanian@rutgers.edu',
@@ -115,7 +115,7 @@ setup_args = {
     ],
 
     'entry_points': {
-     'console_scripts': ['ensemble = radical.ensemblemd.ensembleapi.bin.runme:main']
+     'console_scripts': ['ensemble = radical.ensemblemd.extasy.bin.main:main']
     },
 
 
@@ -128,7 +128,7 @@ setup_args = {
                           'radical.pilot'
                          ],
     'tests_require' : ['setuptools>=1','nose'],
-    'test_suite' : 'radical.ensemblemd.ensembleapi.tests',
+    'test_suite' : 'radical.ensemblemd.extasy.tests',
 
     'zip_safe' : False,
 }
