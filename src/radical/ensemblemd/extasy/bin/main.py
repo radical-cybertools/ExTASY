@@ -1,10 +1,8 @@
-from src.radical.ensemblemd.extasy.bin import Simulator
-
 __author__ = 'vivek'
 
 import radical.pilot
 #import imp
-from parameters import *
+from config.parameters import *
 from Analyzer.LSDMap.Analyze_file import Analyzer
 from Preprocessor.Gromacs.Preprocess import Preprocessing
 from Simulator.Gromacs.Simfile import Simulator
