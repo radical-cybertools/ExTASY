@@ -3,7 +3,7 @@ __author__ = 'vivek'
 import radical.pilot
 import os
 import time
-from parameters import *
+from config.parameters import *
 import saga
 
 def Simulator(umgr):
