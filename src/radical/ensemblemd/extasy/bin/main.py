@@ -3,9 +3,9 @@ __author__ = 'vivek'
 import radical.pilot
 #import imp
 from config.parameters import *
-from Analyzer.LSDMap.Analyze_file import Analyzer
-from Preprocessor.Gromacs.Preprocess import Preprocessing
-from Simulator.Gromacs.Simfile import Simulator
+from Analyzer.LSDMap.analyzer import Analyzer
+from Preprocessor.Gromacs.preprocessor import Preprocessing
+from Simulator.Gromacs.simulator import Simulator
 from config.config_file import *
 
 #------------------------------------------------------------------------------
@@ -77,13 +77,13 @@ def startPilot():
 if __name__ == '__main__':
 
 
-    #Preprocessor=imp.load_source('Preprocessor','file:///home/vivek/Research/thesis/Preprocessor/%s/Preprocess.py' % UPreprocessor)
+    #Preprocessor=imp.load_source('Preprocessor','file:///home/vivek/Research/thesis/Preprocessor/%s/preprocessor.py' % UPreprocessor)
     #from Preprocessor import Preprocessing
 
-    #Sim=imp.load_source('Sim','file:///home/vivek/Research/thesis/Simulator/%s/Simfile.py' % USimulator)
+    #Sim=imp.load_source('Sim','file:///home/vivek/Research/thesis/Simulator/%s/simulator.py' % USimulator)
     #from Sim import Simulator
 
-    #Analyze=imp.load_source('Analyze','file:///home/vivek/Research/thesis/Analyzer/%s/Analyze_file.py' % UAnalyzer)
+    #Analyze=imp.load_source('Analyze','file:///home/vivek/Research/thesis/Analyzer/%s/analyzer.py' % UAnalyzer)
     #from Analyze import Analyzer
     Preprocessing()
 
