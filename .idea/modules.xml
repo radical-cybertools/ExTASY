@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../../saga-pilot/Gromacs/.idea/Gromacs.iml" filepath="$PROJECT_DIR$/../../saga-pilot/Gromacs/.idea/Gromacs.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/MDEnsemble.iml" filepath="$PROJECT_DIR$/.idea/MDEnsemble.iml" />
     </modules>
   </component>
