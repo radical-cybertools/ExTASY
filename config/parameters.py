@@ -29,7 +29,7 @@ evfile = '%s.ev' % sys
 nearest_neighbor_file = '%s.nn' %sys
 
 num_runs = 10000
-num_clone_files = '$s.nc' % sys
+num_clone_files = '%s.nc' % sys
 
 recovery_flag = 0
 
