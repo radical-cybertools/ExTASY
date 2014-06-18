@@ -18,7 +18,7 @@ def Analyzer(umgr):
 
     umgr.submit_units(lsdm)
 
-    umgr.wait()
+    umgr.wait_units()
 
     p2=time.time()
 
