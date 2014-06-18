@@ -1,1 +1,1 @@
-__author__ = 'vivek'
+version = out=open ("VERSION", 'r').read().strip()
