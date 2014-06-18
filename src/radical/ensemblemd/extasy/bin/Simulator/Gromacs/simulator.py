@@ -28,11 +28,11 @@ def Simulator(umgr):
     shared_input_url = saga.Url(units.working_directory).path
 
     gromacs_tasks = []
-    for i in range(0, num_runs):
+    for i in range(0, 64):
         gromacs_task = radical.pilot.ComputeUnitDescription()
-        gromacs_task.executable = "python"
-        gromacs_task.arguments = ['linker_gromacs.py %s %s %s %s' % (shared_input_url,grompp_name,topol_name,tmp_grofile)]
-        gromacs_task.input_data = ['linker_gromacs.py > linker_gromacs.py','run.sh > run.sh','%s/temp/start%s.gro > start.gro' % (os.getcwd(), i)]
+        gromacs_task.executable = "/bin/bash"
+        gromacs_task.arguments = ['-l','-c','". run_simulator.sh %s %s %s %s"' % (shared_input_url,grompp_name,topol_name,outgrofile_name)]
+        gromacs_task.input_data = ['run_simulator.sh','run.sh > run.sh','%s/temp/start%s.gro > start.gro' % (os.getcwd(), i)]
         gromacs_task.output_data = ['out.gro > out%s.gro' % i]
         gromacs_task.cores = 1
 
@@ -43,10 +43,10 @@ def Simulator(umgr):
     # Wait for all compute units to finish.
     umgr.wait_units()
 
-    if os.path.exists('%s/%s' % (os.getcwd(),tmp_grofile)):
-        os.remove(os.getcwd() + '/' + tmp_grofile)
+    if os.path.exists('%s/%s' % (os.getcwd(),outgrofile_name)):
+        os.remove(os.getcwd() + '/' + outgrofile_name)
 
-    with open(tmp_grofile, 'w') as output_grofile:
+    with open(outgrofile_name, 'w') as output_grofile:
         for i in range(0,64):
             with open('out%s.gro' % i, 'r') as output_file:
                 for line in output_file:

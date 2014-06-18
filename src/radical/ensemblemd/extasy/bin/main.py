@@ -44,7 +44,7 @@ def startPilot():
     session.add_credential(cred)
 
     # Add a Pilot Manager. Pilot managers manage one or more ComputePilots.
-    pmgr = radical.pilot.PilotManager(session=session, resource_configurations=RCONF)
+    pmgr = radical.pilot.PilotManager(session=session)
 
     pmgr.register_callback(pilot_state_cb)
 

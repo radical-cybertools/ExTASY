@@ -2,7 +2,7 @@ __author__ = 'vivek'
 
 num_sims = 64 #num of CUs
 
-num_iterations = 10
+num_iterations = 1
 
 input_gro_loc = '/home/vivek/Research/thesis/run'
 input_gro = 'input.gro'

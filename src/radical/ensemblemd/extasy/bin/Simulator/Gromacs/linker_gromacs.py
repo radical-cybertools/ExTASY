@@ -8,6 +8,7 @@ if __name__ =="__main__":
     grompp_name = sys.argv[2]
     topol_name = sys.argv[3]
     outgro_filename = sys.argv[4]
+    os.system('module load gromacs')
     os.system('/bin/bash -l -c "ln -s %s/%s ."'%(path,grompp_name))
     os.system('/bin/bash -l -c "ln -s %s/%s ."'%(path,topol_name))
-    os.system('/bin/bash -l -c "run.sh %s %s %s %s"' % (grompp_name , 'start.gro', topol_name , outgro_filename))
+    os.system('/bin/bash -l -c ". run.sh %s %s %s %s"' % (grompp_name , 'start.gro', topol_name , outgro_filename))
