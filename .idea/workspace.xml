@@ -5,17 +5,13 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../thesis/linker_gromacs.py" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../thesis/run_analyzer.sh" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../thesis/run_simulator.sh" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/linker_gromacs.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/linker_lsdmap.py" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../../../thesis/my-futuregrid.json" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../../../thesis/my-xsede.json" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/analyzer.py" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/analyzer.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../thesis/lsdmap.log" afterPath="$PROJECT_DIR$/../../../thesis/lsdmap.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/main.py" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/main.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../thesis/out.gro" afterPath="$PROJECT_DIR$/../../../thesis/out.gro" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Preprocessor/Gromacs/preprocessor.py" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Preprocessor/Gromacs/preprocessor.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/run.sh" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/run.sh" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../thesis/run.sh" afterPath="$PROJECT_DIR$/../../../thesis/run.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/simulator.py" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/simulator.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../thesis/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../../thesis/.idea/workspace.xml" />
     </list>
@@ -40,11 +36,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="main.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="main.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48407644" vertical-offset="776" max-vertical-offset="1890">
+            <state vertical-scroll-proportion="0.0" vertical-offset="776" max-vertical-offset="1890">
               <caret line="60" column="8" selection-start-line="60" selection-start-column="8" selection-end-line="60" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="run.sh" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/run.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.40127388" vertical-offset="270" max-vertical-offset="954">
+              <caret line="29" column="44" selection-start-line="29" selection-start-column="44" selection-end-line="29" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -88,11 +94,11 @@
         <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/config/config_file.py" />
         <option value="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/main.py" />
-        <option value="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/run.sh" />
         <option value="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/run_analyzer.sh" />
         <option value="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/analyzer.py" />
         <option value="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Preprocessor/Gromacs/preprocessor.py" />
         <option value="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/simulator.py" />
+        <option value="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/run.sh" />
       </list>
     </option>
   </component>
@@ -287,7 +293,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Analyzer" />
+              <option name="myItemId" value="Simulator" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -321,11 +327,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Analyzer" />
+              <option name="myItemId" value="Simulator" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="LSDMap" />
+              <option name="myItemId" value="Gromacs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -779,13 +785,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/linker_lsdmap.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="864">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Amber/simulator.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
@@ -850,14 +849,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/run.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="954">
-          <caret line="29" column="60" selection-start-line="29" selection-start-column="60" selection-end-line="29" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/config_file.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.14040561" vertical-offset="0" max-vertical-offset="641">
@@ -916,8 +907,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48407644" vertical-offset="776" max-vertical-offset="1890">
+        <state vertical-scroll-proportion="0.0" vertical-offset="776" max-vertical-offset="1890">
           <caret line="60" column="8" selection-start-line="60" selection-start-column="8" selection-end-line="60" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/run.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.40127388" vertical-offset="270" max-vertical-offset="954">
+          <caret line="29" column="44" selection-start-line="29" selection-start-column="44" selection-end-line="29" selection-end-column="44" />
           <folding />
         </state>
       </provider>

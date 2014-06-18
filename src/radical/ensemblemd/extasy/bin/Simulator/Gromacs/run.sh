@@ -27,7 +27,7 @@ nlines_per_frame=$((natoms+3))
 nlines=`wc -l $startgro| cut -d' ' -f1`
 nframes=$((nlines/nlines_per_frame))
 
-PATH=$PATH:/opt/apps/intel13/mvapich2_1_9/gromacs/4.6.3/bin/
+PATH=$PATH:/opt/apps/python/2.7.6/bin/python
 
 rm -rf $outgro
 
