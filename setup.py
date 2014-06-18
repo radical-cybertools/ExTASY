@@ -114,9 +114,9 @@ setup_args = {
         'Operating System :: Unix'
     ],
 
-    #'entry_points': {
-    # 'console_scripts': ['ensemble = radical.ensemblemd.extasy.bin.main:main']
-    #},
+    'entry_points': {
+     'console_scripts': ['ensemble = radical.ensemblemd.extasy.bin.main:main']
+    },
 
 
     'namespace_packages': ['radical', 'radical.ensemblemd'],
