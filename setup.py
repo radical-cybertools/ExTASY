@@ -13,6 +13,7 @@ __license__ = "MIT"
 
 import os
 import sys
+import multiprocessing
 
 from setuptools import setup, find_packages, Command
 
