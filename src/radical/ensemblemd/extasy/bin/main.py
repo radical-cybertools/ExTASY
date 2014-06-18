@@ -92,7 +92,8 @@ if __name__ == '__main__':
     for i in range(0,num_iterations):
         print 'Starting Simulation'
         Simulator(umgr)
+        if UAnalyzer:
+            print 'Starting Analysis'
+            Analyzer(umgr)
 
-        print 'Starting Analysis'
-        Analyzer(umgr)
 

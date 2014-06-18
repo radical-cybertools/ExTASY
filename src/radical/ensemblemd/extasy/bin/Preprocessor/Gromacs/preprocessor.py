@@ -21,7 +21,7 @@ def Preprocessing():
 
     print 'Prepare grofiles..'
 
-    grofile_obj = gro.GroFile(grofile_name)
+    grofile_obj = gro.GroFile(os.path.dirname(os.path.realpath(__file__)) + '/' + grofile_name)
 
     if grofile_obj.nruns<num_tasks:
         print "###ERROR: number of runs should be greater or equal to the number of tasks."

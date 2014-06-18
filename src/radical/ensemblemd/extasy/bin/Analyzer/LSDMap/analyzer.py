@@ -4,17 +4,16 @@ from config.parameters import *
 import time
 import radical.pilot
 import os
-from config.config_file import lsdmap_loc
 
 def Analyzer(umgr):
 
 
     p1=time.time()
+    curdir = os.path.dirname(os.path.realpath(__file__))
     lsdm=radical.pilot.ComputeUnitDescription()
     lsdm.executable = '/bin/bash'
     lsdm.arguments = ['-l','-c','". run_analyzer.sh out.ev out.nc 10000"']
-    lsdm.input_data = ['config.ini','out.gro','run_analyzer.sh','select_new_points.py']
-    #lsdm.output_data = ['aladip_1000.ev','aladip_1000.eg']
+    lsdm.input_data = ['%s/config.ini'%curdir,'out.gro','%s/run_analyzer.sh'%curdir,'%s/select_new_points.py'%curdir]
     lsdm.cores = 16
 
     umgr.submit_units(lsdm)

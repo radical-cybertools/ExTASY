@@ -27,12 +27,14 @@ def Simulator(umgr):
 
     shared_input_url = saga.Url(units.working_directory).path
 
+    curdir = os.path.dirname(os.path.realpath(__file__))
+
     gromacs_tasks = []
     for i in range(0, 64):
         gromacs_task = radical.pilot.ComputeUnitDescription()
         gromacs_task.executable = "/bin/bash"
         gromacs_task.arguments = ['-l','-c','". run_simulator.sh %s %s %s %s"' % (shared_input_url,grompp_name,topol_name,outgrofile_name)]
-        gromacs_task.input_data = ['run_simulator.sh','run.sh > run.sh','%s/temp/start%s.gro > start.gro' % (os.getcwd(), i)]
+        gromacs_task.input_data = ['%s/run_simulator.sh'%curdir,'%s/run.sh > run.sh'%curdir,'%s/temp/start%s.gro > start.gro' % (os.getcwd(), i)]
         gromacs_task.output_data = ['out.gro > out%s.gro' % i]
         gromacs_task.cores = 1
 

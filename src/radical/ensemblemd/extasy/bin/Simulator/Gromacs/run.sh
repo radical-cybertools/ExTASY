@@ -27,7 +27,7 @@ nlines_per_frame=$((natoms+3))
 nlines=`wc -l $startgro| cut -d' ' -f1`
 nframes=$((nlines/nlines_per_frame))
 
-PATH=$PATH:/opt/apps/old/gromacs/4.5.3/bin
+PATH=$PATH:/opt/apps/intel13/mvapich2_1_9/gromacs/4.6.3/bin/
 
 rm -rf $outgro
 
@@ -38,8 +38,8 @@ for idx in `seq 1 $nframes`; do
   sed "$start"','"$end"'!d' $startgro > $tmpstartgro
 
   # gromacs preprocessing & MD
-  /opt/apps/intel13/mvapich2_1_9/gromacs/4.6.3/bin/grompp -f $mdpfile_name -c $tmpstartgro -p $topfile_name -o $tprfile_name 1>/dev/null 2>/dev/null
-  /opt/apps/intel13/mvapich2_1_9/gromacs/4.6.3/bin/mdrun -nt 1 -s $tprfile_name -o $trrfile_name -e $edrfile_name 1>/dev/null 2>/dev/null
+  grompp -f $mdpfile_name -c $tmpstartgro -p $topfile_name -o $tprfile_name 1>/dev/null 2>/dev/null
+  mdrun -nt 1 -s $tprfile_name -o $trrfile_name -e $edrfile_name 1>/dev/null 2>/dev/null
 
   # store data
   cat confout.gro >> $outgro
