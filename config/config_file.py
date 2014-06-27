@@ -3,10 +3,10 @@ __author__ = 'vivek'
 
 UPreprocessor = 'Gromacs'
 USimulator = 'Gromacs'
-UAnalyzer = 'LSDMap'
+UAnalyzer = ''
 
-UNAME = 'vb17'
-REMOTE_HOST = 'biou.rice.edu'
+UNAME = 'vivek91'
+REMOTE_HOST = 'stampede.tacc.utexas.edu'
 WALLTIME = 10
-PILOTSIZE = 16
+PILOTSIZE = 64
 DBURL = 'mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/'
