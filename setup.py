@@ -13,6 +13,7 @@ __license__ = "MIT"
 
 import os
 import sys
+import multiprocessing
 
 from setuptools import setup, find_packages, Command
 
@@ -127,7 +128,7 @@ setup_args = {
     'install_requires' : ['setuptools>=1',
                           'radical.pilot'
                          ],
-    'tests_require' : ['setuptools>=1','nose'],
+    'tests_require' : ['setuptools>=1','nose','radical.pilot'],
     'test_suite' : 'radical.ensemblemd.extasy.tests',
 
     'zip_safe' : False,
