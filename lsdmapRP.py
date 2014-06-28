@@ -96,12 +96,12 @@ def main():
             # -------- BEGIN USER DEFINED CU DESCRIPTION --------- #
             cudesc = radical.pilot.ComputeUnitDescription()
 	    cudesc.pre_exec    = ["module load TACC","module load Linux","module load intel/14.0.1.106","module load python/2.7.6"
-					,"(test -d $HOME/mpive || virtualenv $HOME/mpive)","source $HOME/mpive/bin/activate",
-					"(pip freeze | grep -q lsdmap || git clone https://github.com/jp43/lsdmap.git)","module load python/2.7.6","export PATH=$PATH:$PWD/lsdmap/bin","chmod +x lsdmap/bin/lsdmap"
+					,"git clone https://github.com/jp43/lsdmap.git","export PATH=$PATH:$PWD/lsdmap/bin",
+					"chmod +x lsdmap/bin/lsdmap"
 ]
             #cudesc.environment = {'INPUT1': 'test.sh','INPUT2':'hello'}
-            cudesc.executable  = "/bin/bash"
-            cudesc.arguments   = ['-l','-c','module load python && lsdmap -f lsdmap/examples/lsdmap/config.ini -c lsdmap/examples/lsdmap/aladip_1000.gro']
+            cudesc.executable  = "lsdmap"
+            cudesc.arguments   = ['-f','lsdmap/examples/lsdmap/config.ini' ,'-c', 'lsdmap/examples/lsdmap/aladip_1000.gro']
             cudesc.cores       = 1
 	    #cudesc.input_data  = ['test.sh']
 	    #cudesc.mpi	       = False
