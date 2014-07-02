@@ -1,12 +1,8 @@
 __author__ = 'vivek'
 
 import radical.pilot
-#import imp
-from config.parameters import *
-from Analyzer.LSDMap.analyzer import Analyzer
-from Preprocessor.Gromacs.preprocessor import Preprocessing
-from Simulator.Gromacs.simulator import Simulator
-from config.config_file import *
+from config.kernel_config import *
+from config.RP_config import *
 
 #------------------------------------------------------------------------------
 #
@@ -76,18 +72,16 @@ def startPilot():
 
 if __name__ == '__main__':
 
+    if (UPreprocessor == 'Gromacs'):
+        from Preprocessor.Gromacs.preprocessor import Preprocessing
 
-    #Preprocessor=imp.load_source('Preprocessor','file:///home/vivek/Research/thesis/Preprocessor/%s/preprocessor.py' % UPreprocessor)
-    #from Preprocessor import Preprocessing
-
-    #Sim=imp.load_source('Sim','file:///home/vivek/Research/thesis/Simulator/%s/simulator.py' % USimulator)
-    #from Sim import Simulator
-
-    #Analyze=imp.load_source('Analyze','file:///home/vivek/Research/thesis/Analyzer/%s/analyzer.py' % UAnalyzer)
-    #from Analyze import Analyzer
     Preprocessing()
-
     umgr=startPilot()
+
+    if (USimulator == 'Gromacs'):
+        from Simulator.Gromacs.simulator import Simulator
+    if (UAnalyzer == 'LSDMap'):
+        from Analyzer.LSDMap.analyzer import Analyzer
 
     for i in range(0,num_iterations):
         print 'Starting Simulation'

@@ -1,6 +1,6 @@
 __author__ = 'vivek'
 
-from config.parameters import *
+from config.kernel_config import *
 import time
 import shutil
 import os
