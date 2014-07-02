@@ -48,9 +48,41 @@ USAGE
 RP_config
 -----------
 
+The RP_config file is used for defining the parameters related to Radical Pilot.
+
+* UPreprocessor : The preprocessor to be used. Can be 'Gromacs' or 'Namd'
+* USimulator    : The Simulator to be loaded. Can be 'Gromacs' or 'Namd'
+* UAnalyzer     : The Analyzer to be loaded. Can be 'LSDMap' or 'CoCo'
+
+* UNAME         : Username to access the remote machine
+* REMOTE_HOST   : URL of remote machine
+* WALLTIME      : Walltime for the complete job
+* PILOTSIZE     : No. of cores to reserved for the entire job
+* DBURL         : MongoDB URL
+
 
 Kernel_config
 -----------
+
+The Kernel_config file is used for defining the parameters related to the Simulation and Analysis phases.
+
+* num_sims                  : Number of CUs. The input.gro file is divided such that each CU gets equal number of molecules 
+* num_iterations            : Number of times the entire Sim-Analysis chain has to be performed
+* input_gro_loc, input_gro  : Location and name of the input file
+* grompp_loc, grompp_name   : Location and name of the mdp file
+* topol_loc, topol_name     : Location and name of the top file
+* tmp_grofile               : Name of the temporary gro file
+* outgrofile_name           : Name of the output file of the Simulation Stage
+* sys                       : System name
+* egfile                    : Name of the eigen vector file
+* evfile                    : Name of the eigen value file
+* nearest_neighbor_file     : Name of the nearest neighbour file 
+* num_runs                  : Number of runs during Analysis stage
+* num_clone_files           : Name of clone file
+
+
+Running the tests
+------------------
 
 
 
@@ -60,7 +92,7 @@ Running the workload
 To run the particular workload of your experiment. Setup the config_file and the parameters file and use the --workload argument
 
 ```
-extasy --workload
+extasy
 ```
 
 
