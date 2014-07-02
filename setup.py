@@ -116,7 +116,7 @@ setup_args = {
     ],
 
     'entry_points': {
-     'console_scripts': ['extasy = radical.ensemblemd.extasy.bin.main:main']
+     'console_scripts': ['extasy = radical.ensemblemd.extasy.bin.runme:main']
     },
 
 

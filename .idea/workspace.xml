@@ -2,73 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="627926b0-7d68-4dd5-8b41-0cde283342f0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/.run.pbs.swo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/.run.pbs.swp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/.select_new_points.py.swp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/neighbor/aladip.xyz_eps_w_9000001_9000000" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/neighbor/aladip.xyz_neighbor_9000001_9000000" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/neighbor/aladip.xyz_nneighbor_9000001_9000000" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/state.cpt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/tmp.gro" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/topol.tpr" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/traj.trr" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coord_util/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/aladip.xyz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/aladip.xyz_dif.eg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/aladip.xyz_dif.ev" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/aladip.xyz_eps" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/aladip.xyz_eps_cste" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/aladip.xyz_eps_w" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coord_util/coord_math.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/localscale/finalize.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/neighbor/finalize.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coord_util/gro.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coord_util/gro_p.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/grompp.mdp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/input.gro" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../thesis/linker_gromacs.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coord_util/mdcrd.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coord_util/mol_reader.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coord_util/molecule.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/parameters" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/parameters_lsdm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/pbs.log" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/prepare_lsdm_gendmd.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coord_util/pygnat.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/restart.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/rmsd_neighbor.input" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/run.pbs" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../thesis/run_analyzer.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coord_util/sampling.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coord_util/sampling.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/select_new_points.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coord_util/split_chunks.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/start.gro" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/topol.top" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coord_util/trajectory_database.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coord_util/trr.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/update_weights.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/w2csteps.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/run/wlsdmap.input" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/coord_util/xtc.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/test.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/simple_bot.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/test.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/test.sh" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../../../thesis/my-futuregrid.json" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../../../thesis/my-xsede.json" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/config/config_file.py" afterPath="$PROJECT_DIR$/config/RP_config.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/config/parameters.py" afterPath="$PROJECT_DIR$/config/kernel_config.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/analyzer.py" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/analyzer.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/main.py" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/runme.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../thesis/lsdmap.log" afterPath="$PROJECT_DIR$/../../../thesis/lsdmap.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/main.py" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/main.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../thesis/out.gro" afterPath="$PROJECT_DIR$/../../../thesis/out.gro" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Preprocessor/Gromacs/preprocessor.py" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Preprocessor/Gromacs/preprocessor.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../thesis/run.sh" afterPath="$PROJECT_DIR$/../../../thesis/run.sh" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/setup.py" afterPath="$PROJECT_DIR$/setup.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Amber/simulator.py" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Amber/simulator.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/simulator.py" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/simulator.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../thesis/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../../thesis/.idea/workspace.xml" />
     </list>
@@ -103,18 +45,18 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="setup.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="setup.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/setup.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1836" max-vertical-offset="2538">
-              <caret line="118" column="32" selection-start-line="118" selection-start-column="32" selection-end-line="118" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.3369735" vertical-offset="1836" max-vertical-offset="2538">
+              <caret line="118" column="70" selection-start-line="118" selection-start-column="70" selection-end-line="118" selection-end-column="70" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/main.py">
+      <file leaf-file-name="runme.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/runme.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1782">
               <caret line="6" column="45" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="45" />
@@ -135,13 +77,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="README.md" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider editor-type-id="MarkdownPreviewEditor">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.2404007" vertical-offset="373" max-vertical-offset="1296">
+            <state vertical-scroll-proportion="-14.448276" vertical-offset="697" max-vertical-offset="1296">
               <caret line="62" column="17" selection-start-line="62" selection-start-column="17" selection-end-line="62" selection-end-column="17" />
               <folding />
             </state>
@@ -204,8 +146,8 @@
         <option value="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/main.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/config/kernel_config.py" />
-        <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/simulator.py" />
+        <option value="$PROJECT_DIR$/setup.py" />
       </list>
     </option>
   </component>
@@ -267,6 +209,116 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="ExTASY" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MDEnsemble" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ExTASY" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MDEnsemble" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ExTASY" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="radical" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MDEnsemble" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ExTASY" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="radical" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ensemblemd" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MDEnsemble" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ExTASY" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="radical" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ensemblemd" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extasy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MDEnsemble" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ExTASY" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="radical" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ensemblemd" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extasy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bin" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -446,13 +498,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="51" y="24" width="1315" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24410646" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24410646" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935917" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -558,7 +610,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/main.py">
+    <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/runme.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="72" max-vertical-offset="1872">
           <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
@@ -586,7 +638,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/main.py">
+    <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/runme.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="72" max-vertical-offset="1872">
           <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
@@ -802,15 +854,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/setup.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1836" max-vertical-offset="2538">
-          <caret line="118" column="32" selection-start-line="118" selection-start-column="32" selection-end-line="118" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/main.py">
+    <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/runme.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="385" max-vertical-offset="1782">
           <caret line="6" column="45" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="45" />
@@ -833,8 +877,16 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2404007" vertical-offset="373" max-vertical-offset="1296">
+        <state vertical-scroll-proportion="-14.448276" vertical-offset="697" max-vertical-offset="1296">
           <caret line="62" column="17" selection-start-line="62" selection-start-column="17" selection-end-line="62" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3369735" vertical-offset="1836" max-vertical-offset="2538">
+          <caret line="118" column="70" selection-start-line="118" selection-start-column="70" selection-end-line="118" selection-end-column="70" />
           <folding />
         </state>
       </provider>
