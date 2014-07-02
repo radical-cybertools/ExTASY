@@ -70,7 +70,7 @@ def startPilot():
 
 
 
-if __name__ == '__main__':
+def main():
 
     if (UPreprocessor == 'Gromacs'):
         from Preprocessor.Gromacs.preprocessor import Preprocessing
