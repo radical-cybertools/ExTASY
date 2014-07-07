@@ -29,6 +29,12 @@ To install the ExTASY framework, create a virtual environment and use pip to ins
 virtualenv /tmp/test
 source /tmp/test/bin/activate
 cd /tmp/
+git clone -b devel https://github.com/radical-cybertools/saga-python.git
+python saga-python/setup.py install
+git clone -b devel https://github.com/radical-cybertools/radical.pilot.git
+python radical.pilot/setup.py install
+git clone https://github.com/radical-cybertools/radical.ensemblemd.mdkernels.git
+python radical.ensemblemd.mdkernels/setup.py install
 git clone -b devel https://github.com/radical-cybertools/ExTASY.git
 cd ExTASY
 python setup.py install
