@@ -3,6 +3,8 @@ __author__ = 'vivek'
 import radical.pilot
 from config.kernel_config import *
 from config.RP_config import *
+import os
+
 
 #------------------------------------------------------------------------------
 #
@@ -35,9 +37,9 @@ def startPilot():
     print "Session UID: {0} ".format(session.uid)
 
     # Add an ssh identity to the session.
-    cred = radical.pilot.SSHCredential()
+    cred = radical.pilot.Context('ssh')
     cred.user_id = UNAME
-    session.add_credential(cred)
+    session.add_context(cred)
 
     # Add a Pilot Manager. Pilot managers manage one or more ComputePilots.
     pmgr = radical.pilot.PilotManager(session=session)
@@ -49,6 +51,7 @@ def startPilot():
     pdesc.resource = REMOTE_HOST
     pdesc.runtime = WALLTIME
     pdesc.cores = PILOTSIZE
+    pdesc.project = os.getenv('PROJECT_ID')
 
 
     # Launch the pilot.
@@ -90,4 +93,5 @@ def main():
             print 'Starting Analysis'
             Analyzer(umgr)
 
-
+if __name__ == '__main__':
+	main()
