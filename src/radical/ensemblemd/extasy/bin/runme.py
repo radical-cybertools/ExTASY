@@ -1,8 +1,8 @@
 __author__ = 'vivek'
 
 import radical.pilot
-from config.kernel_config import *
-from config.RP_config import *
+from config.kernel_config import *      #change this to command line
+from config.RP_config import *          #change this too
 import os
 
 
@@ -69,7 +69,7 @@ def startPilot():
     # Add the previously created ComputePilot to the UnitManager.
     umgr.add_pilots(pilot)
 
-    return umgr
+    return umgr,session
 
 
 
@@ -79,7 +79,7 @@ def main():
         from Preprocessor.Gromacs.preprocessor import Preprocessing
 
     Preprocessing()
-    umgr=startPilot()
+    umgr,session=startPilot()
 
     if (USimulator == 'Gromacs'):
         from Simulator.Gromacs.simulator import Simulator
@@ -93,5 +93,7 @@ def main():
             print 'Starting Analysis'
             Analyzer(umgr)
 
+    session.close()
+
 if __name__ == '__main__':
-	main()
+    main()

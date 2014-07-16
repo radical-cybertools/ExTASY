@@ -30,6 +30,12 @@ def Simulator(umgr):
 
     units = umgr.submit_units(gromacs_tasks)
 
+    start_times = []
+    end_times = []
+
+    for unit in units:
+        start_times.append(unit.start_time)
+        end_times.append(unit.stop_time)
     # Wait for all compute units to finish.
     umgr.wait_units()
 
@@ -44,5 +50,6 @@ def Simulator(umgr):
             os.remove('out%s.gro'%i)
     p2 = time.time()
 
-    print 'Simulation Time : ', (p2-p1)
+    print 'Total Simulation Time : ', (p2-p1)
+    print 'CU Simulation Time : ', max(end_times)-min(start_times)
 

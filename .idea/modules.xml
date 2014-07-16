@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/MDEnsemble.iml" filepath="$PROJECT_DIR$/.idea/MDEnsemble.iml" />
+      <module fileurl="file://$USER_HOME$/extasy-project/coco/src/extasy/.idea/extasy.iml" filepath="$USER_HOME$/extasy-project/coco/src/extasy/.idea/extasy.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../../thesis/.idea/thesis.iml" filepath="$PROJECT_DIR$/../../../thesis/.idea/thesis.iml" />
     </modules>
   </component>

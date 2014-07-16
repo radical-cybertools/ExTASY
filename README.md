@@ -40,6 +40,12 @@ cd ExTASY
 python setup.py install
 export PYTHONPATH=$PYTHONPATH:/tmp/ExTASY
 ```
+> If you have multiple allocations on the same system, set the environment variable PROJECT_ID 
+> to your allocation number 
+>
+> ```
+> export PROJECT_ID = 'ABCXYZ123'
+> ```
 
 To verify the installation, check the current version
 
@@ -95,7 +101,7 @@ Running the tests
 Running the workload
 --------------------
 
-To run the particular workload of your experiment. Setup the config_file and the parameters file and use the --workload argument
+To run the particular workload of your experiment. Setup the config_file and the parameters file and run extasy.
 
 ```
 extasy

@@ -6,6 +6,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Gromacs" />
     <orderEntry type="module" module-name="thesis" />
+    <orderEntry type="module" module-name="extasy" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="myDocStringFormat" value="Plain" />
