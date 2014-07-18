@@ -33,9 +33,6 @@ def Simulator(umgr):
     start_times = []
     end_times = []
 
-    for unit in units:
-        start_times.append(unit.start_time)
-        end_times.append(unit.stop_time)
     # Wait for all compute units to finish.
     umgr.wait_units()
 
@@ -51,5 +48,10 @@ def Simulator(umgr):
     p2 = time.time()
 
     print 'Total Simulation Time : ', (p2-p1)
-    print 'CU Simulation Time : ', max(end_times)-min(start_times)
+    
+    for unit in units:
+        start_times.append(unit.start_time)
+        end_times.append(unit.stop_time)
+    
+    print 'CU Simulation Time : ', (max(end_times)-min(start_times)).total_seconds()
 
