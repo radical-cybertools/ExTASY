@@ -23,7 +23,7 @@ def Simulator(umgr):
         gromacs_task.executable = mdtd_bound.executable
         gromacs_task.arguments = mdtd_bound.arguments
         gromacs_task.input_data = ['%s/run.sh > run.sh'%curdir,'%s/temp/start%s.gro > start.gro' % (os.getcwd(), i),'%s/%s' % (grompp_loc, grompp_name), '%s/%s' % (topol_loc, topol_name)]
-        gromacs_task.output_data = ['out.gro > out%s.gro' % i]
+        #gromacs_task.output_data = ['out.gro > out%s.gro' % i]
         gromacs_task.cores = 1
 
         gromacs_tasks.append(gromacs_task)
@@ -36,6 +36,7 @@ def Simulator(umgr):
     # Wait for all compute units to finish.
     umgr.wait_units()
 
+    '''
     if os.path.exists('%s/%s' % (os.getcwd(),outgrofile_name)):
         os.remove(os.getcwd() + '/' + outgrofile_name)
 
@@ -45,6 +46,7 @@ def Simulator(umgr):
                 for line in output_file:
                     print >> output_grofile, line.replace("\n", "")
             os.remove('out%s.gro'%i)
+    '''
     p2 = time.time()
 
     print 'Total Simulation Time : ', (p2-p1)
