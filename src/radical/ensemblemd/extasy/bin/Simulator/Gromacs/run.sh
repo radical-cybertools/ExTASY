@@ -37,7 +37,7 @@ for idx in `seq 1 $nframes`; do
 
   # gromacs preprocessing & MD
   grompp -f $mdpfile_name -c $tmpstartgro -p $topfile_name -o $tprfile_name 1>/dev/null 2>/dev/null
-  mdrun -nt 1 -s $tprfile_name -o $trrfile_name -e $edrfile_name 1>/dev/null 2>/dev/null
+  mdrun -s $tprfile_name -o $trrfile_name -e $edrfile_name 1>/dev/null 2>/dev/null
 
   # store data
   cat confout.gro >> $outgro
