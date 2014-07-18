@@ -43,3 +43,9 @@ for idx in `seq 1 $nframes`; do
   cat confout.gro >> $outgro
 
 done
+
+if [ ! -d "$HOME/$dir" ]; then
+    mkdir $HOME/$dir
+fi
+
+cp $outgro $HOME/$dir/$outgro
