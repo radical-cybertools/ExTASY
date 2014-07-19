@@ -1,6 +1,7 @@
 __author__ = 'vivek'
 
 from config.kernel_config import *
+from radical.ensemblemd.mdkernels import MDTaskDescription
 import time
 import radical.pilot
 import os
@@ -10,10 +11,15 @@ def Analyzer(umgr):
 
     p1=time.time()
     curdir = os.path.dirname(os.path.realpath(__file__))
+    mdtd=MDTaskDescription()
+    mdtd.kernel="LSDMap"
+    mdtd.arguments = ['-l','-c','". run_analyzer.sh"']
+    mdtd_bound = mdtd.bind(resource=REMOTE_HOST)
     lsdm=radical.pilot.ComputeUnitDescription()
-    lsdm.executable = '/bin/bash'
-    lsdm.arguments = ['-l','-c','". run_analyzer.sh out.ev out.nc 10000"']
-    lsdm.input_data = ['%s/config.ini'%curdir,'out.gro','%s/run_analyzer.sh'%curdir,'%s/select_new_points.py'%curdir]
+    lsdm.pre_exec = mdtd_bound.pre_exec
+    lsdm.executable = mdtd_bound.executable
+    lsdm.arguments = mdtd_bound.arguments
+    lsdm.input_data = ['%s/config.ini'%curdir,'out.gro','%s/run_analyzer.sh'%curdir]
     lsdm.cores = 16
 
     umgr.submit_units(lsdm)
