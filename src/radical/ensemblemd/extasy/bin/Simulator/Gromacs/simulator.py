@@ -52,7 +52,7 @@ def Simulator(umgr):
     print 'Total Simulation Time : ', (p2-p1)
     
     for unit in units:
-        print 'Start : ', unit.start_time, 'Stop : ', unit.stop_time
+        #print 'Start : ', unit.start_time, 'Stop : ', unit.stop_time
         start_times.append(unit.start_time)
         end_times.append(unit.stop_time)
     
