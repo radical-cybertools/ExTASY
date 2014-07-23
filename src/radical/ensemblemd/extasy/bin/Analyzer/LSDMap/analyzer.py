@@ -1,6 +1,6 @@
 __author__ = 'vivek'
 
-from config.kernel_config import *
+from config.RP_config import *
 from radical.ensemblemd.mdkernels import MDTaskDescription
 import time
 import radical.pilot
