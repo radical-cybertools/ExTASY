@@ -12,7 +12,7 @@ def Analyzer(umgr):
     p1=time.time()
     curdir = os.path.dirname(os.path.realpath(__file__))
     mdtd=MDTaskDescription()
-    mdtd.kernel="LSDMap"
+    mdtd.kernel="LSDMAP"
     mdtd.arguments = ['-l','-c','". run_analyzer.sh"']
     mdtd_bound = mdtd.bind(resource=REMOTE_HOST)
     lsdm=radical.pilot.ComputeUnitDescription()
