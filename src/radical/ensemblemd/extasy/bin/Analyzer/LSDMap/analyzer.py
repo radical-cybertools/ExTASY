@@ -21,7 +21,8 @@ def Analyzer(umgr):
     lsdm.executable = mdtd_bound.executable
     lsdm.arguments = mdtd_bound.arguments
     lsdm.input_data = ['%s/config.ini'%lsdm_config,'out.gro','%s/run_analyzer.sh'%curdir]
-    lsdm.cores = 16
+    lsdm.mpi = True
+    lsdm.cores = PILOTSIZE
 
     umgr.submit_units(lsdm)
 
