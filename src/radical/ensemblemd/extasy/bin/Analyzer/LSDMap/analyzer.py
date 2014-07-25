@@ -1,6 +1,7 @@
 __author__ = 'vivek'
 
 from config.RP_config import *
+from config.kernel_config import *
 from radical.ensemblemd.mdkernels import MDTaskDescription
 import time
 import radical.pilot
@@ -19,7 +20,7 @@ def Analyzer(umgr):
     lsdm.pre_exec = mdtd_bound.pre_exec
     lsdm.executable = mdtd_bound.executable
     lsdm.arguments = mdtd_bound.arguments
-    lsdm.input_data = ['%s/config.ini'%curdir,'out.gro','%s/run_analyzer.sh'%curdir]
+    lsdm.input_data = ['%s/config.ini'%lsdm_config,'out.gro','%s/run_analyzer.sh'%curdir]
     lsdm.cores = 16
 
     umgr.submit_units(lsdm)

@@ -17,6 +17,8 @@ topol_name = 'topol.top'
 tmp_grofile = 'tmp.gro'
 outgrofile_name = 'out.gro'
 
+lsdm_config = '/tmp/ExTASY/config'
+
 sys = 'aladip_1000'
 
 egfile = '%s.eg' % sys
