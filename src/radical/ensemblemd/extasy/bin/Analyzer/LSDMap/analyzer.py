@@ -33,7 +33,7 @@ def Analyzer(umgr):
 
     print 'Analysis time : ',p2-p1
 
-    os.system('python select_new_points.py %s %s --np %s' %(evfile,num_clone_files,num_runs))
+    os.system('python %s/select_new_points.py %s %s --np %s' %(curdir,evfile,num_clone_files,num_runs))
     #Update Boltzman weights
-    os.system('python update_weights.py --max_alive_neighbors 10 %s %s %s %s %s %s' % (recovery_flag,tmp_grofile,nearest_neighbor_file,num_clone_files,temp_wfile,outgrofile_name))
+    os.system('python %s/update_weights.py --max_alive_neighbors 10 %s %s %s %s %s %s' % (curdir,recovery_flag,tmp_grofile,nearest_neighbor_file,num_clone_files,temp_wfile,outgrofile_name))
     return
