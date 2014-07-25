@@ -7,9 +7,11 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/../../../thesis/my-futuregrid.json" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../../../thesis/my-xsede.json" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/analyzer.py" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/analyzer.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/kernel_config.py" afterPath="$PROJECT_DIR$/config/kernel_config.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../thesis/lsdmap.log" afterPath="$PROJECT_DIR$/../../../thesis/lsdmap.log" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../thesis/out.gro" afterPath="$PROJECT_DIR$/../../../thesis/out.gro" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../thesis/run.sh" afterPath="$PROJECT_DIR$/../../../thesis/run.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/run_analyzer.sh" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/run_analyzer.sh" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../thesis/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../../thesis/.idea/workspace.xml" />
     </list>
     <ignored path="MDEnsemble.iws" />
@@ -33,11 +35,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="analyzer.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="analyzer.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/analyzer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6576433" vertical-offset="1" max-vertical-offset="774">
-              <caret line="23" column="19" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="19" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="146" max-vertical-offset="810">
+              <caret line="37" column="4" selection-start-line="37" selection-start-column="4" selection-end-line="37" selection-end-column="4" />
               <folding>
                 <element signature="e#22#52#0" expanded="true" />
               </folding>
@@ -45,11 +47,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="kernel_config.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="kernel_config.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config/kernel_config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="7" max-vertical-offset="684">
-              <caret line="19" column="33" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.6068643" vertical-offset="7" max-vertical-offset="702">
+              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -60,6 +62,36 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="324">
               <caret line="11" column="68" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="68" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="run_analyzer.sh" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/run_analyzer.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="234">
+              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="simulator.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/simulator.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="468" max-vertical-offset="1098">
+              <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="runme.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/runme.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1148" max-vertical-offset="1836">
+              <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -112,11 +144,11 @@
         <option value="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/runme.py" />
         <option value="$PROJECT_DIR$/../../../thesis/run_analyzer.sh" />
         <option value="$PROJECT_DIR$/../../../thesis/pilot_lsdmap.py" />
-        <option value="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/run_analyzer.sh" />
         <option value="$PROJECT_DIR$/config/RP_config.py" />
         <option value="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/simulator.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/config/kernel_config.py" />
+        <option value="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/run_analyzer.sh" />
         <option value="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/analyzer.py" />
       </list>
     </option>
@@ -321,45 +353,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Analyzer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MDEnsemble" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ExTASY" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="radical" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ensemblemd" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extasy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Analyzer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="LSDMap" />
+              <option name="myItemId" value="Simulator" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -900,14 +894,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/runme.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1148" max-vertical-offset="1836">
-          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../../thesis/run_analyzer.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="288">
@@ -924,14 +910,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/simulator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1098">
-          <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider editor-type-id="MarkdownPreviewEditor">
         <state />
@@ -939,22 +917,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-14.275862" vertical-offset="378" max-vertical-offset="2016">
           <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/run_analyzer.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.056162246" vertical-offset="0" max-vertical-offset="641">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/kernel_config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="7" max-vertical-offset="684">
-          <caret line="19" column="33" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
           <folding />
         </state>
       </provider>
@@ -967,13 +929,45 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/run_analyzer.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="234">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/analyzer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6576433" vertical-offset="1" max-vertical-offset="774">
-          <caret line="23" column="19" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="19" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="146" max-vertical-offset="810">
+          <caret line="37" column="4" selection-start-line="37" selection-start-column="4" selection-end-line="37" selection-end-column="4" />
           <folding>
             <element signature="e#22#52#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/simulator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1098">
+          <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/runme.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1148" max-vertical-offset="1836">
+          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/kernel_config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6068643" vertical-offset="7" max-vertical-offset="702">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

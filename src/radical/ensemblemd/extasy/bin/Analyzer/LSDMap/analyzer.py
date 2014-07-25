@@ -20,7 +20,8 @@ def Analyzer(umgr):
     lsdm.pre_exec = mdtd_bound.pre_exec
     lsdm.executable = mdtd_bound.executable
     lsdm.arguments = mdtd_bound.arguments
-    lsdm.input_data = ['%s/config.ini'%lsdm_config,'out.gro','%s/run_analyzer.sh'%curdir]
+    lsdm.input_data = ['%s/config.ini'%lsdm_config,outgrofile_name,'%s/run_analyzer.sh'%curdir]
+    lsdm.output_data = [egfile,evfile]
     lsdm.mpi = True
     lsdm.cores = PILOTSIZE
 
@@ -32,6 +33,7 @@ def Analyzer(umgr):
 
     print 'Analysis time : ',p2-p1
 
+    os.system('python select_new_points.py %s %s --np %s' %(evfile,num_clone_files,num_runs))
     #Update Boltzman weights
-    #os.system('python update_weights.py --max_alive_neighbors 10 %s %s %s %s %s %s' % (recovery_flag,tmp_grofile,nearest_neighbor_file,num_clone_files,temp_wfile,outgrofile_name))
+    os.system('python update_weights.py --max_alive_neighbors 10 %s %s %s %s %s %s' % (recovery_flag,tmp_grofile,nearest_neighbor_file,num_clone_files,temp_wfile,outgrofile_name))
     return
