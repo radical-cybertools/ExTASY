@@ -14,7 +14,7 @@ def Analyzer(umgr):
     curdir = os.path.dirname(os.path.realpath(__file__))
     mdtd=MDTaskDescription()
     mdtd.kernel="LSDMAP"
-    mdtd.arguments = ['-l','-c','". run_analyzer.sh"']
+    mdtd.arguments = ['-l','-c','. run_analyzer.sh']
     mdtd_bound = mdtd.bind(resource=REMOTE_HOST)
     lsdm=radical.pilot.ComputeUnitDescription()
     lsdm.pre_exec = mdtd_bound.pre_exec
