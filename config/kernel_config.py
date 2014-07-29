@@ -18,7 +18,7 @@ tmp_grofile = 'tmp.gro'
 
 lsdm_config = '/tmp/ExTASY/config'
 
-system_name = 'aladip_1000'
+system_name = 'out'
 
 
 outgrofile_name = '%s.gro' %system_name
