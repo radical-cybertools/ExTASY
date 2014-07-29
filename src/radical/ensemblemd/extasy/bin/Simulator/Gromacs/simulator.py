@@ -16,7 +16,7 @@ def Simulator(umgr):
     for i in range(0, num_sims):
         mdtd = MDTaskDescription()
         mdtd.kernel = "GROMACS"
-        mdtd.arguments = ['-l','-c',". run.sh %s start.gro %s %s" % (grompp_name,topol_name,outgrofile_name)]
+        mdtd.arguments = ['-l','-c',". run.sh %s start.gro %s out.gro" % (grompp_name,topol_name)]
         mdtd_bound = mdtd.bind(resource=REMOTE_HOST)
         gromacs_task = radical.pilot.ComputeUnitDescription()
         gromacs_task.pre_exec = mdtd_bound.pre_exec
