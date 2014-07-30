@@ -4,6 +4,7 @@ import radical.pilot
 from config.kernel_config import *      #change this to command line
 from config.RP_config import *          #change this too
 import os
+import sys
 
 
 #------------------------------------------------------------------------------
@@ -75,22 +76,22 @@ def startPilot():
 
 def main():
 
-    if (UPreprocessor == 'Gromacs'):
+    if ( Load_Preprocessor == 'Gromacs'):
         from Preprocessor.Gromacs.preprocessor import Preprocessing
 
     Preprocessing()
     umgr,session=startPilot()
 
-    if (USimulator == 'Gromacs'):
+    if ( Load_Simulator == 'Gromacs'):
         from Simulator.Gromacs.simulator import Simulator
-    if (UAnalyzer == 'LSDMap'):
+    if ( Load_Analyzer == 'LSDMap'):
         from Analyzer.LSDMap.analyzer import Analyzer
 
     for i in range(0,num_iterations):
-        if USimulator:
+        if Load_Simulator:
             print 'Starting Simulation'
             Simulator(umgr)
-        if UAnalyzer:
+        if Load_Analyzer:
             print 'Starting Analysis'
             Analyzer(umgr)
 

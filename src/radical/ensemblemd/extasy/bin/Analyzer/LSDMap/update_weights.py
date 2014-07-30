@@ -77,7 +77,7 @@ else:
     for idx, file_required in enumerate(files_required):
         file_name = args[idx]
         if not os.path.exists(file_name):
-            parser.error("%s does not exist: '%s'" %(file_require[:-len('_name')], file_name))
+            parser.error("%s does not exist: '%s'" %(file_required[:-len('_name')], file_name))
 
 input_grofile_name = args[0]
 nnfile_name = args[1]

@@ -37,10 +37,10 @@ def Simulator(umgr):
     umgr.wait_units()
 
 
-    if os.path.exists('%s/%s' % (os.getcwd(),outgrofile_name)):
-        os.remove(os.getcwd() + '/' + outgrofile_name)
+    if os.path.exists('%s/%s' % (os.getcwd(),tmp_grofile)):
+        os.remove(os.getcwd() + '/' + tmp_grofile)
 
-    with open(outgrofile_name, 'w') as output_grofile:
+    with open(tmp_grofile, 'w') as output_grofile:
         for i in range(0,64):
             with open('out%s.gro' % i, 'r') as output_file:
                 for line in output_file:

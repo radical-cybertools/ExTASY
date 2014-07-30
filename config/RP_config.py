@@ -1,9 +1,9 @@
 __author__ = 'vivek'
 
 
-UPreprocessor = 'Gromacs'
-USimulator = 'Gromacs'
-UAnalyzer = ''
+Load_Preprocessor = 'Gromacs'
+Load_Simulator = 'Gromacs'
+Load_Analyzer = ''
 
 UNAME = 'vivek91'
 REMOTE_HOST = 'stampede.tacc.utexas.edu'

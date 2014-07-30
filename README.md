@@ -61,7 +61,6 @@ The RP_config file is used for defining the parameters related to Radical Pilot.
 * UPreprocessor : The preprocessor to be used. Can be 'Gromacs' or 'Namd'
 * USimulator    : The Simulator to be loaded. Can be 'Gromacs' or 'Namd'
 * UAnalyzer     : The Analyzer to be loaded. Can be 'LSDMap' or 'CoCo'
-
 * UNAME         : Username to access the remote machine
 * REMOTE_HOST   : URL of remote machine
 * WALLTIME      : Walltime for the complete job
