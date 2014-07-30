@@ -73,25 +73,22 @@ The above five variables are to be set before running any test or workload (Simu
 Kernel_config
 -----------
 
-The Kernel_config file is used for defining the parameters related to the Simulation and Analysis phases.
-
- 
-
-
-Running the tests
-------------------
+The Kernel_config file is used for defining the parameters related to the Simulation and Analysis phases. They are discussed 
+as utilized below
 
 
 
 Running the workload
 --------------------
 
-* Simulator
+1) **Simulator**
 
-1) To run just the Simulator, you will have to set the UPreprocessor, USimulator variables in ``` ../config/RP_config.py``` to 'Gromacs'. This
+
+* To run just the Simulator, you will have to set the UPreprocessor, USimulator variables in ``` ../config/RP_config.py``` to 'Gromacs'. This
 tells the tool to load the Gromacs Simulator.
 
-2) Next, open up the ```../config/kernel_config.py``` to set values which are kernel specific. For the Simulation you will have to set,
+* Next, open up the ```../config/kernel_config.py``` to set values which are kernel specific. For the Simulation you will have to set,
+
 
 ```
 
@@ -112,22 +109,27 @@ system_name = 'aladip_1000.gro'
 
 ```
 
-* num_sims                  : Number of CUs. The input.gro file is divided such that each CU gets equal number of frames
-* input_gro_loc, input_gro  : Location and name of the input file
-* grompp_loc, grompp_name   : Location and name of the mdp file
-* topol_loc, topol_name     : Location and name of the top file
-* tmp_grofile               : Name of the temporary gro file
-* system_name               : Name of the molecule, used in filenames
+> num_sims                  : Number of CUs. The input.gro file is divided such that each CU gets equal number of frames
+>
+> input_gro_loc, input_gro  : Location and name of the input file
+>
+> grompp_loc, grompp_name   : Location and name of the mdp file
+>
+> topol_loc, topol_name     : Location and name of the top file
+>
+> tmp_grofile               : Name of the temporary gro file
+>
+> system_name               : Name of the molecule, used in filenames
 
-3) Run ```extasy``` 
+* Run ```extasy``` 
 
 
-* Analyzer
+2) Analyzer
 
-1) To run just the Simulator, you will have to set the UAnalyzer variable in ``` ../config/RP_config.py``` to 'LSDMap'. This
+* To run just the Simulator, you will have to set the UAnalyzer variable in ``` ../config/RP_config.py``` to 'LSDMap'. This
 tells the tool to load the LSDMap Analyzer .
 
-2) Next, open up the ```../config/kernel_config.py``` to set values which are kernel specific. For the Analysis you will have to set,
+* Next, open up the ```../config/kernel_config.py``` to set values which are kernel specific. For the Analysis you will have to set,
 
 ```
 lsdm_config = '/tmp/ExTASY/config'
@@ -138,30 +140,36 @@ num_runs = 10000
 ```
 
 
-* lsdm_config               : Location of the lsdmap config file (/config.ini)
-* system_name               : Name of the molecule, used in filenames
-* num_runs                  : Number of runs during Analysis stage
+> lsdm_config               : Location of the lsdmap config file (/config.ini)
+> 
+> system_name               : Name of the molecule, used in filenames
+>
+> num_runs                  : Number of runs during Analysis stage
 
-Rest of the variables are set based on ```system_name```
+> Rest of the variables are set based on ```system_name```
 
-* egfile                    : Name of the eigen vector file
-* evfile                    : Name of the eigen value file
-* nearest_neighbor_file     : Name of the nearest neighbour file 
-* num_clone_files           : Name of clone file
+> egfile                    : Name of the eigen vector file
+>
+> evfile                    : Name of the eigen value file
+>
+> nearest_neighbor_file     : Name of the nearest neighbour file
+>
+> num_clone_files           : Name of clone file
 
-3) Run ```extasy```
+
+* Run ```extasy```
 
 
-* Simulator + Analyzer
+3) Simulator + Analyzer
 
-1) To run both the Simulator and Analyzer as a Sim-Analysis chain set UPreprocessor, USimulator and UAnalyzer in ```../config/RP_kernel.py```.
+* To run both the Simulator and Analyzer as a Sim-Analysis chain set UPreprocessor, USimulator and UAnalyzer in ```../config/RP_kernel.py```.
 
-2) Set all the variables as before. Also set,
+* Set all the variables as before. Also set,
 
 ```
 num_iterations = 1
 ```
 
-num_iterations              : Number of times the entire Sim-Analysis chain has to be performed
+> num_iterations              : Number of times the entire Sim-Analysis chain has to be performed
 
-3) Run ```extasy```
+* Run ```extasy```
