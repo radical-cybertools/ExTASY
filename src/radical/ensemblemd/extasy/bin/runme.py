@@ -87,7 +87,7 @@ def main():
         from Analyzer.LSDMap.analyzer import Analyzer
 
     for i in range(0,num_iterations):
-        if Simulator():
+        if USimulator:
             print 'Starting Simulation'
             Simulator(umgr)
         if UAnalyzer:
