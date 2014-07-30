@@ -1,4 +1,3 @@
-#!/home/jp43/local/bin/python
 
 ## this program is used to preform the selection step of extended DMdMD algorithm the first diffusion coordinates of each endpoint are loaded, 
 ## then we select a new set of points from the endpoints according to a uniform distribution along the first dc

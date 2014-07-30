@@ -1,4 +1,3 @@
-#!/home/jp43/modules/Python-2.7.3/bin/python
 
 # save new walkers from ncopies file and input database and update Boltzmann weights from ncopies file and file of weights
 # option max_alive_neighbors used to specify the maximum number of alive neighbors you want to consider when spreading the weight of a dead walker
