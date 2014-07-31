@@ -14,14 +14,15 @@ def Analyzer(umgr):
     curdir = os.path.dirname(os.path.realpath(__file__))
     mdtd=MDTaskDescription()
     mdtd.kernel="LSDMAP"
-    mdtd.arguments = ['-l','-c','. run_analyzer.sh %s %s ' %(tmp_grofile,nearest_neighbor_file,temp_wfile)]
+    mdtd.arguments = ['-l','-c','. run_analyzer.sh %s %s %s %s %s' %(tmp_grofile,nearest_neighbor_file,temp_wfile)]
     mdtd_bound = mdtd.bind(resource=REMOTE_HOST)
     lsdm=radical.pilot.ComputeUnitDescription()
     lsdm.pre_exec = mdtd_bound.pre_exec
     lsdm.executable = mdtd_bound.executable
     lsdm.arguments = mdtd_bound.arguments
     lsdm.input_data = ['%s/config.ini'%lsdm_config,tmp_grofile,'%s/run_analyzer.sh'%curdir]
-    lsdm.output_data = [egfile,evfile,temp_wfile,nearest_neighbor_file]
+    fname = tmp_grofile.split('.')[0]
+    lsdm.output_data = [' %s.eg > %s'%(fname,egfile),'%s.ev > %s'%(fname,evfile),temp_wfile,nearest_neighbor_file]
     lsdm.mpi = True
     lsdm.cores = PILOTSIZE
 
