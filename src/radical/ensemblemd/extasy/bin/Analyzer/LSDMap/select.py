@@ -97,5 +97,5 @@ class SelectionStep(object):
 
         print "number of copies stored in %s" %args.ncfile
 
-if __name__ == "__main__":
+def main():
     SelectionStep().run()

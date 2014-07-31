@@ -31,4 +31,4 @@ num_clone_files = '%s.nc' % system_name
 
 recovery_flag = 0
 
-temp_wfile = '%s_tmp.w' % system_name
+wfile = 'weight.w'

@@ -14,7 +14,7 @@ def Analyzer(umgr):
     curdir = os.path.dirname(os.path.realpath(__file__))
     mdtd=MDTaskDescription()
     mdtd.kernel="LSDMAP"
-    mdtd.arguments = ['-l','-c','. run_analyzer.sh %s %s' %(tmp_grofile,nearest_neighbor_file)]
+    mdtd.arguments = ['-l','-c','. run_analyzer.sh %s %s %s' %(tmp_grofile,nearest_neighbor_file,wfile)]
     mdtd_bound = mdtd.bind(resource=REMOTE_HOST)
     lsdm=radical.pilot.ComputeUnitDescription()
     lsdm.pre_exec = mdtd_bound.pre_exec
@@ -34,7 +34,7 @@ def Analyzer(umgr):
 
     print 'Analysis time : ',p2-p1
 
-    os.system('python %s/select_new_points.py %s %s --np %s' %(curdir,evfile,num_clone_files,num_runs))
+    os.system('python %s/select.py %s -s %s -o %s' %(curdir,num_runs, evfile,num_clone_files))
     #Update Boltzman weights
-    os.system('python %s/update_weights.py --max_alive_neighbors 10 %s %s %s %s' % (curdir,tmp_grofile,nearest_neighbor_file,num_clone_files,outgrofile_name))
+    os.system('python %s/reweighting.py -c %s -n %s -s %s -w %s -o %s' % (curdir,tmp_grofile,nearest_neighbor_file,num_clone_files,wfile,outgrofile_name))
     return
