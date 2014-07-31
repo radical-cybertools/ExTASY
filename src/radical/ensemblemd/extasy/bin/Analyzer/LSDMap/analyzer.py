@@ -14,7 +14,7 @@ def Analyzer(umgr):
     curdir = os.path.dirname(os.path.realpath(__file__))
     mdtd=MDTaskDescription()
     mdtd.kernel="LSDMAP"
-    mdtd.arguments = ['-l','-c','. run_analyzer.sh %s %s %s %s %s' %(tmp_grofile,nearest_neighbor_file,temp_wfile)]
+    mdtd.arguments = ['-l','-c','. run_analyzer.sh %s %s %s %s' %(tmp_grofile,nearest_neighbor_file,temp_wfile)]
     mdtd_bound = mdtd.bind(resource=REMOTE_HOST)
     lsdm=radical.pilot.ComputeUnitDescription()
     lsdm.pre_exec = mdtd_bound.pre_exec
@@ -22,7 +22,7 @@ def Analyzer(umgr):
     lsdm.arguments = mdtd_bound.arguments
     lsdm.input_data = ['%s/config.ini'%lsdm_config,tmp_grofile,'%s/run_analyzer.sh'%curdir]
     fname = tmp_grofile.split('.')[0]
-    lsdm.output_data = [' %s.eg > %s'%(fname,egfile),'%s.ev > %s'%(fname,evfile),temp_wfile,nearest_neighbor_file]
+    lsdm.output_data = [' %s.eg > %s'%(fname,egfile),'%s.ev > %s'%(fname,evfile),nearest_neighbor_file]
     lsdm.mpi = True
     lsdm.cores = PILOTSIZE
 
@@ -36,5 +36,5 @@ def Analyzer(umgr):
 
     os.system('python %s/select_new_points.py %s %s --np %s' %(curdir,evfile,num_clone_files,num_runs))
     #Update Boltzman weights
-    os.system('python %s/update_weights.py --max_alive_neighbors 10 %s %s %s %s %s' % (curdir,tmp_grofile,nearest_neighbor_file,num_clone_files,temp_wfile,outgrofile_name))
+    os.system('python %s/update_weights.py --max_alive_neighbors 10 %s %s %s %s %s' % (curdir,tmp_grofile,nearest_neighbor_file,num_clone_files,outgrofile_name))
     return
