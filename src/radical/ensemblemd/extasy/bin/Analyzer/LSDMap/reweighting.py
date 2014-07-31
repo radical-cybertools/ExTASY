@@ -209,3 +209,6 @@ class ReweightingStep(object):
             "sum of the weights differs from old number: sum_new_weights/sum_old_weights: %i/%i" %(sum_new_weights,sum_old_weights)
 
         self.save(args)
+
+if __name__ == '__main__':
+        ReweightingStep().run()
