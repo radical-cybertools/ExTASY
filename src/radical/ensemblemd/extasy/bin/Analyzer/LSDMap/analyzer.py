@@ -36,5 +36,5 @@ def Analyzer(umgr):
 
     os.system('python %s/select_new_points.py %s %s --np %s' %(curdir,evfile,num_clone_files,num_runs))
     #Update Boltzman weights
-    os.system('python %s/update_weights.py --max_alive_neighbors 10 %s %s %s %s %s' % (curdir,tmp_grofile,nearest_neighbor_file,num_clone_files,outgrofile_name))
+    os.system('python %s/update_weights.py --max_alive_neighbors 10 %s %s %s %s' % (curdir,tmp_grofile,nearest_neighbor_file,num_clone_files,outgrofile_name))
     return
