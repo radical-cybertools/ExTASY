@@ -116,7 +116,7 @@ setup_args = {
     ],
 
     'entry_points': {
-     'console_scripts': ['extasy = radical.ensemblemd.extasy.bin.runme:main','select = radical.ensemblemd.extasy.bin.Analyzer.LSDMap.select:Selection.run','update = radical.ensemblemd.extasy.bin.Analyzer.LSDMap.reweighting:ReweightingStep.run']
+     'console_scripts': ['extasy = radical.ensemblemd.extasy.bin.runme:main']
     },
 
 
