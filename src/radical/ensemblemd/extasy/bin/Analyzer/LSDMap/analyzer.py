@@ -33,6 +33,9 @@ def Analyzer(umgr):
     p2=time.time()
 
     print 'Analysis time : ',p2-p1
+    curdir = os.path.dirname(os.path.realpath(__file__))
+
+    os.environ['PYTHONPATH'] = os.environ['PYTHONPATH'] + ':%s'%curdir
 
     os.system('python %s/select.py %s -s %s -o %s' %(curdir,num_runs, evfile,num_clone_files))
     #Update Boltzman weights
