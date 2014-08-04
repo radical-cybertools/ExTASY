@@ -35,6 +35,7 @@ git clone -b devel https://github.com/radical-cybertools/ExTASY.git
 cd ExTASY
 python setup.py install
 export PYTHONPATH=$PYTHONPATH:/tmp/ExTASY
+pip install numpy
 ```
 > If you have multiple allocations on the same system, set the environment variable PROJECT_ID 
 > to your allocation number 
