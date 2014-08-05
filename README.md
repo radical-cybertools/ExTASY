@@ -132,6 +132,8 @@ temporary smaller files based on ```num_sims```. The Simulator is then loaded wh
 and takes as input the temporary files, a mdp file and a top file and runs the MD. The output is aggregated into one gro file to be used 
 during the Analysis phase.
 
+* * *
+
 2) Analyzer
 
 * To run just the Analyzer, you will have to set the Load_Analyzer variable in ``` /tmp/ExTASY/config/RP_config.py``` to 'LSDMap'. This
@@ -174,6 +176,8 @@ This command starts the execution. It will first submit a pilot on the REMOTE_HO
 PILOTSIZE. Once the pilot goes through the queue, the Analyzer is loaded which looks for a gro file as defined by ```tmp_grofile```
 in ```kernel_config.py``` in the current directory (from where ```extasy``` is run) and runs LSDMap on it based on the parameters
 defined in ```/tmp/ExTASY/config/config.ini```.
+
+* * *
 
 
 3) Simulator + Analyzer
