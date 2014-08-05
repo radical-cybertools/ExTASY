@@ -73,8 +73,8 @@ The above five variables are to be set before running any test or workload (Simu
 Kernel_config
 -----------
 
-The Kernel_config file is used for defining the parameters related to the Simulation and Analysis phases. They are discussed 
-as utilized below
+The Kernel_config file is used for defining the parameters required in the Simulators and Analyzers. They are discussed 
+as and when utilized below.
 
 
 
@@ -124,9 +124,17 @@ system_name = 'aladip_1000.gro'
 * Run ```extasy``` 
 
 
+**What this does ...**
+
+This command starts the execution. It will first submit a pilot on the REMOTE_HOST and reserve the number of cores as defined by the
+PILOTSIZE. Once the pilot goes through the queue, the Preprocessor splits the input gro file as defined by ```input_gro``` into
+temporary smaller files based on ```num_sims```. The Simulator is then loaded which submits Compute Units to the REMOTE_HOST
+and takes as input the temporary files, a mdp file and a top file and runs the MD. The output is aggregated into one gro file to be used 
+during the Analysis phase.
+
 2) Analyzer
 
-* To run just the Simulator, you will have to set the Load_Analyzer variable in ``` /tmp/ExTASY/config/RP_config.py``` to 'LSDMap'. This
+* To run just the Analyzer, you will have to set the Load_Analyzer variable in ``` /tmp/ExTASY/config/RP_config.py``` to 'LSDMap'. This
 tells the tool to load the LSDMap Analyzer .
 
 * Next, open up the ```/tmp/ExTASY/config/kernel_config.py``` to set values which are kernel specific. For the Analysis you will have to set,
@@ -160,6 +168,14 @@ num_runs = 10000
 * Run ```extasy```
 
 
+**What this does ...**
+
+This command starts the execution. It will first submit a pilot on the REMOTE_HOST and reserve the number of cores as defined by the
+PILOTSIZE. Once the pilot goes through the queue, the Analyzer is loaded which looks for a gro file as defined by ```tmp_grofile```
+in ```kernel_config.py``` in the current directory (from where ```extasy``` is run) and runs LSDMap on it based on the parameters
+defined in ```/tmp/ExTASY/config/config.ini```.
+
+
 3) Simulator + Analyzer
 
 * To run both the Simulator and Analyzer as a Sim-Analysis chain set Load_Preprocessor, Load_Simulator and Load_Analyzer in ```../config/RP_kernel.py```.
@@ -173,3 +189,14 @@ num_iterations = 1
 > num_iterations              : Number of times the entire Sim-Analysis chain has to be performed
 
 * Run ```extasy```
+
+
+**What this does ...**
+
+This command starts the execution.It will first submit a pilot on the REMOTE_HOST and reserve the number of cores as defined by the
+PILOTSIZE. Once the pilot goes through the queue, the Preprocessor splits the input gro file as defined by ```input_gro``` into
+temporary smaller files based on ```num_sims```. The Simulator is then loaded which submits Compute Units to the REMOTE_HOST
+and takes as input the temporary files, a mdp file and a top file and runs the MD. The output is aggregated into one gro file to be used 
+during the Analysis phase. The Analyzer is then loaded which looks for a gro file as defined by ```tmp_grofile```
+in ```kernel_config.py``` in the current directory (from where ```extasy``` is run) and runs LSDMap on it based on the parameters
+defined in ```/tmp/ExTASY/config/config.ini```.
