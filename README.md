@@ -134,7 +134,7 @@ during the Analysis phase.
 
 * * *
 
-2) Analyzer
+2) **Analyzer**
 
 * To run just the Analyzer, you will have to set the Load_Analyzer variable in ``` /tmp/ExTASY/config/RP_config.py``` to 'LSDMap'. This
 tells the tool to load the LSDMap Analyzer .
@@ -180,7 +180,7 @@ defined in ```/tmp/ExTASY/config/config.ini```.
 * * *
 
 
-3) Simulator + Analyzer
+3) **Simulator + Analyzer**
 
 * To run both the Simulator and Analyzer as a Sim-Analysis chain set Load_Preprocessor, Load_Simulator and Load_Analyzer in ```../config/RP_kernel.py```.
 
