@@ -59,9 +59,9 @@ RP_config
 
 The RP_config file is used for defining the parameters related to Radical Pilot.
 
-* UPreprocessor : The preprocessor to be used. Can be 'Gromacs' or 'Namd'
-* USimulator    : The Simulator to be loaded. Can be 'Gromacs' or 'Namd'
-* UAnalyzer     : The Analyzer to be loaded. Can be 'LSDMap' or 'CoCo'
+* Load_Preprocessor : The preprocessor to be used. Can be 'Gromacs' or 'Namd'
+* Load_Simulator    : The Simulator to be loaded. Can be 'Gromacs' or 'Namd'
+* Load_Analyzer     : The Analyzer to be loaded. Can be 'LSDMap' or 'CoCo'
 * UNAME         : Username to access the remote machine
 * REMOTE_HOST   : URL of remote machine
 * WALLTIME      : Walltime for the complete job
@@ -84,10 +84,10 @@ Running the workload
 1) **Simulator**
 
 
-* To run just the Simulator, you will have to set the UPreprocessor, USimulator variables in ``` ../config/RP_config.py``` to 'Gromacs'. This
+* To run just the Simulator, you will have to set the Load_Preprocessor, Load_Simulator variables in ``` /tmp/ExTASY/config/RP_config.py``` to 'Gromacs'. This
 tells the tool to load the Gromacs Simulator.
 
-* Next, open up the ```../config/kernel_config.py``` to set values which are kernel specific. For the Simulation you will have to set,
+* Next, open up the ```/tmp/ExTASY/config/kernel_config.py``` to set values which are kernel specific. For the Simulation you will have to set,
 
 
 ```
@@ -126,10 +126,10 @@ system_name = 'aladip_1000.gro'
 
 2) Analyzer
 
-* To run just the Simulator, you will have to set the UAnalyzer variable in ``` ../config/RP_config.py``` to 'LSDMap'. This
+* To run just the Simulator, you will have to set the Load_Analyzer variable in ``` /tmp/ExTASY/config/RP_config.py``` to 'LSDMap'. This
 tells the tool to load the LSDMap Analyzer .
 
-* Next, open up the ```../config/kernel_config.py``` to set values which are kernel specific. For the Analysis you will have to set,
+* Next, open up the ```/tmp/ExTASY/config/kernel_config.py``` to set values which are kernel specific. For the Analysis you will have to set,
 
 ```
 lsdm_config = '/tmp/ExTASY/config'
@@ -162,7 +162,7 @@ num_runs = 10000
 
 3) Simulator + Analyzer
 
-* To run both the Simulator and Analyzer as a Sim-Analysis chain set UPreprocessor, USimulator and UAnalyzer in ```../config/RP_kernel.py```.
+* To run both the Simulator and Analyzer as a Sim-Analysis chain set Load_Preprocessor, Load_Simulator and Load_Analyzer in ```../config/RP_kernel.py```.
 
 * Set all the variables as before. Also set,
 
