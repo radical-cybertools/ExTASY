@@ -33,7 +33,7 @@ Running the workload on Stampede
 ```
 cd
 wget https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/coco/runme.py
-wget https://github.com/radical-cybertools/ExTASY/blob/devel/coco/postexec.py
+wget https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/coco/postexec.py
 python runme.py
 ```
 
