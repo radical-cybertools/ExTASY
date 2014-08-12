@@ -21,7 +21,7 @@ cd
 curl -O https://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.11.tar.gz
 tar xvfz virtualenv-1.11.tar.gz
 module load python
-cd virtualenv-1.11.tar.gz
+cd virtualenv-1.11
 python virtualenv.py $HOME/rp
 source $HOME/rp/bin/activate
 pip install radical.pilot
