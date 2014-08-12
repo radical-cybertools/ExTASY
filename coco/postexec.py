@@ -4,8 +4,9 @@ import sys
 
 if __name__ == '__main__':
     print 'creating new crd files...'
-    nreps = sys.argv[1]
-    cycle = sys.argv[2]
+    nreps = int(sys.argv[1])
+    cycle = int(sys.argv[2])
+    dict = {}
     for rep in range(nreps):
         dict['rep'] = rep
         dict['path'] = os.path.dirname(os.path.abspath(__file__))

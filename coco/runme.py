@@ -84,7 +84,7 @@ if __name__ == '__main__':
     dict['minin']   = 'min.in'
 
     # set number of cycles, and number of replicates
-    maxcycles = 1
+    maxcycles = 10
     nreps = 8
     coco_loc = '$HOME/coco/'
     #
@@ -108,7 +108,7 @@ if __name__ == '__main__':
             cudesc = radical.pilot.ComputeUnitDescription()
             cudesc.executable = '/bin/bash'
             cudesc.cores = 1
-            cudesc.pre_exec = ['module load python', 'cd %s/examples' % coco_loc, '( test -d "rep0*" || rm rep0* -rf)' , 'mkdir rep00 rep01 rep02 rep03 rep04 rep05 rep06 rep07' ]
+            cudesc.pre_exec = ['cd %s/examples' % coco_loc, '( test -d "rep0*" || rm rep0* -rf)' , 'mkdir rep00 rep01 rep02 rep03 rep04 rep05 rep06 rep07' ]
             cudesc.arguments = ['-l','-c','tee rep00/md0.crd rep01/md0.crd rep02/md0.crd rep03/md0.crd rep04/md0.crd rep05/md0.crd rep06/md0.crd rep07/md0.crd < %s > /dev/null' % dict['crdfile']]
 
             unit = umgr.submit_units(cudesc)
@@ -122,10 +122,11 @@ if __name__ == '__main__':
             cudesc = radical.pilot.ComputeUnitDescription()
             cudesc.executable = 'python'
             cudesc.cores = 16
-            cudesc.pre_exec = ['module load python','cd %s/examples' % coco_loc]
-            cudesc.arguments = ['cocoUi.py --grid 5 --projs 3  --frontpoints 8 --cycle %s -vvv' % cycle]
+            cudesc.pre_exec = ['module load python','cp postexec.py %s/examples'% coco_loc,'cd %s/examples' % coco_loc,'module load mpi4py']
+            cudesc.arguments = ['cocoUi.py', '--grid 5', ' --projs 3 ', ' --frontpoints 8 ', '--cycle %s ' % cycle, '-vvv' ]
             cudesc.input_data = ['postexec.py']
             cudesc.post_exec = ['python postexec.py %s %s' % (nreps,cycle)]
+            cudesc.mpi = True
             #cs.append('mpiexec -mca btl ^openib -n 4 python cocoUi.py --grid 5 --projs 3  --frontpoints 8 --cycle {cycle} -vvv'.format(**dict))
             #cs.append('python cocoUi.py --grid 5 --projs 3  --frontpoints 8 --cycle {cycle} -vvv'.format(**dict))
 
