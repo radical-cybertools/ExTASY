@@ -34,7 +34,7 @@ def unit_state_change_cb(unit, state):
 #
 
 if __name__ == '__main__':
-    print "Starting 16 core pilot-job..."
+    print "Starting pilot-job..."
     session = radical.pilot.Session(database_url=DBURL)
     print "Session UID: {0} ".format(session.uid)
 
@@ -70,8 +70,6 @@ if __name__ == '__main__':
     umgr.add_pilots(pilot)
 
 
-    print "... DONE."
-
     #------------------------------------------------------------------------------
     #
 
@@ -98,7 +96,8 @@ if __name__ == '__main__':
     # cycle 0: we begin with a single coordinate and topology file.
     # Copy it into the separate rep0? directories ready to run the MD simulations.
     #
-            print "creating initial setup"
+            print 'Cycle : %s' % cycle
+            print "Creating initial setup"
             #cp = script.Script()
             #for rep in range(nreps):
             #    dict['rep'] = str(rep)
@@ -118,7 +117,8 @@ if __name__ == '__main__':
 
         else:
 
-            print 'coco stuff...'
+            print 'Cycle : %s' % cycle
+            print 'Submitting COCO Compute Unit'
 
             cudesc = radical.pilot.ComputeUnitDescription()
             cudesc.executable = 'python'
