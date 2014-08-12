@@ -34,8 +34,11 @@ Running the workload on Stampede
 cd
 wget https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/coco/runme.py
 wget https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/coco/postexec.py
+export ALLOCATION_ID = ''          #only if you have multiple allocations
 python runme.py
 ```
+
+To repeat the workload, please delete the rep0* folders in $HOME/coco/examples/.
 
 
 
