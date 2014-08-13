@@ -121,10 +121,10 @@ if __name__ == '__main__':
             print 'Submitting COCO Compute Unit'
 
             cudesc = radical.pilot.ComputeUnitDescription()
-            cudesc.executable = '/bin/bash'
+            cudesc.executable = 'python'
             cudesc.cores = 16
             cudesc.pre_exec = ['module load python','cp postexec.py %s/examples'% coco_loc,'cd %s/examples' % coco_loc,'module load mpi4py','module load amber']
-            cudesc.arguments = ['-l','-c','python cocoUi.py --grid 5 --projs 3 --frontpoints 8 --cycle %s -vvv' % cycle ]
+            cudesc.arguments = ['cocoUi.py','--grid','5','--projs','3','--frontpoints','8','--cycle','%s'% cycle ,'-vvv' ]
             cudesc.input_data = ['postexec.py']
             cudesc.post_exec = ['python postexec.py %s %s' % (nreps,cycle)]
             cudesc.mpi = True
