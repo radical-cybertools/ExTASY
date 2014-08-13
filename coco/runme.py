@@ -4,7 +4,6 @@ import sys
 import radical.pilot
 
 DBURL = "mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017"
-RCONF  = ["https://raw.github.com/radical-cybertools/radical.pilot/master/configs/xsede.json"]
 
 #------------------------------------------------------------------------------
 #
