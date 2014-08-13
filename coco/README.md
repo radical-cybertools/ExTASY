@@ -20,7 +20,9 @@ python setup.py install --user
 ```
 
 > You will have to install numpy and cython as well before installing scipy. For other scipy dependencies 
-> ```http://stackoverflow.com/questions/7496547/python-scipy-needs-blas```
+> ```
+> http://stackoverflow.com/questions/7496547/python-scipy-needs-blas
+> ```
 
 RP on Stampede
 ----------------------
