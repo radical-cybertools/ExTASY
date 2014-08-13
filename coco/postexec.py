@@ -1,6 +1,7 @@
 __author__ = 'vivek'
 import os
 import sys
+from extasy import script
 
 if __name__ == '__main__':
     print 'creating new crd files...'
@@ -11,9 +12,9 @@ if __name__ == '__main__':
         dict['rep'] = rep
         dict['path'] = os.path.dirname(os.path.abspath(__file__))
         dict['cycle'] = cycle
-        #tl = script.Script()
-        os.system('source leaprc.ff99SB')
-        os.system('x = loadpdb {path}/rep0{rep}/pentaopt{cycle}.pdb'.format(**dict))
-        os.system('saveamberparm x {path}/rep0{rep}/delete.me {path}/rep0{rep}/min{cycle}.crd'.format(**dict))
-        os.system('quit')
-        #tl.run('tleap -f {}')
+        tl = script.Script()
+        tl.append('source leaprc.ff99SB')
+        tl.append('x = loadpdb {path}/rep0{rep}/pentaopt{cycle}.pdb'.format(**dict))
+        tl.append('saveamberparm x {path}/rep0{rep}/delete.me {path}/rep0{rep}/min{cycle}.crd'.format(**dict))
+        tl.append('quit')
+        tl.run('tleap -f {}')

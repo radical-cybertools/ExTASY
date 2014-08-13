@@ -121,10 +121,10 @@ if __name__ == '__main__':
             print 'Submitting COCO Compute Unit'
 
             cudesc = radical.pilot.ComputeUnitDescription()
-            cudesc.executable = 'python'
+            cudesc.executable = '/bin/bash'
             cudesc.cores = 16
-            cudesc.pre_exec = ['module load python','cp postexec.py %s/examples'% coco_loc,'cd %s/examples' % coco_loc,'module load mpi4py']
-            cudesc.arguments = ['cocoUi.py', '--grid 5', ' --projs 3 ', ' --frontpoints 8 ', '--cycle %s ' % cycle, '-vvv' ]
+            cudesc.pre_exec = ['module load python','cp postexec.py %s/examples'% coco_loc,'cd %s/examples' % coco_loc,'module load mpi4py','module load amber']
+            cudesc.arguments = ['-l','-c','python cocoUi.py --grid 5 --projs 3 --frontpoints 8 --cycle %s -vvv' % cycle ]
             cudesc.input_data = ['postexec.py']
             cudesc.post_exec = ['python postexec.py %s %s' % (nreps,cycle)]
             cudesc.mpi = True
@@ -157,7 +157,7 @@ if __name__ == '__main__':
         for i in range(nreps):
             print "Submitting new 'pmemd' compute unit"
             dict['rep'] = str(i)
-            dict['path'] = coco_loc
+            dict['path'] = coco_loc + '/examples'
             # output files that need to be transferred back: *.mdcrd
 
             step_1 = 'pmemd -O -i {path}/{minin} -o {path}/rep0{rep}/min{cycle}.out -inf {path}/rep0{rep}/min{cycle}.inf -r {path}/rep0{rep}/md{cycle}.crd -p {path}/{topfile} -c {path}/rep0{rep}/min{cycle}.crd -ref {path}/rep0{rep}/min{cycle}.crd'.format(**dict)
