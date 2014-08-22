@@ -22,7 +22,7 @@ def Analyzer(umgr,RPconfig_url,Kconfig_url,cycle):
     cudesc.pre_exec = ['module load python','cp postexec.py %s'% exp_loc,'cd %s' % exp_loc,'module load mpi4py','module load amber']
     cudesc.arguments = ['cocoUi.py','--grid','5','--projs','3','--frontpoints','8','--cycle','%s'% cycle ,'-vvv' ]
     cudesc.input_data = ['%s/postexec.py'%(os.path.dirname(os.path.realpath(__file__)))]
-    cudesc.post_exec = ['python %s/postexec.py %s %s' % (os.path.dirname(os.path.realpath(__file__)),nreps,cycle)]
+    cudesc.post_exec = ['python postexec.py %s %s' % (nreps,cycle)]
     cudesc.mpi = True
 
     unit = umgr.submit_units(cudesc)
