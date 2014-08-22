@@ -2,24 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="627926b0-7d68-4dd5-8b41-0cde283342f0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/config/amber_coco_config.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/CoCo/analyzer.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Preprocessor/Amber/preprocessor.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Preprocessor/Gromacs/input.gro" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/config/config.ini" afterPath="$PROJECT_DIR$/gromacs_lsdmap_example/config.ini" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/config/kernel_config.py" afterPath="$PROJECT_DIR$/config/gromacs_lsdmap_config.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/run/grompp.mdp" afterPath="$PROJECT_DIR$/gromacs_lsdmap_example/grompp.mdp" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/run/input.gro" afterPath="$PROJECT_DIR$/gromacs_lsdmap_example/input.gro" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/run/topol.top" afterPath="$PROJECT_DIR$/gromacs_lsdmap_example/topol.top" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/RP_config.py" afterPath="$PROJECT_DIR$/config/RP_config.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VERSION" afterPath="$PROJECT_DIR$/VERSION" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/VERSION" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/VERSION" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/analyzer.py" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/analyzer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Preprocessor/Gromacs/preprocessor.py" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Preprocessor/Gromacs/preprocessor.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/runme.py" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/runme.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Amber/simulator.py" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Amber/simulator.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/simulator.py" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/simulator.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/CoCo/analyzer.py" afterPath="$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/CoCo/analyzer.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="MDEnsemble.iws" />
@@ -46,7 +31,7 @@
       <file leaf-file-name="runme.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/coco/runme.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2727" max-vertical-offset="3330">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2124" max-vertical-offset="3366">
               <caret line="118" column="38" selection-start-line="118" selection-start-column="33" selection-end-line="118" selection-end-column="38" />
               <folding />
             </state>
@@ -56,11 +41,9 @@
       <file leaf-file-name="preprocessor.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Preprocessor/Amber/preprocessor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="594">
+            <state vertical-scroll-proportion="0.0" vertical-offset="432" max-vertical-offset="594">
               <caret line="24" column="152" selection-start-line="24" selection-start-column="152" selection-end-line="24" selection-end-column="195" />
-              <folding>
-                <element signature="e#22#32#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -68,7 +51,7 @@
       <file leaf-file-name="amber_coco_config.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/amber_coco_config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="432">
+            <state vertical-scroll-proportion="0.0" vertical-offset="288" max-vertical-offset="432">
               <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
               <folding />
             </state>
@@ -78,7 +61,7 @@
       <file leaf-file-name="simulator.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Simulator/Amber/simulator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="20" max-vertical-offset="1152">
+            <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="1224">
               <caret line="10" column="49" selection-start-line="10" selection-start-column="49" selection-end-line="10" selection-end-column="49" />
               <folding />
             </state>
@@ -88,8 +71,8 @@
       <file leaf-file-name="analyzer.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/CoCo/analyzer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6119403" vertical-offset="63" max-vertical-offset="702">
-              <caret line="24" column="100" selection-start-line="24" selection-start-column="100" selection-end-line="24" selection-end-column="100" />
+            <state vertical-scroll-proportion="0.72" vertical-offset="0" max-vertical-offset="702">
+              <caret line="23" column="87" selection-start-line="23" selection-start-column="87" selection-end-line="23" selection-end-column="87" />
               <folding>
                 <element signature="e#1#59#0" expanded="true" />
               </folding>
@@ -100,7 +83,7 @@
       <file leaf-file-name="runme.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/runme.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1987" max-vertical-offset="2718">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2322" max-vertical-offset="2754">
               <caret line="129" column="28" selection-start-line="129" selection-start-column="28" selection-end-line="129" selection-end-column="28" />
               <folding />
             </state>
@@ -110,7 +93,7 @@
       <file leaf-file-name="RP_config.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/RP_config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="324">
+            <state vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="324">
               <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
               <folding />
             </state>
@@ -883,7 +866,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="53" y="24" width="1313" height="744" extended-state="6" />
+    <frame x="53" y="24" width="1313" height="744" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1172,9 +1155,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.360601" vertical-offset="2232" max-vertical-offset="3798">
           <caret line="136" column="15" selection-start-line="136" selection-start-column="15" selection-end-line="136" selection-end-column="15" />
@@ -1206,7 +1186,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="641">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1218,13 +1197,9 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/coco/README.md">
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="36" max-vertical-offset="1350">
           <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1240,7 +1215,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="684">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1248,9 +1222,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.64285713" vertical-offset="0" max-vertical-offset="1224">
           <caret line="22" column="58" selection-start-line="22" selection-start-column="58" selection-end-line="22" selection-end-column="101" />
-          <folding>
-            <element signature="e#58#68#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1258,9 +1229,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7910448" vertical-offset="441" max-vertical-offset="1044">
           <caret line="51" column="10" selection-start-line="4" selection-start-column="0" selection-end-line="51" selection-end-column="10" />
-          <folding>
-            <element signature="e#90#148#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1308,16 +1276,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="594">
           <caret line="24" column="152" selection-start-line="24" selection-start-column="152" selection-end-line="24" selection-end-column="195" />
-          <folding>
-            <element signature="e#22#32#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/radical/ensemblemd/extasy/bin/Analyzer/CoCo/analyzer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6119403" vertical-offset="63" max-vertical-offset="702">
-          <caret line="24" column="100" selection-start-line="24" selection-start-column="100" selection-end-line="24" selection-end-column="100" />
+        <state vertical-scroll-proportion="0.72" vertical-offset="0" max-vertical-offset="702">
+          <caret line="23" column="87" selection-start-line="23" selection-start-column="87" selection-end-line="23" selection-end-column="87" />
           <folding>
             <element signature="e#1#59#0" expanded="true" />
           </folding>
