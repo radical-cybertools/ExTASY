@@ -1,13 +1,18 @@
 __author__ = 'vivek'
 
-from config.kernel_config import *
+#from config.kernel_config import *
+import imp
 import time
 import shutil
 import os
 import sys
 import coord_util.gro as gro
 
-def Preprocessing():
+def Preprocessing(Kconfig_url,umgr):
+
+    Kconfig = imp.load_source('Kconfig',Kconfig_url)
+
+    from Kconfig import *
 
     p1 = time.time()
 

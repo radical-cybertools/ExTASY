@@ -4,13 +4,20 @@ import radical.pilot
 from radical.ensemblemd.mdkernels import MDTaskDescription
 import os
 import time
-from config.kernel_config import *
-from config.RP_config import *
+import imp
+#from config.kernel_config import *
+#from config.RP_config import *
 
-def Simulator(umgr):
+def Simulator(umgr,RPconfig_url,Kconfig_url):
 
     p1 = time.time()
     curdir = os.path.dirname(os.path.realpath(__file__))
+
+    RPconfig = imp.load_source('RPconfig',RPconfig_url)
+    Kconfig = imp.load_source('Kconfig',Kconfig_url)
+
+    from RPconfig import *
+    from Kconfig import *
 
     gromacs_tasks = []
     for i in range(0, num_sims):
@@ -56,5 +63,5 @@ def Simulator(umgr):
         start_times.append(unit.start_time)
         end_times.append(unit.stop_time)
     
-    print 'CU Simulation Time : ', (max(end_times)-min(start_times)).total_seconds()
+    print 'Simulation Execution Time : ', (max(end_times)-min(start_times)).total_seconds()
 

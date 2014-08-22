@@ -1,10 +1,13 @@
 __author__ = 'vivek'
 
 import radical.pilot
-from config.kernel_config import *      #change this to command line
-from config.RP_config import *          #change this too
+import argparse
+import imp
+#from config.kernel_config import *      #change this to command line
+#from config.RP_config import *          #change this too
 import os
 import sys
+import time
 
 
 #------------------------------------------------------------------------------
@@ -32,7 +35,13 @@ def unit_state_change_cb(unit, state):
 
 #---------------------------------------------------------------------------------
 
-def startPilot():
+def startPilot(Kconfig_url,RPconfig_url):
+
+    RPconfig = imp.load_source('RPconfig',RPconfig_url)
+    Kconfig = imp.load_source('Kconfig',Kconfig_url)
+
+    from RPconfig import *
+    from Kconfig import *
 
     session = radical.pilot.Session(database_url=DBURL)
     print "Session UID: {0} ".format(session.uid)
@@ -76,11 +85,44 @@ def startPilot():
 
 def main():
 
+    usage = 'usage: %prog --RPconfig --Kconfig'
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--RPconfig', help='link to Radical Pilot related configurations file')
+    parser.add_argument('--Kconfig', help='link to Kernel configurations file')
+
+    args = parser.parse_args()
+
+    if args.RPconfig is None:
+        parser.error('Please enter a RP configuration file')
+        sys.exit(1)
+    if args.Kconfig is None:
+        parser.error('Please enter a Kernel configuration file')
+        sys.exit(0)
+
+    RPconfig = imp.load_source('RPconfig', args.RPconfig)
+    Kconfig = imp.load_source('Kconfig', args.Kconfig)
+
+    from RPconfig import *
+    from Kconfig import *
+
     if ( Load_Preprocessor == 'Gromacs'):
         from Preprocessor.Gromacs.preprocessor import Preprocessing
 
-    Preprocessing()
-    umgr,session=startPilot()
+    if (Load_Preprocessor == 'Amber'):
+        from Preprocessor.Amber.preprocessor import Preprocessing
+
+
+
+    umgr,session=startPilot(args.Kconfig,args.RPconfig)
+
+    Preprocessing(args.Kconfig,umgr)
+
+
+    if ( Load_Simulator == 'Amber'):
+        from Simulator.Amber.simulator import Simulator
+    if ( Load_Analyzer == 'CoCo'):
+        from Analyzer.CoCo.analyzer import Analyzer
 
     if ( Load_Simulator == 'Gromacs'):
         from Simulator.Gromacs.simulator import Simulator
@@ -89,11 +131,15 @@ def main():
 
     for i in range(0,num_iterations):
         if Load_Simulator:
+            p1=time.time()
             print 'Starting Simulation'
-            Simulator(umgr)
+            Simulator(umgr,args.RPconfig,args.Kconfig,i)
         if Load_Analyzer:
             print 'Starting Analysis'
-            Analyzer(umgr)
+            Analyzer(umgr,args.RPconfig,args.Kconfig,i)
+            p2=time.time()
+        if p1.is_integer() and p2.is_integer():
+            print 'TTC for one iteration : ', p2-p1
 
     session.close()
 

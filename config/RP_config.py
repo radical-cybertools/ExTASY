@@ -1,9 +1,9 @@
 __author__ = 'vivek'
 
 
-Load_Preprocessor = 'Gromacs'
-Load_Simulator = 'Gromacs'
-Load_Analyzer = 'LSDMap'
+Load_Preprocessor = 'Amber'
+Load_Simulator = 'Amber'
+Load_Analyzer = 'CoCo'
 
 UNAME = 'vivek91'
 REMOTE_HOST = 'stampede.tacc.utexas.edu'
