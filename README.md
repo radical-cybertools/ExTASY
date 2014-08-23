@@ -73,7 +73,9 @@ python setup.py install --user
 
 > You will have to install numpy and cython as well before installing scipy. For other scipy dependencies 
 > ```
-> http://stackoverflow.com/questions/7496547/python-scipy-needs-blas
+> Cython : wget cython.org/release/Cython-0.20.2.tar.gz
+> numpy : git clone git://github.com/numpy/numpy.git numpy
+> BLAS + LAPACK : http://stackoverflow.com/questions/7496547/python-scipy-needs-blas
 > ```
 
 After installing the dependencies, you will need to make a local installation of lsdmap on Stampede using the existing
@@ -105,7 +107,9 @@ python setup.py install --user
 
 > You will have to install numpy and cython as well before installing scipy. For other scipy dependencies 
 > ```
-> http://stackoverflow.com/questions/7496547/python-scipy-needs-blas
+> Cython : wget cython.org/release/Cython-0.20.2.tar.gz
+> numpy : git clone git://github.com/numpy/numpy.git numpy
+> BLAS + LAPACK : http://stackoverflow.com/questions/7496547/python-scipy-needs-blas
 > ```
 
 
