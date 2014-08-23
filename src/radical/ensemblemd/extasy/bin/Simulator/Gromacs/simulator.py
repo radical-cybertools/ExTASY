@@ -8,7 +8,7 @@ import imp
 #from config.kernel_config import *
 #from config.RP_config import *
 
-def Simulator(umgr,RPconfig_url,Kconfig_url):
+def Simulator(umgr,RPconfig_url,Kconfig_url,cycle):
 
     p1 = time.time()
     curdir = os.path.dirname(os.path.realpath(__file__))

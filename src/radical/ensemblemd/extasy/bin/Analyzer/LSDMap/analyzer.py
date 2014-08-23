@@ -8,7 +8,7 @@ import radical.pilot
 import os
 import imp
 
-def Analyzer(umgr,RPconfig_url,Kconfig_url):
+def Analyzer(umgr,RPconfig_url,Kconfig_url,cycle):
 
     RPconfig = imp.load_source('RPconfig',RPconfig_url)
     Kconfig = imp.load_source('Kconfig',Kconfig_url)
