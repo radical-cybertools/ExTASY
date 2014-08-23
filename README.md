@@ -48,6 +48,14 @@ To verify the installation, check the current version
 python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
 ```
 
+After installation on localhost, the following sections have to be implemented to run the workload.
+
+1. Installing LSDMap/CoCo on Stampede
+2. Setting up the Radical Pilot configuration file
+3. Setting up the Kernel configuration file : Gromacs-LSDMap/Amber-CoCo
+4. Running the workload : Gromacs-LSDMap/Amber-CoCo
+
+
 Installing LSDMap on Stampede
 ---------------------------
 
@@ -85,7 +93,7 @@ Installing CoCo on Stampede
 -------------------------
 
 Running CoCo on Stampede requires that you make a local installation of scipy 14 (or greater) using the 
-existing python/2.7.3.
+existing python/2.7.3. Make sure intel/13.0.2.146(default) is loaded.
 
 ```
 module load python
