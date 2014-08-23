@@ -128,14 +128,14 @@ example/demo can be found in ``` /tmp/ExTASY/config/gromacs_lsdmap_config.py```.
 * num_CUs           : Number of Compute Units to be submitted to the pilot
 * num_iterations    : Number of iterations of Simulation-Analysis
 
------------------------------------------------------Simulation(Gromacs)----------------------------------------------------------------
+-----------------------------------------------------Simulation(Gromacs)--------------------------------------------------------------
 
 * input_gro_loc & input_gro : location and name of the input(gro) file
 * grompp_loc & grompp_name  : location and name of the grompp(mdp) file
 * topol_loc & topol_name    : location and name of the topol(top) file
 * tmp_grofile               : name of the intermediate file used as input for LSDMap
 
--------------------------------------------------------Analysis(LSDMap)-----------------------------------------------------------------
+-------------------------------------------------------Analysis(LSDMap)---------------------------------------------------------------
 
 * lsdm_config_loc & lsdm_config_name : location and name of the lsdm configuration file
 * wfile     : name of the weight file to be used in LSDMap
