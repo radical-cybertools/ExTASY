@@ -71,7 +71,7 @@ cd scipy
 python setup.py install --user
 ```
 
-> You will have to install numpy and cython as well before installing scipy. For other scipy dependencies 
+> Before installing scipy, you will have to install numpy, cython, BLAS + LAPACK. 
 > ```
 > Cython : wget cython.org/release/Cython-0.20.2.tar.gz
 > numpy : git clone git://github.com/numpy/numpy.git numpy
@@ -105,7 +105,7 @@ cd scipy
 python setup.py install --user
 ```
 
-> You will have to install numpy and cython as well before installing scipy. For other scipy dependencies 
+> Before installing scipy, you will have to install numpy, cython, BLAS + LAPACK. 
 > ```
 > Cython : wget cython.org/release/Cython-0.20.2.tar.gz
 > numpy : git clone git://github.com/numpy/numpy.git numpy
