@@ -1,8 +1,8 @@
 __author__ = 'vivek'
 
 
-Load_Preprocessor = 'Amber'
 Load_Simulator = 'Amber'
+Load_Preprocessor = Load_Simulator
 Load_Analyzer = 'CoCo'
 
 UNAME = 'vivek91'

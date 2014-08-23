@@ -1,8 +1,11 @@
 __author__ = 'vivek'
 
-num_sims = 64 #num of CUs
+#--------------------------General--------------------------------
 
+num_CUs = 64 #num of CUs
 num_iterations = 1
+
+#--------------------------Simulation--------------------------------
 
 input_gro_loc = '/home/vivek/Research/ExTASY/gromacs_lsdmap_example'
 input_gro = 'input.gro'
@@ -16,7 +19,10 @@ topol_name = 'topol.top'
 
 tmp_grofile = 'tmp.gro'
 
-lsdm_config = '/home/vivek/Research/ExTASY/gromacs_lsdmap_example'
+#--------------------------Analysis----------------------------------
+
+lsdm_config_loc = '/home/vivek/Research/ExTASY/gromacs_lsdmap_example'
+lsdm_config_name = 'config.ini'
 
 system_name = 'out'
 

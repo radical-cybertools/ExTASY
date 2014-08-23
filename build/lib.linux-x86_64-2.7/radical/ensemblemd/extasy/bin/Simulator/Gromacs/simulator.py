@@ -20,7 +20,7 @@ def Simulator(umgr,RPconfig_url,Kconfig_url):
     from Kconfig import *
 
     gromacs_tasks = []
-    for i in range(0, num_CUs):
+    for i in range(0, num_sims):
         mdtd = MDTaskDescription()
         mdtd.kernel = "GROMACS"
         mdtd.arguments = ['-l','-c',". run.sh %s start.gro %s out.gro" % (grompp_name,topol_name)]

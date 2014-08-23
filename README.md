@@ -34,8 +34,6 @@ pip install --upgrade git+https://github.com/radical-cybertools/radical.ensemble
 git clone -b devel https://github.com/radical-cybertools/ExTASY.git
 cd ExTASY
 python setup.py install
-export PYTHONPATH=$PYTHONPATH:/tmp/ExTASY
-pip install numpy
 ```
 > If you have multiple allocations on the same system, set the environment variable PROJECT_ID 
 > to your allocation number 
@@ -53,14 +51,23 @@ python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
 USAGE
 ======
 
+To use the ASA tool, you will first need to setup two files. 
 
-RP_config
------------
+A configuration file for the Radical Pilot related parameters which would allow us to launch pilot(s) and compute units on the targeted remote machine.
+You will also use this file to mention the Simulation and Analysis kernels to be used.
 
-The RP_config file is used for defining the parameters related to Radical Pilot.
+The second configuration file should contain all the parameters required to execute the Simulation and Analysis kernels. A detailed description for each of the 
+combinations (Gromacs-LSDMap / Amber-CoCo) is given below.
 
-* Load_Preprocessor : The preprocessor to be used. Can be 'Gromacs' or 'Namd'
-* Load_Simulator    : The Simulator to be loaded. Can be 'Gromacs' or 'Namd'
+
+Setting up the Radical Pilot config file
+-----------------------------------------
+
+The RP config file is used for defining the parameters related to Radical Pilot. It is one of the input files 
+to the ASA tool.
+
+* Load_Preprocessor : The preprocessor to be used. Can be 'Gromacs' or 'Amber'
+* Load_Simulator    : The Simulator to be loaded. Can be 'Gromacs' or 'Amber'
 * Load_Analyzer     : The Analyzer to be loaded. Can be 'LSDMap' or 'CoCo'
 * UNAME         : Username to access the remote machine
 * REMOTE_HOST   : URL of remote machine
@@ -68,139 +75,117 @@ The RP_config file is used for defining the parameters related to Radical Pilot.
 * PILOTSIZE     : No. of cores to reserved for the entire job
 * DBURL         : MongoDB URL
 
-The above five variables are to be set before running any test or workload (Simulator only/ Analyzer only/ Sim-Analysis chain)
 
-Kernel_config
------------
+Setting up the Kernel configuration file : Gromacs-LSDMap
+----------------------------------------------------------
 
-The Kernel_config file is used for defining the parameters required in the Simulators and Analyzers. They are discussed 
-as and when utilized below.
+As described before, the other input file to the tool is the file containing all required parameters for the
+Kernel execution. The following are the parameters required for the Gromacs-LSDMap kernel combinations. An 
+example/demo can be found in ``` /tmp/ExTASY/config/gromacs_lsdmap_config.py```.
+
+----------------------------------------------General-------------------------------------------------------
+
+* num_CUs           : Number of Compute Units to be submitted to the pilot
+* num_iterations    : Number of iterations of Simulation-Analysis
+
+------------------------------------------Simulation(Gromacs)-----------------------------------------------
+
+* input_gro_loc & input_gro : location and name of the input(gro) file
+* grompp_loc & grompp_name  : location and name of the grompp(mdp) file
+* topol_loc & topol_name    : location and name of the topol(top) file
+* tmp_grofile               : name of the intermediate file used as input for LSDMap
+
+--------------------------------------------Analysis(LSDMap)------------------------------------------------
+
+* lsdm_config_loc & lsdm_config_name : location and name of the lsdm configuration file
+* wfile     : name of the weight file to be used in LSDMap
+
+------------------------------------------------Update------------------------------------------------------
+
+* num_runs : number of replicas
+
+-------------------------------------------------Auto-------------------------------------------------------
+
+These parameters are automatically assigned based on the values above. These are mainly for the 
+propagation of filenames throughout the tool.
+
+* system_name
+* outgrofile_name
+* egfile 
+* evfile 
+* nearest_neighbor_file 
+* num_clone_files 
+
+
+Setting up the Kernel configuration file : Amber-CoCo
+------------------------------------------------------
+
+As described before, the other input file to the tool is the file containing all required parameters for the
+Kernel execution. The following are the parameters required for the Amber-CoCo kernel combinations. An 
+example/demo can be found in ``` /tmp/ExTASY/config/amber_coco_config.py```.
+
+
+----------------------------------General------------------------------------
+
+* num_iterations  : Number of iterations of Simulation-Analysis chain
+* nreps           : Number of replicas
+
+
+-----------------------------Simulation(Amber)--------------------------------
+
+* mdshort_loc & mdshortfile : Location and name of the mdshort file
+* min_loc & minfile         : Location and name of the min file
+* crd_loc & crdfile         : Location and name of the crd file
+* top_loc & topfile         : Location and name of the topology file
+
+
+-------------------------------Analysis(CoCo)-----------------------------------
+
+* exp_loc       : common location on the remote system where all the execution is held (temporary)
 
 
 
-Running the workload
---------------------
+Running the workload : Gromacs-LSDMap
+---------------------------------------
 
-1) **Simulator**
-
-
-* To run just the Simulator, you will have to set the Load_Preprocessor, Load_Simulator variables in ``` /tmp/ExTASY/config/RP_config.py``` to 'Gromacs'. This
-tells the tool to load the Gromacs Simulator.
-
-* Next, open up the ```/tmp/ExTASY/config/kernel_config.py``` to set values which are kernel specific. For the Simulation you will have to set,
-
+The command format to run the workload is as follows,
 
 ```
-
-num_sims = 64 
-
-input_gro_loc = '/tmp/ExTASY/run'
-input_gro = 'input.gro'
-
-grompp_loc = '/tmp/ExTASY/run'
-grompp_name = 'grompp.mdp'
-
-topol_loc = '/tmp/ExTASY/run'
-topol_name = 'topol.top'
-
-tmp_grofile = 'tmp.gro'
-
-system_name = 'aladip_1000.gro'
-
+extasy --RPconfig RPCONFIG --Kconfig KCONFIG
 ```
 
-> num_sims                  : Number of CUs. The input.gro file is divided such that each CU gets equal number of frames
->
-> input_gro_loc, input_gro  : Location and name of the input file
->
-> grompp_loc, grompp_name   : Location and name of the mdp file
->
-> topol_loc, topol_name     : Location and name of the top file
->
-> tmp_grofile               : Name of the temporary gro file
->
-> system_name               : Name of the molecule, used in filenames
+where RPCONFIG is the path to the Radical Pilot configuration file and KCONFIG is the path to the Kernel 
+configuration file. But before running this command, there are some dependencies to address which is particular 
+to this combination of kernels.
 
-* Run ```extasy``` 
+
+The update stage following LSDMap in each iteration requires numpy and data from the folder coord_util in 
+```/tmp/ExTASY```. For this install numpy and set the python path to point to that path respectively.
+
+```
+pip install numpy
+export PYTHONPATH=$PYTHONPATH:/tmp/ExTASY
+```
+
+Next we need to set the tool to use Gromacs as the Simulation kernel and LSDMap as the Analysis kernel. For this,
+we need to set 2 parameters in the Radical Pilot configuration file.
+
+```
+Load_Simulator = 'Gromacs'
+Load_Analyzer = 'Amber'
+````
+
+All set ! Run the workload execution command ! If you followed this document completely, the command should look like
+```
+extasy --RPconfig /tmp/ExTASY/config/RP_config.py --Kconfig /tmp/ExTASY/config/gromacs_lsdmap_config.py
+```
 
 
 **What this does ...**
 
 This command starts the execution. It will first submit a pilot on the REMOTE_HOST and reserve the number of cores as defined by the
 PILOTSIZE. Once the pilot goes through the queue, the Preprocessor splits the input gro file as defined by ```input_gro``` into
-temporary smaller files based on ```num_sims```. The Simulator is then loaded which submits Compute Units to the REMOTE_HOST
-and takes as input the temporary files, a mdp file and a top file and runs the MD. The output is aggregated into one gro file to be used 
-during the Analysis phase.
-
-* * *
-
-2) **Analyzer**
-
-* To run just the Analyzer, you will have to set the Load_Analyzer variable in ``` /tmp/ExTASY/config/RP_config.py``` to 'LSDMap'. This
-tells the tool to load the LSDMap Analyzer .
-
-* Next, open up the ```/tmp/ExTASY/config/kernel_config.py``` to set values which are kernel specific. For the Analysis you will have to set,
-
-```
-lsdm_config = '/tmp/ExTASY/config'
-
-system_name = 'out'
-
-num_runs = 10000
-```
-
-
-> lsdm_config               : Location of the lsdmap config file (/config.ini)
-> 
-> system_name               : Name of the molecule, used in filenames
->
-> num_runs                  : Number of runs during Analysis stage
-
-> Rest of the variables are set based on ```system_name```
-
-> egfile                    : Name of the eigen vector file
->
-> evfile                    : Name of the eigen value file
->
-> nearest_neighbor_file     : Name of the nearest neighbour file
->
-> num_clone_files           : Name of clone file
-
-
-* Run ```extasy```
-
-
-**What this does ...**
-
-This command starts the execution. It will first submit a pilot on the REMOTE_HOST and reserve the number of cores as defined by the
-PILOTSIZE. Once the pilot goes through the queue, the Analyzer is loaded which looks for a gro file as defined by ```tmp_grofile```
-in ```kernel_config.py``` in the current directory (from where ```extasy``` is run) and runs LSDMap on it based on the parameters
-defined in ```/tmp/ExTASY/config/config.ini```.
-
-* * *
-
-
-3) **Simulator + Analyzer**
-
-* To run both the Simulator and Analyzer as a Sim-Analysis chain set Load_Preprocessor, Load_Simulator and Load_Analyzer in ```../config/RP_kernel.py```.
-
-* Set all the variables as before. Also set,
-
-```
-num_iterations = 1
-```
-
-> num_iterations              : Number of times the entire Sim-Analysis chain has to be performed
-
-* Run ```extasy```
-
-
-**What this does ...**
-
-This command starts the execution.It will first submit a pilot on the REMOTE_HOST and reserve the number of cores as defined by the
-PILOTSIZE. Once the pilot goes through the queue, the Preprocessor splits the input gro file as defined by ```input_gro``` into
-temporary smaller files based on ```num_sims```. The Simulator is then loaded which submits Compute Units to the REMOTE_HOST
+temporary smaller files based on ```num_CUs```. The Simulator is then loaded which submits Compute Units to the REMOTE_HOST
 and takes as input the temporary files, a mdp file and a top file and runs the MD. The output is aggregated into one gro file to be used 
 during the Analysis phase. The Analyzer is then loaded which looks for a gro file as defined by ```tmp_grofile```
-in ```kernel_config.py``` in the current directory (from where ```extasy``` is run) and runs LSDMap on it based on the parameters
-defined in ```/tmp/ExTASY/config/config.ini```.
+in KCONFIG in the current directory (from where ```extasy``` is run) and runs LSDMap on it.

@@ -22,7 +22,7 @@ def Preprocessing(Kconfig_url,umgr):
     if os.path.exists(grofile_name_loc + '/' + grofile_name) is True:
         shutil.copy(grofile_name_loc + '/' + grofile_name,os.path.dirname(os.path.realpath(__file__)))
 
-    num_tasks = num_CUs
+    num_tasks = num_sims
 
     print 'Prepare grofiles..'
 
