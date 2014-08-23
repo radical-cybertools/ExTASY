@@ -1,5 +1,5 @@
-Coupled Simulation-Analysis Execution (ExTASY)
-===============================================
+Coupled Simulation-Analysis Execution
+======================================
 
 Provides a command line interface to run multiple Molecular Dynamics (MD) simulations, which can be coupled to an analysis tool. The coupled simulation-analysis execution pattern (aka ExTASY pattern) currently supports two examples: 
 (a) Gromacs as the "Simulator" and LSDMap as the "Analyzer"; (b) AMBER as the simulation engine and COCO as the analyzer. Due to the plugin-based architecture, this execution pattern, will be 
@@ -51,7 +51,7 @@ python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
 USAGE
 ======
 
-To use the ASA tool, you will first need to setup two files. 
+To use the CSA tool, you will first need to setup two files. 
 
 A configuration file for the Radical Pilot related parameters which would allow us to launch pilot(s) and compute units on the targeted remote machine.
 You will also use this file to mention the Simulation and Analysis kernels to be used.
@@ -60,8 +60,8 @@ The second configuration file should contain all the parameters required to exec
 combinations (Gromacs-LSDMap / Amber-CoCo) is given below.
 
 
-Setting up the Radical Pilot config file
------------------------------------------
+Setting up the Radical Pilot configuration file
+------------------------------------------------
 
 The RP config file is used for defining the parameters related to Radical Pilot. It is one of the input files 
 to the ASA tool.
@@ -83,7 +83,7 @@ As described before, the other input file to the tool is the file containing all
 Kernel execution. The following are the parameters required for the Gromacs-LSDMap kernel combinations. An 
 example/demo can be found in ``` /tmp/ExTASY/config/gromacs_lsdmap_config.py```.
 
-----------------------------------------------General-------------------------------------------------------
+----------------------------------------------------------General-----------------------------------------------------------------------
 
 * num_CUs           : Number of Compute Units to be submitted to the pilot
 * num_iterations    : Number of iterations of Simulation-Analysis
