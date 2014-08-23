@@ -123,7 +123,7 @@ As described before, the other input file to the tool is the file containing all
 Kernel execution. The following are the parameters required for the Gromacs-LSDMap kernel combinations. An 
 example/demo can be found in ``` /tmp/ExTASY/config/gromacs_lsdmap_config.py```.
 
-----------------------------------------------------------General-----------------------------------------------------------------------
+----------------------------------------------------------General-------------------------------------------------------------------------
 
 * num_CUs           : Number of Compute Units to be submitted to the pilot
 * num_iterations    : Number of iterations of Simulation-Analysis
@@ -140,11 +140,11 @@ example/demo can be found in ``` /tmp/ExTASY/config/gromacs_lsdmap_config.py```.
 * lsdm_config_loc & lsdm_config_name : location and name of the lsdm configuration file
 * wfile     : name of the weight file to be used in LSDMap
 
-------------------------------------------------------------Update----------------------------------------------------------------------
+------------------------------------------------------------Update--------------------------------------------------------------------------
 
 * num_runs : number of replicas
 
--------------------------------------------------------------Auto-----------------------------------------------------------------------
+-------------------------------------------------------------Auto---------------------------------------------------------------------------
 
 These parameters are automatically assigned based on the values above. These are mainly for the 
 propagation of filenames throughout the tool.
@@ -165,7 +165,7 @@ Kernel execution. The following are the parameters required for the Amber-CoCo k
 example/demo can be found in ``` /tmp/ExTASY/config/amber_coco_config.py```.
 
 
-----------------------------------------------------------General-----------------------------------------------------------------------
+----------------------------------------------------------General-----------------------------------------------------------------------------
 
 * num_iterations  : Number of iterations of Simulation-Analysis chain
 * nreps           : Number of replicas
@@ -179,7 +179,7 @@ example/demo can be found in ``` /tmp/ExTASY/config/amber_coco_config.py```.
 * top_loc & topfile         : Location and name of the topology file
 
 
--------------------------------------------------------Analysis(CoCo)-------------------------------------------------------------------
+-------------------------------------------------------Analysis(CoCo)--------------------------------------------------------------------
 
 * exp_loc       : common location on the remote system where all the execution is held (temporary)
 
