@@ -48,6 +48,46 @@ To verify the installation, check the current version
 python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
 ```
 
+Running LSDMap on Stampede
+---------------------------
+
+Running LSDMap on Stampede requires that you make a local installation of the lsdmap tool using the 
+existing python/2.7.6.
+
+```
+module load -intel intel/14.0.1.106
+module load python
+cd
+git clone git://github.com/scipy/scipy.git scipy
+cd scipy
+python setup.py install --user
+```
+
+> You will have to install numpy and cython as well before installing scipy. For other scipy dependencies 
+> ```
+> http://stackoverflow.com/questions/7496547/python-scipy-needs-blas
+> ```
+
+
+Running CoCo on Stampede
+-------------------------
+
+```
+module load python
+cd
+git clone git://github.com/scipy/scipy.git scipy
+cd scipy
+python setup.py install --user
+```
+
+> You will have to install numpy and cython as well before installing scipy. For other scipy dependencies 
+> ```
+> http://stackoverflow.com/questions/7496547/python-scipy-needs-blas
+> ```
+
+
+
+
 USAGE
 ======
 
@@ -88,23 +128,23 @@ example/demo can be found in ``` /tmp/ExTASY/config/gromacs_lsdmap_config.py```.
 * num_CUs           : Number of Compute Units to be submitted to the pilot
 * num_iterations    : Number of iterations of Simulation-Analysis
 
-------------------------------------------Simulation(Gromacs)-----------------------------------------------
+-----------------------------------------------------Simulation(Gromacs)----------------------------------------------------------------
 
 * input_gro_loc & input_gro : location and name of the input(gro) file
 * grompp_loc & grompp_name  : location and name of the grompp(mdp) file
 * topol_loc & topol_name    : location and name of the topol(top) file
 * tmp_grofile               : name of the intermediate file used as input for LSDMap
 
---------------------------------------------Analysis(LSDMap)------------------------------------------------
+-------------------------------------------------------Analysis(LSDMap)-----------------------------------------------------------------
 
 * lsdm_config_loc & lsdm_config_name : location and name of the lsdm configuration file
 * wfile     : name of the weight file to be used in LSDMap
 
-------------------------------------------------Update------------------------------------------------------
+------------------------------------------------------------Update----------------------------------------------------------------------
 
 * num_runs : number of replicas
 
--------------------------------------------------Auto-------------------------------------------------------
+-------------------------------------------------------------Auto-----------------------------------------------------------------------
 
 These parameters are automatically assigned based on the values above. These are mainly for the 
 propagation of filenames throughout the tool.
@@ -125,13 +165,13 @@ Kernel execution. The following are the parameters required for the Amber-CoCo k
 example/demo can be found in ``` /tmp/ExTASY/config/amber_coco_config.py```.
 
 
-----------------------------------General------------------------------------
+----------------------------------------------------------General-----------------------------------------------------------------------
 
 * num_iterations  : Number of iterations of Simulation-Analysis chain
 * nreps           : Number of replicas
 
 
------------------------------Simulation(Amber)--------------------------------
+-------------------------------------------------------Simulation(Amber)----------------------------------------------------------------
 
 * mdshort_loc & mdshortfile : Location and name of the mdshort file
 * min_loc & minfile         : Location and name of the min file
@@ -139,7 +179,7 @@ example/demo can be found in ``` /tmp/ExTASY/config/amber_coco_config.py```.
 * top_loc & topfile         : Location and name of the topology file
 
 
--------------------------------Analysis(CoCo)-----------------------------------
+-------------------------------------------------------Analysis(CoCo)-------------------------------------------------------------------
 
 * exp_loc       : common location on the remote system where all the execution is held (temporary)
 
@@ -172,7 +212,7 @@ we need to set 2 parameters in the Radical Pilot configuration file.
 
 ```
 Load_Simulator = 'Gromacs'
-Load_Analyzer = 'Amber'
+Load_Analyzer = 'LSDMap'
 ````
 
 All set ! Run the workload execution command ! If you followed this document completely, the command should look like
@@ -189,3 +229,43 @@ temporary smaller files based on ```num_CUs```. The Simulator is then loaded whi
 and takes as input the temporary files, a mdp file and a top file and runs the MD. The output is aggregated into one gro file to be used 
 during the Analysis phase. The Analyzer is then loaded which looks for a gro file as defined by ```tmp_grofile```
 in KCONFIG in the current directory (from where ```extasy``` is run) and runs LSDMap on it.
+
+
+Running the workload : Amber-CoCo
+---------------------------------------
+
+The command format to run the workload is as follows,
+
+```
+extasy --RPconfig RPCONFIG --Kconfig KCONFIG
+```
+
+where RPCONFIG is the path to the Radical Pilot configuration file and KCONFIG is the path to the Kernel 
+configuration file. But before running this command, there are some dependencies to address which is particular 
+to this combination of kernels.
+
+Before we start with the execution, we need to set the tool to use Gromacs as the Simulation kernel and LSDMap as the Analysis kernel. For this,
+we need to set 2 parameters in the Radical Pilot configuration file.
+
+```
+Load_Simulator = 'Amber'
+Load_Analyzer = 'CoCo'
+````
+
+All set ! Run the workload execution command ! If you followed this document completely, the command should look like
+
+```
+extasy --RPconfig /tmp/ExTASY/config/RP_config.py --Kconfig /tmp/ExTASY/config/amber_coco_config.py
+```
+
+
+**What this does ...**
+
+This command starts the execution. It will first submit a pilot on the REMOTE_HOST and reserve the number of cores as defined by the
+PILOTSIZE. Once the pilot goes through the queue, the Preprocessor transfers the required analysis file to the remote host and sets 
+up the folder structure, since this is currently required according to the CoCo file provided. The Simulator is then loaded which 
+submits Compute Units to the REMOTE_HOST, the files were already transfered in the preprocessing stage. The Analyzer is then loaded
+ which executes the MPI based CoCo script, each of the output remains in their respective folders in the remote host.
+ 
+ 
+

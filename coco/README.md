@@ -12,6 +12,7 @@ python setup.py install --user
 ```
 
 Also install scipy 14 or greater on python 2.7.3.
+
 ```
 cd
 git clone git://github.com/scipy/scipy.git scipy
