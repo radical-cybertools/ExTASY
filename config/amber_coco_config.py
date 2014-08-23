@@ -8,16 +8,16 @@ nreps = 8
 
 #-------------------------Simulation-----------------------
 
-mdshort_loc = '/home/vivek/Research/ExTASY/coco_examples'
+mdshort_loc = '/tmp/ExTASY/coco_examples'
 mdshortfile = 'mdshort.in'
 
-min_loc = '/home/vivek/Research/ExTASY/coco_examples'
+min_loc = '/tmp/ExTASY/coco_examples'
 minfile = 'min.in'
 
-crd_loc = '/home/vivek/Research/ExTASY/coco_examples'
+crd_loc = '/tmp/ExTASY/coco_examples'
 crdfile = 'penta.crd'
 
-top_loc = '/home/vivek/Research/ExTASY/coco_examples'
+top_loc = '/tmp/ExTASY/coco_examples'
 topfile = 'penta.top'
 
 

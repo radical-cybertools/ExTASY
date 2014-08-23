@@ -7,21 +7,21 @@ num_iterations = 1
 
 #--------------------------Simulation--------------------------------
 
-input_gro_loc = '/home/vivek/Research/ExTASY/gromacs_lsdmap_example'
+input_gro_loc = '/tmp/ExTASY/gromacs_lsdmap_example'
 input_gro = 'input.gro'
 
 
-grompp_loc = '/home/vivek/Research/ExTASY/gromacs_lsdmap_example'
+grompp_loc = '/tmp/ExTASY/gromacs_lsdmap_example'
 grompp_name = 'grompp.mdp'
 
-topol_loc = '/home/vivek/Research/ExTASY/gromacs_lsdmap_example'
+topol_loc = '/tmp/ExTASY/gromacs_lsdmap_example'
 topol_name = 'topol.top'
 
 tmp_grofile = 'tmp.gro'
 
 #--------------------------Analysis----------------------------------
 
-lsdm_config_loc = '/home/vivek/Research/ExTASY/gromacs_lsdmap_example'
+lsdm_config_loc = '/tmp/ExTASY/gromacs_lsdmap_example'
 lsdm_config_name = 'config.ini'
 
 system_name = 'out'
