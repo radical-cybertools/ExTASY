@@ -72,7 +72,7 @@ def get_version():
     return short_version, long_version
 
 
-short_version, long_version = get_version ()
+short_version, long_version = get_version()
 
 #-----------------------------------------------------------------------------
 # check python version. we need > 2.5, <3.x
