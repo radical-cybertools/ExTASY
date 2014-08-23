@@ -72,6 +72,21 @@ python setup.py install --user
 Running CoCo on Stampede
 -------------------------
 
+Since the CoCo repository is private, you will need to explicitly log into Stampede and make a local 
+installation of CoCo using the existing python/2.7.6.
+
+```
+cd $HOME
+git clone https://<user-name>@bitbucket.org/extasy-project/coco.git
+module load python
+cd $HOME/coco
+python setup.py install --user
+
+```
+
+Running CoCo on Stampede requires that you make a local installation of the lsdmap tool using the 
+existing python/2.7.6.
+
 ```
 module load python
 cd
