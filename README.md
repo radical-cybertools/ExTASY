@@ -39,7 +39,7 @@ python setup.py install
 > to your allocation number 
 >
 > ```
-> export PROJECT_ID = 'ABCXYZ123'
+> export PROJECT_ID='ABCXYZ123'
 > ```
 
 To verify the installation, check the current version
@@ -60,23 +60,8 @@ Installing LSDMap on Stampede
 ---------------------------
 
 Running LSDMap on Stampede requires that you make a local installation of of scipy 14 (or greater) using the 
-existing python/2.7.6.
-
-```
-module load -intel intel/14.0.1.106
-module load python
-cd
-git clone git://github.com/scipy/scipy.git scipy
-cd scipy
-python setup.py install --user
-```
-
-> Before installing scipy, you will have to install numpy, cython, BLAS + LAPACK. 
-> ```
-> Cython : wget cython.org/release/Cython-0.20.2.tar.gz
-> numpy : git clone git://github.com/numpy/numpy.git numpy
-> BLAS + LAPACK : http://stackoverflow.com/questions/7496547/python-scipy-needs-blas
-> ```
+existing python/2.7.6. To use python/2.7.6, you will have to load intel/14.0.1.106. If you do not have scipy 14 
+(or greater) with python/2.7.6, goto [link](https://github.com/radical-cybertools/ExTASY/blob/devel/docs/scipy_installation_python_2_7_6.md)
 
 After installing the dependencies, you will need to make a local installation of lsdmap on Stampede using the existing
 python/2.7.6
@@ -95,24 +80,8 @@ Installing CoCo on Stampede
 -------------------------
 
 Running CoCo on Stampede requires that you make a local installation of scipy 14 (or greater) using the 
-existing python/2.7.3. Make sure intel/13.0.2.146(default) is loaded.
-
-```
-module load python
-cd
-git clone git://github.com/scipy/scipy.git scipy
-cd scipy
-python setup.py install --user
-```
-
-> Before installing scipy, you will have to install numpy, cython, BLAS + LAPACK. 
-> ```
-> Cython : wget cython.org/release/Cython-0.20.2.tar.gz
-> numpy : git clone git://github.com/numpy/numpy.git numpy
-> BLAS + LAPACK : http://stackoverflow.com/questions/7496547/python-scipy-needs-blas
-> ```
-
-
+existing python/2.7.3. To use python/2.7.3, you will have to load intel/13.0.2.146. If you do not have scipy 14 
+(or greater) with python/2.7.3, goto [link](https://github.com/radical-cybertools/ExTASY/blob/devel/docs/scipy_installation_python_2_7_3.md)
 
 After installing the dependencies, you will need to explicitly log into Stampede and make a local 
 installation of CoCo using the existing python/2.7.3.
@@ -284,7 +253,7 @@ where RPCONFIG is the path to the Radical Pilot configuration file and KCONFIG i
 configuration file. But before running this command, there are some dependencies to address which is particular 
 to this combination of kernels.
 
-Before we start with the execution, we need to set the tool to use Gromacs as the Simulation kernel and LSDMap as the Analysis kernel. For this,
+Before we start with the execution, we need to set the tool to use Amber as the Simulation kernel and CoCo as the Analysis kernel. For this,
 we need to set 2 parameters in the Radical Pilot configuration file.
 
 ```

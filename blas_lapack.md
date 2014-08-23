@@ -26,5 +26,5 @@ edit the make.inc file by setting OPTS = -O2 -fPIC and NOOPT = -O0 -fPIC
 ```
 make lapacklib
 make clean
-export LAPACK=~/src/lapack-*/liblapack.a
+export LAPACK=~/src/lapack-3.5.0/liblapack.a
 ```
