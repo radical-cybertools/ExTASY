@@ -51,7 +51,7 @@ python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
 Running LSDMap on Stampede
 ---------------------------
 
-Running LSDMap on Stampede requires that you make a local installation of the lsdmap tool using the 
+Running LSDMap on Stampede requires that you make a local installation of of scipy 14 (or greater) using the 
 existing python/2.7.6.
 
 ```
@@ -68,24 +68,24 @@ python setup.py install --user
 > http://stackoverflow.com/questions/7496547/python-scipy-needs-blas
 > ```
 
+After installing the dependencies, you will need to make a local installation of lsdmap on Stampede using the existing
+python/2.7.6
+
+```
+module load -intel intel/14.0.1.106
+module load python
+cd
+git clone https://github.com/jp43/lsdmap.git
+cd lsdmap
+python setup.py install --user
+```
+
 
 Running CoCo on Stampede
 -------------------------
 
-Since the CoCo repository is private, you will need to explicitly log into Stampede and make a local 
-installation of CoCo using the existing python/2.7.6.
-
-```
-cd $HOME
-git clone https://<user-name>@bitbucket.org/extasy-project/coco.git
-module load python
-cd $HOME/coco
-python setup.py install --user
-
-```
-
-Running CoCo on Stampede requires that you make a local installation of the lsdmap tool using the 
-existing python/2.7.6.
+Running CoCo on Stampede requires that you make a local installation of scipy 14 (or greater) using the 
+existing python/2.7.3.
 
 ```
 module load python
@@ -100,6 +100,19 @@ python setup.py install --user
 > http://stackoverflow.com/questions/7496547/python-scipy-needs-blas
 > ```
 
+
+
+After installing the dependencies, you will need to explicitly log into Stampede and make a local 
+installation of CoCo using the existing python/2.7.3.
+
+```
+cd $HOME
+git clone https://<user-name>@bitbucket.org/extasy-project/coco.git
+module load python
+cd $HOME/coco
+python setup.py install --user
+
+```
 
 
 
