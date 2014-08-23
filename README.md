@@ -140,7 +140,7 @@ Setting up the Radical Pilot configuration file
 ------------------------------------------------
 
 The RP config file is used for defining the parameters related to Radical Pilot. It is one of the input files 
-to the ASA tool.
+to the csa tool.
 
 * Load_Preprocessor : The preprocessor to be used. Can be 'Gromacs' or 'Amber'
 * Load_Simulator    : The Simulator to be loaded. Can be 'Gromacs' or 'Amber'
