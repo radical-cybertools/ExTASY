@@ -48,7 +48,7 @@ To verify the installation, check the current version
 python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
 ```
 
-Running LSDMap on Stampede
+Installing LSDMap on Stampede
 ---------------------------
 
 Running LSDMap on Stampede requires that you make a local installation of of scipy 14 (or greater) using the 
@@ -81,7 +81,7 @@ python setup.py install --user
 ```
 
 
-Running CoCo on Stampede
+Installing CoCo on Stampede
 -------------------------
 
 Running CoCo on Stampede requires that you make a local installation of scipy 14 (or greater) using the 
