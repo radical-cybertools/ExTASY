@@ -17,8 +17,9 @@ Numpy
 -----
 
 ```
-git clone git://github.com/numpy/numpy.git numpy
-cd numpy
+wget https://pypi.python.org/packages/source/n/numpy/numpy-1.8.2.tar.gz#md5=cdd1a0d14419d8a8253400d8ca8cba42
+tar xvfz numpy-1.8.2.tar.gz
+cd numpy-1.8.2
 python setup.py install --user                  #make sure python/2.7.6 is being used
 ```
 
@@ -63,7 +64,8 @@ Scipy
 ------
 
 ```
-git clone git://github.com/scipy/scipy.git scipy
-cd scipy
+wget https://pypi.python.org/packages/source/s/scipy/scipy-0.14.0.tar.gz#md5=d7c7f4ccf8b07b08d6fe49d5cd51f85d
+tar xvfz scipy-0.14.0.tar.gz
+cd scipy-0.14.0
 python setup.py install --user              #make sure python/2.7.6 is being used
 ```

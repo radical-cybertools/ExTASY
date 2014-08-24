@@ -59,9 +59,19 @@ After installation on localhost, the following sections have to be implemented t
 Installing LSDMap on Stampede
 ---------------------------
 
-Running LSDMap on Stampede requires that you make a local installation of of scipy 14 (or greater) using the 
-existing python/2.7.6. To use python/2.7.6, you will have to load intel/14.0.1.106. If you do not have scipy 14 
-(or greater) with python/2.7.6, goto [link](https://github.com/radical-cybertools/ExTASY/blob/devel/docs/scipy_installation_stampede_python_2_7_6.md)
+Running LSDMap on Stampede requires that you make a local installation of scipy 0.10.0 (or greater) and numpy 1.4.1 
+(or greater)using the existing python/2.7.6. To use python/2.7.6, you will have to load intel/14.0.1.106. If you do 
+not have scipy 0.10.0 (or greater) and numpy 1.4.1 (or greater) with python/2.7.6, goto [link](https://github.com/radical-cybertools/ExTASY/blob/devel/docs/scipy_installation_stampede_python_2_7_6.md)
+
+To check the version of scipy and numpy,
+
+```
+import scipy
+scipy.__version__
+import numpy
+numpy.__version__
+```
+
 
 After installing the dependencies, you will need to make a local installation of lsdmap on Stampede using the existing
 python/2.7.6
@@ -82,6 +92,16 @@ Installing CoCo on Stampede
 Running CoCo on Stampede requires that you make a local installation of scipy 14 (or greater) using the 
 existing python/2.7.3. To use python/2.7.3, you will have to load intel/13.0.2.146. If you do not have scipy 14 
 (or greater) with python/2.7.3, goto [link](https://github.com/radical-cybertools/ExTASY/blob/devel/docs/scipy_installation_stampede_python_2_7_3.md)
+
+To check the version of scipy and numpy,
+
+```
+import scipy
+scipy.__version__
+import numpy
+numpy.__version__
+```
+
 
 After installing the dependencies, you will need to explicitly log into Stampede and make a local 
 installation of CoCo using the existing python/2.7.3.
