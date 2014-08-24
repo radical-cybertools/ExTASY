@@ -23,7 +23,7 @@ Requirements
 Installation
 =============
 
-To install the ExTASY framework, create a virtual environment and use pip to install the package
+To install the ExTASY framework, create a virtual environment on localhost and use pip to install the package
 
 ```
 virtualenv /tmp/test

@@ -50,7 +50,8 @@ def Analyzer(umgr,RPconfig_url,Kconfig_url,cycle):
     os.system('python %s/reweighting.py -c %s -n %s -s %s -w %s -o %s' % (curdir,tmp_grofile,nearest_neighbor_file,num_clone_files,wfile,outgrofile_name))
 
     #Rename outputfile as inputfile for next iteration
-    os.sysconf('mv %s %s/%s'%(outgrofile_name,input_gro_loc,input_gro))
+    os.system('mv %s %s/%s'%(outgrofile_name,input_gro_loc,input_gro))
+
 
     print 'Analysis + Update time : ',time.time() - p1
     return
