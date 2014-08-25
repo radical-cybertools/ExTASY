@@ -61,6 +61,8 @@ def startPilot(Kconfig_url,RPconfig_url):
     pdesc.resource = REMOTE_HOST
     pdesc.runtime = WALLTIME
     pdesc.cores = PILOTSIZE
+    pdesc.workdir = WORKDIR
+    pdesc.queue = QUEUE
     pdesc.project = ALLOCATION
 
 
@@ -105,6 +107,8 @@ def main():
 
     from RPconfig import *
     from Kconfig import *
+
+    Load_Preprocessor = Load_Simulator
 
     if ( Load_Preprocessor == 'Gromacs'):
         from Preprocessor.Gromacs.preprocessor import Preprocessing
