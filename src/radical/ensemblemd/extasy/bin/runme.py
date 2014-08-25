@@ -61,7 +61,7 @@ def startPilot(Kconfig_url,RPconfig_url):
     pdesc.resource = REMOTE_HOST
     pdesc.runtime = WALLTIME
     pdesc.cores = PILOTSIZE
-    pdesc.project = os.getenv('PROJECT_ID')
+    pdesc.project = ALLOCATION
 
 
     # Launch the pilot.
