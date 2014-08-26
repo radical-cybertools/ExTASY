@@ -1,0 +1,3 @@
+[console_scripts]
+extasy = radical.ensemblemd.extasy.bin.runme:main
+
