@@ -7,7 +7,8 @@ import imp
 
 def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
-    print 'Cycle : %s' % cycle
+    print 'Starting Analysis'
+
     print 'Submitting COCO Compute Unit'
 
     cudesc = radical.pilot.ComputeUnitDescription()

@@ -10,7 +10,6 @@ import radical.pilot
 
 def Preprocessing(Kconfig,umgr):
 
-    print 'Cycle : 0'
     print "Creating initial setup"
 
     exp_loc = Kconfig.exp_loc

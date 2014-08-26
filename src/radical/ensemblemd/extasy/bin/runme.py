@@ -129,10 +129,8 @@ def main():
     for i in range(0,Kconfig.num_iterations):
         if RPconfig.Load_Simulator:
             p1=time.time()
-            print 'Starting Simulation'
             Simulator(umgr,RPconfig,Kconfig,i)
         if RPconfig.Load_Analyzer:
-            print 'Starting Analysis'
             Analyzer(umgr,RPconfig,Kconfig,i)
             p2=time.time()
         if p1.is_integer() and p2.is_integer():

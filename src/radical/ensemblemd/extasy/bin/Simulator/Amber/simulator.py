@@ -11,6 +11,10 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
     p1 = time.time()
     #curdir = os.path.dirname(os.path.realpath(__file__))
 
+    print 'Cycle %s' %cycle
+
+    print 'Starting Simulation'
+
     dict = {}
     dict['crdfile'] = Kconfig.crdfile
     dict['topfile'] = Kconfig.topfile
@@ -23,7 +27,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
 
     compute_units = []
     for i in range(Kconfig.nreps):
-        print "Submitting new 'pmemd' compute unit"
+        #print "Submitting new 'pmemd' compute unit"
         dict['rep'] = str(i)
         dict['path'] = Kconfig.exp_loc
         # output files that need to be transferred back: *.mdcrd

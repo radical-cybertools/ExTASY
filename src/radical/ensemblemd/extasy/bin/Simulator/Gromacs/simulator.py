@@ -11,6 +11,10 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
     p1 = time.time()
     curdir = os.path.dirname(os.path.realpath(__file__))
 
+    print 'Cycle %s' %cycle
+
+    print 'Starting Simulation'
+
     gromacs_tasks = []
     for i in range(0, Kconfig.num_CUs):
         mdtd = MDTaskDescription()

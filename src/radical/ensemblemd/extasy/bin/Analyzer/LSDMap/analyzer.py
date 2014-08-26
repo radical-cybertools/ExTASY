@@ -7,6 +7,8 @@ import os
 
 def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
+    print 'Starting Analysis'
+
     p1=time.time()
     curdir = os.path.dirname(os.path.realpath(__file__))
     mdtd=MDTaskDescription()
