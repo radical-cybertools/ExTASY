@@ -3,8 +3,8 @@
 
 #-------------------------------------------------------------------------------------------------
 # Change the values below accordingly to choose the Simulator and Analyzer
-Load_Simulator = 'Amber'                        # Simulator to be loaded. Can be 'Amber' or 'Gromacs'
-Load_Analyzer = 'CoCo'                          # Analyzer to be loaded. Can be 'CoCo' or 'LSDMap'
+Load_Simulator = 'Gromacs'                        # Simulator to be loaded. Can be 'Amber' or 'Gromacs'
+Load_Analyzer = 'LSDMap'                          # Analyzer to be loaded. Can be 'CoCo' or 'LSDMap'
 #-------------------------------------------------------------------------------------------------
 
 

@@ -80,7 +80,7 @@ python/2.7.6
 module load -intel intel/14.0.1.106
 module load python
 cd
-git clone https://github.com/jp43/lsdmap.git
+git clone git://git.code.sf.net/p/lsdmap/git lsdmap
 cd lsdmap
 python setup.py install --user
 ```
