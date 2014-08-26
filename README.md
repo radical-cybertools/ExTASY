@@ -292,7 +292,7 @@ extasy --RPconfig /tmp/ExTASY/config/RP_config.py --Kconfig /tmp/ExTASY/config/a
 This command starts the execution. It will first submit a pilot on the REMOTE_HOST and reserve the number of cores as defined by the
 PILOTSIZE. Once the pilot goes through the queue, the Preprocessor transfers the required analysis file to the remote host and sets 
 up the folder structure, since this is currently required according to the CoCo file provided. The Simulator is then loaded which 
-submits Compute Units to the REMOTE_HOST, the files were already transfered in the preprocessing stage. The Analyzer is then loaded
+submits Compute Units to the REMOTE_HOST, the files were already transferred in the preprocessing stage. The Analyzer is then loaded
  which executes the MPI based CoCo script, each of the output remains in their respective folders in the remote host.
  
  
