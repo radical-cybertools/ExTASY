@@ -108,11 +108,10 @@ installation of CoCo using the existing python/2.7.3.
 
 ```
 cd $HOME
-git clone https://<user-name>@bitbucket.org/extasy-project/coco.git
+git clone https://bitbucket.org/extasy-project/coco.git
 module load python
 cd $HOME/coco
 python setup.py install --user
-
 ```
 
 
