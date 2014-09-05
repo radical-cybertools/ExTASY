@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""Setup file for EnsembleAPI
+"""Setup file for ExTASY
 """
 
 __author__ = "Vivek"
@@ -13,6 +13,7 @@ __license__ = "MIT"
 
 import os
 import sys
+import multiprocessing
 
 from setuptools import setup, find_packages, Command
 
@@ -71,7 +72,7 @@ def get_version():
     return short_version, long_version
 
 
-short_version, long_version = get_version ()
+short_version, long_version = get_version()
 
 #-----------------------------------------------------------------------------
 # check python version. we need > 2.5, <3.x
@@ -87,7 +88,7 @@ def read(*rnames):
 setup_args = {
     'name' : 'radical.ensemblemd.extasy',
     'version' : short_version,
-    'description' :" A library to run bulk gromacs tasks on DCI.",
+    'description' :" A library to run bulk Coupled Simulator-Analyzer tasks on DCI.",
     'long_description' : (read('README.md') + '\n\n' + read('CHANGES.md')),
     'author' : 'RADICAL Group at Rutgers University',
     'author_email' : 'vivek.balasubramanian@rutgers.edu',
@@ -115,7 +116,7 @@ setup_args = {
     ],
 
     'entry_points': {
-     'console_scripts': ['ensemble = radical.ensemblemd.extasy.bin.runme:main']
+     'console_scripts': ['extasy = radical.ensemblemd.extasy.bin.runme:main']
     },
 
 
@@ -125,7 +126,8 @@ setup_args = {
 
     'package_data' : {'': ['*.sh', 'VERSION', 'VERSION.git', ]},
     'install_requires' : ['setuptools>=1',
-                          'radical.pilot'
+                          'radical.pilot',
+                          'argparse'
                          ],
     'tests_require' : ['setuptools>=1','nose','radical.pilot'],
     'test_suite' : 'radical.ensemblemd.extasy.tests',

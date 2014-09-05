@@ -1,49 +1,142 @@
-import sys
-import mdAPI
-import imp
+__author__ = 'vivek'
+
+import radical.pilot
 import argparse
+import imp
+#from config.kernel_config import *      #change this to command line
+#from config.RP_config import *          #change this too
+import os
+import sys
+import time
+
+
+#------------------------------------------------------------------------------
+#
+def pilot_state_cb(pilot, state):
+    """pilot_state_change_cb() is a callback function. It gets called very
+    time a ComputePilot changes its state.
+    """
+    print "[Callback]: ComputePilot '{0}' state changed to {1}.".format(
+        pilot.uid, state)
+
+    if state == radical.pilot.states.FAILED:
+        sys.exit(1)
+
+#------------------------------------------------------------------------------
+#
+def unit_state_change_cb(unit, state):
+    """unit_state_change_cb() is a callback function. It gets called very
+    time a ComputeUnit changes its state.
+    """
+    print "[Callback]: ComputeUnit '{0}' state changed to {1}.".format(
+        unit.uid, state)
+    if state == radical.pilot.states.FAILED:
+        print "            Log: %s" % unit.log[-1]
+
+#---------------------------------------------------------------------------------
+
+def startPilot(Kconfig,RPconfig):
+
+    session = radical.pilot.Session(database_url=RPconfig.DBURL)
+    print "Session UID: {0} ".format(session.uid)
+
+    # Add an ssh identity to the session.
+    cred = radical.pilot.Context('ssh')
+    cred.user_id = RPconfig.UNAME
+    session.add_context(cred)
+
+    # Add a Pilot Manager. Pilot managers manage one or more ComputePilots.
+    pmgr = radical.pilot.PilotManager(session=session)
+
+    pmgr.register_callback(pilot_state_cb)
+
+    # Start a pilot at the remote host as per the configs
+    pdesc = radical.pilot.ComputePilotDescription()
+    pdesc.resource = RPconfig.REMOTE_HOST
+    pdesc.runtime = RPconfig.WALLTIME
+    pdesc.cores = RPconfig.PILOTSIZE
+    if RPconfig.WORKDIR is not None:
+        pdesc.sandbox = RPconfig.WORKDIR
+    pdesc.queue = RPconfig.QUEUE
+    pdesc.project = RPconfig.ALLOCATION
+
+
+    # Launch the pilot.
+    pilot = pmgr.submit_pilots(pdesc)
+
+    print "Pilot UID       : {0} ".format(pilot.uid)
+
+
+    umgr = radical.pilot.UnitManager(session=session, scheduler=radical.pilot.SCHED_DIRECT_SUBMISSION)
+    # Register our callback with the UnitManager. This callback will get
+    # called every time any of the units managed by the UnitManager
+    # change their state.
+    umgr.register_callback(unit_state_change_cb)
+
+    # Add the previously created ComputePilot to the UnitManager.
+    umgr.add_pilots(pilot)
+
+    return umgr,session
+
+
 
 def main():
 
-    usage = 'usage: %prog --config [--checkenv, --testjob, --workload, --help]'
+    usage = 'usage: %prog --RPconfig RPCONFIG --Kconfig KCONFIG'
+
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config",help = "The resource configuration file")
-    parser.add_argument("--checkenv",action="store_true",help = "Submit a job to test the remote environment")
-    parser.add_argument("--testjob",action="store_true",help = "Submit a job to execute a simple gromacs ensemble")
-    parser.add_argument("-w","--workload",action="store_true",help = "Performs tasks mentioned in the workload file")
+    parser.add_argument('--RPconfig', help='link to Radical Pilot related configurations file')
+    parser.add_argument('--Kconfig', help='link to Kernel configurations file')
 
     args = parser.parse_args()
 
-    if args.config is None:
-        parser.error("Please define a config file.")
-    
-    else:
-        config = imp.load_source('config',args.config)
+    if args.RPconfig is None:
+        parser.error('Please enter a RP configuration file')
+        sys.exit(1)
+    if args.Kconfig is None:
+        parser.error('Please enter a Kernel configuration file')
+        sys.exit(0)
 
-        from config import RESOURCE,RCONF,DBURL,UNAME
+    RPconfig = imp.load_source('RPconfig', args.RPconfig)
+    Kconfig = imp.load_source('Kconfig', args.Kconfig)
 
-        #One object per Remote Host
-        obj1=mdAPI.simple(DBURL=DBURL,uname=UNAME)
 
-        #Resource started at the Remote Host as defined by RESOURCE
-        obj1.startResource(resource_info=RESOURCE,RCONF=RCONF)
+    Load_Preprocessor = RPconfig.Load_Simulator
 
-        if args.checkenv is True:
-            #Run test job to check environment
-            result=obj1.checkEnv()
-            sys.exit(result)
+    if ( Load_Preprocessor == 'Gromacs'):
+        from Preprocessor.Gromacs.preprocessor import Preprocessing
 
-        elif args.testjob is True:
-            #Run test job to submit a simple gromacs task
-            result=obj1.startTestJob()
-            sys.exit(result)
+    if (Load_Preprocessor == 'Amber'):
+        from Preprocessor.Amber.preprocessor import Preprocessing
 
-        elif args.workload is True:
-            #Tasks started at the Remote Host as defined by TASK
-            from config import TASK
-            result=obj1.startTasks(task_info=TASK)
-            sys.exit(result)
 
-        else:
-            print('Please enter a valid parameter (--checkenv, --testjob, --workload, --h for help)')
-    
+
+    umgr,session=startPilot(Kconfig,RPconfig)
+
+    Preprocessing(Kconfig,umgr)
+
+
+    if ( RPconfig.Load_Simulator == 'Amber'):
+        from Simulator.Amber.simulator import Simulator
+    if ( RPconfig.Load_Analyzer == 'CoCo'):
+        from Analyzer.CoCo.analyzer import Analyzer
+
+    if ( RPconfig.Load_Simulator == 'Gromacs'):
+        from Simulator.Gromacs.simulator import Simulator
+    if ( RPconfig.Load_Analyzer == 'LSDMap'):
+        from Analyzer.LSDMap.analyzer import Analyzer
+
+    for i in range(0,Kconfig.num_iterations):
+        if RPconfig.Load_Simulator:
+            p1=time.time()
+            Simulator(umgr,RPconfig,Kconfig,i)
+        if RPconfig.Load_Analyzer:
+            Analyzer(umgr,RPconfig,Kconfig,i)
+            p2=time.time()
+        if p1.is_integer() and p2.is_integer():
+            print 'TTC for one iteration : ', p2-p1
+
+    session.close()
+
+if __name__ == '__main__':
+    main()

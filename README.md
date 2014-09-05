@@ -1,15 +1,15 @@
-Coupled Simulation-Analysis Execution (ExTASY)
-===============================================
+Coupled Simulation-Analysis Execution
+======================================
 
 Provides a command line interface to run multiple Molecular Dynamics (MD) simulations, which can be coupled to an analysis tool. The coupled simulation-analysis execution pattern (aka ExTASY pattern) currently supports two examples: 
-(a) Gromacs as the "Simulator" and LSDMap as the "Analyzer"; (b) AMBER as the simulation engine and COCO as the analyzer. Due to the plugin-based architecture, this execution pattern, will be 
+(a) Gromacs as the "Simulator" and LSDMap as the "Analyzer"; (b) AMBER as the "Simulator" and COCO as the "Analyzer". Due to the plugin-based architecture, this execution pattern, will be 
 expandable as to support more Simulators and Analyzers.
 
 
 Requirements
 ============
 
-* python >= 2.6
+* python >= 2.7
 * virtualenv >= 1.11
 * pip >= 1.5
 * Password-less ssh login to remote machine
@@ -23,16 +23,24 @@ Requirements
 Installation
 =============
 
-To install the ExTASY framework, create a virtual environment and use pip to install the package
+To install the ExTASY framework, create a virtual environment on localhost and use pip to install the package
 
 ```
 virtualenv /tmp/test
 source /tmp/test/bin/activate
 cd /tmp/
-git clone https://github.com/radical-cybertools/ExTASY.git
+pip install --upgrade git+https://github.com/radical-cybertools/radical.pilot.git@master#egg=radical.pilot
+pip install --upgrade git+https://github.com/radical-cybertools/radical.ensemblemd.mdkernels.git@master#egg=radical.ensemblemd.mdkernels
+git clone -b devel https://github.com/radical-cybertools/ExTASY.git
 cd ExTASY
 python setup.py install
 ```
+> If you have multiple allocations on the same system, set the environment variable PROJECT_ID 
+> to your allocation number 
+>
+> ```
+> export PROJECT_ID='ABCXYZ123'
+> ```
 
 To verify the installation, check the current version
 
@@ -40,156 +48,252 @@ To verify the installation, check the current version
 python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
 ```
 
-> You can set an Environement variable CONFIG to point to the configuration folder in the cloned repository.
-> ```
-> export CONFIG=/tmp/ExTASY/config
-> ```
+After installation on localhost, the following sections have to be implemented to run the workload.
 
-Usage
+1. Installing LSDMap/CoCo on Stampede
+2. Setting up the Radical Pilot configuration file
+3. Setting up the Kernel configuration file : Gromacs-LSDMap/Amber-CoCo
+4. Running the workload : Gromacs-LSDMap/Amber-CoCo
+
+
+Installing LSDMap on Stampede
+---------------------------
+
+Running LSDMap on Stampede requires that you make a local installation of scipy 0.10.0 (or greater) and numpy 1.4.1 
+(or greater)using the existing python/2.7.6. To use python/2.7.6, you will have to load intel/14.0.1.106. If you do 
+not have scipy 0.10.0 (or greater) and numpy 1.4.1 (or greater) with python/2.7.6, goto [link](https://github.com/radical-cybertools/ExTASY/blob/devel/docs/scipy_installation_stampede_python_2_7_6.md)
+
+To check the version of scipy and numpy,
+
+```
+import scipy
+scipy.__version__
+import numpy
+numpy.__version__
+```
+
+
+After installing the dependencies, you will need to make a local installation of lsdmap on Stampede using the existing
+python/2.7.6
+
+```
+module load -intel intel/14.0.1.106
+module load python
+cd
+git clone git://git.code.sf.net/p/lsdmap/git lsdmap
+cd lsdmap
+python setup.py install --user
+```
+
+
+Installing CoCo on Stampede
+-------------------------
+
+Running CoCo on Stampede requires that you make a local installation of scipy 14 (or greater) using the 
+existing python/2.7.3. To use python/2.7.3, you will have to load intel/13.0.2.146. If you do not have scipy 14 
+(or greater) with python/2.7.3, goto [link](https://github.com/radical-cybertools/ExTASY/blob/devel/docs/scipy_installation_stampede_python_2_7_3.md)
+
+To check the version of scipy and numpy,
+
+```
+import scipy
+scipy.__version__
+import numpy
+numpy.__version__
+```
+
+
+After installing the dependencies, you will need to explicitly log into Stampede and make a local 
+installation of CoCo using the existing python/2.7.3.
+
+```
+cd $HOME
+git clone https://bitbucket.org/extasy-project/coco.git
+module load python
+cd $HOME/coco
+python setup.py install --user
+```
+
+
+
+USAGE
 ======
 
+To use the CSA tool, you will first need to setup two files. 
 
-Adding a Resource
--------------------
+A configuration file for the Radical Pilot related parameters which would allow us to launch pilot(s) and compute units on the targeted remote machine.
+You will also use this file to mention the Simulation and Analysis kernels to be used.
 
-The various resources to be used are added to a JSON file. The resources are referenced through the config.py file. An example set of resource
- configurations can be found in
-
- ```
- https://github.com/radical-cybertools/ExTASY/tree/master/config
- ```
-
-Resource config files for XSEDE & FUTUREGRID have been added as part of the config. To write your own resource configuration files, refer
- to the *Writing a Custom Resource Configuration File section* in the radical. pilot documentation
-
- ```
- http://radicalpilot.readthedocs.org/en/latest/machconf.html#writing-a-custom-resource-configuration-file
- ```
+The second configuration file should contain all the parameters required to execute the Simulation and Analysis kernels. A detailed description for each of the 
+combinations (Gromacs-LSDMap / Amber-CoCo) is given below.
 
 
-Config file
--------------
+Setting up the Radical Pilot configuration file
+------------------------------------------------
 
-This section is mainly to explain the format of the config file. Skip ahead for running sample tests.
+The RP config file is used for defining the parameters related to Radical Pilot. It is one of the input files 
+to the csa tool.
+
+* Load_Preprocessor : The preprocessor to be used. Can be 'Gromacs' or 'Amber'
+* Load_Simulator    : The Simulator to be loaded. Can be 'Gromacs' or 'Amber'
+* Load_Analyzer     : The Analyzer to be loaded. Can be 'LSDMap' or 'CoCo'
+* UNAME         : Username to access the remote machine
+* REMOTE_HOST   : URL of remote machine
+* WALLTIME      : Walltime for the complete job
+* PILOTSIZE     : No. of cores to reserved for the entire job
+* DBURL         : MongoDB URL
+
+
+Setting up the Kernel configuration file : Gromacs-LSDMap
+----------------------------------------------------------
+
+As described before, the other input file to the tool is the file containing all required parameters for the
+Kernel execution. The following are the parameters required for the Gromacs-LSDMap kernel combinations. An 
+example/demo can be found in ``` /tmp/ExTASY/config/gromacs_lsdmap_config.py```.
+
+----------------------------------------------------------General-------------------------------------------------------------------------
+
+* num_CUs           : Number of Compute Units to be submitted to the pilot
+* num_iterations    : Number of iterations of Simulation-Analysis
+
+-----------------------------------------------------Simulation(Gromacs)--------------------------------------------------------------
+
+* input_gro_loc & input_gro : location and name of the input(gro) file
+* grompp_loc & grompp_name  : location and name of the grompp(mdp) file
+* topol_loc & topol_name    : location and name of the topol(top) file
+* tmp_grofile               : name of the intermediate file used as input for LSDMap
+
+-------------------------------------------------------Analysis(LSDMap)---------------------------------------------------------------
+
+* lsdm_config_loc & lsdm_config_name : location and name of the lsdm configuration file
+* wfile     : name of the weight file to be used in LSDMap
+
+------------------------------------------------------------Update--------------------------------------------------------------------------
+
+* num_runs : number of replicas
+
+-------------------------------------------------------------Auto---------------------------------------------------------------------------
+
+These parameters are automatically assigned based on the values above. These are mainly for the 
+propagation of filenames throughout the tool.
+
+* system_name
+* outgrofile_name
+* egfile 
+* evfile 
+* nearest_neighbor_file 
+* num_clone_files 
+
+
+Setting up the Kernel configuration file : Amber-CoCo
+------------------------------------------------------
+
+As described before, the other input file to the tool is the file containing all required parameters for the
+Kernel execution. The following are the parameters required for the Amber-CoCo kernel combinations. An 
+example/demo can be found in ``` /tmp/ExTASY/config/amber_coco_config.py```.
+
+
+----------------------------------------------------------General-----------------------------------------------------------------------------
+
+* num_iterations  : Number of iterations of Simulation-Analysis chain
+* nreps           : Number of replicas
+
+
+-------------------------------------------------------Simulation(Amber)----------------------------------------------------------------
+
+* mdshort_loc & mdshortfile : Location and name of the mdshort file
+* min_loc & minfile         : Location and name of the min file
+* crd_loc & crdfile         : Location and name of the crd file
+* top_loc & topfile         : Location and name of the topology file
+
+
+-------------------------------------------------------Analysis(CoCo)--------------------------------------------------------------------
+
+* exp_loc       : common location on the remote system where all the execution is held (temporary)
+
+
+
+Running the workload : Gromacs-LSDMap
+---------------------------------------
+
+The command format to run the workload is as follows,
 
 ```
-https://github.com/radical-cybertools/ExTASY/tree/master/config/config.py
+extasy --RPconfig RPCONFIG --Kconfig KCONFIG
 ```
 
-This is the primary configuration file that needs to modified by the user. This file allows the user to :-
-
-1) Specify resource details
-
-* select the target resource (machine + working directory) from the bulk of resources present in the JSON config files.
-* define the number of cores to be reserved for the totality of the experiment (aka pilot size)
-* define the time for which you want to reserve the cores
+where RPCONFIG is the path to the Radical Pilot configuration file and KCONFIG is the path to the Kernel 
+configuration file. But before running this command, there are some dependencies to address which is particular 
+to this combination of kernels.
 
 
-```
-
-RESOURCE = {
-        #Resource related inputs	--MANDATORY
-        'remote_host' : 'stampede.tacc.utexas.edu',
-        'number_of_cores' : 2,
-        'walltime' : 5
-    }
-
+The update stage following LSDMap in each iteration requires numpy and data from the folder coord_util in 
+```/tmp/ExTASY```. For this install numpy and set the python path to point to that path respectively.
 
 ```
-
-2) Specify task details
-
-* specify the source directory from which the data has to be transfered. All the files which are commonly shared/accessed by individual tasks need to be in this folder; all the files in this folder are transferred to the remote host.
-* specify the output file to be transferred back to the local machine.
-* the name and type of the kernel to be executed as the task
-* number of tasks (or ensembles) to be executed
-* number of cores out of the total cores to allocated to each task
-
-
-```
-TASK = {
-        #Task related inputs		--MANDATORY
-
-        #Paths/Directories involved
-        #Keep the kernel and the files accessed by the kernel/that need to be transferred in the source_directory
-        'source_directory' : '/tmp/ExTASY/gromacs_input_PYP/',
-        'output' : "md.log",
-
-        #kernel/wrapper names
-        'kernel_type' : '/bin/bash',       #/bin/bash or python
-        'kernel' : 'MDRun.sh',      #this file should contain all the bash level commands/functions that are executed
-
-        #Resource requirement and number of tasks
-        'cores_per_task' : 1,
-        'number_of_tasks' : 2,
-    }
+pip install numpy
+export PYTHONPATH=$PYTHONPATH:/tmp/ExTASY
 ```
 
-3) UNAME
+Next we need to set the tool to use Gromacs as the Simulation kernel and LSDMap as the Analysis kernel. For this,
+we need to set 2 parameters in the Radical Pilot configuration file.
 
-Username to login the remote target (leave as '' if running as localhost)
+```
+Load_Simulator = 'Gromacs'
+Load_Analyzer = 'LSDMap'
+````
 
-3) RCONF
-
-This is a list of paths to different resource configuration JSON files.
-
-
-4) DBURL
-
-This a url to the mongodb server to be used.
-
-
-Running the tests
-------------------
-
-The API provides two modes of running tests. **checkenv** and **testjob**. Both the tests are recommended before submitting large workloads.
-
-You will have to do things.
-
-* Set an Environment variable "RADICAL_PILOT_USERNAME"  - username on the remote/target machine
-* Open the config.py file inside $CONFIG, and set the target machine in remote_host. By default, it is set to Stampede.
-
-> For more possible values for "remote_host", see
-> ```
-> https://raw.githubusercontent.com/radical-cybertools/radical.pilot/master/configs/xsede.json
-
-> https://raw.githubusercontent.com/radical-cybertools/radical.pilot/master/configs/futuregrid.json
-> ```
+All set ! Run the workload execution command ! If you followed this document completely, the command should look like
+```
+extasy --RPconfig /tmp/ExTASY/config/RP_config.py --Kconfig /tmp/ExTASY/config/gromacs_lsdmap_config.py
+```
 
 
+**What this does ...**
 
-1) **checkenv**
-
-This mode is to check whether the necessary modules are present and loaded in the remote host before workload submission.
-
-To run a environment check on the intended remote host, use the --checkenv argument
-```ensemble --config $CONFIG/config.py --checkenv```
-
-**Note**
-* ```--config``` should be followed by the complete path of the config.py file or $CONFIG/config.py if CONFIG has been set.
-* Be sure to have the config.py file and JSON resource configuration files set before running the tests.
+This command starts the execution. It will first submit a pilot on the REMOTE_HOST and reserve the number of cores as defined by the
+PILOTSIZE. Once the pilot goes through the queue, the Preprocessor splits the input gro file as defined by ```input_gro``` into
+temporary smaller files based on ```num_CUs```. The Simulator is then loaded which submits Compute Units to the REMOTE_HOST
+and takes as input the temporary files, a mdp file and a top file and runs the MD. The output is aggregated into one gro file to be used 
+during the Analysis phase. The Analyzer is then loaded which looks for a gro file as defined by ```tmp_grofile```
+in KCONFIG in the current directory (from where ```extasy``` is run) and runs LSDMap on it.
 
 
-2) **testjob**
+Running the workload : Amber-CoCo
+---------------------------------------
 
-This mode is to submit a basic dummy gromacs task on to the specified remote host to make sure the execution is complete and usable.
+The command format to run the workload is as follows,
 
-To run a simple testjob on the intended remote host, use the --testjob argument
-```ensemble --config $CONFIG/config.py --testjob```
+```
+extasy --RPconfig RPCONFIG --Kconfig KCONFIG
+```
 
-**Note**
-* ```--config``` should be followed by the complete path of the config.py file or $CONFIG/config.py if CONFIG has been set.
-* Be sure to have the config.py file and JSON resource configuration files set before running the tests.
+where RPCONFIG is the path to the Radical Pilot configuration file and KCONFIG is the path to the Kernel 
+configuration file. But before running this command, there are some dependencies to address which is particular 
+to this combination of kernels.
+
+Before we start with the execution, we need to set the tool to use Amber as the Simulation kernel and CoCo as the Analysis kernel. For this,
+we need to set 2 parameters in the Radical Pilot configuration file.
+
+```
+Load_Simulator = 'Amber'
+Load_Analyzer = 'CoCo'
+````
+
+All set ! Run the workload execution command ! If you followed this document completely, the command should look like
+
+```
+extasy --RPconfig /tmp/ExTASY/config/RP_config.py --Kconfig /tmp/ExTASY/config/amber_coco_config.py
+```
 
 
+**What this does ...**
 
-Running the workload
---------------------
+This command starts the execution. It will first submit a pilot on the REMOTE_HOST and reserve the number of cores as defined by the
+PILOTSIZE. Once the pilot goes through the queue, the Preprocessor transfers the required analysis file to the remote host and sets 
+up the folder structure, since this is currently required according to the CoCo file provided. The Simulator is then loaded which 
+submits Compute Units to the REMOTE_HOST, the files were already transferred in the preprocessing stage. The Analyzer is then loaded
+ which executes the MPI based CoCo script, each of the output remains in their respective folders in the remote host.
+ 
+ 
 
-To run the particular workload of your experiment. Setup the TASK definitions in the config file and use the --workload or --w argument.
-
-```ensemble --config $CONFIG/config.py --workload```
-
-**Note**
-* ```--config``` should be followed by the complete path of the config.py file or $CONFIG/config.py if CONFIG has been set.
-* Be sure to have the config.py file and JSON resource configuration files set before running the workload.
