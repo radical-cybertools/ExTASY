@@ -3,11 +3,10 @@ __author__ = 'vivek'
 import radical.pilot
 import argparse
 import imp
-#from config.kernel_config import *      #change this to command line
-#from config.RP_config import *          #change this too
 import os
 import sys
 import time
+import shutil
 
 
 #------------------------------------------------------------------------------
@@ -113,8 +112,6 @@ def main():
 
     umgr,session=startPilot(Kconfig,RPconfig)
 
-    Preprocessing(Kconfig,umgr)
-
 
     if ( RPconfig.Load_Simulator == 'Amber'):
         from Simulator.Amber.simulator import Simulator
@@ -127,6 +124,7 @@ def main():
         from Analyzer.LSDMap.analyzer import Analyzer
 
     for i in range(0,Kconfig.num_iterations):
+        Preprocessing(Kconfig,umgr,i)
         if RPconfig.Load_Simulator:
             p1=time.time()
             Simulator(umgr,RPconfig,Kconfig,i)
@@ -135,6 +133,13 @@ def main():
             p2=time.time()
         if p1.is_integer() and p2.is_integer():
             print 'TTC for one iteration : ', p2-p1
+        if((i+1)%Kconfig.nsave == 0):
+            if os.path.isdir('%s/backup' % os.getcwd()) is False:
+                os.mkdir('%s/backup' % os.getcwd())
+            os.mkdir('%s/backup/iter%s/'%(os.getcwd(),i+1))
+            shutil.copy('%s_%s'%(i,Kconfig.input_gro),'%s/backup/iter%s/%s'%(os.getcwd(),i+1,Kconfig.input_gro))
+            shutil.copy(Kconfig.wfile,'%s/backup/iter%s/%s'%(os.getcwd(),i+1,Kconfig.wfile))
+            shutil.copy('lsdmap.log','%s/backup/iter%s/lsdmap.log'%(os.getcwd(),i+1))
 
     session.close()
 
