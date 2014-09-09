@@ -1,3 +1,0 @@
-setuptools>=1
-radical.pilot
-argparse
