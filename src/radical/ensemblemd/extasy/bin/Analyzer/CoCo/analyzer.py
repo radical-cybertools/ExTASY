@@ -16,7 +16,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     cudesc.executable = 'python'
     cudesc.cores = RPconfig.PILOTSIZE
     cudesc.pre_exec = ['module load python','cp postexec.py %s'% Kconfig.exp_loc,'cd %s' % Kconfig.exp_loc,'module load mpi4py','module load amber']
-    cudesc.arguments = ['cocoUi.py','--grid','5','--projs','3','--frontpoints','8','--cycle','%s'% cycle ,'-vvv' ]
+    cudesc.arguments = ['cocoUi.py','--grid',Kconfig.grid,'--projs',Kconfig.projs,'--frontpoints',Kconfig.frontpoints,'--cycle','%s'% cycle ,'-vvv' ]
     cudesc.input_staging = ['%s/postexec.py'%(os.path.dirname(os.path.realpath(__file__)))]
     cudesc.post_exec = ['python postexec.py %s %s' % (Kconfig.nreps,cycle)]
     cudesc.mpi = True

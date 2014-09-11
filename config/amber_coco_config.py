@@ -25,4 +25,7 @@ topfile = 'penta.top'
 #-------------------------Analysis--------------------------
 
 exp_loc = '$HOME/coco_exp'
+grid = '5'
+projs = '3'
+frontpoints = '8'
 
