@@ -3,6 +3,7 @@ __author__ = 'vivek'
 #-------------------------General---------------------------
 
 num_iterations = 2
+start_iter = 0
 nreps = 8
 
 

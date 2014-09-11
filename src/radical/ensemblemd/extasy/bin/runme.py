@@ -123,7 +123,7 @@ def main():
     if ( RPconfig.Load_Analyzer == 'LSDMap'):
         from Analyzer.LSDMap.analyzer import Analyzer
 
-    for i in range(0,Kconfig.num_iterations):
+    for i in range(Kconfig.start_iter,Kconfig.num_iterations):
         Preprocessing(Kconfig,umgr,i)
         if RPconfig.Load_Simulator:
             p1=time.time()

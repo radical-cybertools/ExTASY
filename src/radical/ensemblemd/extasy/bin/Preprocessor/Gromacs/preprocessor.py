@@ -1,12 +1,10 @@
 __author__ = 'vivek'
 
-#from config.kernel_config import *
-import imp
 import time
 import shutil
 import os
 import sys
-import coord_util.gro as gro
+import gro
 
 def Preprocessing(Kconfig,umgr,i):
 

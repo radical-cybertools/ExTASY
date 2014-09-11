@@ -4,6 +4,7 @@ __author__ = 'vivek'
 
 num_CUs = 64 #num of CUs
 num_iterations = 1
+start_iter = 0
 nsave = 2
 #--------------------------Simulation--------------------------------
 
