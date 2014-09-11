@@ -3,7 +3,10 @@ __author__ = 'vivek'
 #-------------------------General---------------------------
 
 num_iterations = 2
+<<<<<<< HEAD
 start_iter = 0
+=======
+>>>>>>> origin/master
 nreps = 8
 
 
@@ -25,7 +28,10 @@ topfile = 'penta.top'
 #-------------------------Analysis--------------------------
 
 exp_loc = '$HOME/coco_exp'
+<<<<<<< HEAD
 grid = '5'
 projs = '3'
 frontpoints = '8'
+=======
+>>>>>>> origin/master
 

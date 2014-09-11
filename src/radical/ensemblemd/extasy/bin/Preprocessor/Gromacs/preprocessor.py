@@ -1,9 +1,15 @@
 __author__ = 'vivek'
 
+<<<<<<< HEAD
+=======
+#from config.kernel_config import *
+import imp
+>>>>>>> origin/master
 import time
 import shutil
 import os
 import sys
+<<<<<<< HEAD
 import gro
 
 def Preprocessing(Kconfig,umgr,i):
@@ -25,6 +31,20 @@ def Preprocessing(Kconfig,umgr,i):
 
     num_tasks = Kconfig.num_CUs
 
+=======
+import coord_util.gro as gro
+
+def Preprocessing(Kconfig,umgr):
+
+    p1 = time.time()
+
+    grofile_name_loc = Kconfig.input_gro_loc
+    grofile_name = Kconfig.input_gro
+    num_tasks = Kconfig.num_CUs
+
+    if os.path.exists(grofile_name_loc + '/' + grofile_name) is True:
+        shutil.copy(grofile_name_loc + '/' + grofile_name,os.path.dirname(os.path.realpath(__file__)))
+>>>>>>> origin/master
 
 
     print 'Prepare grofiles..'

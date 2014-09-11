@@ -15,6 +15,7 @@ tprfile_name=topol.tpr
 trrfile_name=traj.trr
 edrfile_name=ener.edr
 
+<<<<<<< HEAD
 if [ -n "$grompp_options" ]; then
     grompp_options=$grompp_options
 else
@@ -26,6 +27,8 @@ if [ -n "$mdrun_options" ]; then
 else
     mdrun_options=''
 fi
+=======
+>>>>>>> origin/master
 
 startgro=$grofile_name
 tmpstartgro=tmpstart.gro
@@ -47,8 +50,13 @@ for idx in `seq 1 $nframes`; do
   sed "$start"','"$end"'!d' $startgro > $tmpstartgro
 
   # gromacs preprocessing & MD
+<<<<<<< HEAD
   grompp $grompp_options -f $mdpfile_name -c $tmpstartgro -p $topfile_name -o $tprfile_name 1>/dev/null 2>/dev/null
   mdrun $mdrun_options -s $tprfile_name -o $trrfile_name -e $edrfile_name 1>/dev/null 2>/dev/null
+=======
+  grompp -f $mdpfile_name -c $tmpstartgro -p $topfile_name -o $tprfile_name 1>/dev/null 2>/dev/null
+  mdrun -s $tprfile_name -o $trrfile_name -e $edrfile_name 1>/dev/null 2>/dev/null
+>>>>>>> origin/master
 
   # store data
   cat confout.gro >> $outgro

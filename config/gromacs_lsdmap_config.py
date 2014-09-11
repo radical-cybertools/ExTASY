@@ -4,19 +4,28 @@ __author__ = 'vivek'
 
 num_CUs = 64 #num of CUs
 num_iterations = 1
+<<<<<<< HEAD
 start_iter = 0
 nsave = 2
+=======
+
+>>>>>>> origin/master
 #--------------------------Simulation--------------------------------
 
 input_gro_loc = '/tmp/ExTASY/gromacs_lsdmap_example'
 input_gro = 'input.gro'
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 grompp_loc = '/tmp/ExTASY/gromacs_lsdmap_example'
 grompp_name = 'grompp.mdp'
 
 topol_loc = '/tmp/ExTASY/gromacs_lsdmap_example'
 topol_name = 'topol.top'
 
+<<<<<<< HEAD
 ndxfile_loc = ''
 ndxfile_name = ''
 
@@ -25,6 +34,8 @@ mdrun_options = ''
 
 itpfile_loc = ''
 
+=======
+>>>>>>> origin/master
 tmp_grofile = 'tmp.gro'
 
 #--------------------------Analysis----------------------------------
@@ -46,6 +57,9 @@ num_clone_files = '%s.nc' % system_name
 recovery_flag = 0
 
 wfile = 'weight.w'
+<<<<<<< HEAD
 
 max_alive_neighbors = ''
 max_dead_neighbors = ''
+=======
+>>>>>>> origin/master
