@@ -17,6 +17,7 @@ src/radical/ensemblemd/extasy/bin/Analyzer/__init__.py
 src/radical/ensemblemd/extasy/bin/Analyzer/CoCo/__init__.py
 src/radical/ensemblemd/extasy/bin/Analyzer/CoCo/analyzer.py
 src/radical/ensemblemd/extasy/bin/Analyzer/CoCo/postexec.py
+src/radical/ensemblemd/extasy/bin/Analyzer/CoCo/pycoco.py
 src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/__init__.py
 src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/analyzer.py
 src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/reweighting.py
@@ -33,7 +34,6 @@ src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/lsdmap/rw/writer.py
 src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/lsdmap/rw/xvg.py
 src/radical/ensemblemd/extasy/bin/Preprocessor/__init__.py
 src/radical/ensemblemd/extasy/bin/Preprocessor/Amber/__init__.py
-src/radical/ensemblemd/extasy/bin/Preprocessor/Amber/cocoUi.py
 src/radical/ensemblemd/extasy/bin/Preprocessor/Amber/preprocessor.py
 src/radical/ensemblemd/extasy/bin/Preprocessor/Gromacs/__init__.py
 src/radical/ensemblemd/extasy/bin/Preprocessor/Gromacs/gro.py
