@@ -125,7 +125,7 @@ setup_args = {
     'package_dir' : {'': 'src'},
 
     'package_data' : {'': ['*.sh', 'VERSION', 'VERSION.git', ]},
-    'install_requires' : ['setuptools>=1',
+    'install_requires' : ['setuptools',
                           'radical.pilot',
                           'argparse'
                          ],

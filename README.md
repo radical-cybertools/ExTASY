@@ -155,6 +155,8 @@ example/demo can be found in ``` /tmp/ExTASY/config/gromacs_lsdmap_config.py```.
 
 * num_CUs           : Number of Compute Units to be submitted to the pilot
 * num_iterations    : Number of iterations of Simulation-Analysis
+* nsave             : Number of iterations after which backup is to be created
+* start_iter        : Iteration number with which to start
 
 -----------------------------------------------------Simulation(Gromacs)--------------------------------------------------------------
 
@@ -162,11 +164,17 @@ example/demo can be found in ``` /tmp/ExTASY/config/gromacs_lsdmap_config.py```.
 * grompp_loc & grompp_name  : location and name of the grompp(mdp) file
 * topol_loc & topol_name    : location and name of the topol(top) file
 * tmp_grofile               : name of the intermediate file used as input for LSDMap
+* ndxfile_name & ndxfile_loc: name and location of index file
+* grompp_options            : grompp options to be added during runtime
+* mdrun_options             : mdrun options to be added during runtime
+* itpfile_loc               : location of itpfiles to be transfered
 
 -------------------------------------------------------Analysis(LSDMap)---------------------------------------------------------------
 
 * lsdm_config_loc & lsdm_config_name : location and name of the lsdm configuration file
 * wfile     : name of the weight file to be used in LSDMap
+* max_alive_neighbors : maximum alive neighbors to be considered during reweighting step
+* max_dead_neighbors  : maximum dead neighbors to be considered during reweighting step
 
 ------------------------------------------------------------Update--------------------------------------------------------------------------
 
@@ -209,7 +217,9 @@ example/demo can be found in ``` /tmp/ExTASY/config/amber_coco_config.py```.
 
 -------------------------------------------------------Analysis(CoCo)--------------------------------------------------------------------
 
-* exp_loc       : common location on the remote system where all the execution is held (temporary)
+* grid              : the number of grid points per dimension in the CoCo histogram
+* dims              : the number of dimensions (PCs) in the CoCo mapping
+* frontpoints       : the number of fronteir points to return structures
 
 
 
@@ -259,6 +269,11 @@ during the Analysis phase. The Analyzer is then loaded which looks for a gro fil
 in KCONFIG in the current directory (from where ```extasy``` is run) and runs LSDMap on it.
 
 
+Number of CUs in the simulation stage = num_CUs
+Number of CUs in the analysis stage = 1
+Total number of CUs in N iterations of ASA = N*(num_CUs + 1)
+
+
 Running the workload : Amber-CoCo
 ---------------------------------------
 
@@ -290,10 +305,13 @@ extasy --RPconfig /tmp/ExTASY/config/RP_config.py --Kconfig /tmp/ExTASY/config/a
 **What this does ...**
 
 This command starts the execution. It will first submit a pilot on the REMOTE_HOST and reserve the number of cores as defined by the
-PILOTSIZE. Once the pilot goes through the queue, the Preprocessor transfers the required analysis file to the remote host and sets 
-up the folder structure, since this is currently required according to the CoCo file provided. The Simulator is then loaded which 
-submits Compute Units to the REMOTE_HOST, the files were already transferred in the preprocessing stage. The Analyzer is then loaded
- which executes the MPI based CoCo script, each of the output remains in their respective folders in the remote host.
+PILOTSIZE. Once the pilot goes through the queue, there is no Preprocessor for these combination of kernels. The 
+Simulator is loaded which transfers the required files (.crd,.top,.in) and performs the amber simulation on the
+provided input. After all the simulations are done, the Analysis stage kicks in and performs analysis using the CoCo method.
+The output of the Analysis stage is fed back as the input of the Simulation in the next iteration. 
+
  
- 
+Number of CUs in the simulation stage = num_CUs
+Number of CUs in the analysis stage = 1
+Total number of CUs in N iterations of ASA = N*(num_CUs + 1) 
 
