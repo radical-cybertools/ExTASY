@@ -4,10 +4,7 @@ import radical.pilot
 from radical.ensemblemd.mdkernels import MDTaskDescription
 import os
 import time
-<<<<<<< HEAD
 import glob
-=======
->>>>>>> origin/master
 
 
 def Simulator(umgr,RPconfig,Kconfig,cycle):
@@ -23,7 +20,6 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
     for i in range(0, Kconfig.num_CUs):
         mdtd = MDTaskDescription()
         mdtd.kernel = "GROMACS"
-<<<<<<< HEAD
         mdtd.arguments = ['-l','-c',". run.sh %s start.gro %s out.gro %s" % (Kconfig.grompp_name,Kconfig.topol_name,Kconfig.ndxfile_name)]
         mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
         gromacs_task = radical.pilot.ComputeUnitDescription()
@@ -42,16 +38,6 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
             for itpfile in glob.glob(Kconfig.itpfile_loc + '*.itp'):
                 gromacs_task.input_staging.append('%s/%s'%(Kconfig.itpfile_loc,itpfile))
         gromacs_task.output_staging = ['out.gro > out%s.gro' % i]
-=======
-        mdtd.arguments = ['-l','-c',". run.sh %s start.gro %s out.gro" % (Kconfig.grompp_name,Kconfig.topol_name)]
-        mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
-        gromacs_task = radical.pilot.ComputeUnitDescription()
-        gromacs_task.pre_exec = mdtd_bound.pre_exec
-        gromacs_task.executable = mdtd_bound.executable
-        gromacs_task.arguments = mdtd_bound.arguments
-        gromacs_task.input_data = ['%s/run.sh > run.sh'%curdir,'%s/temp/start%s.gro > start.gro' % (os.getcwd(), i),'%s/%s' % (Kconfig.grompp_loc, Kconfig.grompp_name), '%s/%s' % (Kconfig.topol_loc, Kconfig.topol_name)]
-        gromacs_task.output_data = ['out.gro > out%s.gro' % i]
->>>>>>> origin/master
         gromacs_task.cores = 1
 
         gromacs_tasks.append(gromacs_task)
@@ -69,11 +55,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
         os.remove(os.getcwd() + '/' + Kconfig.tmp_grofile)
 
     with open(Kconfig.tmp_grofile, 'w') as output_grofile:
-<<<<<<< HEAD
         for i in range(0,Kconfig.num_CUs):
-=======
-        for i in range(0,64):
->>>>>>> origin/master
             with open('out%s.gro' % i, 'r') as output_file:
                 for line in output_file:
                     print >> output_grofile, line.replace("\n", "")

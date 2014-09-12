@@ -8,13 +8,11 @@ if __name__ == '__main__':
     nreps = int(sys.argv[1])
     cycle = int(sys.argv[2])
     dict = {}
+    dict['cycle'] = cycle
     for rep in range(nreps):
-        dict['rep'] = rep
-        dict['path'] = os.path.dirname(os.path.abspath(__file__))
-        dict['cycle'] = cycle
         tl = script.Script()
         tl.append('source leaprc.ff99SB')
-        tl.append('x = loadpdb {path}/rep0{rep}/pentaopt{cycle}.pdb'.format(**dict))
-        tl.append('saveamberparm x {path}/rep0{rep}/delete.me {path}/rep0{rep}/min{cycle}.crd'.format(**dict))
+        tl.append('x = loadpdb pentaopt%s%s.pdb'%(cycle,rep))
+        tl.append('saveamberparm x delete.me min%s%s.crd'%(cycle+1,rep))
         tl.append('quit')
         tl.run('tleap -f {}')

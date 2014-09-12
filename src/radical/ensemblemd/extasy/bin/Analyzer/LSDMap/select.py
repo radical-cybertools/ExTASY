@@ -1,11 +1,9 @@
 import os
-import sys
 import argparse
-import logging
 import numpy as np
+import sampling
 
 from lsdmap.rw import reader
-import coord_util.sampling as sampling
 
 
 class SelectionStep(object):

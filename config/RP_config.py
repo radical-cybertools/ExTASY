@@ -15,11 +15,7 @@ UNAME = 'vivek91'                               # Username on the Remote Machine
 ALLOCATION = 'TG-MCB090174'                     # Allocation to be charged
 WALLTIME = 60                                   # Walltime to be requested for the pilot
 PILOTSIZE = 64                                  # Number of cores to be reserved
-<<<<<<< HEAD
 WORKDIR = None			                        # Working directory on the remote machine
-=======
-WORKDIR = None			                # Working directory on the remote machine
->>>>>>> origin/master
 QUEUE = 'normal'                                # Name of the queue in the remote machine
 
 

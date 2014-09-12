@@ -27,19 +27,24 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
 
     compute_units = []
     for i in range(Kconfig.nreps):
-        #print "Submitting new 'pmemd' compute unit"
-        dict['rep'] = str(i)
-        dict['path'] = Kconfig.exp_loc
-        # output files that need to be transferred back: *.mdcrd
 
-        step_1 = 'pmemd -O -i {path}/{minin} -o {path}/rep0{rep}/min{cycle}.out -inf {path}/rep0{rep}/min{cycle}.inf -r {path}/rep0{rep}/md{cycle}.crd -p {path}/{topfile} -c {path}/rep0{rep}/min{cycle}.crd -ref {path}/rep0{rep}/min{cycle}.crd'.format(**dict)
-        step_2 = 'pmemd -O -i {path}/{mdin} -o {path}/rep0{rep}/md{cycle}.out -inf {path}/rep0{rep}/md{cycle}.inf -x {path}/rep0{rep}/md{cycle}.mdcrd -r {path}/rep0{rep}/md{cycle}.rst -p {path}/{topfile} -c {path}/rep0{rep}/md{cycle}.crd'.format(**dict)
+        step_1 = 'pmemd -O -i {minin} -o min{cycle}.out -inf min{cycle}.inf -r md{cycle}.crd -p {topfile} -c min{cycle}.crd -ref min{cycle}.crd'.format(**dict)
+        step_2 = 'pmemd -O -i {mdin} -o md{cycle}.out -inf md{cycle}.inf -x md{cycle}.mdcrd -r md{cycle}.rst -p {topfile} -c md{cycle}.crd'.format(**dict)
 
+        mdtd = MDTaskDescription()
+        mdtd.kernel = "AMBER"
+        mdtd.arguments = ['-l', '-c', " %s && %s" % (step_1, step_2)]
+        mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
         cu = radical.pilot.ComputeUnitDescription()
-        cu.executable = "/bin/bash"
         cu.cores      = 1
-        cu.pre_exec = ['module load TACC ','module load amber','cd %s' % Kconfig.exp_loc]
-        cu.arguments  = ['-l', '-c', " %s && %s" % (step_1, step_2)]
+        cu.executable = mdtd_bound.executable
+        cu.pre_exec   = mdtd_bound.pre_exec
+        cu.arguments  = mdtd_bound.arguments
+        if(cycle==0):
+            cu.input_staging = ['%s/%s > min%s.crd'%(Kconfig.crd_loc,dict['crdfile'],cycle),'%s/%s'%(Kconfig.top_loc,dict['topfile']),'%s/%s'%(Kconfig.min_loc,dict['minin']),'%s/%s'%(Kconfig.mdshort_loc,dict['mdin'])]
+        else:
+            cu.input_staging = ['min%s%s.crd > min%s.crd'%(cycle,i,cycle),'%s/%s'%(Kconfig.top_loc,dict['topfile']),'%s/%s'%(Kconfig.min_loc,dict['minin']),'%s/%s'%(Kconfig.mdshort_loc,dict['mdin'])]
+        cu.output_staging = ['md%s.mdcrd > md_%s_%s.mdcrd'%(cycle,cycle,i)]
         compute_units.append(cu)
 
     units = umgr.submit_units(compute_units)
