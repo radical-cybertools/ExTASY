@@ -13,7 +13,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     curdir = os.path.dirname(os.path.realpath(__file__))
     mdtd=MDTaskDescription()
     mdtd.kernel="LSDMAP"
-<<<<<<< HEAD
+
     mdtd.arguments = ['-l','-c','. run_analyzer.sh %s %s' %(Kconfig.nearest_neighbor_file,Kconfig.wfile)]
     mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
     lsdm=radical.pilot.ComputeUnitDescription()
@@ -25,17 +25,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     lsdm.input_staging = ['%s/%s'%(Kconfig.lsdm_config_loc,Kconfig.lsdm_config_name),Kconfig.tmp_grofile,'%s/run_analyzer.sh'%curdir]
     fname = Kconfig.tmp_grofile.split('.')[0]
     lsdm.output_staging = [' tmpha.eg > %s'%(Kconfig.egfile),'tmpha.ev > %s'%(Kconfig.evfile),Kconfig.nearest_neighbor_file,'lsdmap.log']
-=======
-    mdtd.arguments = ['-l','-c','. run_analyzer.sh %s %s %s' %(Kconfig.tmp_grofile,Kconfig.nearest_neighbor_file,Kconfig.wfile)]
-    mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
-    lsdm=radical.pilot.ComputeUnitDescription()
-    lsdm.pre_exec = mdtd_bound.pre_exec
-    lsdm.executable = mdtd_bound.executable
-    lsdm.arguments = mdtd_bound.arguments
-    lsdm.input_data = ['%s/%s'%(Kconfig.lsdm_config_loc,Kconfig.lsdm_config_name),Kconfig.tmp_grofile,'%s/run_analyzer.sh'%curdir]
-    fname = Kconfig.tmp_grofile.split('.')[0]
-    lsdm.output_data = [' %s.eg > %s'%(fname,Kconfig.egfile),'%s.ev > %s'%(fname,Kconfig.evfile),Kconfig.nearest_neighbor_file]
->>>>>>> origin/master
+
     lsdm.mpi = True
     lsdm.cores = RPconfig.PILOTSIZE
 
@@ -54,18 +44,11 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
     os.system('python %s/select.py %s -s %s -o %s' %(curdir,Kconfig.num_runs, Kconfig.evfile,Kconfig.num_clone_files))
     #Update Boltzman weights
-<<<<<<< HEAD
+
     os.system('python %s/reweighting.py -c %s -n %s -s %s -w %s -o %s --max_alive_neighbors=%s --max_dead_neighbors=%s' % (curdir,Kconfig.tmp_grofile,Kconfig.nearest_neighbor_file,Kconfig.num_clone_files,Kconfig.wfile,Kconfig.outgrofile_name,Kconfig.max_alive_neighbors,Kconfig.max_dead_neighbors))
 
     #Rename outputfile as inputfile for next iteration
     os.system('mv %s %s_%s'%(Kconfig.outgrofile_name,cycle,Kconfig.input_gro))
-=======
-    os.system('python %s/reweighting.py -c %s -n %s -s %s -w %s -o %s' % (curdir,Kconfig.tmp_grofile,Kconfig.nearest_neighbor_file,Kconfig.num_clone_files,Kconfig.wfile,Kconfig.outgrofile_name))
-
-    #Rename outputfile as inputfile for next iteration
-    os.system('mv %s %s/%s'%(Kconfig.outgrofile_name,Kconfig.input_gro_loc,Kconfig.input_gro))
->>>>>>> origin/master
-
 
     print 'Analysis + Update time : ',time.time() - p1
     return
