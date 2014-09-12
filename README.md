@@ -270,7 +270,9 @@ in KCONFIG in the current directory (from where ```extasy``` is run) and runs LS
 
 
 Number of CUs in the simulation stage = num_CUs
+
 Number of CUs in the analysis stage = 1
+
 Total number of CUs in N iterations of ASA = N*(num_CUs + 1)
 
 
@@ -312,6 +314,8 @@ The output of the Analysis stage is fed back as the input of the Simulation in t
 
  
 Number of CUs in the simulation stage = num_CUs
+
 Number of CUs in the analysis stage = 1
+
 Total number of CUs in N iterations of ASA = N*(num_CUs + 1) 
 
