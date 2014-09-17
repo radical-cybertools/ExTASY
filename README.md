@@ -42,12 +42,6 @@ python setup.py install
 > export PROJECT_ID='ABCXYZ123'
 > ```
 
-To verify the installation, check the current version
-
-```
-python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
-```
-
 After installation on localhost, the following sections have to be implemented to run the workload.
 
 1. Installing LSDMap/CoCo on Stampede
