@@ -29,7 +29,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
     for i in range(Kconfig.nreps):
 
         step_1 = 'pmemd -O -i {minin} -o min{cycle}.out -inf min{cycle}.inf -r md{cycle}.crd -p {topfile} -c min{cycle}.crd -ref min{cycle}.crd'.format(**dict)
-        step_2 = 'pmemd -O -i {mdin} -o md{cycle}.out -inf md{cycle}.inf -x md{cycle}.mdcrd -r md{cycle}.rst -p {topfile} -c md{cycle}.crd'.format(**dict)
+        step_2 = 'pmemd -O -i {mdin} -o md{cycle}.out -inf md{cycle}.inf -x md{cycle}.ncdf -r md{cycle}.rst -p {topfile} -c md{cycle}.crd'.format(**dict)
 
         mdtd = MDTaskDescription()
         mdtd.kernel = "AMBER"
@@ -44,7 +44,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
             cu.input_staging = ['%s/%s > min%s.crd'%(Kconfig.crd_loc,dict['crdfile'],cycle),'%s/%s'%(Kconfig.top_loc,dict['topfile']),'%s/%s'%(Kconfig.min_loc,dict['minin']),'%s/%s'%(Kconfig.mdshort_loc,dict['mdin'])]
         else:
             cu.input_staging = ['min%s%s.crd > min%s.crd'%(cycle,i,cycle),'%s/%s'%(Kconfig.top_loc,dict['topfile']),'%s/%s'%(Kconfig.min_loc,dict['minin']),'%s/%s'%(Kconfig.mdshort_loc,dict['mdin'])]
-        cu.output_staging = ['md%s.mdcrd > md_%s_%s.mdcrd'%(cycle,cycle,i)]
+        cu.output_staging = ['md%s.ncdf > md_%s_%s.ncdf'%(cycle,cycle,i)]
         compute_units.append(cu)
 
     units = umgr.submit_units(compute_units)
