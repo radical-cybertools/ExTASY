@@ -133,7 +133,7 @@ to the csa tool.
 * Load_Analyzer     : The Analyzer to be loaded. Can be 'LSDMap' or 'CoCo'
 * UNAME         : Username to access the remote machine
 * REMOTE_HOST   : URL of remote machine
-* WALLTIME      : Walltime for the complete job
+* WALLTIME      : Walltime in minutes for the complete job
 * PILOTSIZE     : No. of cores to reserved for the entire job
 * DBURL         : MongoDB URL
 
