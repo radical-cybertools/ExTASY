@@ -31,7 +31,7 @@ source /tmp/test/bin/activate
 cd /tmp/
 pip install --upgrade git+https://github.com/radical-cybertools/radical.pilot.git@master#egg=radical.pilot
 pip install --upgrade git+https://github.com/radical-cybertools/radical.ensemblemd.mdkernels.git@master#egg=radical.ensemblemd.mdkernels
-git clone -b devel https://github.com/radical-cybertools/ExTASY.git
+git clone --branch extasy-0.1-rc2 https://github.com/radical-cybertools/ExTASY.git
 cd ExTASY
 python setup.py install
 ```
