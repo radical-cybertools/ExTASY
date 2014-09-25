@@ -231,12 +231,10 @@ configuration file. But before running this command, there are some dependencies
 to this combination of kernels.
 
 
-The update stage following LSDMap in each iteration requires numpy and data from the folder coord_util in 
-```/tmp/ExTASY```. For this install numpy and set the python path to point to that path respectively.
+The update stage following LSDMap in each iteration requires numpy. For this install numpy as follow,
 
 ```
 pip install numpy
-export PYTHONPATH=$PYTHONPATH:/tmp/ExTASY
 ```
 
 Next we need to set the tool to use Gromacs as the Simulation kernel and LSDMap as the Analysis kernel. For this,
