@@ -9,22 +9,16 @@ nreps = 8
 
 #-------------------------Simulation-----------------------
 
-mdshort_loc = '/tmp/ExTASY/coco_examples'
-mdshortfile = 'mdshort.in'
+md_input_file = '/tmp/ExTASY/coco_examples/mdshort.in'
 
-min_loc = '/tmp/ExTASY/coco_examples'
-minfile = 'min.in'
+minimization_input_file = '/tmp/ExTASY/coco_examples/min.in'
 
-crd_loc = '/tmp/ExTASY/coco_examples'
-crdfile = 'penta.crd'
+initial_crd_file = '/tmp/ExTASY/coco_examples/penta.crd'
 
-top_loc = '/tmp/ExTASY/coco_examples'
-topfile = 'penta.top'
-
+top_file = '/tmp/ExTASY/coco_examples/penta.top'
 
 #-------------------------Analysis--------------------------
 
-exp_loc = '$HOME/coco_exp'
 grid = '5'
 dims = '3'
 frontpoints = '8'
