@@ -29,7 +29,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
         if Kconfig.mdrun_options is not None:
             gromacs_task.environment['mdrun_options'] = '%s' % Kconfig.mdrun_options
         gromacs_task.pre_exec = mdtd_bound.pre_exec
-        gromacs_task.executable = mdtd_bound.executable
+        gromacs_task.executable = '/bin/bash'
         gromacs_task.arguments = mdtd_bound.arguments
         gromacs_task.input_staging = ['%s/run.sh > run.sh'%curdir,'%s/temp/start%s.gro > start.gro' % (os.getcwd(), i),'%s/%s' % (Kconfig.grompp_loc, Kconfig.grompp_name), '%s/%s' % (Kconfig.topol_loc, Kconfig.topol_name)]
         if Kconfig.ndxfile_name is not None:
