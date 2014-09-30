@@ -85,7 +85,7 @@ This example allocates ``PILOTSIZE`` cores on ``REMOTE_HOST``. Once the core all
 > You can skip this step if you have done this already.
 
 CoCo is currently **not installed** on Stampede. In order to run the CoCo/Amber
-example, you need to install it yourself. This also requires you to install **scipy 14** (or greater) using the Stampede **python/2.7.3** and **intel/13.0.2.146** modules. Please follow [THIS LINK](https://github.com/radical-cybertools/ExTASY/blob/devel/docs/scipy_installation_stampede_python_2_7_3.md) for installation instructions. 
+example, you need to install it yourself. This also requires you to install **scipy 0.14** (or greater) using the Stampede **python/2.7.3** and **intel/13.0.2.146** modules. Please follow [THIS LINK](https://github.com/radical-cybertools/ExTASY/blob/devel/docs/scipy_installation_stampede_python_2_7_3.md) for installation instructions. 
 
 Once you have installed numpy/scipy, double-check the version of scipy and numpy:
 
