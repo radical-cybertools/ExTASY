@@ -89,7 +89,7 @@ python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
 > You can skip this step if you have done this already.
 
 CoCo is currently **not installed** on Stampede. In order to run the CoCo/Amber
-example, you need to install it yourself. This also requires you to install **scipy 14** (or greater) using the Stampede **python/2.7.3** and **intel/13.0.2.146** modules. Please follow [THIS LINK](https://github.com/radical-cybertools/ExTASY/blob/devel/docs/scipy_installation_stampede_python_2_7_3.md) for installation instructions. 
+example, you need to install it yourself. This also requires you to install **scipy 0.14** (or greater) using the Stampede **python/2.7.3** and **intel/13.0.2.146** modules. Please follow [THIS LINK](https://github.com/radical-cybertools/ExTASY/blob/devel/docs/scipy_installation_stampede_python_2_7_3.md) for installation instructions. 
 
 Once you have installed numpy/scipy, double-check the version of scipy and numpy:
 
@@ -221,7 +221,7 @@ cd $HOME/coam-on-archer/
 REMOTE_HOST = 'archer.ac.uk'              # Label/Name of the Remote Machine
 UNAME       = 'username'                  # Username on the Remote Machine
 ALLOCATION  = 'e290'                      # Allocation to be charged
-WALLTIME    = 60                          # Walltime to be requested for the pilot
+WALLTIME    = 10                          # Walltime to be requested for the pilot
 PILOTSIZE   = 24                          # Number of cores to be reserved
 WORKDIR     = None                        # Working directory on the remote machine
 QUEUE       = 'debug'                     # Name of the queue in the remote machine
@@ -249,7 +249,7 @@ curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/c
 Now you can run the workload:
 
 ```
-extasy --RPconfig archer.cfg --Kconfig cocoamber.cfg
+extasy --RPconfig archer.rcfg --Kconfig cocoamber.wcfg
 ```
 
 <!-- 
@@ -302,7 +302,7 @@ python setup.py install --user
 
 The ExTASY tool expects two input files:
 
-1. The resource configuration file sets the parameters of the HPC resource we want to run the workload on, in this case **Archer**.
+1. The resource configuration file sets the parameters of the HPC resource we want to run the workload on, in this case **Stampede**.
 2. The workload configuration file defines the GROMACS/LSDMap workload itself.
 
 **Step 1:** Create a new directory for the example:
@@ -377,7 +377,7 @@ pip install numpy
 **Step 5:** Run the workload:
 
 ```
-extasy --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg
+extasy --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg
 ```
 
 <!-- LSDMAP / ARCHER
