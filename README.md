@@ -107,7 +107,9 @@ mkdir $HOME/coam-on-stampede/
 cd $HOME/coam-on-stampede/
 ```
 
-**Step 2:** Create a new resource configuration file ``archer.cfg``:
+**Step 2:** Create a new resource configuration file ``stampede.cfg``:
+
+(Download it [stampede.cfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/stampede.cfg) directly.)
 
 > Change the following values according to your needs:
 > 
@@ -165,7 +167,7 @@ frontpoints = '8'
 Now you are can run the workload:
 
 ```
-extasy --RPconfig archer.cfg --Kconfig cocoamber.cfg
+extasy --RPconfig stampede.cfg --Kconfig cocoamber.cfg
 ```
 
 ## 2.2 ... on Archer
@@ -188,7 +190,7 @@ cd $HOME/coam-on-archer/
 
 **Step 2:** Create a new resource configuration file ``archer.cfg``:
 
-(Download it [archer.cfg](https://github.com/radical-cybertools/ExTASY/blob/devel/config/) directly.)
+(Download it [archer.cfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/archer.cfg) directly.)
 
 > Change the following values according to your needs:
 > 
