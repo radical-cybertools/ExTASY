@@ -81,7 +81,11 @@ python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
 
 > **[TODO Vivek: Improve paragraph below - hard to understand. Avoid 'jargon'. Don't reference things that are not defined yet, e.g. PILOTSIZE]**
 
-This example allocates ``PILOTSIZE`` cores on ``REMOTE_HOST``. Once the core allocation request goes through the queue, there is no Preprocessor for these combination of kernels. The Simulator is loaded which transfers the required files (``.crd``, ``.top``, ``.in``) and performs the Amber simulation on the provided input. After all the simulations are done, the Analysis stage kicks in and performs analysis using the CoCo method. The output of the Analysis stage is fed back as the input of the Simulation in the next iteration.
+  This section will discuss details about the installation and execution phase. Depending on the remote/target machine,
+  some of the modules might need to be manually installed as discussed below. The input to the tool is given in terms of
+  a resource configuration file and a workload configuration file. The execution is started based on the parameters set in
+  these configuration files. In the execution phase, a number of simulation tasks as defined in the workload configuration file
+  are executed in the target machine.
 
 > **[TODO Vivek: Put bullet points below into perspective?]**
 > 
