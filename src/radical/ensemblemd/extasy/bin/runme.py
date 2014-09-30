@@ -100,7 +100,7 @@ def main():
     Kconfig = imp.load_source('Kconfig', args.Kconfig)
 
 
-    Load_Preprocessor = RPconfig.Load_Simulator
+    Load_Preprocessor = Kconfig.simulator
 
     if ( Load_Preprocessor == 'Gromacs'):
         from Preprocessor.Gromacs.preprocessor import Preprocessing
@@ -113,27 +113,27 @@ def main():
     umgr,session=startPilot(Kconfig,RPconfig)
 
 
-    if ( RPconfig.Load_Simulator == 'Amber'):
+    if ( Kconfig.simulator == 'Amber'):
         from Simulator.Amber.simulator import Simulator
-    if ( RPconfig.Load_Analyzer == 'CoCo'):
+    if ( Kconfig.analyzer == 'CoCo'):
         from Analyzer.CoCo.analyzer import Analyzer
 
-    if ( RPconfig.Load_Simulator == 'Gromacs'):
+    if ( Kconfig.simulator == 'Gromacs'):
         from Simulator.Gromacs.simulator import Simulator
-    if ( RPconfig.Load_Analyzer == 'LSDMap'):
+    if ( Kconfig.analyzer == 'LSDMap'):
         from Analyzer.LSDMap.analyzer import Analyzer
 
     for i in range(Kconfig.start_iter,Kconfig.num_iterations):
         Preprocessing(Kconfig,umgr,i)
-        if RPconfig.Load_Simulator:
+        if Kconfig.simulator:
             p1=time.time()
             Simulator(umgr,RPconfig,Kconfig,i)
-        if RPconfig.Load_Analyzer:
+        if Kconfig.analyzer:
             Analyzer(umgr,RPconfig,Kconfig,i)
             p2=time.time()
         if p1.is_integer() and p2.is_integer():
             print 'TTC for one iteration : ', p2-p1
-        if (RPconfig.Load_Simulator == 'Gromacs'):
+        if (Kconfig.simulator == 'Gromacs'):
             if((i+1)%Kconfig.nsave == 0):
                 if os.path.isdir('%s/backup' % os.getcwd()) is False:
                     os.mkdir('%s/backup' % os.getcwd())
