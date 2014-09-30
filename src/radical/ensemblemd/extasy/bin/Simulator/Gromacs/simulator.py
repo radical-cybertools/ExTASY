@@ -13,6 +13,9 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
     curdir = os.path.dirname(os.path.realpath(__file__))
 
     print 'Cycle %s' %cycle
+    Kconfig.grompp_name = os.path.basename(Kconfig.mdp_file)
+    Kconfig.topol_name = os.path.basename(Kconfig.top_file)
+    Kconfig.ndxfile_name = os.path.basename(Kconfig.ndx_file)
 
     print 'Starting Simulation'
 
@@ -31,12 +34,14 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
         gromacs_task.pre_exec = mdtd_bound.pre_exec
         gromacs_task.executable = '/bin/bash'
         gromacs_task.arguments = mdtd_bound.arguments
-        gromacs_task.input_staging = ['%s/run.sh > run.sh'%curdir,'%s/temp/start%s.gro > start.gro' % (os.getcwd(), i),'%s/%s' % (Kconfig.grompp_loc, Kconfig.grompp_name), '%s/%s' % (Kconfig.topol_loc, Kconfig.topol_name)]
-        if Kconfig.ndxfile_name is not None:
-            gromacs_task.input_staging.append('%s/%s'%(Kconfig.ndxfile_loc,Kconfig.ndxfile_name))
-        if Kconfig.itpfile_loc is not None:
-            for itpfile in glob.glob(Kconfig.itpfile_loc + '*.itp'):
-                gromacs_task.input_staging.append('%s/%s'%(Kconfig.itpfile_loc,itpfile))
+        gromacs_task.mpi = True
+        gromacs_task.cores = Kconfig.num_cores_per_sim_cu
+        gromacs_task.input_staging = ['%s/run.sh > run.sh'%curdir,'%s/temp/start%s.gro > start.gro' % (os.getcwd(), i),'%s' % (Kconfig.mdp_file), '%s' % (Kconfig.top_file)]
+        if Kconfig.ndx_file is not None:
+            gromacs_task.input_staging.append('%s' % Kconfig.ndx_file)
+        if Kconfig.itp_file_loc is not None:
+            for itpfile in glob.glob(Kconfig.itp_file_loc + '*.itp'):
+                gromacs_task.input_staging.append('%s/%s' % (Kconfig.itp_file_loc,itpfile))
         gromacs_task.output_staging = ['out.gro > out%s.gro' % i]
         gromacs_task.cores = 1
 
@@ -51,10 +56,10 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
     umgr.wait_units()
 
 
-    if os.path.exists('%s/%s' % (os.getcwd(),Kconfig.tmp_grofile)):
-        os.remove(os.getcwd() + '/' + Kconfig.tmp_grofile)
+    if os.path.exists('%s/%s' % (os.getcwd(),Kconfig.md_output_file)):
+        os.remove(os.getcwd() + '/' + Kconfig.md_output_file)
 
-    with open(Kconfig.tmp_grofile, 'w') as output_grofile:
+    with open(Kconfig.md_output_file, 'w') as output_grofile:
         for i in range(0,Kconfig.num_CUs):
             with open('out%s.gro' % i, 'r') as output_file:
                 for line in output_file:

@@ -9,19 +9,17 @@ import gro
 def Preprocessing(Kconfig,umgr,i):
 
     p1 = time.time()
-
     if(i==0):
-        grofile_name_loc = Kconfig.input_gro_loc
-        grofile_name = Kconfig.input_gro
-        if os.path.exists(grofile_name_loc + '/' + grofile_name) is True:
-            shutil.copy(grofile_name_loc + '/' + grofile_name,os.path.dirname(os.path.realpath(__file__)))
-        if os.path.exists(os.getcwd() + '/' + Kconfig.wfile):
+        grofile_name = os.path.basename(Kconfig.md_input_file)
+        if os.path.exists(Kconfig.md_input_file) is True:
+            shutil.copy(Kconfig.md_input_file,os.path.dirname(os.path.realpath(__file__)))
+        if os.path.exists(os.getcwd() + '/' + Kconfig.w_file):
             os.remove('%s/%s'%(os.getcwd(),Kconfig.wfile))
         if os.path.exists(os.getcwd() + '/backup'):
             shutil.rmtree('%s/backup' % os.getcwd())
 
     else:
-        grofile_name='%s_%s'%(i,Kconfig.input_gro)
+        grofile_name='%s_%s'%(i,os.path.basename(Kconfig.md_input_file))
         if os.path.exists(os.getcwd() + '/' + grofile_name) is True:
             shutil.copy(os.getcwd() + '/' + grofile_name,os.path.dirname(os.path.realpath(__file__)))
 

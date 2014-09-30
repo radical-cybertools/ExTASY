@@ -9,29 +9,26 @@ nsave = 2
 
 #--------------------------Simulation--------------------------------
 
-input_gro_loc = '/tmp/ExTASY/gromacs_lsdmap_example'
-input_gro = 'input.gro'
+num_cores_per_sim_cu = 2
 
-grompp_loc = '/tmp/ExTASY/gromacs_lsdmap_example'
-grompp_name = 'grompp.mdp'
+md_input_file = '/tmp/ExTASY/gromacs_lsdmap_example/input.gro'
 
-topol_loc = '/tmp/ExTASY/gromacs_lsdmap_example'
-topol_name = 'topol.top'
+mdp_file = '/tmp/ExTASY/gromacs_lsdmap_example/grompp.mdp'
 
-ndxfile_loc = ''
-ndxfile_name = ''
+top_file = '/tmp/ExTASY/gromacs_lsdmap_example/topol.top'
+
+ndx_file = ''
 
 grompp_options = ''
 mdrun_options = ''
 
-itpfile_loc = ''
+itp_file_loc = ''
 
-tmp_grofile = 'tmp.gro'
+md_output_file = 'tmp.gro'
 
 #--------------------------Analysis----------------------------------
 
-lsdm_config_loc = '/tmp/ExTASY/gromacs_lsdmap_example'
-lsdm_config_name = 'config.ini'
+lsdm_config_file = '/tmp/ExTASY/gromacs_lsdmap_example/config.ini'
 
 system_name = 'out'
 
@@ -46,7 +43,7 @@ num_clone_files = '%s.nc' % system_name
 
 recovery_flag = 0
 
-wfile = 'weight.w'
+w_file = 'weight.w'
 
 max_alive_neighbors = ''
 max_dead_neighbors = ''
