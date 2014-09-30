@@ -145,20 +145,21 @@ curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/c
 
 **Step 4:** Create a new workload configuration file ``cocoamber.cfg``:
 
+(Download it [cocoamber.cfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/cocoamber.cfg) directly.)
+
 ```
 #-------------------------General---------------------------
 num_iterations = 2  # Number of iterations of Simulation-Analysis
-start_iter     = 0  # Iteration number with which to start
-nreps          = 8
+start_iter = 0      # Iteration number with which to start
+nreps = 8
 
 #-------------------------Simulation-----------------------
-mdshort_loc    = './mdshort.in'
-min_loc        = './min.in'
-crd_loc        = './penta.crd'
-top_loc        = './penta.top'
+md_input_file           = './mdshort.in'
+minimization_input_file = './min.in'
+initial_crd_file        = './penta.crd'
+top_file                = './penta.top'
 
 #-------------------------Analysis--------------------------
-exp_loc     = '$HOME/coco_exp'
 grid        = '5'
 dims        = '3'
 frontpoints = '8'
@@ -226,6 +227,8 @@ curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/c
 
 **Step 4:** Create a new workload configuration file ``cocoamber.cfg``:
 
+(Download it [cocoamber.cfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/cocoamber.cfg) directly.)
+
 ```
 #-------------------------General---------------------------
 num_iterations = 2  # Number of iterations of Simulation-Analysis
@@ -233,14 +236,12 @@ start_iter = 0      # Iteration number with which to start
 nreps = 8
 
 #-------------------------Simulation-----------------------
-mdshort_loc = './mdshort.in'
-min_loc     = './min.in'
-crd_loc     = './penta.crd'
-top_loc     = './penta.top'
+md_input_file           = './mdshort.in'
+minimization_input_file = './min.in'
+initial_crd_file        = './penta.crd'
+top_file                = './penta.top'
 
 #-------------------------Analysis--------------------------
-
-exp_loc     = '$HOME/coco_exp'
 grid        = '5'
 dims        = '3'
 frontpoints = '8'
