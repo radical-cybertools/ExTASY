@@ -38,7 +38,18 @@ potentially incompatible system-wide packages.
 
 ```
 virtualenv /tmp/ExTASY-tools/
-source /tmp/ExTASY-tools/bin/activate
+```
+
+If your shell is **BASH**:
+
+```
+source /tmp/ExTASY-tools/bin/activate 
+```
+
+If your shell is **CSH**:
+
+```
+source /tmp/ExTASY-tools/bin/activate.csh 
 ```
 
 **Step 2:** Install ExTASY's dependencies:
