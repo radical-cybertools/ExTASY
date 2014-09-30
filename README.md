@@ -5,100 +5,85 @@ Provides a command line interface to run multiple Molecular Dynamics (MD) simula
 (a) Gromacs as the "Simulator" and LSDMap as the "Analyzer"; (b) AMBER as the "Simulator" and COCO as the "Analyzer". Due to the plugin-based architecture, this execution pattern, will be 
 expandable as to support more Simulators and Analyzers.
 
+**Table of Contents**
 
-Requirements
-============
-
-* python >= 2.7
-* virtualenv >= 1.11
-* pip >= 1.5
-* Password-less ssh login to remote machine
-
-> Some tips to setup a password-less login
-> ```
-> http://www.linuxproblem.org/art_9.html
-> ```
+* **2. Running Coco/Amber**
+* **2.1 ... on Stampede**
+* **2.2 ... on Archer**
+* **3. Running Gromacs/LSDMap**
+* **3.1 ... on Stampede**
+* **3.2 ... on Archer**
 
 
-Installation
-=============
+# 1. Installation
 
-To install the ExTASY framework, create a virtual environment on localhost and use pip to install the package
-
-```
-virtualenv /tmp/test
-source /tmp/test/bin/activate
-cd /tmp/
-pip install --upgrade git+https://github.com/radical-cybertools/radical.pilot.git@master#egg=radical.pilot
-pip install --upgrade git+https://github.com/radical-cybertools/radical.ensemblemd.mdkernels.git@master#egg=radical.ensemblemd.mdkernels
-git clone --branch extasy-0.1-rc2 https://github.com/radical-cybertools/ExTASY.git
-cd ExTASY
-python setup.py install
-```
-> If you have multiple allocations on the same system, set the environment variable PROJECT_ID 
-> to your allocation number 
+> **!! Requirements !!**
 >
-> ```
-> export PROJECT_ID='ABCXYZ123'
-> ```
-
-After installation on localhost, the following sections have to be implemented to run the workload.
-
-1. Installing LSDMap/CoCo on Stampede
-2. Setting up the Radical Pilot configuration file
-3. Setting up the Kernel configuration file : Gromacs-LSDMap/Amber-CoCo
-4. Running the workload : Gromacs-LSDMap/Amber-CoCo
+> The following are the minimal requirements to install the ExTASY module.
+> 
+> * python >= 2.7
+> * virtualenv >= 1.11
+> * pip >= 1.5
+> * Password-less ssh login to **Stampede** and/or **Archer** machine
+>   (see e.g., http://www.linuxproblem.org/art_9.html)
 
 
-Installing LSDMap on Stampede
----------------------------
+The easiest way to install ExTASY is to create virtualenv. This way, ExTASY and 
+its dependencies can easily be installed in user-space without clashing with 
+potentially incompatible system-wide packages. 
 
-Running LSDMap on Stampede requires that you make a local installation of scipy 0.10.0 (or greater) and numpy 1.4.1 
-(or greater)using the existing python/2.7.6. To use python/2.7.6, you will have to load intel/14.0.1.106. If you do 
-not have scipy 0.10.0 (or greater) and numpy 1.4.1 (or greater) with python/2.7.6, goto [link](https://github.com/radical-cybertools/ExTASY/blob/devel/docs/scipy_installation_stampede_python_2_7_6.md)
 
-To check the version of scipy and numpy,
+Create the virtualenv:
 
 ```
-import scipy
-scipy.__version__
-import numpy
-numpy.__version__
+virtualenv /tmp/ExTASY-tools/
+source /tmp/ExTASY-tools/bin/activate
 ```
 
-
-After installing the dependencies, you will need to make a local installation of lsdmap on Stampede using the existing
-python/2.7.6
+Install ExTASY's dependencies:
 
 ```
-module load -intel intel/14.0.1.106
-module load python
-cd
-git clone git://git.code.sf.net/p/lsdmap/git lsdmap
-cd lsdmap
-python setup.py install --user
+pip install radical.pilot
+pip install --upgrade git+https://github.com/radical-cybertools/radical.ensemblemd.mdkernels.git@master#egg=radical.ensemblemd.mdkernels
 ```
 
+> **TODO OLE/VIVEK: CHANGE 'devel' to release tag in the line below!
 
-Installing CoCo on Stampede
--------------------------
-
-Running CoCo on Stampede requires that you make a local installation of scipy 14 (or greater) using the 
-existing python/2.7.3. To use python/2.7.3, you will have to load intel/13.0.2.146. If you do not have scipy 14 
-(or greater) with python/2.7.3, goto [link](https://github.com/radical-cybertools/ExTASY/blob/devel/docs/scipy_installation_stampede_python_2_7_3.md)
-
-To check the version of scipy and numpy,
+Install ExTASY:
 
 ```
-import scipy
-scipy.__version__
-import numpy
-numpy.__version__
+pip install --upgrade git+https://github.com/radical-cybertools/ExTASY.git@devel#egg=radical.ensemblemd.extasy
 ```
 
+Now you should be able to print the installed version of the ExTASY module:
 
-After installing the dependencies, you will need to explicitly log into Stampede and make a local 
-installation of CoCo using the existing python/2.7.3.
+```
+python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
+```
+
+**Installation is complete!**
+
+==========
+
+# 2. Running Coco/Amber
+
+## 2.1 ... on Stampede
+
+### 2.1.1 Installing CoCo on Stampede
+
+> You can skip this step if you have done this already.
+
+CoCo is currently **not installed** on Stampede. In order to run the CoCo/Amber
+example, you need to install it yourself. This also requires you to install **scipy 14** (or greater) using the Stampede **python/2.7.3** and **intel/13.0.2.146** modules. Please follow [THIS LINK](https://github.com/radical-cybertools/ExTASY/blob/devel/docs/scipy_installation_stampede_python_2_7_3.md) for installation instructions. 
+
+Once you have installed numpy/scipy, double-check the version of scipy and numpy:
+
+```
+python -c "import scipy; scipy.__version__"
+python -c "import numpy; numpy.__version__"
+```
+
+Now you can install CoCo itself. Log-on to Stampede check out the CoCo repository and install it:
 
 ```
 cd $HOME
@@ -107,6 +92,253 @@ module load python
 cd $HOME/coco
 python setup.py install --user
 ```
+
+### 2.1.2 Running the Example Workload
+
+The ExTASY tool expects two input files:
+
+1. The resource configuration file sets the parameters of the HPC resource we want to run the workload on, in this case **Stampede**.
+2. The workload configuration file defines the CoCo/Amber workload itself.
+
+**Step 1:** Create a new directory for the example:
+
+```
+mkdir $HOME/coam-on-stampede/
+cd $HOME/coam-on-stampede/
+```
+
+**Step 2:** Create a new resource configuration file ``archer.cfg``:
+
+> Change the following values according to your needs:
+> 
+> * UNAME
+> * ALLOCATION
+
+```
+# Change the values below accordingly to choose the Simulator and Analyzer
+Load_Simulator = 'Amber'                  # Simulator to be loaded. Can be 'Amber' or 'Gromacs'
+Load_Analyzer = 'CoCo'                    # Analyzer to be loaded. Can be 'CoCo' or 'LSDMap'
+
+# Change the following Radical Pilot according to use requirements
+REMOTE_HOST = 'stampede.tacc.utexas.edu'  # Label/Name of the Remote Machine
+UNAME       = 'username'                  # Username on the Remote Machine
+ALLOCATION  = 'TG-MCB090174'              # Allocation to be charged
+WALLTIME    = 60                          # Walltime to be requested for the pilot
+PILOTSIZE   = 64                          # Number of cores to be reserved
+WORKDIR     = None                        # Working directory on the remote machine
+QUEUE       = 'normal'                    # Name of the queue in the remote machine
+
+# MongoDB related parameters
+DBURL = 'mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/'        
+```
+
+**Step 3:** Download the sample input data:
+
+```
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/coco_examples/mdshort.in
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/coco_examples/min.in
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/coco_examples/penta.crd
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/coco_examples/penta.top
+```
+
+**Step 4:** Create a new workload configuration file ``cocoamber.cfg``:
+
+```
+#-------------------------General---------------------------
+num_iterations = 2  # Number of iterations of Simulation-Analysis
+start_iter     = 0  # Iteration number with which to start
+nreps          = 8
+
+#-------------------------Simulation-----------------------
+mdshort_loc    = './mdshort.in'
+min_loc        = './min.in'
+crd_loc        = './penta.crd'
+top_loc        = './penta.top'
+
+#-------------------------Analysis--------------------------
+exp_loc     = '$HOME/coco_exp'
+grid        = '5'
+dims        = '3'
+frontpoints = '8'
+```
+
+Now you are can run the workload:
+
+```
+extasy --RPconfig archer.cfg --Kconfig cocoamber.cfg
+```
+
+## 2.2 ... on Archer
+
+> CoCo is already installed as a module on Archer so you don't need to install it yourself.
+
+### 2.2.1 Running the Example Workload
+
+The ExTASY tool expects two input files:
+
+1. The resource configuration file sets the parameters of the HPC resource we want to run the workload on, in this case **Archer**.
+2. The workload configuration file defines the CoCo/Amber workload itself.
+
+**Step 1:** Create a new directory for the example:
+
+```
+mkdir $HOME/coam-on-archer/
+cd $HOME/coam-on-archer/
+```
+
+**Step 2:** Create a new resource configuration file ``archer.cfg``:
+
+(Download it [archer.cfg](https://github.com/radical-cybertools/ExTASY/blob/devel/config/) directly.)
+
+> Change the following values according to your needs:
+> 
+> * UNAME
+> * ALLOCATION
+
+```
+# Change the values below accordingly to choose the Simulator and Analyzer
+Load_Simulator = 'Amber'                  # Simulator to be loaded. Can be 'Amber' or 'Gromacs'
+Load_Analyzer  = 'CoCo'                   # Analyzer to be loaded. Can be 'CoCo' or 'LSDMap'
+
+# Change the following Radical Pilot according to use requirements
+REMOTE_HOST = 'archer.ac.uk'              # Label/Name of the Remote Machine
+UNAME       = 'username'                  # Username on the Remote Machine
+ALLOCATION  = 'e290'                      # Allocation to be charged
+WALLTIME    = 60                          # Walltime to be requested for the pilot
+PILOTSIZE   = 24                          # Number of cores to be reserved
+WORKDIR     = None                        # Working directory on the remote machine
+QUEUE       = 'debug'                     # Name of the queue in the remote machine
+
+# MongoDB related parameters
+DBURL = 'mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/'        
+```
+
+**Step 3:** Download the sample input data:
+
+```
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/coco_examples/mdshort.in
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/coco_examples/min.in
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/coco_examples/penta.crd
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/coco_examples/penta.top
+```
+
+**Step 4:** Create a new workload configuration file ``cocoamber.cfg``:
+
+```
+#-------------------------General---------------------------
+num_iterations = 2  # Number of iterations of Simulation-Analysis
+start_iter = 0      # Iteration number with which to start
+nreps = 8
+
+#-------------------------Simulation-----------------------
+mdshort_loc = './mdshort.in'
+min_loc     = './min.in'
+crd_loc     = './penta.crd'
+top_loc     = './penta.top'
+
+#-------------------------Analysis--------------------------
+
+exp_loc     = '$HOME/coco_exp'
+grid        = '5'
+dims        = '3'
+frontpoints = '8'
+```
+
+Now you can run the workload:
+
+```
+extasy --RPconfig archer.cfg --Kconfig cocoamber.cfg
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+==========
+
+# 3. Runing Gromacs/LSDMap
+
+## 3.1 ... on Stampede
+
+### 3.1.1 Installing LSDMap on Stampede
+
+LSDMap is currently **not installed** on Stampede. In order to run the Gromacs/LSDMap
+example, you need to install it yourself. This also requires you to install **scipy 0.10.0** (or greater) and **numpy 1.4.1** using the Stampede **python/2.7.6** and **intel/14.0.1.106** modules. Please follow [THIS LINK](https://github.com/radical-cybertools/ExTASY/blob/devel/docs/scipy_installation_stampede_python_2_7_6.md) for installation instructions. 
+
+```
+python -c "import scipy; scipy.__version__"
+python -c "import numpy; numpy.__version__"
+```
+
+Now you can install LSDMap itself. Log-on to Stampede check out the LSDMap repository and install it:
+
+```
+module load -intel intel/14.0.1.106
+module load python
+git clone git://git.code.sf.net/p/lsdmap/git lsdmap
+cd lsdmap
+python setup.py install --user
+```
+
+**Installation is complete!** 
+
+==========
+
+## 3.2 ... on Archer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -120,22 +352,6 @@ You will also use this file to mention the Simulation and Analysis kernels to be
 
 The second configuration file should contain all the parameters required to execute the Simulation and Analysis kernels. A detailed description for each of the 
 combinations (Gromacs-LSDMap / Amber-CoCo) is given below.
-
-
-Setting up the Radical Pilot configuration file
-------------------------------------------------
-
-The RP config file is used for defining the parameters related to Radical Pilot. It is one of the input files 
-to the csa tool.
-
-* Load_Preprocessor : The preprocessor to be used. Can be 'Gromacs' or 'Amber'
-* Load_Simulator    : The Simulator to be loaded. Can be 'Gromacs' or 'Amber'
-* Load_Analyzer     : The Analyzer to be loaded. Can be 'LSDMap' or 'CoCo'
-* UNAME         : Username to access the remote machine
-* REMOTE_HOST   : URL of remote machine
-* WALLTIME      : Walltime in minutes for the complete job
-* PILOTSIZE     : No. of cores to reserved for the entire job
-* DBURL         : MongoDB URL
 
 
 Setting up the Kernel configuration file : Gromacs-LSDMap
