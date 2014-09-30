@@ -245,7 +245,7 @@ curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/c
 Now you can run the workload:
 
 ```
-extasy --RPconfig archer.cfg --Kconfig cocoamber.cfg
+extasy --RPconfig archer.rcfg --Kconfig cocoamber.wcfg
 ```
 
 <!-- 
