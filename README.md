@@ -118,9 +118,9 @@ mkdir $HOME/coam-on-stampede/
 cd $HOME/coam-on-stampede/
 ```
 
-**Step 2:** Create a new resource configuration file ``stampede.cfg``:
+**Step 2:** Create a new resource configuration file ``stampede_coam.rcfg``:
 
-(Download it [stampede.cfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/stampede.cfg) directly.)
+(Download it [stampede_coam.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/stampede_coam.rcfg) directly.)
 
 > Change the following values according to your needs:
 > 
@@ -130,7 +130,7 @@ cd $HOME/coam-on-stampede/
 ```
 # Change the values below accordingly to choose the Simulator and Analyzer
 Load_Simulator = 'Amber'                  # Simulator to be loaded. Can be 'Amber' or 'Gromacs'
-Load_Analyzer = 'CoCo'                    # Analyzer to be loaded. Can be 'CoCo' or 'LSDMap'
+Load_Analyzer  = 'CoCo'                   # Analyzer to be loaded. Can be 'CoCo' or 'LSDMap'
 
 # Change the following Radical Pilot according to use requirements
 REMOTE_HOST = 'stampede.tacc.utexas.edu'  # Label/Name of the Remote Machine
@@ -154,15 +154,19 @@ curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/c
 curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/coco_examples/penta.top
 ```
 
-**Step 4:** Create a new workload configuration file ``cocoamber.cfg``:
+**Step 4:** Create a new workload configuration file ``cocoamber.wcfg``:
 
-(Download it [cocoamber.cfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/cocoamber.cfg) directly.)
+(Download it [cocoamber.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/cocoamber.wcfg) directly.)
 
 ```
+#-------------------------Applications----------------------
+simulator               = 'Amber'  # Simulator to be loaded. Can be 'Amber' or 'Gromacs'
+analyzer                = 'CoCo'   # Analyzer to be loaded. Can be 'CoCo' or 'LSDMap'
+
 #-------------------------General---------------------------
-num_iterations = 2  # Number of iterations of Simulation-Analysis
-start_iter = 0      # Iteration number with which to start
-nreps = 8
+num_iterations          = 2  # Number of iterations of Simulation-Analysis
+start_iter              = 0  # Iteration number with which to start
+nreps                   = 8
 
 #-------------------------Simulation-----------------------
 md_input_file           = './mdshort.in'
@@ -171,15 +175,15 @@ initial_crd_file        = './penta.crd'
 top_file                = './penta.top'
 
 #-------------------------Analysis--------------------------
-grid        = '5'
-dims        = '3'
-frontpoints = '8'
+grid                   = '5'
+dims                   = '3'
+frontpoints            = '8'
 ```
 
 Now you are can run the workload:
 
 ```
-extasy --RPconfig stampede.cfg --Kconfig cocoamber.cfg
+extasy --RPconfig stampede_coam.rcfg --Kconfig cocoamber.cfg
 ```
 
 ## 2.2 Running on Archer
@@ -200,9 +204,9 @@ mkdir $HOME/coam-on-archer/
 cd $HOME/coam-on-archer/
 ```
 
-**Step 2:** Create a new resource configuration file ``archer.cfg``:
+**Step 2:** Create a new resource configuration file ``archer.rcfg``:
 
-(Download it [archer.cfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/archer.cfg) directly.)
+(Download it [archer_coam.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/archer.rcfg) directly.)
 
 > Change the following values according to your needs:
 > 
@@ -210,10 +214,6 @@ cd $HOME/coam-on-archer/
 > * ALLOCATION
 
 ```
-# Change the values below accordingly to choose the Simulator and Analyzer
-Load_Simulator = 'Amber'                  # Simulator to be loaded. Can be 'Amber' or 'Gromacs'
-Load_Analyzer  = 'CoCo'                   # Analyzer to be loaded. Can be 'CoCo' or 'LSDMap'
-
 # Change the following Radical Pilot according to use requirements
 REMOTE_HOST = 'archer.ac.uk'              # Label/Name of the Remote Machine
 UNAME       = 'username'                  # Username on the Remote Machine
@@ -236,15 +236,19 @@ curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/c
 curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/coco_examples/penta.top
 ```
 
-**Step 4:** Create a new workload configuration file ``cocoamber.cfg``:
+**Step 4:** Create a new workload configuration file ``cocoamber.wcfg``:
 
-(Download it [cocoamber.cfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/cocoamber.cfg) directly.)
+(Download it [cocoamber.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/cocoamber.wcfg) directly.)
 
 ```
+#-------------------------Applications----------------------
+simulator               = 'Amber'  # Simulator to be loaded. Can be 'Amber' or 'Gromacs'
+analyzer                = 'CoCo'   # Analyzer to be loaded. Can be 'CoCo' or 'LSDMap'
+
 #-------------------------General---------------------------
-num_iterations = 2  # Number of iterations of Simulation-Analysis
-start_iter = 0      # Iteration number with which to start
-nreps = 8
+num_iterations          = 2  # Number of iterations of Simulation-Analysis
+start_iter              = 0  # Iteration number with which to start
+nreps                   = 8
 
 #-------------------------Simulation-----------------------
 md_input_file           = './mdshort.in'
@@ -253,9 +257,9 @@ initial_crd_file        = './penta.crd'
 top_file                = './penta.top'
 
 #-------------------------Analysis--------------------------
-grid        = '5'
-dims        = '3'
-frontpoints = '8'
+grid                   = '5'
+dims                   = '3'
+frontpoints            = '8'
 ```
 
 Now you can run the workload:
@@ -330,9 +334,51 @@ python setup.py install --user
 
 **Installation is complete!** 
 
+### 3.1.2 Running the Example Workload
+
+The ExTASY tool expects two input files:
+
+1. The resource configuration file sets the parameters of the HPC resource we want to run the workload on, in this case **Archer**.
+2. The workload configuration file defines the GROMACS/LSDMap workload itself.
+
+**Step 1:** Create a new directory for the example:
+
+```
+mkdir $HOME/grlsd-on-stampede/
+cd $HOME/grlsd-on-stampede/
+```
+
+**Step 2:** Create a new resource configuration file ``stampede_grlsdm.cfg``:
+
+(Download it [stampede.cfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/stampede_grlsdm.cfg) directly.)
+
+> Change the following values according to your needs:
+> 
+> * UNAME
+> * ALLOCATION
+
+```
+# Change the values below accordingly to choose the Simulator and Analyzer
+Load_Simulator = 'Gromacs'                  # Simulator to be loaded. Can be 'Amber' or 'Gromacs'
+Load_Analyzer  = 'LSDMap'                   # Analyzer to be loaded. Can be 'CoCo' or 'LSDMap'
+
+# Change the following Radical Pilot according to use requirements
+REMOTE_HOST = 'archer.ac.uk'              # Label/Name of the Remote Machine
+UNAME       = 'username'                  # Username on the Remote Machine
+ALLOCATION  = 'e290'                      # Allocation to be charged
+WALLTIME    = 60                          # Walltime to be requested for the pilot
+PILOTSIZE   = 24                          # Number of cores to be reserved
+WORKDIR     = None                        # Working directory on the remote machine
+QUEUE       = 'debug'                     # Name of the queue in the remote machine
+
+# MongoDB related parameters
+DBURL = 'mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/'        
+```
+
+
 ## 3.2 Running on Archer
 
-### 2.2.1 Running the Example Workload
+### 3.2.1 Running the Example Workload
 
 The ExTASY tool expects two input files:
 
@@ -346,7 +392,7 @@ mkdir $HOME/grlsd-on-archer/
 cd $HOME/grlsd-on-archer/
 ```
 
-**Step 2:** Create a new resource configuration file ``archer.cfg``:
+**Step 2:** Create a new resource configuration file ``stampede_grlsdm.cfg``:
 
 (Download it [archer.cfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/archer.cfg) directly.)
 
@@ -384,27 +430,13 @@ curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gr
 
 **Step 4:** Create a new workload configuration file ``gromacslsdmap.cfg``:
 
-(Download it [cocoamber.cfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/gromacslsdmap.cfg) directly.)
+(Download it [gromacslsdmap.cfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/gromacslsdmap.cfg) directly.)
 
 ```
-#-------------------------General---------------------------
-num_iterations = 2  # Number of iterations of Simulation-Analysis
-start_iter = 0      # Iteration number with which to start
-nreps = 8
-
-#-------------------------Simulation-----------------------
-md_input_file           = './mdshort.in'
-minimization_input_file = './min.in'
-initial_crd_file        = './penta.crd'
-top_file                = './penta.top'
-
-#-------------------------Analysis--------------------------
-grid        = '5'
-dims        = '3'
-frontpoints = '8'
+coming soon...
 ```
 
-**Step 5a:** Install numpy
+**Step 5a:** Install NumPy:
 
 The LSDMap update stage currently requires a local installation of numpy. 
 
@@ -414,10 +446,8 @@ pip install numpy
 
 **Step 5:** Run the workload:
 
-
-
 ```
-extasy --RPconfig archer.cfg --Kconfig cocoamber.cfg
+extasy --RPconfig archer.cfg --Kconfig gromacslsdmap.cfg
 ```
 
 
@@ -502,41 +532,6 @@ propagation of filenames throughout the tool.
 * nearest_neighbor_file 
 * num_clone_files 
 -->
-
-
-
-Running the workload : Gromacs-LSDMap
----------------------------------------
-46
-The command format to run the workload is as follows,
-
-```
-extasy --RPconfig RPCONFIG --Kconfig KCONFIG
-```
-
-where RPCONFIG is the path to the Radical Pilot configuration file and KCONFIG is the path to the Kernel 
-configuration file. But before running this command, there are some dependencies to address which is particular 
-to this combination of kernels.
-
-
-The update stage following LSDMap in each iteration requires numpy. For this install numpy as follow,
-
-```
-pip install numpy
-```
-
-Next we need to set the tool to use Gromacs as the Simulation kernel and LSDMap as the Analysis kernel. For this,
-we need to set 2 parameters in the Radical Pilot configuration file.
-
-```
-Load_Simulator = 'Gromacs'
-Load_Analyzer = 'LSDMap'
-````
-
-All set ! Run the workload execution command ! If you followed this document completely, the command should look like
-```
-extasy --RPconfig /tmp/ExTASY/config/RP_config.py --Kconfig /tmp/ExTASY/config/gromacs_lsdmap_config.py
-```
 
 
 
