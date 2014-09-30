@@ -310,6 +310,8 @@ cd $HOME/grlsd-on-stampede/
 
 **Step 2:** Create a new resource configuration file ``stampede.rcfg``:
 
+> This file is identical with the resource configuration file used in "Running CoCo/Amber on Stampede"
+
 (Download it [stampede.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/stampede.rcfg) directly.)
 
 > Change the following values according to your needs:
@@ -317,29 +319,67 @@ cd $HOME/grlsd-on-stampede/
 > * UNAME
 > * ALLOCATION
 
+**Step 3:** Download the sample input data:
+
 ```
-# Change the values below accordingly to choose the Simulator and Analyzer
-Load_Simulator = 'Gromacs'                  # Simulator to be loaded. Can be 'Amber' or 'Gromacs'
-Load_Analyzer  = 'LSDMap'                   # Analyzer to be loaded. Can be 'CoCo' or 'LSDMap'
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gromacs_lsdmap_example/config.ini
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gromacs_lsdmap_example/grompp.mdp
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gromacs_lsdmap_example/input.gro
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gromacs_lsdmap_example/topol.top
+```
 
-# Change the following Radical Pilot according to use requirements
-REMOTE_HOST = 'archer.ac.uk'              # Label/Name of the Remote Machine
-UNAME       = 'username'                  # Username on the Remote Machine
-ALLOCATION  = 'e290'                      # Allocation to be charged
-WALLTIME    = 60                          # Walltime to be requested for the pilot
-PILOTSIZE   = 24                          # Number of cores to be reserved
-WORKDIR     = None                        # Working directory on the remote machine
-QUEUE       = 'debug'                     # Name of the queue in the remote machine
+**Step 4:** Create a new workload configuration file ``gromacslsdmap.wcfg``:
 
-# MongoDB related parameters
-DBURL = 'mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/'        
+(Download it [gromacslsdmap.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/gromacslsdmap.wcfg) directly.)
+
+```
+#-------------------------Applications----------------------
+simulator             = 'Gromacs'
+analyzer              = 'LSDMap'
+
+#--------------------------General--------------------------------
+num_CUs              = 64 #num of CUs
+num_iterations       = 1
+start_iter           = 0
+nsave                = 2
+
+#--------------------------Simulation--------------------------------
+num_cores_per_sim_cu = 2
+md_input_file        = './input.gro'
+mdp_file             = './grompp.mdp'
+top_file             = './topol.top'
+ndx_file             = ''
+grompp_options       = ''
+mdrun_options        = ''
+itp_file_loc         = ''
+md_output_file       = 'tmp.gro'
+
+#--------------------------Analysis----------------------------------
+lsdm_config_file     = './config.ini'
+num_runs             = 10000
+w_file               = 'weight.w'
+max_alive_neighbors  = ''
+max_dead_neighbors   = ''
+
+```
+**Step 5a:** Install NumPy:
+
+The LSDMap update stage currently requires a local installation of numpy. 
+
+```
+pip install numpy
+```
+
+**Step 5:** Run the workload:
+
+```
+extasy --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg
 ```
 
 <!-- LSDMAP / ARCHER
 ===================================================================
 ===================================================================
 -->
-
 ## 3.2 Running on Archer
 
 ### 3.2.1 Running the Example Workload
@@ -381,7 +421,6 @@ curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gr
 > The file is identical with the workload configuration file used in "Running GROMACS/LSDMap on Stampede"
 
 (Download it [gromacslsdmap.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/gromacslsdmap.wcfg) directly.)
-
 
 **Step 5a:** Install NumPy:
 
