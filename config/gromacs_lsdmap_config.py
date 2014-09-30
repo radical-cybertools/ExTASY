@@ -30,11 +30,7 @@ md_output_file = 'tmp.gro'
 
 lsdm_config_file = '/tmp/ExTASY/gromacs_lsdmap_example/config.ini'
 
-system_name = 'out'
-
 num_runs = 10000
-
-recovery_flag = 0
 
 w_file = 'weight.w'
 
