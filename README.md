@@ -1,16 +1,17 @@
-Coupled Simulation-Analysis Execution
-======================================
+# ExTASY Coupled Simulation-Analysis Execution
+==============================================
 
 Provides a command line interface to run multiple Molecular Dynamics (MD) simulations, which can be coupled to an analysis tool. The coupled simulation-analysis execution pattern (aka ExTASY pattern) currently supports two examples: 
 (a) Gromacs as the "Simulator" and LSDMap as the "Analyzer"; (b) AMBER as the "Simulator" and COCO as the "Analyzer". Due to the plugin-based architecture, this execution pattern, will be 
 expandable as to support more Simulators and Analyzers.
 
-**Table of Contents**
+### Table of Contents
 
-* **2. Running Coco/Amber**
+* **1. Installation**
+* **2. Running a Coco/Amber Workload**
 * **2.1 ... on Stampede**
 * **2.2 ... on Archer**
-* **3. Running Gromacs/LSDMap**
+* **3. Running a Gromacs/LSDMap Workload**
 * **3.1 ... on Stampede**
 * **3.2 ... on Archer**
 
@@ -33,14 +34,14 @@ its dependencies can easily be installed in user-space without clashing with
 potentially incompatible system-wide packages. 
 
 
-Create the virtualenv:
+**Step 1:** Create the virtualenv:
 
 ```
 virtualenv /tmp/ExTASY-tools/
 source /tmp/ExTASY-tools/bin/activate
 ```
 
-Install ExTASY's dependencies:
+**Step 2:** Install ExTASY's dependencies:
 
 ```
 pip install radical.pilot
@@ -49,7 +50,7 @@ pip install --upgrade git+https://github.com/radical-cybertools/radical.ensemble
 
 > **TODO OLE/VIVEK: CHANGE 'devel' to release tag in the line below!
 
-Install ExTASY:
+**Step 3:** Install ExTASY:
 
 ```
 pip install --upgrade git+https://github.com/radical-cybertools/ExTASY.git@devel#egg=radical.ensemblemd.extasy
@@ -65,9 +66,15 @@ python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
 
 ==========
 
-# 2. Running Coco/Amber
+# 2. Running a Coco/Amber Workload 
 
-## 2.1 ... on Stampede
+This example allocates ``PILOTSIZE`` cores on ``REMOTE_HOST``. Once the core allocation request goes through the queue, there is no Preprocessor for these combination of kernels. The Simulator is loaded which transfers the required files (``.crd``, ``.top``, ``.in``) and performs the Amber simulation on the provided input. After all the simulations are done, the Analysis stage kicks in and performs analysis using the CoCo method. The output of the Analysis stage is fed back as the input of the Simulation in the next iteration.
+
+> * Number of CUs in the simulation stage = ``num_CUs``
+> * Number of CUs in the analysis stage = ``1``
+> * Total number of CUs in N iterations of ASA =`` N*(num_CUs + 1)`` 
+
+## 2.1 Running on Stampede
 
 ### 2.1.1 Installing CoCo on Stampede
 
@@ -171,7 +178,7 @@ Now you are can run the workload:
 extasy --RPconfig stampede.cfg --Kconfig cocoamber.cfg
 ```
 
-## 2.2 ... on Archer
+## 2.2 Running on Archer
 
 > CoCo is already installed as a module on Archer so you don't need to install it yourself.
 
@@ -280,7 +287,7 @@ extasy --RPconfig archer.cfg --Kconfig cocoamber.cfg
 
 ==========
 
-# 3. Runing Gromacs/LSDMap
+# 3. Runing a Gromacs/LSDMap Workload
 
 ## 3.1 ... on Stampede
 
@@ -406,34 +413,6 @@ propagation of filenames throughout the tool.
 * num_clone_files 
 
 
-Setting up the Kernel configuration file : Amber-CoCo
-------------------------------------------------------
-
-As described before, the other input file to the tool is the file containing all required parameters for the
-Kernel execution. The following are the parameters required for the Amber-CoCo kernel combinations. An 
-example/demo can be found in ``` /tmp/ExTASY/config/amber_coco_config.py```.
-
-
-----------------------------------------------------------General-----------------------------------------------------------------------------
-
-* num_iterations  : Number of iterations of Simulation-Analysis chain
-* nreps           : Number of replicas
-
-
--------------------------------------------------------Simulation(Amber)----------------------------------------------------------------
-
-* mdshort_loc & mdshortfile : Location and name of the mdshort file
-* min_loc & minfile         : Location and name of the min file
-* crd_loc & crdfile         : Location and name of the crd file
-* top_loc & topfile         : Location and name of the topology file
-
-
--------------------------------------------------------Analysis(CoCo)--------------------------------------------------------------------
-
-* grid              : the number of grid points per dimension in the CoCo histogram
-* dims              : the number of dimensions (PCs) in the CoCo mapping
-* frontpoints       : the number of fronteir points to return structures
-
 
 
 Running the workload : Gromacs-LSDMap
@@ -486,47 +465,4 @@ Number of CUs in the analysis stage = 1
 
 Total number of CUs in N iterations of ASA = N*(num_CUs + 1)
 
-
-Running the workload : Amber-CoCo
----------------------------------------
-
-The command format to run the workload is as follows,
-
-```
-extasy --RPconfig RPCONFIG --Kconfig KCONFIG
-```
-
-where RPCONFIG is the path to the Radical Pilot configuration file and KCONFIG is the path to the Kernel 
-configuration file. But before running this command, there are some dependencies to address which is particular 
-to this combination of kernels.
-
-Before we start with the execution, we need to set the tool to use Amber as the Simulation kernel and CoCo as the Analysis kernel. For this,
-we need to set 2 parameters in the Radical Pilot configuration file.
-
-```
-Load_Simulator = 'Amber'
-Load_Analyzer = 'CoCo'
-````
-
-All set ! Run the workload execution command ! If you followed this document completely, the command should look like
-
-```
-extasy --RPconfig /tmp/ExTASY/config/RP_config.py --Kconfig /tmp/ExTASY/config/amber_coco_config.py
-```
-
-
-**What this does ...**
-
-This command starts the execution. It will first submit a pilot on the REMOTE_HOST and reserve the number of cores as defined by the
-PILOTSIZE. Once the pilot goes through the queue, there is no Preprocessor for these combination of kernels. The 
-Simulator is loaded which transfers the required files (.crd,.top,.in) and performs the amber simulation on the
-provided input. After all the simulations are done, the Analysis stage kicks in and performs analysis using the CoCo method.
-The output of the Analysis stage is fed back as the input of the Simulation in the next iteration. 
-
- 
-Number of CUs in the simulation stage = num_CUs
-
-Number of CUs in the analysis stage = 1
-
-Total number of CUs in N iterations of ASA = N*(num_CUs + 1) 
 
