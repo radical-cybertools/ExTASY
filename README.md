@@ -298,7 +298,7 @@ python setup.py install --user
 
 The ExTASY tool expects two input files:
 
-1. The resource configuration file sets the parameters of the HPC resource we want to run the workload on, in this case **Archer**.
+1. The resource configuration file sets the parameters of the HPC resource we want to run the workload on, in this case **Stampede**.
 2. The workload configuration file defines the GROMACS/LSDMap workload itself.
 
 **Step 1:** Create a new directory for the example:
@@ -373,7 +373,7 @@ pip install numpy
 **Step 5:** Run the workload:
 
 ```
-extasy --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg
+extasy --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg
 ```
 
 <!-- LSDMAP / ARCHER
