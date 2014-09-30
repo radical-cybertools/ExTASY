@@ -68,8 +68,12 @@ python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
 
 # 2. Running a Coco/Amber Workload 
 
+> **[TODO Vivek: Improve paragraph below - hard to understand. Avoid 'jargon'. Don't reference things that are not defined yet, e.g. PILOTSIZE]**
+
 This example allocates ``PILOTSIZE`` cores on ``REMOTE_HOST``. Once the core allocation request goes through the queue, there is no Preprocessor for these combination of kernels. The Simulator is loaded which transfers the required files (``.crd``, ``.top``, ``.in``) and performs the Amber simulation on the provided input. After all the simulations are done, the Analysis stage kicks in and performs analysis using the CoCo method. The output of the Analysis stage is fed back as the input of the Simulation in the next iteration.
 
+> **[TODO Vivek: Put bullet points below into perspective?]**
+> 
 > * Number of CUs in the simulation stage = ``num_CUs``
 > * Number of CUs in the analysis stage = ``1``
 > * Total number of CUs in N iterations of ASA =`` N*(num_CUs + 1)`` 
@@ -289,7 +293,20 @@ extasy --RPconfig archer.cfg --Kconfig cocoamber.cfg
 
 # 3. Runing a Gromacs/LSDMap Workload
 
-## 3.1 ... on Stampede
+> **[TODO Vivek: Improve paragraph below - hard to understand. Avoid 'jargon'.]**
+
+This example allocates ``PILOTSIZE`` cores on ``REMOTE_HOST``. Once the pilot goes through the queue, the Preprocessor splits the ``input.gro`` file as defined by ``input_gro`` into
+temporary smaller files based on ``num_CUs``. The Simulator is then launched which takes as input the temporary files, an ``mdp`` file and a ``top`` file and runs the MD. The output is aggregated into one ``gro`` file that is used during the Analysis phase. The Analyzer is then loaded which looks for a ``gro`` file as defined in ``tmp_grofile``
+in the workload configuration.
+
+> **[TODO Vivek: Put bullet points below into perspective?]**
+
+> * Number of CUs in the simulation stage = ``num_CUs``
+> * Number of CUs in the analysis stage = ``1``
+> * Total number of CUs in N iterations of ASA = ``N*(num_CUs + 1)``
+
+
+## 3.1 Running on Stampede
 
 ### 3.1.1 Installing LSDMap on Stampede
 
@@ -313,9 +330,95 @@ python setup.py install --user
 
 **Installation is complete!** 
 
-==========
+## 3.2 Running on Archer
 
-## 3.2 ... on Archer
+### 2.2.1 Running the Example Workload
+
+The ExTASY tool expects two input files:
+
+1. The resource configuration file sets the parameters of the HPC resource we want to run the workload on, in this case **Archer**.
+2. The workload configuration file defines the GROMACS/LSDMap workload itself.
+
+**Step 1:** Create a new directory for the example:
+
+```
+mkdir $HOME/grlsd-on-archer/
+cd $HOME/grlsd-on-archer/
+```
+
+**Step 2:** Create a new resource configuration file ``archer.cfg``:
+
+(Download it [archer.cfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/archer.cfg) directly.)
+
+> Change the following values according to your needs:
+> 
+> * UNAME
+> * ALLOCATION
+
+```
+# Change the values below accordingly to choose the Simulator and Analyzer
+Load_Simulator = 'Amber'                  # Simulator to be loaded. Can be 'Amber' or 'Gromacs'
+Load_Analyzer  = 'CoCo'                   # Analyzer to be loaded. Can be 'CoCo' or 'LSDMap'
+
+# Change the following Radical Pilot according to use requirements
+REMOTE_HOST = 'archer.ac.uk'              # Label/Name of the Remote Machine
+UNAME       = 'username'                  # Username on the Remote Machine
+ALLOCATION  = 'e290'                      # Allocation to be charged
+WALLTIME    = 60                          # Walltime to be requested for the pilot
+PILOTSIZE   = 24                          # Number of cores to be reserved
+WORKDIR     = None                        # Working directory on the remote machine
+QUEUE       = 'debug'                     # Name of the queue in the remote machine
+
+# MongoDB related parameters
+DBURL = 'mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/'        
+```
+
+**Step 3:** Download the sample input data:
+
+```
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gromacs_lsdmap_example/config.ini
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gromacs_lsdmap_example/grompp.mdp
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gromacs_lsdmap_example/input.gro
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gromacs_lsdmap_example/topol.top
+```
+
+**Step 4:** Create a new workload configuration file ``gromacslsdmap.cfg``:
+
+(Download it [cocoamber.cfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/gromacslsdmap.cfg) directly.)
+
+```
+#-------------------------General---------------------------
+num_iterations = 2  # Number of iterations of Simulation-Analysis
+start_iter = 0      # Iteration number with which to start
+nreps = 8
+
+#-------------------------Simulation-----------------------
+md_input_file           = './mdshort.in'
+minimization_input_file = './min.in'
+initial_crd_file        = './penta.crd'
+top_file                = './penta.top'
+
+#-------------------------Analysis--------------------------
+grid        = '5'
+dims        = '3'
+frontpoints = '8'
+```
+
+**Step 5a:** Install numpy
+
+The LSDMap update stage currently requires a local installation of numpy. 
+
+```
+pip install numpy
+```
+
+**Step 5:** Run the workload:
+
+
+
+```
+extasy --RPconfig archer.cfg --Kconfig cocoamber.cfg
+```
 
 
 
@@ -350,20 +453,7 @@ python setup.py install --user
 
 
 
-
-
-USAGE
-======
-
-To use the CSA tool, you will first need to setup two files. 
-
-A configuration file for the Radical Pilot related parameters which would allow us to launch pilot(s) and compute units on the targeted remote machine.
-You will also use this file to mention the Simulation and Analysis kernels to be used.
-
-The second configuration file should contain all the parameters required to execute the Simulation and Analysis kernels. A detailed description for each of the 
-combinations (Gromacs-LSDMap / Amber-CoCo) is given below.
-
-
+<!--
 Setting up the Kernel configuration file : Gromacs-LSDMap
 ----------------------------------------------------------
 
@@ -411,7 +501,7 @@ propagation of filenames throughout the tool.
 * evfile 
 * nearest_neighbor_file 
 * num_clone_files 
-
+-->
 
 
 
@@ -448,21 +538,5 @@ All set ! Run the workload execution command ! If you followed this document com
 extasy --RPconfig /tmp/ExTASY/config/RP_config.py --Kconfig /tmp/ExTASY/config/gromacs_lsdmap_config.py
 ```
 
-
-**What this does ...**
-
-This command starts the execution. It will first submit a pilot on the REMOTE_HOST and reserve the number of cores as defined by the
-PILOTSIZE. Once the pilot goes through the queue, the Preprocessor splits the input gro file as defined by ```input_gro``` into
-temporary smaller files based on ```num_CUs```. The Simulator is then loaded which submits Compute Units to the REMOTE_HOST
-and takes as input the temporary files, a mdp file and a top file and runs the MD. The output is aggregated into one gro file to be used 
-during the Analysis phase. The Analyzer is then loaded which looks for a gro file as defined by ```tmp_grofile```
-in KCONFIG in the current directory (from where ```extasy``` is run) and runs LSDMap on it.
-
-
-Number of CUs in the simulation stage = num_CUs
-
-Number of CUs in the analysis stage = 1
-
-Total number of CUs in N iterations of ASA = N*(num_CUs + 1)
 
 
