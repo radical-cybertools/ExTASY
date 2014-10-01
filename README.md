@@ -96,8 +96,8 @@ example, you need to install it yourself. This also requires you to install **sc
 Once you have installed numpy/scipy, double-check the version of scipy and numpy:
 
 ```
-python -c "import scipy; scipy.__version__"
-python -c "import numpy; numpy.__version__"
+python -c "import scipy; print scipy.__version__"
+python -c "import numpy; print numpy.__version__"
 ```
 
 Now you can install CoCo itself. Log-on to Stampede check out the CoCo repository and install it:
@@ -292,8 +292,8 @@ LSDMap is currently **not installed** on Stampede. In order to run the Gromacs/L
 example, you need to install it yourself. This also requires you to install **scipy 0.10.0** (or greater) and **numpy 1.4.1** using the Stampede **python/2.7.6** and **intel/14.0.1.106** modules. Please follow [THIS LINK](https://github.com/radical-cybertools/ExTASY/blob/devel/docs/scipy_installation_stampede_python_2_7_6.md) for installation instructions. 
 
 ```
-python -c "import scipy; scipy.__version__"
-python -c "import numpy; numpy.__version__"
+python -c "import scipy; print scipy.__version__"
+python -c "import numpy; print numpy.__version__"
 ```
 
 Now you can install LSDMap itself. Log-on to Stampede check out the LSDMap repository and install it:

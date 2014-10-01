@@ -33,6 +33,10 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
     unit.wait()
 
-    print 'Analysis Execution time : ',(unit.stop_time - unit.start_time).total_seconds()
+    try:
+        print 'Analysis Execution time : ',(unit.stop_time - unit.start_time).total_seconds()
+
+    except:
+        pass
 
     return

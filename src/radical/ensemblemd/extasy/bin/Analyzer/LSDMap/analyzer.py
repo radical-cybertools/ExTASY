@@ -39,7 +39,12 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
     p2=time.time()
 
-    print 'Analysis Execution time : ',(lsdmCU.stop_time - lsdmCU.start_time).total_seconds()
+    try:
+        print 'Analysis Execution time : ',(lsdmCU.stop_time - lsdmCU.start_time).total_seconds()
+
+    except:
+        pass
+
     print 'Total Analysis time : ',p2-p1
 
     curdir = os.path.dirname(os.path.realpath(__file__))
