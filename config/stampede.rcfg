@@ -6,4 +6,4 @@ PILOTSIZE   = 64                          # Number of cores to be reserved
 WORKDIR     = None                        # Working directory on the remote machine
 QUEUE       = 'normal'                    # Name of the queue in the remote machine
 
-DBURL       = 'mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/'   
+DBURL       = 'mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/'          #MongoDB link to be used for coordination purposes
