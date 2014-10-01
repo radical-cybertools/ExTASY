@@ -38,11 +38,10 @@ potentially incompatible system-wide packages.
 > ```
 > wget --no-check-certificate https://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.9.tar.gz
 > tar xzf virtualenv-1.9.tar.gz
+> python virtualenv-1.9/virtualenv.py --system-site-packages $HOME/myenv
+> source $HOME/myenv/bin/activate
 > ```
 
-python virtualenv-1.9/virtualenv.py --system-site-packages $HOME/myenv
-source $HOME/myenv/bin/activate
-```
 
 **Step 1:** Create the virtualenv:
 
