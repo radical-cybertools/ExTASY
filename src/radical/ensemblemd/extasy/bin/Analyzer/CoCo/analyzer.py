@@ -21,12 +21,12 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     cudesc.pre_exec = mdtd_bound.pre_exec
     cudesc.arguments = mdtd_bound.arguments
     cudesc.input_staging = ['%s/postexec.py'%curdir,'%s/pycoco.py'%curdir,'%s'%(Kconfig.top_file)]
-    for i in range(0,Kconfig.nreps):
+    for i in range(0,Kconfig.num_CUs):
             cudesc.input_staging.append('md_%s_%s.mdcrd'%(cycle,i))
-    cudesc.post_exec = ['python postexec.py %s %s' % (Kconfig.nreps,cycle)]
+    cudesc.post_exec = ['python postexec.py %s %s' % (Kconfig.num_CUs,cycle)]
     cudesc.mpi = True
     cudesc.output_staging = []
-    for i in range(0,Kconfig.nreps):
+    for i in range(0,Kconfig.num_CUs):
         cudesc.output_staging.append('min%s%s.crd'%(cyc,i))
 
     unit = umgr.submit_units(cudesc)

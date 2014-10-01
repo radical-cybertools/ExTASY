@@ -79,13 +79,10 @@ python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
 
 # 2. Running a Coco/Amber Workload 
 
-> **[TODO Vivek: Improve paragraph below - hard to understand. Avoid 'jargon'. Don't reference things that are not defined yet, e.g. PILOTSIZE]**
-
   This section will discuss details about the installation and execution phase. Depending on the remote/target machine,
   some of the modules might need to be manually installed as discussed below. The input to the tool is given in terms of
   a resource configuration file and a workload configuration file. The execution is started based on the parameters set in
-  these configuration files. In the execution phase, a number of simulation tasks as defined in the workload configuration file
-  are executed in the target machine.
+  these configuration files. 
 
 > **[TODO Vivek: Put bullet points below into perspective?]**
 > 
@@ -175,7 +172,7 @@ analyzer                 = 'CoCo'
 #-------------------------General---------------------------
 num_iterations          = 2  # Number of iterations of Simulation-Analysis
 start_iter              = 0  # Iteration number with which to start
-nreps = 8
+num_CUs = 8
 
 #-------------------------Simulation-----------------------
 num_cores_per_sim_cu    = 2
@@ -263,23 +260,30 @@ Now you can run the workload:
 extasy --RPconfig archer.rcfg --Kconfig cocoamber.wcfg
 ```
 
+There are two stages in the execution phase - Simulation and Analysis. Execution starts with any Preprocessing that 
+might be required on the input data and then moves to Simulation stage. In the Simulation stage, a number of tasks (num_CUs)
+are launched to execute on the target machine. The number of tasks set to execute depends on the PILOTSIZE, num_CUs, 
+num_cores_per_sim_cu, the number of tasks in execution state simultaneously would be PILOTSIZE/num_cores_per_sim_cu.
+As each task attains 'Done' (completed) state, the remain tasks are scheduled till all the **num_CUs** tasks are completed.
+ 
+This is followed by the Analysis stage, one task is scheduled on the target machine which takes all the cores as the 
+PILOTSIZE to perform the analysis and returns the data required for the next iteration of the Simulation stage. As can
+be seen, per iteration, there are (num_CUs+1) tasks executed.
+
 <!-- 
 ===================================================================
 ===================================================================
 -->
+
+
+
 # 3. Runing a Gromacs/LSDMap Workload
 
-> **[TODO Vivek: Improve paragraph below - hard to understand. Avoid 'jargon'.]**
+This section will discuss details about the installation and execution phase. Depending on the remote/target machine,
+some of the modules might need to be manually installed as discussed below. The input to the tool is given in terms of
+a resource configuration file and a workload configuration file. The execution is started based on the parameters set in
+these configuration files. 
 
-This example allocates ``PILOTSIZE`` cores on ``REMOTE_HOST``. Once the pilot goes through the queue, the Preprocessor splits the ``input.gro`` file as defined by ``input_gro`` into
-temporary smaller files based on ``num_CUs``. The Simulator is then launched which takes as input the temporary files, an ``mdp`` file and a ``top`` file and runs the MD. The output is aggregated into one ``gro`` file that is used during the Analysis phase. The Analyzer is then loaded which looks for a ``gro`` file as defined in ``tmp_grofile``
-in the workload configuration.
-
-> **[TODO Vivek: Put bullet points below into perspective?]**
-
-> * Number of CUs in the simulation stage = ``num_CUs``
-> * Number of CUs in the analysis stage = ``1``
-> * Total number of CUs in N iterations of ASA = ``N*(num_CUs + 1)``
 
 <!-- LSDMAP / STAMPEDE
 ===================================================================
@@ -451,7 +455,15 @@ pip install numpy
 extasy --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg
 ```
 
-
+There are two stages in the execution phase - Simulation and Analysis. Execution starts with any Preprocessing that 
+might be required on the input data and then moves to Simulation stage. In the Simulation stage, a number of tasks (num_CUs)
+are launched to execute on the target machine. The number of tasks set to execute depends on the PILOTSIZE, num_CUs, 
+num_cores_per_sim_cu, the number of tasks in execution state simultaneously would be PILOTSIZE/num_cores_per_sim_cu.
+As each task attains 'Done' (completed) state, the remain tasks are scheduled till all the **num_CUs** tasks are completed.
+ 
+This is followed by the Analysis stage, one task is scheduled on the target machine which takes all the cores as the 
+PILOTSIZE to perform the analysis and returns the data required for the next iteration of the Simulation stage. As can
+be seen, per iteration, there are (num_CUs+1) tasks executed.
 
 
 

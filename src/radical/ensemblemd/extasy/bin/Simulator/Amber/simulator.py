@@ -30,7 +30,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
     end_times = []
 
     compute_units = []
-    for i in range(Kconfig.nreps):
+    for i in range(Kconfig.num_CUs):
 
         step_1 = 'pmemd -O -i {mininfilename} -o min{cycle}.out -inf min{cycle}.inf -r md{cycle}.crd -p {topfilename} -c min{cycle}.crd -ref min{cycle}.crd'.format(**dict)
         step_2 = 'pmemd -O -i {mdinfilename} -o md{cycle}.out -inf md{cycle}.inf -x md{cycle}.mdcrd -r md{cycle}.rst -p {topfilename} -c md{cycle}.crd'.format(**dict)
