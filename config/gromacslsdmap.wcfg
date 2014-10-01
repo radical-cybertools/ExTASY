@@ -23,5 +23,5 @@ md_output_file       = 'tmp.gro'
 lsdm_config_file     = './config.ini'
 num_runs             = 10000
 w_file               = 'weight.w'
-max_alive_neighbors  = ''
-max_dead_neighbors   = ''
+max_alive_neighbors  = '10'
+max_dead_neighbors   = '1'
