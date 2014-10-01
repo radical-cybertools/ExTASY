@@ -84,12 +84,6 @@ python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
   a resource configuration file and a workload configuration file. The execution is started based on the parameters set in
   these configuration files. 
 
-> **[TODO Vivek: Put bullet points below into perspective?]**
-> 
-> * Number of CUs in the simulation stage = ``num_CUs``
-> * Number of CUs in the analysis stage = ``1``
-> * Total number of CUs in N iterations of ASA =`` N*(num_CUs + 1)`` 
-
 ## 2.1 Running on Stampede
 
 ### 2.1.1 Installing CoCo on Stampede
@@ -289,6 +283,7 @@ these configuration files.
 ===================================================================
 ===================================================================
 -->
+
 ## 3.1 Running on Stampede
 
 ### 3.1.1 Installing LSDMap on Stampede
