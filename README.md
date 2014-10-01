@@ -256,13 +256,13 @@ extasy --RPconfig archer.rcfg --Kconfig cocoamber.wcfg
 
 There are two stages in the execution phase - Simulation and Analysis. Execution starts with any Preprocessing that 
 might be required on the input data and then moves to Simulation stage. In the Simulation stage, a number of tasks (num_CUs)
-are launched to execute on the target machine. The number of tasks set to execute depends on the PILOTSIZE, num_CUs, 
-num_cores_per_sim_cu, the number of tasks in execution state simultaneously would be PILOTSIZE/num_cores_per_sim_cu.
+are launched to execute on the target machine. The number of tasks set to execute depends on the **PILOTSIZE, num_CUs, 
+num_cores_per_sim_cu**, the number of tasks in execution state simultaneously would be **PILOTSIZE/num_cores_per_sim_cu**.
 As each task attains 'Done' (completed) state, the remain tasks are scheduled till all the **num_CUs** tasks are completed.
  
 This is followed by the Analysis stage, one task is scheduled on the target machine which takes all the cores as the 
 PILOTSIZE to perform the analysis and returns the data required for the next iteration of the Simulation stage. As can
-be seen, per iteration, there are (num_CUs+1) tasks executed.
+be seen, per iteration, there are **(num_CUs+1)** tasks executed.
 
 <!-- 
 ===================================================================
@@ -452,94 +452,10 @@ extasy --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg
 
 There are two stages in the execution phase - Simulation and Analysis. Execution starts with any Preprocessing that 
 might be required on the input data and then moves to Simulation stage. In the Simulation stage, a number of tasks (num_CUs)
-are launched to execute on the target machine. The number of tasks set to execute depends on the PILOTSIZE, num_CUs, 
-num_cores_per_sim_cu, the number of tasks in execution state simultaneously would be PILOTSIZE/num_cores_per_sim_cu.
+are launched to execute on the target machine. The number of tasks set to execute depends on the **PILOTSIZE, num_CUs, 
+num_cores_per_sim_cu**, the number of tasks in execution state simultaneously would be **PILOTSIZE/num_cores_per_sim_cu**.
 As each task attains 'Done' (completed) state, the remain tasks are scheduled till all the **num_CUs** tasks are completed.
  
 This is followed by the Analysis stage, one task is scheduled on the target machine which takes all the cores as the 
 PILOTSIZE to perform the analysis and returns the data required for the next iteration of the Simulation stage. As can
-be seen, per iteration, there are (num_CUs+1) tasks executed.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
-Setting up the Kernel configuration file : Gromacs-LSDMap
-----------------------------------------------------------
-
-As described before, the other input file to the tool is the file containing all required parameters for the
-Kernel execution. The following are the parameters required for the Gromacs-LSDMap kernel combinations. An 
-example/demo can be found in ``` /tmp/ExTASY/config/gromacs_lsdmap_config.py```.
-
-----------------------------------------------------------General-------------------------------------------------------------------------
-
-* num_CUs           : Number of Compute Units to be submitted to the pilot
-* num_iterations    : Number of iterations of Simulation-Analysis
-* nsave             : Number of iterations after which backup is to be created
-* start_iter        : Iteration number with which to start
-
------------------------------------------------------Simulation(Gromacs)--------------------------------------------------------------
-
-* input_gro_loc & input_gro : location and name of the input(gro) file
-* grompp_loc & grompp_name  : location and name of the grompp(mdp) file
-* topol_loc & topol_name    : location and name of the topol(top) file
-* tmp_grofile               : name of the intermediate file used as input for LSDMap
-* ndxfile_name & ndxfile_loc: name and location of index file
-* grompp_options            : grompp options to be added during runtime
-* mdrun_options             : mdrun options to be added during runtime
-* itpfile_loc               : location of itpfiles to be transfered
-
--------------------------------------------------------Analysis(LSDMap)---------------------------------------------------------------
-
-* lsdm_config_loc & lsdm_config_name : location and name of the lsdm configuration file
-* wfile     : name of the weight file to be used in LSDMap
-* max_alive_neighbors : maximum alive neighbors to be considered during reweighting step
-* max_dead_neighbors  : maximum dead neighbors to be considered during reweighting step
-
-------------------------------------------------------------Update--------------------------------------------------------------------------
-
-* num_runs : number of replicas
-
--------------------------------------------------------------Auto---------------------------------------------------------------------------
-
-These parameters are automatically assigned based on the values above. These are mainly for the 
-propagation of filenames throughout the tool.
-
-* system_name
-* outgrofile_name
-* egfile 
-* evfile 
-* nearest_neighbor_file 
-* num_clone_files 
--->
-
-
-
+be seen, per iteration, there are **(num_CUs+1)** tasks executed.
