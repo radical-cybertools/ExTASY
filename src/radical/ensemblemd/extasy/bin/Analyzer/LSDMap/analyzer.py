@@ -59,7 +59,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     os.system('python %s/reweighting.py -c %s -n %s -s %s -w %s -o %s --max_alive_neighbors=%s --max_dead_neighbors=%s' % (curdir,Kconfig.md_output_file,nearest_neighbor_file,num_clone_files,Kconfig.w_file,outgrofile_name,Kconfig.max_alive_neighbors,Kconfig.max_dead_neighbors))
 
     #Rename outputfile as inputfile for next iteration
-    os.system('mv %s %s_%s'%(outgrofile_name,cycle+1,Kconfig.md_input_file))
+    os.system('mv %s %s_%s'%(outgrofile_name,cycle+1,os.path.basename(Kconfig.md_input_file)))
 
     print 'Analysis + Update time : ',time.time() - p1
     return
