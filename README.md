@@ -148,10 +148,10 @@ DBURL       = 'mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/'
 **Step 3:** Download the sample input data:
 
 ```
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/coco_examples/mdshort.in
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/coco_examples/min.in
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/coco_examples/penta.crd
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/coco_examples/penta.top
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/coco_examples/mdshort.in
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/coco_examples/min.in
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/coco_examples/penta.crd
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/coco_examples/penta.top
 ```
 
 **Step 4:** Create a new workload configuration file ``cocoamber.wcfg``:
@@ -234,10 +234,10 @@ DBURL       = 'mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/'
 **Step 3:** Download the sample input data:
 
 ```
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/coco_examples/mdshort.in
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/coco_examples/min.in
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/coco_examples/penta.crd
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/coco_examples/penta.top
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/coco_examples/mdshort.in
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/coco_examples/min.in
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/coco_examples/penta.crd
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/coco_examples/penta.top
 ```
 
 **Step 4:** Create a new workload configuration file ``cocoamber.wcfg``:
