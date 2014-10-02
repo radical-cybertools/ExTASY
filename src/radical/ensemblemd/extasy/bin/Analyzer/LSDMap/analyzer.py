@@ -27,7 +27,6 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     lsdm.executable = mdtd_bound.executable
     lsdm.arguments = mdtd_bound.arguments
     lsdm.input_staging = ['%s'%Kconfig.lsdm_config_file,Kconfig.md_output_file,'%s/run_analyzer.sh'%curdir]
-    fname = Kconfig.tmp_grofile.split('.')[0]
     lsdm.output_staging = [' tmpha.eg > %s'%(egfile),'tmpha.ev > %s'%(evfile),nearest_neighbor_file,'lsdmap.log']
 
     lsdm.mpi = True
@@ -39,7 +38,12 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
     p2=time.time()
 
-    print 'Analysis Execution time : ',(lsdmCU.stop_time - lsdmCU.start_time).total_seconds()
+    try:
+        print 'Analysis Execution time : ',(lsdmCU.stop_time - lsdmCU.start_time).total_seconds()
+
+    except:
+        pass
+
     print 'Total Analysis time : ',p2-p1
 
     curdir = os.path.dirname(os.path.realpath(__file__))
@@ -55,7 +59,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     os.system('python %s/reweighting.py -c %s -n %s -s %s -w %s -o %s --max_alive_neighbors=%s --max_dead_neighbors=%s' % (curdir,Kconfig.md_output_file,nearest_neighbor_file,num_clone_files,Kconfig.w_file,outgrofile_name,Kconfig.max_alive_neighbors,Kconfig.max_dead_neighbors))
 
     #Rename outputfile as inputfile for next iteration
-    os.system('mv %s %s_%s'%(outgrofile_name,cycle+1,Kconfig.input_gro))
+    os.system('mv %s %s_%s'%(outgrofile_name,cycle+1,os.path.basename(Kconfig.md_input_file)))
 
     print 'Analysis + Update time : ',time.time() - p1
     return

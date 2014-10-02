@@ -69,11 +69,14 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
     p2 = time.time()
 
     print 'Total Simulation Time : ', (p2-p1)
-    
-    for unit in units:
-        #print 'Start : ', unit.start_time, 'Stop : ', unit.stop_time
-        start_times.append(unit.start_time)
-        end_times.append(unit.stop_time)
-    
-    print 'Simulation Execution Time : ', (max(end_times)-min(start_times)).total_seconds()
 
+    try:
+        for unit in units:
+            #print 'Start : ', unit.start_time, 'Stop : ', unit.stop_time
+            start_times.append(unit.start_time)
+            end_times.append(unit.stop_time)
+    
+        print 'Simulation Execution Time : ', (max(end_times)-min(start_times)).total_seconds()
+
+    except:
+        pass

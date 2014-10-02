@@ -13,7 +13,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
     mdtd=MDTaskDescription()
     mdtd.kernel="CoCo"
-    mdtd.arguments = ['-l','-c','python pycoco.py --grid %s --dims %s --frontpoints %s --topfile %s --mdfile *.mdcrd --output pentaopt%s'%(Kconfig.grid,Kconfig.dims,Kconfig.frontpoints,os.path.basename(Kconfig.top_file),cycle)]
+    mdtd.arguments = ['-l','-c','python pycoco.py --grid %s --dims %s --frontpoints %s --topfile %s --mdfile *.ncdf --output pentaopt%s'%(Kconfig.grid,Kconfig.dims,Kconfig.frontpoints,os.path.basename(Kconfig.top_file),cycle)]
     mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
     cudesc = radical.pilot.ComputeUnitDescription()
     cudesc.cores = RPconfig.PILOTSIZE
@@ -21,18 +21,22 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     cudesc.pre_exec = mdtd_bound.pre_exec
     cudesc.arguments = mdtd_bound.arguments
     cudesc.input_staging = ['%s/postexec.py'%curdir,'%s/pycoco.py'%curdir,'%s'%(Kconfig.top_file)]
-    for i in range(0,Kconfig.nreps):
-            cudesc.input_staging.append('md_%s_%s.mdcrd'%(cycle,i))
-    cudesc.post_exec = ['python postexec.py %s %s' % (Kconfig.nreps,cycle)]
+    for i in range(0,Kconfig.num_CUs):
+            cudesc.input_staging.append('md_%s_%s.ncdf'%(cycle,i))
+    cudesc.post_exec = ['python postexec.py %s %s' % (Kconfig.num_CUs,cycle)]
     cudesc.mpi = True
     cudesc.output_staging = []
-    for i in range(0,Kconfig.nreps):
+    for i in range(0,Kconfig.num_CUs):
         cudesc.output_staging.append('min%s%s.crd'%(cyc,i))
 
     unit = umgr.submit_units(cudesc)
 
     unit.wait()
 
-    print 'Analysis Execution time : ',(unit.stop_time - unit.start_time).total_seconds()
+    try:
+        print 'Analysis Execution time : ',(unit.stop_time - unit.start_time).total_seconds()
+
+    except:
+        pass
 
     return

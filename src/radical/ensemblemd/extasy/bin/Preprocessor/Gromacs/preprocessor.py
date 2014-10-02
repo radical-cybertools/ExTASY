@@ -14,7 +14,7 @@ def Preprocessing(Kconfig,umgr,i):
         if os.path.exists(Kconfig.md_input_file) is True:
             shutil.copy(Kconfig.md_input_file,os.path.dirname(os.path.realpath(__file__)))
         if os.path.exists(os.getcwd() + '/' + Kconfig.w_file):
-            os.remove('%s/%s'%(os.getcwd(),Kconfig.wfile))
+            os.remove('%s/%s'%(os.getcwd(),Kconfig.w_file))
         if os.path.exists(os.getcwd() + '/backup'):
             shutil.rmtree('%s/backup' % os.getcwd())
 

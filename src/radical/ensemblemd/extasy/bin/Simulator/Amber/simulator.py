@@ -30,10 +30,10 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
     end_times = []
 
     compute_units = []
-    for i in range(Kconfig.nreps):
+    for i in range(Kconfig.num_CUs):
 
         step_1 = 'pmemd -O -i {mininfilename} -o min{cycle}.out -inf min{cycle}.inf -r md{cycle}.crd -p {topfilename} -c min{cycle}.crd -ref min{cycle}.crd'.format(**dict)
-        step_2 = 'pmemd -O -i {mdinfilename} -o md{cycle}.out -inf md{cycle}.inf -x md{cycle}.mdcrd -r md{cycle}.rst -p {topfilename} -c md{cycle}.crd'.format(**dict)
+        step_2 = 'pmemd -O -i {mdinfilename} -o md{cycle}.out -inf md{cycle}.inf -x md{cycle}.ncdf -r md{cycle}.rst -p {topfilename} -c md{cycle}.crd'.format(**dict)
 
         mdtd = MDTaskDescription()
         mdtd.kernel = "AMBER"
@@ -48,7 +48,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
             cu.input_staging = ['%s > min%s.crd'%(dict['crdfile'],cycle),'%s'%(dict['topfile']),'%s'%(dict['minin']),'%s'%(dict['mdin'])]
         else:
             cu.input_staging = ['min%s%s.crd > min%s.crd'%(cycle,i,cycle),'%s'%(dict['topfile']),'%s'%(dict['minin']),'%s'%(dict['mdin'])]
-        cu.output_staging = ['md%s.mdcrd > md_%s_%s.mdcrd'%(cycle,cycle,i)]
+        cu.output_staging = ['md%s.ncdf > md_%s_%s.ncdf'%(cycle,cycle,i)]
         compute_units.append(cu)
 
     units = umgr.submit_units(compute_units)
@@ -58,10 +58,15 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
 
     print 'Total Simulation Time : ', (p2-p1)
 
-    for unit in units:
-        #print 'Start : ', unit.start_time, 'Stop : ', unit.stop_time
-        start_times.append(unit.start_time)
-        end_times.append(unit.stop_time)
+    try:
 
-    print 'Simulation Execution Time : ', (max(end_times)-min(start_times)).total_seconds()
+        for unit in units:
+            #print 'Start : ', unit.start_time, 'Stop : ', unit.stop_time
+            start_times.append(unit.start_time)
+            end_times.append(unit.stop_time)
+
+        print 'Simulation Execution Time : ', (max(end_times)-min(start_times)).total_seconds()
+
+    except:
+        pass
 
