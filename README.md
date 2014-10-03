@@ -82,7 +82,13 @@ Now you should be able to print the installed version of the ExTASY module:
 python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
 ```
 
+
 **Installation is complete!**
+
+> There are two ways in which execution can be done : Local - Remote Submission and Remote - Remote Submission.
+[This](./docs/local_vs_remote.md) document shows the distinction between the two methods. 
+Note : Currently all tests have been performed as Local - Remote.
+
 
 ==========
 
