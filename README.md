@@ -82,6 +82,13 @@ Now you should be able to print the installed version of the ExTASY module:
 python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
 ```
 
+If your shell is **CSH**:
+
+```
+rehash 
+```
+This will reset the PATH variable to also point to the packages which were just installed.
+
 
 **Installation is complete!**
 
