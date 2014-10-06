@@ -411,8 +411,6 @@ extasy --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg
 -->
 ## 3.2 Running on Archer
 
-> IMPORTANT : Currently, required gromacs version is not completely supported on Archer. Gromacs/LSDMap will not work
-on Archer for now. Ticket [#43](https://github.com/radical-cybertools/ExTASY/issues/43).
 
 ### 3.2.1 Running the Example Workload
 
