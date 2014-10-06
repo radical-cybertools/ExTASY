@@ -55,8 +55,3 @@ for idx in `seq 1 $nframes`; do
 
 done
 
-if [ ! -d "$HOME/$dir" ]; then
-    mkdir $HOME/$dir
-fi
-
-cp $outgro $HOME/$dir/$outgro
