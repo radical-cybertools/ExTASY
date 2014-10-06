@@ -68,8 +68,6 @@ pip install radical.pilot
 pip install --upgrade git+https://github.com/radical-cybertools/radical.ensemblemd.mdkernels.git@master#egg=radical.ensemblemd.mdkernels
 ```
 
-> NOTE: If you are running a CSH, type ``rehash`` after step 2 to make sure the extasy tool is found in your $PATH.
-
 **Step 3:** Install ExTASY:
 
 ```
