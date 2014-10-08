@@ -142,7 +142,10 @@ def main():
                 shutil.copy(Kconfig.wfile,'%s/backup/iter%s/%s'%(os.getcwd(),i+1,Kconfig.wfile))
                 shutil.copy('lsdmap.log','%s/backup/iter%s/lsdmap.log'%(os.getcwd(),i+1))
 
-    session.close()
+    if os.getenv("EXTASY_DEBUG") is not None:
+        session.close(delete=False)
+    else:
+        session.close(delete=True)
 
 if __name__ == '__main__':
     main()
