@@ -35,6 +35,19 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
     lsdmCU.wait()
 
+<<<<<<< HEAD
+=======
+    if type(lsdmCU) != list:
+        lsdmCU = [lsdmCU]
+
+    for u in lsdmCU:
+        if u.state != radical.pilot.DONE:
+            print "CU {0} failed. Log: {1}".format(u.uid, u.log)
+            raise Exception("CU {0} failed".format(u.uid))
+
+    p2=time.time()
+
+>>>>>>> 4e9c7c56b73584dc52430d1974735102895c6398
     try:
         print 'Analysis Execution time : ',(lsdmCU.stop_time - lsdmCU.start_time).total_seconds()
 
