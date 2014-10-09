@@ -125,8 +125,8 @@ The result should look like this:
 
 ```
 Python 2.7.3 -- EPD 7.3-2 (64-bit)
-X
-Y
+'0.15.0.dev-4a5d2ae'
+'1.10.0.dev-fa14ae0'
 
 ```
 
@@ -337,10 +337,13 @@ python -c "import numpy; print numpy.__version__"
 The commands above should returns these versions:
 
 ```
-x
-y
-z
+Python 2.7.6
+'0.13.3' (default)
+'1.8.0'  (default)
 ```
+If you also have dependencies of coco installed, the scipy and numpy versions would be that of those scipy and numpy
+packages. Since they match the version criteria for lsdmap, you can use the same for lsdmap installation.
+
 
 Now you can install LSDMap itself. Log-on to Stampede check out the LSDMap repository and install it:
 

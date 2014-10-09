@@ -40,7 +40,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
         mdtd.arguments = ['-l', '-c', " %s && %s" % (step_1, step_2)]
         mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
         cu = radical.pilot.ComputeUnitDescription()
-        cu.cores      = 1
+        cu.cores      = Kconfig.num_cores_per_sim_cu
         cu.executable = mdtd_bound.executable
         cu.pre_exec   = mdtd_bound.pre_exec
         cu.arguments  = mdtd_bound.arguments
