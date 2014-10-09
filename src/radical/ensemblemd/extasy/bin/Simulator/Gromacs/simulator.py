@@ -9,7 +9,6 @@ import glob
 
 def Simulator(umgr,RPconfig,Kconfig,cycle):
 
-    p1 = time.time()
     curdir = os.path.dirname(os.path.realpath(__file__))
 
     print 'Cycle %s' %cycle
@@ -65,10 +64,6 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
                 for line in output_file:
                     print >> output_grofile, line.replace("\n", "")
             os.remove('out%s.gro'%i)
-
-    p2 = time.time()
-
-    print 'Total Simulation Time : ', (p2-p1)
 
     try:
         for unit in units:

@@ -14,7 +14,6 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     num_clone_files = 'ncopies.nc'
     outgrofile_name = 'out.gro'
 
-    p1=time.time()
     curdir = os.path.dirname(os.path.realpath(__file__))
     mdtd=MDTaskDescription()
     mdtd.kernel="LSDMAP"
@@ -36,15 +35,11 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
     lsdmCU.wait()
 
-    p2=time.time()
-
     try:
         print 'Analysis Execution time : ',(lsdmCU.stop_time - lsdmCU.start_time).total_seconds()
 
     except:
         pass
-
-    print 'Total Analysis time : ',p2-p1
 
     curdir = os.path.dirname(os.path.realpath(__file__))
 
@@ -60,6 +55,4 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
     #Rename outputfile as inputfile for next iteration
     os.system('mv %s %s_%s'%(outgrofile_name,cycle+1,os.path.basename(Kconfig.md_input_file)))
-
-    print 'Analysis + Update time : ',time.time() - p1
     return

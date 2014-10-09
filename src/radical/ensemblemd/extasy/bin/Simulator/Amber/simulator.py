@@ -8,8 +8,6 @@ import time
 
 def Simulator(umgr,RPconfig,Kconfig,cycle):
 
-    p1 = time.time()
-    #curdir = os.path.dirname(os.path.realpath(__file__))
 
     print 'Cycle %s' %cycle
 
@@ -54,10 +52,6 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
 
     units = umgr.submit_units(compute_units)
     umgr.wait_units()
-
-    p2 = time.time()
-
-    print 'Total Simulation Time : ', (p2-p1)
 
     try:
 
