@@ -309,11 +309,27 @@ these configuration files.
 ### 3.1.1 Installing LSDMap on Stampede
 
 LSDMap is currently **not installed** on Stampede. In order to run the Gromacs/LSDMap
-example, you need to install it yourself. This also requires you to install **scipy 0.10.0** (or greater) and **numpy 1.4.1** using the Stampede **python/2.7.6** and **intel/14.0.1.106** modules. Please follow [THIS LINK](https://github.com/radical-cybertools/ExTASY/blob/devel/docs/scipy_installation_stampede_python_2_7_6.md) for installation instructions. 
+example, you need to install it in your home directory. 
+
+Log in to stampede and load the required modules:
 
 ```
+module load -intel intel/14.0.1.106
+module load python
+```
+
+```
+python -V
 python -c "import scipy; print scipy.__version__"
 python -c "import numpy; print numpy.__version__"
+```
+
+The commands above should returns these versions:
+
+```
+x
+y
+z
 ```
 
 Now you can install LSDMap itself. Log-on to Stampede check out the LSDMap repository and install it:
