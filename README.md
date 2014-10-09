@@ -111,12 +111,14 @@ Note : Currently all tests have been performed as Local - Remote.
 > You can skip this step if you have done this already.
 
 CoCo is currently **not installed** on Stampede. In order to run the CoCo/Amber
-example, you need to install it yourself. This also requires you to install **scipy 0.14** (or greater) using the Stampede **python/2.7.3** and **intel/13.0.2.146** modules. Please follow [THIS LINK](https://github.com/radical-cybertools/ExTASY/blob/devel/docs/scipy_installation_stampede_python_2_7_3.md) for installation instructions. 
+example, you need to install it yourself. This also requires you to install **scipy 0.14** (or greater) using the Stampede **python/2.7.3** and **intel/13.0.2.146** modules. 
+
+**Please follow [THIS LINK](https://github.com/radical-cybertools/ExTASY/blob/devel/docs/scipy_installation_stampede_python_2_7_3.md) for installation instructions.**
 
 Once you have installed numpy/scipy, double-check the version of scipy and numpy:
 
 ```
-python -v
+python -V
 python -c "import scipy; print scipy.__version__"
 python -c "import numpy; print numpy.__version__"
 ```
@@ -125,9 +127,8 @@ The result should look like this:
 
 ```
 Python 2.7.3 -- EPD 7.3-2 (64-bit)
-'0.15.0.dev-4a5d2ae'
-'1.10.0.dev-fa14ae0'
-
+0.15.0.dev-ad016af
+1.10.0.dev-e6e2bb0
 ```
 
 Now you can install CoCo itself. Log-on to Stampede check out the CoCo repository and install it:
