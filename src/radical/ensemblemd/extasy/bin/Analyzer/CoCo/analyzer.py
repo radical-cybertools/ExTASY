@@ -7,7 +7,6 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
     print 'Starting Analysis'
     curdir = os.path.dirname(os.path.realpath(__file__))
-    cyc=cycle+1
 
     print 'Submitting COCO Compute Unit'
 
@@ -27,7 +26,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     cudesc.mpi = True
     cudesc.output_staging = []
     for i in range(0,Kconfig.num_CUs):
-        cudesc.output_staging.append('min%s%s.crd'%(cyc,i))
+        cudesc.output_staging.append('min%s%s.crd'%(cycle+1,i))
 
     unit = umgr.submit_units(cudesc)
 

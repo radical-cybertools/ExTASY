@@ -25,8 +25,10 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     lsdm.pre_exec = ['module load gromacs'] + lsdm.pre_exec
     lsdm.executable = mdtd_bound.executable
     lsdm.arguments = mdtd_bound.arguments
-    lsdm.input_staging = ['%s'%Kconfig.lsdm_config_file,Kconfig.md_output_file,'%s/run_analyzer.sh'%curdir]
+    lsdm.input_staging = [Kconfig.lsdm_config_file,Kconfig.md_output_file,'%s/run_analyzer.sh'%curdir]
     lsdm.output_staging = [' tmpha.eg > %s'%(egfile),'tmpha.ev > %s'%(evfile),nearest_neighbor_file,'lsdmap.log']
+    if(cycle>0):
+        lsdm.output_staging = lsdm.output_staging.extend(Kconfig.w_file)
 
     lsdm.mpi = True
     lsdm.cores = RPconfig.PILOTSIZE
@@ -42,8 +44,6 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
         if u.state != radical.pilot.DONE:
             print "CU {0} failed. Log: {1}".format(u.uid, u.log)
             raise Exception("CU {0} failed".format(u.uid))
-
-    p2=time.time()
 
     try:
         print 'Analysis Execution time : ',(lsdmCU.stop_time - lsdmCU.start_time).total_seconds()

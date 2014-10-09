@@ -126,13 +126,9 @@ def main():
     for i in range(Kconfig.start_iter,Kconfig.num_iterations):
         Preprocessing(Kconfig,umgr,i)
         if Kconfig.simulator:
-            p1=time.time()
             Simulator(umgr,RPconfig,Kconfig,i)
         if Kconfig.analyzer:
             Analyzer(umgr,RPconfig,Kconfig,i)
-            p2=time.time()
-        if p1.is_integer() and p2.is_integer():
-            print 'TTC for one iteration : ', p2-p1
         if (Kconfig.simulator == 'Gromacs'):
             if((i+1)%Kconfig.nsave == 0):
                 if os.path.isdir('%s/backup' % os.getcwd()) is False:
