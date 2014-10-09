@@ -352,8 +352,6 @@ Now you can install LSDMap itself. Log-on to Stampede check out the LSDMap repos
 module load -intel intel/14.0.1.106
 module load python
 
-cd /tmp
-
 wget http://cython.org/release/Cython-0.21.tar.gz
 tar xvfz Cython-0.21.tar.gz
 cd Cython-0.21
