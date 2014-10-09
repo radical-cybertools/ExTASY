@@ -138,7 +138,7 @@ def main():
                 if os.path.isdir('%s/backup' % os.getcwd()) is False:
                     os.mkdir('%s/backup' % os.getcwd())
                 os.mkdir('%s/backup/iter%s/'%(os.getcwd(),i+1))
-                shutil.copy('%s_%s'%(i,os.path.basename(Kconfig.md_input_file)),'%s/backup/iter%s/%s'%(os.getcwd(),i+1,os.path.basename(Kconfig.md_input_file)))
+                shutil.copy('%s_%s'%(i+1,os.path.basename(Kconfig.md_input_file)),'%s/backup/iter%s/%s'%(os.getcwd(),i+1,os.path.basename(Kconfig.md_input_file)))
                 shutil.copy(Kconfig.w_file,'%s/backup/iter%s/%s'%(os.getcwd(),i+1,os.path.basename(Kconfig.w_file)))
                 shutil.copy('lsdmap.log','%s/backup/iter%s/lsdmap.log'%(os.getcwd(),i+1))
 
