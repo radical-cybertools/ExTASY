@@ -116,8 +116,18 @@ example, you need to install it yourself. This also requires you to install **sc
 Once you have installed numpy/scipy, double-check the version of scipy and numpy:
 
 ```
+python -v
 python -c "import scipy; print scipy.__version__"
 python -c "import numpy; print numpy.__version__"
+```
+
+The result should look like this: 
+
+```
+Python 2.7.3 -- EPD 7.3-2 (64-bit)
+X
+Y
+
 ```
 
 Now you can install CoCo itself. Log-on to Stampede check out the CoCo repository and install it:
