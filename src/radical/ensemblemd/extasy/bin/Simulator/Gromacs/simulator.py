@@ -42,7 +42,6 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
             for itpfile in glob.glob(Kconfig.itp_file_loc + '*.itp'):
                 gromacs_task.input_staging.append('%s/%s' % (Kconfig.itp_file_loc,itpfile))
         gromacs_task.output_staging = ['out.gro > out%s.gro' % i]
-        gromacs_task.cores = 1
 
         gromacs_tasks.append(gromacs_task)
 

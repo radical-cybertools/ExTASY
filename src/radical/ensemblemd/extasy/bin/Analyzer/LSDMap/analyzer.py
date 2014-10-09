@@ -35,8 +35,6 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
     lsdmCU.wait()
 
-<<<<<<< HEAD
-=======
     if type(lsdmCU) != list:
         lsdmCU = [lsdmCU]
 
@@ -47,7 +45,6 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
     p2=time.time()
 
->>>>>>> 4e9c7c56b73584dc52430d1974735102895c6398
     try:
         print 'Analysis Execution time : ',(lsdmCU.stop_time - lsdmCU.start_time).total_seconds()
 
