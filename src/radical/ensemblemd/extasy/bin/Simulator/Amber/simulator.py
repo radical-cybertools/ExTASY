@@ -40,10 +40,11 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
         mdtd.arguments = ['-l', '-c', " %s && %s" % (step_1, step_2)]
         mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
         cu = radical.pilot.ComputeUnitDescription()
-        cu.cores      = Kconfig.num_cores_per_sim_cu
+        cu.cores = Kconfig.num_cores_per_sim_cu
+        cu.mpi = True
         cu.executable = mdtd_bound.executable
-        cu.pre_exec   = mdtd_bound.pre_exec
-        cu.arguments  = mdtd_bound.arguments
+        cu.pre_exec = mdtd_bound.pre_exec
+        cu.arguments = mdtd_bound.arguments
         if(cycle==0):
             cu.input_staging = ['%s > min%s.crd'%(dict['crdfile'],cycle),'%s'%(dict['topfile']),'%s'%(dict['minin']),'%s'%(dict['mdin'])]
         else:

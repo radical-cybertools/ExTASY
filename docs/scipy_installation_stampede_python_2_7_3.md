@@ -10,9 +10,9 @@ Cython
 ```
 module load intel/13.0.2.146
 module load python
-wget cython.org/release/Cython-0.20.2.tar.gz
-tar xvfz Cython-0.20.2.tar.gz
-cd Cython-0.20.2
+wget cython.org/release/Cython-0.21.tar.gz
+tar xvfz Cython-0.21.tar.gz
+cd Cython-0.21
 python setup.py install --user                  #make sure python/2.7.3 is being used
 cd ..
 ```
