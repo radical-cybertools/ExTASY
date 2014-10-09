@@ -36,6 +36,14 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
     lsdmCU.wait()
 
+    if type(lsdmCU) != list:
+        lsdmCU = [lsdmCU]
+
+    for u in lsdmCU:
+        if u.state != radical.pilot.DONE:
+            print "CU {0} failed. Log: {1}".format(u.uid, u.log)
+            raise Exception("CU {0} failed".format(u.uid))
+
     p2=time.time()
 
     try:
