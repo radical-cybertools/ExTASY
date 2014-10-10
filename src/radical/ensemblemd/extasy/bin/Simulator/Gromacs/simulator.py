@@ -53,14 +53,6 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
     # Wait for all compute units to finish.
     umgr.wait_units()
 
-    if type(units) != list:
-        units = [units]
-        
-    for u in units:
-        if u.state != radical.pilot.DONE:
-            print "CU {0} failed. Log: {1}".format(u.uid, u.log)
-            raise Exception("CU {0} failed".format(u.uid))
-
     if os.path.exists('%s/%s' % (os.getcwd(),Kconfig.md_output_file)):
         os.remove(os.getcwd() + '/' + Kconfig.md_output_file)
 
