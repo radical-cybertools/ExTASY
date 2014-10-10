@@ -32,14 +32,6 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
     unit.wait()
 
-    if type(unit) != list:
-        unit = [unit]
-        
-    for u in unit:
-        if u.state != radical.pilot.DONE:
-            print "CU {0} failed. Log: {1}".format(u.uid, u.log)
-            raise Exception("CU {0} failed".format(u.uid))
-
     try:
         print 'Analysis Execution time : ',(unit.stop_time - unit.start_time).total_seconds()
 

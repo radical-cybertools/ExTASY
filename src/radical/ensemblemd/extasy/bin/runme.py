@@ -19,6 +19,11 @@ def pilot_state_cb(pilot, state):
         pilot.uid, state)
 
     if state == radical.pilot.states.FAILED:
+        print "#######################"
+        print "##       ERROR       ##"
+        print "#######################"
+        print "Pilot {0} has FAILED. Can't recover.".format(pilot.uid)
+        print "Pilot log: {0}".format(pilot.log)
         sys.exit(1)
 
 #------------------------------------------------------------------------------
@@ -29,8 +34,22 @@ def unit_state_change_cb(unit, state):
     """
     print "[Callback]: ComputeUnit '{0}' state changed to {1}.".format(
         unit.uid, state)
+
     if state == radical.pilot.states.FAILED:
-        print "            Log: %s" % unit.log[-1]
+        print "#######################"
+        print "##       ERROR       ##"
+        print "#######################"
+        print "ComputeUnit {0} has FAILED. Can't recover.".format(unit.uid)
+        print "ComputeUnit log: {0}".format(unit.log)
+        sys.exit(1)
+
+    elif state == radical.pilot.states.CANCELED:
+        print "#######################"
+        print "##       ERROR       ##"
+        print "#######################"
+        print "ComputeUnit was canceled prematurely because the pilot was terminated. Can't recover.".format(unit.uid)
+        sys.exit(1)
+
 
 #---------------------------------------------------------------------------------
 

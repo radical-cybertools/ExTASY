@@ -53,14 +53,6 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
     units = umgr.submit_units(compute_units)
     umgr.wait_units()
 
-    if type(units) != list:
-        units = [units]
-        
-    for u in units:
-        if u.state != radical.pilot.DONE:
-            print "CU {0} failed. Log: {1}".format(u.uid, u.log)
-            raise Exception("CU {0} failed".format(u.uid))
-
     try:
         for unit in units:
             #print 'Start : ', unit.start_time, 'Stop : ', unit.stop_time
