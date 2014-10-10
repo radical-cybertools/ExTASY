@@ -90,10 +90,6 @@ This will reset the PATH variable to also point to the packages which were just 
 
 **Installation is complete!**
 
-> **NOTE** : There are two ways in which execution can be done : Local - Remote Submission and Remote - Remote Submission.
-[This](./docs/local_vs_remote.md) document shows the distinction between the two methods. 
-Note : Currently all tests have been performed as Local - Remote.
-
 
 ==========
 
@@ -143,7 +139,7 @@ python setup.py install --user
 
 ### 2.1.2 Running the Example Workload
 
-The ExTASY tool expects two input files:
+This section is to be done entirely on your **laptop**. The ExTASY tool expects two input files:
 
 1. The resource configuration file sets the parameters of the HPC resource we want to run the workload on, in this case **Stampede**.
 2. The workload configuration file defines the CoCo/Amber workload itself.
@@ -229,7 +225,7 @@ extasy --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg
 
 ### 2.2.1 Running the Example Workload
 
-The ExTASY tool expects two input files:
+This section is to be done entirely on your **laptop**. The ExTASY tool expects two input files:
 
 1. The resource configuration file sets the parameters of the HPC resource we want to run the workload on, in this case **Archer**.
 2. The workload configuration file defines the CoCo/Amber workload itself.
@@ -368,7 +364,7 @@ python setup.py install --user
 
 ### 3.1.2 Running the Example Workload
 
-The ExTASY tool expects two input files:
+This section is to be done entirely on your **laptop**. The ExTASY tool expects two input files:
 
 1. The resource configuration file sets the parameters of the HPC resource we want to run the workload on, in this case **Stampede**.
 2. The workload configuration file defines the GROMACS/LSDMap workload itself.
@@ -457,7 +453,7 @@ extasy --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg
 
 ### 3.2.1 Running the Example Workload
 
-The ExTASY tool expects two input files:
+This section is to be done entirely on your **laptop**. The ExTASY tool expects two input files:
 
 1. The resource configuration file sets the parameters of the HPC resource we want to run the workload on, in this case **Archer**.
 2. The workload configuration file defines the GROMACS/LSDMap workload itself.
