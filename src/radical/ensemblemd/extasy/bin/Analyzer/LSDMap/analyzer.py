@@ -28,7 +28,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     lsdm.input_staging = [Kconfig.lsdm_config_file,Kconfig.md_output_file,'%s/run_analyzer.sh'%curdir]
     lsdm.output_staging = [' tmpha.eg > %s'%(egfile),'tmpha.ev > %s'%(evfile),nearest_neighbor_file,'lsdmap.log']
     if(cycle>0):
-        lsdm.output_staging = lsdm.output_staging.extend(Kconfig.w_file)
+        lsdm.input_staging = lsdm.input_staging + [Kconfig.w_file]
 
     lsdm.mpi = True
     lsdm.cores = RPconfig.PILOTSIZE

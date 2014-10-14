@@ -17,4 +17,3 @@ top_file                = './penta.top'     # Entire path to Topology file - Do 
 #-------------------------Analysis--------------------------
 grid                    = '5'               # Number of points along each dimension of the CoCo histogram
 dims                    = '3'               # The number of projections to consider from the input pcz file
-frontpoints             = '8'               # The number of new frontier points to select through CoCo
