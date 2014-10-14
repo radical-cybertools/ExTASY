@@ -211,7 +211,7 @@ frontpoints             = '8'
 Now you are can run the workload:
 
 ```
-extasy --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg
+RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg 2> extasy.log
 ```
 
 <!-- 
@@ -278,7 +278,7 @@ curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/co
 Now you can run the workload:
 
 ```
-extasy --RPconfig archer.rcfg --Kconfig cocoamber.wcfg
+RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig archer.rcfg --Kconfig cocoamber.wcfg 2> extasy.log
 ```
 
 There are two stages in the execution phase - Simulation and Analysis. Execution starts with any Preprocessing that 
@@ -441,7 +441,7 @@ pip install numpy
 **Step 5:** Run the workload:
 
 ```
-extasy --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg
+RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg 2> extasy.log
 ```
 
 <!-- LSDMAP / ARCHER
@@ -502,7 +502,7 @@ pip install numpy
 **Step 5:** Run the workload:
 
 ```
-extasy --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg
+RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg > extasy.log
 ```
 
 There are two stages in the execution phase - Simulation and Analysis. Execution starts with any Preprocessing that 
