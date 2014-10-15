@@ -115,34 +115,30 @@ def main():
         parser.error('Please enter a Kernel configuration file')
         sys.exit(0)
 
-    RPconfig = imp.load_source('RPconfig', args.RPconfig)
-    Kconfig = imp.load_source('Kconfig', args.Kconfig)
-
-
-    Load_Preprocessor = Kconfig.simulator
-
-    if ( Load_Preprocessor == 'Gromacs'):
-        from Preprocessor.Gromacs.preprocessor import Preprocessing
-
-    if (Load_Preprocessor == 'Amber'):
-        from Preprocessor.Amber.preprocessor import Preprocessing
-
-
-
-    umgr,session=startPilot(Kconfig,RPconfig)
-
-
-    if ( Kconfig.simulator == 'Amber'):
-        from Simulator.Amber.simulator import Simulator
-    if ( Kconfig.analyzer == 'CoCo'):
-        from Analyzer.CoCo.analyzer import Analyzer
-
-    if ( Kconfig.simulator == 'Gromacs'):
-        from Simulator.Gromacs.simulator import Simulator
-    if ( Kconfig.analyzer == 'LSDMap'):
-        from Analyzer.LSDMap.analyzer import Analyzer
-
     try:
+
+        RPconfig = imp.load_source('RPconfig', args.RPconfig)
+        Kconfig = imp.load_source('Kconfig', args.Kconfig)
+
+        Load_Preprocessor = Kconfig.simulator
+
+        if ( Load_Preprocessor == 'Gromacs'):
+            from Preprocessor.Gromacs.preprocessor import Preprocessing
+
+        if (Load_Preprocessor == 'Amber'):
+            from Preprocessor.Amber.preprocessor import Preprocessing
+
+        umgr,session=startPilot(Kconfig,RPconfig)
+
+        if ( Kconfig.simulator == 'Amber'):
+            from Simulator.Amber.simulator import Simulator
+        if ( Kconfig.analyzer == 'CoCo'):
+            from Analyzer.CoCo.analyzer import Analyzer
+
+        if ( Kconfig.simulator == 'Gromacs'):
+            from Simulator.Gromacs.simulator import Simulator
+        if ( Kconfig.analyzer == 'LSDMap'):
+            from Analyzer.LSDMap.analyzer import Analyzer
 
         for i in range(Kconfig.start_iter,Kconfig.num_iterations):
             Preprocessing(Kconfig,umgr,i)
