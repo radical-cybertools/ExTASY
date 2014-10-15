@@ -142,25 +142,35 @@ def main():
     if ( Kconfig.analyzer == 'LSDMap'):
         from Analyzer.LSDMap.analyzer import Analyzer
 
-    for i in range(Kconfig.start_iter,Kconfig.num_iterations):
-        Preprocessing(Kconfig,umgr,i)
-        if Kconfig.simulator:
-            Simulator(umgr,RPconfig,Kconfig,i)
-        if Kconfig.analyzer:
-            Analyzer(umgr,RPconfig,Kconfig,i)
-        if (Kconfig.simulator == 'Gromacs'):
-            if((i+1)%Kconfig.nsave == 0):
-                if os.path.isdir('%s/backup' % os.getcwd()) is False:
-                    os.mkdir('%s/backup' % os.getcwd())
-                os.mkdir('%s/backup/iter%s/'%(os.getcwd(),i+1))
-                shutil.copy('%s_%s'%(i+1,os.path.basename(Kconfig.md_input_file)),'%s/backup/iter%s/%s'%(os.getcwd(),i+1,os.path.basename(Kconfig.md_input_file)))
-                shutil.copy(Kconfig.w_file,'%s/backup/iter%s/%s'%(os.getcwd(),i+1,os.path.basename(Kconfig.w_file)))
-                shutil.copy('lsdmap.log','%s/backup/iter%s/lsdmap.log'%(os.getcwd(),i+1))
+    try:
 
-    if os.getenv("EXTASY_DEBUG") is not None:
-        session.close(delete=False)
-    else:
-        session.close(delete=True)
+        for i in range(Kconfig.start_iter,Kconfig.num_iterations):
+            Preprocessing(Kconfig,umgr,i)
+            if Kconfig.simulator:
+                Simulator(umgr,RPconfig,Kconfig,i)
+            if Kconfig.analyzer:
+                Analyzer(umgr,RPconfig,Kconfig,i)
+            if (Kconfig.simulator == 'Gromacs'):
+                if((i+1)%Kconfig.nsave == 0):
+                    if os.path.isdir('%s/backup' % os.getcwd()) is False:
+                        os.mkdir('%s/backup' % os.getcwd())
+                    os.mkdir('%s/backup/iter%s/'%(os.getcwd(),i+1))
+                    shutil.copy('%s_%s'%(i+1,os.path.basename(Kconfig.md_input_file)),'%s/backup/iter%s/%s'%(os.getcwd(),i+1,os.path.basename(Kconfig.md_input_file)))
+                    shutil.copy(Kconfig.w_file,'%s/backup/iter%s/%s'%(os.getcwd(),i+1,os.path.basename(Kconfig.w_file)))
+                    shutil.copy('lsdmap.log','%s/backup/iter%s/lsdmap.log'%(os.getcwd(),i+1))
+
+    except Exception as e:
+        print "An error occurred: %s" % ((str(e)))
+        sys.exit(-1)
+    except KeyboardInterrupt:
+        print "Execution was interrupted"
+        sys.exit(-1)
+    finally:
+        print "Closing session, exiting now ..."
+        if os.getenv("EXTASY_DEBUG") is not None:
+            session.close(delete=False)
+        else:
+            session.close(delete=True)
 
 if __name__ == '__main__':
     main()
