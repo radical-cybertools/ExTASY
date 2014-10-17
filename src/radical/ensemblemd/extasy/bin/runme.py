@@ -128,7 +128,7 @@ def main():
         if (Load_Preprocessor == 'Amber'):
             from Preprocessor.Amber.preprocessor import Preprocessing
 
-        umgr,session=startPilot(Kconfig,RPconfig)
+        umgr, session = startPilot(Kconfig,RPconfig)
 
         if ( Kconfig.simulator == 'Amber'):
             from Simulator.Amber.simulator import Simulator
@@ -141,11 +141,11 @@ def main():
             from Analyzer.LSDMap.analyzer import Analyzer
 
         for i in range(Kconfig.start_iter,Kconfig.num_iterations):
-            Preprocessing(Kconfig,umgr,i)
+            Preprocessing(Kconfig, umgr, i)
             if Kconfig.simulator:
-                Simulator(umgr,RPconfig,Kconfig,i)
+                Simulator(umgr, RPconfig, Kconfig, i)
             if Kconfig.analyzer:
-                Analyzer(umgr,RPconfig,Kconfig,i)
+                Analyzer(umgr, RPconfig, Kconfig, i)
             if (Kconfig.simulator == 'Gromacs'):
                 if((i+1)%Kconfig.nsave == 0):
                     if os.path.isdir('%s/backup' % os.getcwd()) is False:
@@ -162,11 +162,15 @@ def main():
         print "Execution was interrupted"
         sys.exit(-1)
     finally:
-        print "Closing session, exiting now ..."
-        if os.getenv("EXTASY_DEBUG") is not None:
-            session.close(delete=False)
+        if session is not None:
+            print "Closing session, exiting now ..."
+            if os.getenv("EXTASY_DEBUG") is not None:
+                session.close(delete=False)
+            else:
+                session.close(delete=True)
         else:
-            session.close(delete=True)
+            print 'Exception triggered, no session created, exiting now...'
+            sys.exit(-1)
 
 if __name__ == '__main__':
     main()
