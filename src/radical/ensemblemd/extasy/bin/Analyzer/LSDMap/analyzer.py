@@ -25,7 +25,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     lsdm.pre_exec = ['module load gromacs'] + lsdm.pre_exec
     lsdm.executable = mdtd_bound.executable
     lsdm.arguments = mdtd_bound.arguments
-    lsdm.input_staging = [Kconfig.lsdm_config_file,Kconfig.md_output_file,'%s/run_analyzer.sh'%curdir]
+    lsdm.input_staging = [Kconfig.lsdm_config_file,Kconfig.md_output_file,'%s/run_analyzer.sh'%curdir,'%s/lsdm.py'%curdir]
     lsdm.output_staging = [' tmpha.eg > %s'%(egfile),'tmpha.ev > %s'%(evfile),nearest_neighbor_file,'lsdmap.log']
     if(cycle>0):
         lsdm.input_staging = lsdm.input_staging + [Kconfig.w_file]

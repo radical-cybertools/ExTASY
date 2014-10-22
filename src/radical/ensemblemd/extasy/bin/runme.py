@@ -97,7 +97,6 @@ def startPilot(Kconfig,RPconfig):
     return umgr,session
 
 
-
 def main():
 
     usage = 'usage: %prog --RPconfig RPCONFIG --Kconfig KCONFIG'
