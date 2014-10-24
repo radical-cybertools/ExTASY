@@ -237,7 +237,6 @@ class LSDMap(object):
                 else:
                     idx_neighbor_matrix = comm.recv(source=idx, tag=idx)
                     f1=open('idx_neighbor_matrix','w')
-                    np.set_printoptions(threshold=np.nan)
                     for row in idx_neighbor_matrix:
                         f1.write(str(row))
                         f1.write('\n')

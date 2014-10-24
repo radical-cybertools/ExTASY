@@ -1,0 +1,63 @@
+__author__ = 'vivek'
+
+import time
+import shutil
+import os
+import sys
+import gro
+
+def Preprocessing(Kconfig,umgr,i):
+
+    p1 = time.time()
+    if(i==0):
+        grofile_name = os.path.basename(Kconfig.md_input_file)
+        if os.path.exists(Kconfig.md_input_file) is True:
+            shutil.copy(Kconfig.md_input_file,os.path.dirname(os.path.realpath(__file__)))
+        if os.path.exists(os.getcwd() + '/' + Kconfig.w_file):
+            os.remove('%s/%s'%(os.getcwd(),Kconfig.w_file))
+        if os.path.exists(os.getcwd() + '/backup'):
+            shutil.rmtree('%s/backup' % os.getcwd())
+
+    else:
+        grofile_name='%s_%s'%(i,os.path.basename(Kconfig.md_input_file))
+        if os.path.exists(os.getcwd() + '/' + grofile_name) is True:
+            shutil.copy(os.getcwd() + '/' + grofile_name,os.path.dirname(os.path.realpath(__file__)))
+
+    num_tasks = Kconfig.num_CUs
+
+    print 'Prepare grofiles..'
+
+    grofile_obj = gro.GroFile(os.path.dirname(os.path.realpath(__file__)) + '/' + grofile_name)
+
+    if grofile_obj.nruns<num_tasks:
+        print "###ERROR: number of runs should be greater or equal to the number of tasks."
+        sys.exit(1)
+
+    nruns_per_task = [grofile_obj.nruns/num_tasks for _ in xrange(num_tasks)]
+    nextraruns=grofile_obj.nruns%num_tasks
+
+    for idx in xrange(nextraruns):
+        nruns_per_task[idx] += 1
+
+    if os.path.isdir('%s/temp' % os.getcwd()) is True:
+        shutil.rmtree('%s/temp' % os.getcwd())
+    os.mkdir('%s/temp' % os.getcwd())
+
+    with open(grofile_obj.filename, 'r') as grofile:
+        for idx in xrange(num_tasks):
+            start_grofile_name =  os.getcwd() + '/temp/start%s.gro'%idx
+            with open(start_grofile_name, 'w') as start_grofile:
+                nlines_per_task = nruns_per_task[idx]*grofile_obj.nlines_per_run
+                for jdx in xrange(nlines_per_task):
+                    line=grofile.readline()
+                    if line:
+                        line = line.replace("\n", "")
+                        print >> start_grofile, line
+                    else:
+                        break
+
+    p2 = time.time()
+
+    print 'Preprocessing time : ', (p2-p1)
+
+
