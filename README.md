@@ -502,7 +502,7 @@ pip install numpy
 **Step 5:** Run the workload:
 
 ```
-RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg > extasy.log
+RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg 2> extasy.log
 ```
 
 There are two stages in the execution phase - Simulation and Analysis. Execution starts with any Preprocessing that 
