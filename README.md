@@ -131,7 +131,7 @@ Now you can install CoCo itself. Log-on to Stampede check out the CoCo repositor
 
 ```
 cd $HOME
-git clone https://bitbucket.org/extasy-project/coco.git
+git clone -b coco-0.1 https://bitbucket.org/extasy-project/coco.git
 module load python
 cd $HOME/coco
 python setup.py install --user
@@ -355,7 +355,7 @@ python setup.py install --user
 
 cd ..
 
-git clone git://git.code.sf.net/p/lsdmap/git lsdmap
+git clone -b extasy-0.1-rc2 git://git.code.sf.net/p/lsdmap/git lsdmap
 cd lsdmap
 python setup.py install --user
 ```
