@@ -187,25 +187,24 @@ curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/co
 
 ```
 #-------------------------Applications----------------------
-simulator                = 'Amber'
-analyzer                 = 'CoCo'
+simulator                = 'Amber'          # Simulator to be loaded
+analyzer                 = 'CoCo'           # Analyzer to be loaded
 
 #-------------------------General---------------------------
-num_iterations          = 2  # Number of iterations of Simulation-Analysis
-start_iter              = 0  # Iteration number with which to start
-num_CUs = 8
+num_iterations          = 16                 # Number of iterations of Simulation-Analysis
+start_iter              = 0                 # Iteration number with which to start
+num_CUs = 16                                 # Number of tasks or Compute Units
 
 #-------------------------Simulation-----------------------
-num_cores_per_sim_cu    = 2
-md_input_file           = './mdshort.in'
-minimization_input_file = './min.in'
-initial_crd_file        = './penta.crd'
-top_file                = './penta.top'
+num_cores_per_sim_cu    = 2                 # Number of cores per Simulation Compute Units
+md_input_file           = './mdshort.in'    # Entire path to MD Input file - Do not use $HOME or the likes
+minimization_input_file = './min.in'        # Entire path to Minimization file - Do not use $HOME or the likes
+initial_crd_file        = './penta.crd'     # Entire path to Coordinates file - Do not use $HOME or the likes
+top_file                = './penta.top'     # Entire path to Topology file - Do not use $HOME or the likes
 
 #-------------------------Analysis--------------------------
-grid                    = '5'
-dims                    = '3'
-frontpoints             = '8'
+grid                    = '5'               # Number of points along each dimension of the CoCo histogram
+dims                    = '3'               # The number of projections to consider from the input pcz file
 ```
 
 Now you are can run the workload:
