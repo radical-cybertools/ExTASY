@@ -138,6 +138,8 @@ module load python
 python setup.py install --user
 ```
 
+> **NOTE** : If re-installing coco on Stampede, please remove the contents of .local/lib/python2.7/site-packages/ on Stampede before trying to reinstall. 
+
 ### 2.1.2 Running the Example Workload
 
 This section is to be done entirely on your **laptop**. The ExTASY tool expects two input files:
@@ -360,6 +362,7 @@ cd lsdmap
 git checkout tags/extasy-0.1-rc2
 python setup.py install --user
 ```
+> **NOTE** : If re-installing lsdmap on Stampede, please remove the contents of .local/lib/python2.7/site-packages/ on Stampede before trying to reinstall.
 
 **Installation is complete!** 
 
