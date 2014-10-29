@@ -104,7 +104,7 @@ This will reset the PATH variable to also point to the packages which were just 
 
 ### 2.1.1 Installing CoCo on Stampede
 
-> **NOTE** : If re-installing/making a fresh installation of coco on Stampede, please remove the contents of .local/lib/python2.7/site-packages/ on Stampede before trying to reinstall.
+> **NOTE** : If re-installing/making a fresh installation of coco on Stampede, please remove the contents of .local/lib/python2.7/site-packages/ on Stampede before installing.
 
 > You can skip this step if you have done this already.
 
@@ -317,7 +317,7 @@ these configuration files.
 
 ### 3.1.1 Installing LSDMap on Stampede
 
-> **NOTE** : If re-installing/making a fresh installation of lsdmap on Stampede, please remove the contents of .local/lib/python2.7/site-packages/ on Stampede before trying to reinstall.
+> **NOTE** : If re-installing/making a fresh installation of lsdmap on Stampede, please remove the contents of .local/lib/python2.7/site-packages/ on Stampede before installing.
 
 LSDMap is currently **not installed** on Stampede. In order to run the Gromacs/LSDMap
 example, you need to install it in your home directory. 
