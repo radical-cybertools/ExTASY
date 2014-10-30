@@ -111,7 +111,7 @@ This will reset the PATH variable to also point to the packages which were just 
 CoCo is currently **not installed** on Stampede. In order to run the CoCo/Amber
 example, you need to install it yourself. This also requires you to install **scipy 0.14** (or greater) using the Stampede **python/2.7.3** and **intel/13.0.2.146** modules. 
 
-**Please download [this file](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/docs/coco_installer.sh) and run it on Stampede.**
+**Please download [this file](https://github.com/radical-cybertools/ExTASY/blob/extasy-0.1-rc3/docs/installer.sh) and run it on Stampede.**
 
 Once you have installed numpy/scipy, double-check the version of scipy and numpy:
 
