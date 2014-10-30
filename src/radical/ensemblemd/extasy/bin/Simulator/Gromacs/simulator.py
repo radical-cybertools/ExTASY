@@ -22,7 +22,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
     for i in range(0, Kconfig.num_CUs):
         mdtd = MDTaskDescription()
         mdtd.kernel = "GROMACS"
-        mdtd.arguments = ['-l','-c',". run.sh %s start.gro %s out.gro %s" % (Kconfig.grompp_name,Kconfig.topol_name,Kconfig.ndxfile_name)]
+        mdtd.arguments = ['-l','-c',". run.sh %s start.gro %s out.gro %s" % (Kconfig.grompp_name,Kconfig.topol_name,Kconfig.num_cores_per_sim_cu)]
         mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
         gromacs_task = radical.pilot.ComputeUnitDescription()
         gromacs_task.environment = {}
@@ -30,6 +30,8 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
             gromacs_task.environment['grompp_options'] = '%s' % Kconfig.grompp_options
         if Kconfig.mdrun_options is not None:
             gromacs_task.environment['mdrun_options'] = '%s' % Kconfig.mdrun_options
+        if Kconfig.ndxfile_name is not None:
+            gromacs_task.environment['mdrun_options'] = gromacs_task.environment['mdrun_options'] + '-n %s'%Kconfig.ndxfile_name
         gromacs_task.pre_exec = mdtd_bound.pre_exec
         gromacs_task.executable = '/bin/bash'
         gromacs_task.arguments = mdtd_bound.arguments

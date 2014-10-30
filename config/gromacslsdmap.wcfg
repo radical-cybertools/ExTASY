@@ -9,7 +9,7 @@ start_iter           = 0                    # Iteration number with which to sta
 nsave                = 2                    # Number of iterations after which data is to be saved
 
 #--------------------------Simulation--------------------------------
-num_cores_per_sim_cu = 2                    # Number of cores per Simulation Compute Units
+num_cores_per_sim_cu = 1                    # Number of cores per Simulation Compute Units
 md_input_file        = './input.gro'        # Entire path to the MD Input file - Do not use $HOME or the likes
 mdp_file             = './grompp.mdp'       # Entire path to the MD Parameters file - Do not use $HOME or the likes
 top_file             = './topol.top'        # Entire path to the Topology file - Do not use $HOME or the likes
