@@ -27,11 +27,11 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
         gromacs_task = radical.pilot.ComputeUnitDescription()
         gromacs_task.environment = {}
         if Kconfig.grompp_options is not None:
-            gromacs_task.environment['grompp_options'] = '%s' % Kconfig.grompp_options
+            gromacs_task.environment['grompp_options'] = '"%s"' % Kconfig.grompp_options
         if Kconfig.mdrun_options is not None:
-            gromacs_task.environment['mdrun_options'] = '%s' % Kconfig.mdrun_options
+            gromacs_task.environment['mdrun_options'] = '"%s"' % Kconfig.mdrun_options
         if Kconfig.ndxfile_name is not None:
-            gromacs_task.environment['mdrun_options'] = gromacs_task.environment['mdrun_options'] + '-n %s'%Kconfig.ndxfile_name
+            gromacs_task.environment['ndxfile'] = '"%s"' % Kconfig.ndxfile_name
         gromacs_task.pre_exec = mdtd_bound.pre_exec
         gromacs_task.executable = '/bin/bash'
         gromacs_task.arguments = mdtd_bound.arguments
@@ -42,7 +42,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
             gromacs_task.input_staging.append('%s' % Kconfig.ndx_file)
         if Kconfig.itp_file_loc is not None:
             for itpfile in glob.glob(Kconfig.itp_file_loc + '*.itp'):
-                gromacs_task.input_staging.append('%s/%s' % (Kconfig.itp_file_loc,itpfile))
+                gromacs_task.input_staging.append('%s/%s' % itpfile)
         gromacs_task.output_staging = ['out.gro > out%s.gro' % i]
 
         gromacs_tasks.append(gromacs_task)
