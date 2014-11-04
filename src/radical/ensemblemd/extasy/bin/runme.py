@@ -99,6 +99,7 @@ def startPilot(Kconfig,RPconfig):
 
 def main():
 
+    session = None
     usage = 'usage: %prog --RPconfig RPCONFIG --Kconfig KCONFIG'
 
     parser = argparse.ArgumentParser()
