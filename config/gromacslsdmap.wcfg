@@ -3,7 +3,7 @@ simulator             = 'Gromacs'           # Simulator to be loaded
 analyzer              = 'LSDMap'            # Analyzer to be loaded
 
 #--------------------------General--------------------------------
-num_CUs              = 64                   # Number of tasks or Compute Units
+num_CUs              = 16                   # Number of tasks or Compute Units
 num_iterations       = 3                    # Number of iterations of Simulation-Analysis
 start_iter           = 0                    # Iteration number with which to start
 nsave                = 2                    # Number of iterations after which data is to be saved
