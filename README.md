@@ -113,9 +113,12 @@ example, you need to install it yourself. This also requires you to install **sc
 
 **Please download [this file](https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy-0.1-rc3/docs/installer.sh) and run it on Stampede.**
 
-Once you have installed numpy/scipy, double-check the version of scipy and numpy:
+Once you have installed numpy/scipy using the installer script from above, double-check the version of scipy and numpy:
 
 ```
+module load intel/13.0.2.146
+module load python
+
 python -V
 python -c "import scipy; print scipy.__version__"
 python -c "import numpy; print numpy.__version__"
