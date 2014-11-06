@@ -38,27 +38,27 @@ potentially incompatible system-wide packages.
 > ```
 > wget --no-check-certificate https://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.9.tar.gz
 > tar xzf virtualenv-1.9.tar.gz
-> python virtualenv-1.9/virtualenv.py --system-site-packages $HOME/myenv
-> source $HOME/myenv/bin/activate
+> python virtualenv-1.9/virtualenv.py --system-site-packages $HOME/ExTASY-tools/
+> source $HOME/ExTASY-tools/
 > ```
 
 
 **Step 1:** Create the virtualenv:
 
 ```
-virtualenv /tmp/ExTASY-tools/
+virtualenv $HOME/ExTASY-tools/
 ```
 
 If your shell is **BASH**:
 
 ```
-source /tmp/ExTASY-tools/bin/activate 
+source $HOME/ExTASY-tools/bin/activate 
 ```
 
 If your shell is **CSH**:
 
 ```
-source /tmp/ExTASY-tools/bin/activate.csh 
+source $HOME/ExTASY-tools/bin/activate.csh 
 ```
 
 **Step 2:** Install ExTASY's dependencies:
@@ -113,9 +113,12 @@ example, you need to install it yourself. This also requires you to install **sc
 
 **Please download [this file](https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy-0.1-rc3/docs/installer.sh) and run it on Stampede.**
 
-Once you have installed numpy/scipy, double-check the version of scipy and numpy:
+Once you have installed numpy/scipy using the installer script from above, double-check the version of scipy and numpy:
 
 ```
+module load intel/13.0.2.146
+module load python
+
 python -V
 python -c "import scipy; print scipy.__version__"
 python -c "import numpy; print numpy.__version__"
