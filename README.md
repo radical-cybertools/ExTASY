@@ -38,27 +38,27 @@ potentially incompatible system-wide packages.
 > ```
 > wget --no-check-certificate https://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.9.tar.gz
 > tar xzf virtualenv-1.9.tar.gz
-> python virtualenv-1.9/virtualenv.py --system-site-packages /tmp/ExTASY-tools/
-> source /tmp/ExTASY-tools/
+> python virtualenv-1.9/virtualenv.py --system-site-packages $HOME/ExTASY-tools/
+> source $HOME/ExTASY-tools/
 > ```
 
 
 **Step 1:** Create the virtualenv:
 
 ```
-virtualenv /tmp/ExTASY-tools/
+virtualenv $HOME/ExTASY-tools/
 ```
 
 If your shell is **BASH**:
 
 ```
-source /tmp/ExTASY-tools/bin/activate 
+source $HOME/ExTASY-tools/bin/activate 
 ```
 
 If your shell is **CSH**:
 
 ```
-source /tmp/ExTASY-tools/bin/activate.csh 
+source $HOME/ExTASY-tools/bin/activate.csh 
 ```
 
 **Step 2:** Install ExTASY's dependencies:
