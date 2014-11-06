@@ -22,16 +22,21 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
     for i in range(0, Kconfig.num_CUs):
         mdtd = MDTaskDescription()
         mdtd.kernel = "GROMACS"
-        mdtd.arguments = ['-l','-c',". run.sh %s start.gro %s out.gro %s" % (Kconfig.grompp_name,Kconfig.topol_name,Kconfig.num_cores_per_sim_cu)]
+        if Kconfig.grompp_options is not None:
+            grompp_opts = Kconfig.grompp_options
+        else:
+            grompp_opts = ''
+        if Kconfig.mdrun_options is not None:
+            mdrun_opts = Kconfig.mdrun_options
+        else:
+            mdrun_opts = ''
+        if Kconfig.ndxfile_name is not None:
+            ndx_opts = Kconfig.ndxfile_name
+        else:
+            ndx_opts = ''
+        mdtd.arguments = ['-l','-c','export grompp_options="%s" mdrun_options="%s" ndxfile="%s" && . run.sh %s start.gro %s out.gro %s' % (grompp_opts,mdrun_opts,ndx_opts,Kconfig.grompp_name,Kconfig.topol_name,Kconfig.num_cores_per_sim_cu)]
         mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
         gromacs_task = radical.pilot.ComputeUnitDescription()
-        gromacs_task.environment = {}
-        if Kconfig.grompp_options is not None:
-            gromacs_task.environment['grompp_options'] = '"%s"' % Kconfig.grompp_options
-        if Kconfig.mdrun_options is not None:
-            gromacs_task.environment['mdrun_options'] = '"%s"' % Kconfig.mdrun_options
-        if Kconfig.ndxfile_name is not None:
-            gromacs_task.environment['ndxfile'] = '"%s"' % Kconfig.ndxfile_name
         gromacs_task.pre_exec = mdtd_bound.pre_exec
         gromacs_task.executable = '/bin/bash'
         gromacs_task.arguments = mdtd_bound.arguments
@@ -42,7 +47,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
             gromacs_task.input_staging.append('%s' % Kconfig.ndx_file)
         if Kconfig.itp_file_loc is not None:
             for itpfile in glob.glob(Kconfig.itp_file_loc + '*.itp'):
-                gromacs_task.input_staging.append('%s/%s' % itpfile)
+                gromacs_task.input_staging.append('%s' % itpfile)
         gromacs_task.output_staging = ['out.gro > out%s.gro' % i]
 
         gromacs_tasks.append(gromacs_task)
