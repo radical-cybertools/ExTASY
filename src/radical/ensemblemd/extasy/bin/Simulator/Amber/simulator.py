@@ -4,6 +4,7 @@ import radical.pilot
 from radical.ensemblemd.mdkernels import MDTaskDescription
 import os
 import time
+import saga
 
 
 def Simulator(umgr,RPconfig,Kconfig,cycle):
@@ -27,15 +28,14 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
     start_times = []
     end_times = []
 
-    compute_units = []
+    cudesc_list_A = []
     for i in range(Kconfig.num_CUs):
 
         step_1 = 'pmemd.MPI -O -i {mininfilename} -o min{cycle}.out -inf min{cycle}.inf -r md{cycle}.crd -p {topfilename} -c min{cycle}.crd -ref min{cycle}.crd'.format(**dict)
-        step_2 = 'pmemd.MPI -O -i {mdinfilename} -o md{cycle}.out -inf md{cycle}.inf -x md{cycle}.ncdf -r md{cycle}.rst -p {topfilename} -c md{cycle}.crd'.format(**dict)
 
         mdtd = MDTaskDescription()
         mdtd.kernel = "AMBER"
-        mdtd.arguments = ['-l', '-c', " %s && %s" % (step_1, step_2)]
+        mdtd.arguments = ['-l', '-c', " %s" % step_1]
         mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
         cu = radical.pilot.ComputeUnitDescription()
         cu.cores = Kconfig.num_cores_per_sim_cu
@@ -44,20 +44,51 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
         cu.pre_exec = mdtd_bound.pre_exec
         cu.arguments = mdtd_bound.arguments
         if(cycle==0):
-            cu.input_staging = ['%s > min%s.crd'%(dict['crdfile'],cycle),'%s'%(dict['topfile']),'%s'%(dict['minin']),'%s'%(dict['mdin'])]
+            cu.input_staging = ['%s > min%s.crd'%(dict['crdfile'],cycle),'%s'%(dict['topfile']),'%s'%(dict['minin'])]
         else:
-            cu.input_staging = ['min%s%s.crd > min%s.crd'%(cycle,i,cycle),'%s'%(dict['topfile']),'%s'%(dict['minin']),'%s'%(dict['mdin'])]
-        cu.output_staging = ['md%s.ncdf > md_%s_%s.ncdf'%(cycle,cycle,i)]
-        compute_units.append(cu)
+            cu.input_staging = ['min%s%s.crd > min%s.crd'%(cycle,i,cycle),'%s'%(dict['topfile']),'%s'%(dict['minin'])]
+        #cu.output_staging = ['md%s.ncdf > md_%s_%s.ncdf'%(cycle,cycle,i)]
+        cudesc_list_A.append(cu)
 
-    units = umgr.submit_units(compute_units)
-    umgr.wait_units()
+    cu_list_A = umgr.submit_units(cudesc_list_A)
+
+    cu_list_B = []
+
+    cu_list_A_copy = cu_list_A[:]
+
+    i=0
+    while cu_list_A:
+        for cu_a in cu_list_A:
+            cu_a.wait ()
+            path=saga.Url(cu_a.working_directory).path
+
+            step_2 = 'pmemd.MPI -O -i {mdinfilename} -o md{cycle}.out -inf md{cycle}.inf -x md{cycle}.ncdf -r md{cycle}.rst -p {topfilename} -c md{cycle}.crd'.format(**dict)
+
+            mdtd = MDTaskDescription()
+            mdtd.kernel = "AMBER"
+            mdtd.arguments = ['-l', '-c', " %s" % step_2]
+            mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
+            cudesc = radical.pilot.ComputeUnitDescription()
+            cudesc.cores = Kconfig.num_cores_per_sim_cu
+            cudesc.mpi = True
+            cudesc.executable = mdtd_bound.executable
+            cudesc.pre_exec = ['cp %s/* .'%path] + mdtd_bound.pre_exec
+            cudesc.arguments = mdtd_bound.arguments
+            cudesc.input_staging = [dict['mdin']]
+            cudesc.output_staging = ['md%s.ncdf > md_%s_%s.ncdf'%(cycle,cycle,i)]
+            cu_b = umgr.submit_units(cudesc)
+            i+=1
+            cu_list_B.append(cu_b)
+            cu_list_A.remove(cu_a)
+
+    for cu_b in cu_list_B:
+        cu_b.wait()
 
     try:
-        for unit in units:
+        for unit_a,unit_b in cu_list_A_copy,cu_list_B:
             #print 'Start : ', unit.start_time, 'Stop : ', unit.stop_time
-            start_times.append(unit.start_time)
-            end_times.append(unit.stop_time)
+            start_times.append(unit_a.start_time)
+            end_times.append(unit_b.stop_time)
 
         print 'Simulation Execution Time : ', (max(end_times)-min(start_times)).total_seconds()
 
