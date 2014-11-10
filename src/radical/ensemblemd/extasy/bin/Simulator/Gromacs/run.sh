@@ -48,8 +48,8 @@ for idx in `seq 1 $nframes`; do
   sed "$start"','"$end"'!d' $startgro > $tmpstartgro
 
   # gromacs preprocessing & MD
-  grompp $grompp_options $ndxfile_option -f $mdpfile_name -c $tmpstartgro -p $topfile_name -o $tprfile_name 1>/dev/null 2>/dev/null
-  mdrun -nt $N $mdrun_options -s $tprfile_name -o $trrfile_name -e $edrfile_name 1>/dev/null 2>/dev/null
+  grompp $grompp_options $ndxfile_option -f $mdpfile_name -c $tmpstartgro -p $topfile_name -o $tprfile_name
+  mdrun -nt $N $mdrun_options -s $tprfile_name -o $trrfile_name -e $edrfile_name
 
   # store data
   cat confout.gro >> $outgro
