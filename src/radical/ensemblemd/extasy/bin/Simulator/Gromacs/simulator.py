@@ -16,6 +16,8 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
     Kconfig.topol_name = os.path.basename(Kconfig.top_file)
     Kconfig.ndxfile_name = os.path.basename(Kconfig.ndx_file)
 
+    nsave = Kconfig.nsave
+
     print 'Starting Simulation'
 
     gromacs_tasks = []

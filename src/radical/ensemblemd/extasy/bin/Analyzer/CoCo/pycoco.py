@@ -35,8 +35,6 @@ def coco_ui(args):
     else:
         log.basicConfig(format="%(levelname)s: %(message)s")
 
-    log.info('Performing coco analysis!')
-
     dict = {}
     dict['topfile'] = args.topfile
     dict['mdfiles'] = args.mdfile
@@ -49,7 +47,7 @@ def coco_ui(args):
     
     cf = cofasu.Cofasu(f)
 
-    log.info('cofasu contains ',cf.natoms,' and ',cf.numframes(),' frames')
+    log.info('cofasu contains {} atoms and {} frames'.format(cf.natoms,cf.numframes()))
     # Create the optimizer
 
     log.info('creating optimizer...')
@@ -67,6 +65,7 @@ def coco_ui(args):
     coco_instance = coco.Coco(projsSel)
     # Find the COCO points.
     nreps = int(args.frontpoints)
+    log.info('generating new points...')
     cp = coco_instance.cpoints(nreps)
     
     for rep in range(nreps):
