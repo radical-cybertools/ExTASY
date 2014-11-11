@@ -13,7 +13,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
     mdtd=MDTaskDescription()
     mdtd.kernel="CoCo"
-    mdtd.arguments = ['-l','-c','python pycoco.py --grid %s --dims %s --frontpoints %s --topfile %s --mdfile *.ncdf --output pentaopt%s'%(Kconfig.grid,Kconfig.dims,Kconfig.num_CUs,os.path.basename(Kconfig.top_file),cycle)]
+    mdtd.arguments = ['-l','-c','pyCoCo --grid %s --dims %s --frontpoints %s --topfile %s --mdfile *.ncdf --output pentaopt%s'%(Kconfig.grid,Kconfig.dims,Kconfig.num_CUs,os.path.basename(Kconfig.top_file),cycle)]
     mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
     cudesc = radical.pilot.ComputeUnitDescription()
     cudesc.cores = RPconfig.PILOTSIZE
