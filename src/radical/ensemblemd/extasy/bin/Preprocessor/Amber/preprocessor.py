@@ -12,7 +12,7 @@ def Preprocessing(Kconfig,umgr,cycle,paths):
 
     if(cycle==0):
         curdir = os.path.dirname(os.path.realpath(__file__))
-        list_of_files = ['%s > min0.crd'%Kconfig.md_input_file,Kconfig.minimization_input_file,Kconfig.initial_crd_file
+        list_of_files = [Kconfig.initial_crd_file,Kconfig.md_input_file,Kconfig.minimization_input_file
             ,Kconfig.top_file,'%s/../../Analyzer/CoCo/postexec.py'%curdir]
 
         cud = radical.pilot.ComputeUnitDescription()

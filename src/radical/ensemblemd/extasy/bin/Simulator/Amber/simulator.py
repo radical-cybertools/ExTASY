@@ -44,9 +44,9 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
         cu.pre_exec = mdtd_bound.pre_exec
         cu.arguments = mdtd_bound.arguments
         if(cycle==0):
-            cu.pre_exec = cu._pre_exec + ['cp %s/%s min%s.crd'%(paths[0],dict['crdfile'],cycle),'cp %s/%s .'%(paths[0],dict['topfile']),'cp %s/%s .'%(paths[0],dict['minin'])]
+            cu.pre_exec = cu.pre_exec + ['cp %s/%s min%s.crd'%(paths[0],dict['crdfilename'],cycle),'cp %s/%s .'%(paths[0],dict['topfilename']),'cp %s/%s .'%(paths[0],dict['mininfilename'])]
         else:
-            cu.pre_exec = cu.pre_exec + ['cp %s/min%s%s.crd min%s.crd'%(paths[cycle],cycle,i,cycle),'cp %s/%s .'%(paths[0],dict['topfile']),'cp %s/%s .'%(paths[0],dict['minin'])]
+            cu.pre_exec = cu.pre_exec + ['cp %s/min%s%s.crd min%s.crd'%(paths[cycle],cycle,i,cycle),'cp %s/%s .'%(paths[0],dict['topfilename']),'cp %s/%s .'%(paths[0],dict['mininfilename'])]
         cudesc_list_A.append(cu)
 
     cu_list_A = umgr.submit_units(cudesc_list_A)
@@ -73,7 +73,8 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
             cudesc.executable = mdtd_bound.executable
             cudesc.pre_exec = ['cp %s/* .'%path] + mdtd_bound.pre_exec
             cudesc.arguments = mdtd_bound.arguments
-            cudesc.input_staging = [dict['mdin']]
+            #cudesc.input_staging = [dict['mdin']]
+            cudesc.pre_exec = cudesc.pre_exec + ['cp %s/%s .'%(paths[0],dict['mdinfilename'])]
             #cudesc.output_staging = ['md%s.ncdf > md_%s_%s.ncdf'%(cycle,cycle,i)]
             cudesc.post_exec = ['cp md%s.ncdf %s/md_%s_%s.ncdf'%(cycle,paths[cycle],cycle,i)]
             cu_b = umgr.submit_units(cudesc)

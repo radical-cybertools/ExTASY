@@ -24,7 +24,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
     cudesc.pre_exec = cudesc.pre_exec + ['cp %s/postexec.py .'%paths[0],'cp %s/%s .'%(paths[0],Kconfig.top_file)]
     #for file in glob.glob('*.ncdf'):
     #    cudesc.input_staging.append(file)
-    for i in range(1,len(paths)):
+    for i in range(0,len(paths)):
         cudesc.pre_exec = cudesc.pre_exec + ['cp %s/*.ncdf .'%paths[i]]
     cudesc.post_exec = ['python postexec.py %s %s' % (Kconfig.num_CUs,cycle)]
     cudesc.mpi = True
