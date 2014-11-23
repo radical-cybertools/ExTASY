@@ -1,7 +1,7 @@
 __author__ = 'vivek'
 
 from radical.ensemblemd.mdkernels import MDTaskDescription
-import saga
+import time
 import radical.pilot
 import os
 
@@ -32,6 +32,20 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
         #lsdm.input_staging = lsdm.input_staging + [Kconfig.w_file]
         lsdm.pre_exec = lsdm.pre_exec + ['cp %s/%s .'%(paths[cycle-1],os.path.basename(Kconfig.w_file))]
 
+    #lsdm.output_staging = [' tmpha.eg > %s'%(egfile),'tmpha.ev > %s'%(evfile),nearest_neighbor_file,'lsdmap.log']
+    lsdm.post_exec = ['wait','ln -s %s/post_analyze.py .'%paths[0],'ln -s %s/select.py .'%paths[0],'cp -r %s/lsdmap .'%paths[0],
+                      'ln -s %s/reweighting.py .'%paths[0],
+                      'python post_analyze.py %s %s %s %s %s %s %s %s %s %s %s'%
+                        (Kconfig.num_runs,evfile,num_clone_files,Kconfig.md_output_file,nearest_neighbor_file,
+                         Kconfig.w_file,outgrofile_name,Kconfig.max_alive_neighbors,Kconfig.max_dead_neighbors,
+                         Kconfig.md_input_file,cycle)]
+
+    #lsdm.output_staging = [' tmpha.eg > %s'%(egfile),'tmpha.ev > %s'%(evfile),nearest_neighbor_file,'lsdmap.log']
+    if((cycle+1)%Kconfig.nsave==0):
+        lsdm.output_staging = ['lsdmap.log',Kconfig.w_file,'%s_%s'%(cycle+1,Kconfig.md_input_file)]
+    else:
+        lsdm.post_exec = lsdm.post_exec + ['cp %s %s/'%(Kconfig.w_file,paths[cycle]),'ln -s %s_%s %s/'%(cycle+1,Kconfig.md_input_file,paths[cycle])]
+
     lsdm.mpi = True
     lsdm.cores = RPconfig.PILOTSIZE
 
@@ -39,28 +53,8 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
 
     lsdmCU.wait()
 
-    lsdm_path=saga.Url(lsdmCU.working_directory).path
-
-
-    post=radical.pilot.ComputeUnitDescription()
-    post.pre_exec = ['ln -s %s/post_analyze.py .'%paths[0],'ln -s %s/select.py .'%paths[0],'cp -r %s/lsdmap .'%paths[0],
-                      'ln -s %s/reweighting.py .'%paths[0],'cp %s/%s .'%(lsdm_path,nearest_neighbor_file),
-                      'cp %s/%s .'%(lsdm_path,evfile),'cp %s/%s'%(lsdm_path,Kconfig.md_output_file),
-                      'cp %s/%s .'%(lsdm_path,Kconfig.w_file)]
-    post.executable = 'python'
-    post.arguments = ['post_analyze.py',Kconfig.num_runs,evfile,num_clone_files,Kconfig.md_output_file,nearest_neighbor_file,
-                         Kconfig.w_file,outgrofile_name,Kconfig.max_alive_neighbors,Kconfig.max_dead_neighbors,
-                         os.path.basename(Kconfig.md_input_file),cycle]
-
-    #lsdm.output_staging = [' tmpha.eg > %s'%(egfile),'tmpha.ev > %s'%(evfile),nearest_neighbor_file,'lsdmap.log']
-    if((cycle+1)%Kconfig.nsave==0):
-        post.output_staging = ['%s/lsdmap.log'%lsdm_path,Kconfig.w_file,'%s_%s'%(cycle+1,Kconfig.md_input_file)]
-    else:
-        post.post_exec = post.post_exec + ['cp %s %s/'%(Kconfig.w_file,paths[cycle]),'ln -s %s_%s %s/'%(cycle+1,Kconfig.md_input_file,paths[cycle])]
-
-
     try:
-        print 'Analysis Execution time : ',((lsdmCU.stop_time - lsdmCU.start_time).total_seconds()+(post.stop_time - post.start_time).total_seconds())
+        print 'Analysis Execution time : ',(lsdmCU.stop_time - lsdmCU.start_time).total_seconds()
 
     except:
         pass
