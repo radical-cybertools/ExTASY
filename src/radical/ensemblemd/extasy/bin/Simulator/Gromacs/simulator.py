@@ -51,9 +51,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
         if Kconfig.ndx_file is not None:
             #gromacs_task.input_staging.append('%s' % Kconfig.ndx_file)
             gromacs_task.pre_exec = gromacs_task.pre_exec + ['cp %s/%s .'%(paths[0],ndxfile_name)]
-        print Kconfig.itp_file_loc
         if Kconfig.itp_file_loc is not None:
-            print 'WTF'
             # for itpfile in glob.glob(Kconfig.itp_file_loc + '*.itp'):
             #    gromacs_task.input_staging.append('%s' % itpfile)
             gromacs_task.pre_exec = gromacs_task.pre_exec + ['cp %s/*.itp .' % paths[0]]

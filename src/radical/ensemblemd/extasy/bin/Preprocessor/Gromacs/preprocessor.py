@@ -20,12 +20,12 @@ def Preprocessing(Kconfig,umgr,cycle,paths):
                          '%s/../../Analyzer/LSDMap/post_analyze.py'%curdir,
                          '%s/../../Analyzer/LSDMap/select.py'%curdir,
                          '%s/../../Analyzer/LSDMap/reweighting.py'%curdir,
-                         '%s/../../Analyzer/LSDMap/lsdmap_utils/rw/reader.py'%curdir,
-                         '%s/../../Analyzer/LSDMap/lsdmap_utils/rw/writer.py'%curdir,
-                         '%s/../../Analyzer/LSDMap/lsdmap_utils/rw/ev.py'%curdir,
-                         '%s/../../Analyzer/LSDMap/lsdmap_utils/rw/gro.py > grofile.py'%curdir,
-                         '%s/../../Analyzer/LSDMap/lsdmap_utils/rw/sl.py'%curdir,
-                         '%s/../../Analyzer/LSDMap/lsdmap_utils/rw/xvg.py'%curdir
+                         '%s/../../Analyzer/LSDMap/lsdmap/rw/reader.py'%curdir,
+                         '%s/../../Analyzer/LSDMap/lsdmap/rw/writer.py'%curdir,
+                         '%s/../../Analyzer/LSDMap/lsdmap/rw/ev.py'%curdir,
+                         '%s/../../Analyzer/LSDMap/lsdmap/rw/gro.py > grofile.py'%curdir,
+                         '%s/../../Analyzer/LSDMap/lsdmap/rw/sl.py'%curdir,
+                         '%s/../../Analyzer/LSDMap/lsdmap/rw/xvg.py'%curdir
                          ]
 
         if Kconfig.ndx_file is not None:
@@ -56,15 +56,16 @@ def Preprocessing(Kconfig,umgr,cycle,paths):
         return [init_path]
 
     elif((cycle!=0)and(cycle%Kconfig.nsave==0)):
-        list_of_files = ['%s/backup/iter%s/%s_%s'%(cycle,os.getcwd(),cycle,os.path.basename(Kconfig.md_input_file))]
+        list_of_files = ['{1}_{2}'.format(os.getcwd(),cycle,os.path.basename(Kconfig.md_input_file))]
 
         cud = radical.pilot.ComputeUnitDescription()
         cud.cores = 1
         cud.mpi = False
         cud.executable = 'python'
-        cud.pre_exec = ['ln -s %s/gro.py .'% paths[0] ,'ln -s %s/spliter.py .'% paths[0]]
+        cud.pre_exec = ['cp %s/gro.py .'% paths[0] ,'cp %s/spliter.py .'% paths[0]]
+        cud.pre_exec = cud.pre_exec + ['cp %s/%s_%s .'%(paths[cycle-1],cycle,os.path.basename(Kconfig.md_input_file))]
         cud.arguments = ['spliter.py',Kconfig.num_CUs,'%s_%s'%(cycle,os.path.basename(Kconfig.md_input_file))]
-        cud.input_staging = list_of_files
+        #cud.input_staging = list_of_files
 
         cu = umgr.submit_units(cud)
 
@@ -81,7 +82,7 @@ def Preprocessing(Kconfig,umgr,cycle,paths):
         cud.mpi = False
         cud.executable = 'python'
         cud.arguments = ['spliter.py',Kconfig.num_CUs,'%s_%s'%(cycle,os.path.basename(Kconfig.md_input_file))]
-        cud.pre_exec = ['ln -s %s/gro.py .'%paths[0],'ln -s %s/spliter.py .'% paths[0], 'ln -s %s/%s_%s .' %(paths[cycle-1],cycle,os.path.basename(Kconfig.md_input_file))]
+        cud.pre_exec = ['cp %s/gro.py .'%paths[0],'cp %s/spliter.py .'% paths[0], 'cp %s/%s_%s .' %(paths[cycle-1],cycle,os.path.basename(Kconfig.md_input_file))]
 
         cu = umgr.submit_units(cud)
 

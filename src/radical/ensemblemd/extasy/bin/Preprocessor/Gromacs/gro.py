@@ -21,6 +21,7 @@ class GroFile(object):
     def get_nlines(self):
         with open(self.filename, 'r') as file:
             nlines = sum(1 for line in file)
+        print nlines
         return nlines
 
 

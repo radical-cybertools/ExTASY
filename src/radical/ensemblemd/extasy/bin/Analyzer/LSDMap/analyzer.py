@@ -9,8 +9,8 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
 
     print 'Starting Analysis'
     nearest_neighbor_file = 'neighbors.nn'
-    egfile = 'lsdmap.eg'
-    evfile = 'lsdmap.ev'
+    egfile = 'tmpha.eg'
+    evfile = 'tmpha.ev'
     num_clone_files = 'ncopies.nc'
     outgrofile_name = 'out.gro'
 
@@ -27,7 +27,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
     lsdm.executable = mdtd_bound.executable
     lsdm.arguments = mdtd_bound.arguments
     #lsdm.input_staging = [Kconfig.lsdm_config_file,Kconfig.md_output_file,'%s/run_analyzer.sh'%curdir,'%s/lsdm.py'%curdir]
-    lsdm.pre_exec = lsdm.pre_exec + ['ln -s %s/%s .'%(paths[0],Kconfig.lsdm_config_file),'ln -s %s/run_analyzer.sh .'% paths[0],'ln -s %s/lsdm.py .'%paths[cycle]]
+    lsdm.pre_exec = lsdm.pre_exec + ['ln -s %s/%s .'%(paths[0],Kconfig.lsdm_config_file),'ln -s %s/run_analyzer.sh .'% paths[0],'cp %s/lsdm.py .'%paths[0]]
     if(cycle>0):
         #lsdm.input_staging = lsdm.input_staging + [Kconfig.w_file]
         lsdm.pre_exec = lsdm.pre_exec + ['cp %s/%s .'%(paths[cycle-1],os.path.basename(Kconfig.w_file))]
@@ -43,10 +43,11 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
 
 
     post=radical.pilot.ComputeUnitDescription()
-    post.pre_exec = ['ln -s %s/post_analyze.py .'%paths[0],'ln -s %s/select.py .'%paths[0],'cp -r %s/lsdmap .'%paths[0],
+    post.pre_exec = ['module load python','ln -s %s/post_analyze.py .'%paths[0],'ln -s %s/select.py .'%paths[0],'cp -r %s/lsdmap .'%paths[0],
                       'ln -s %s/reweighting.py .'%paths[0],'cp %s/%s .'%(lsdm_path,nearest_neighbor_file),
-                      'cp %s/%s .'%(lsdm_path,evfile),'cp %s/%s'%(lsdm_path,Kconfig.md_output_file),
-                      'cp %s/%s .'%(lsdm_path,Kconfig.w_file)]
+                      'cp %s/%s .'%(lsdm_path,evfile),'cp %s/%s .'%(lsdm_path,Kconfig.md_output_file)]
+    if(cycle>=1):
+        post.pre_exec = post.pre_exec +['cp %s/%s .'%(lsdm_path,Kconfig.w_file)]
     post.executable = 'python'
     post.arguments = ['post_analyze.py',Kconfig.num_runs,evfile,num_clone_files,Kconfig.md_output_file,nearest_neighbor_file,
                          Kconfig.w_file,outgrofile_name,Kconfig.max_alive_neighbors,Kconfig.max_dead_neighbors,
@@ -54,13 +55,18 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
 
     #lsdm.output_staging = [' tmpha.eg > %s'%(egfile),'tmpha.ev > %s'%(evfile),nearest_neighbor_file,'lsdmap.log']
     if((cycle+1)%Kconfig.nsave==0):
-        post.output_staging = ['%s/lsdmap.log'%lsdm_path,Kconfig.w_file,'%s_%s'%(cycle+1,Kconfig.md_input_file)]
+        post.post_exec = ['cp %s/lsdmap.log .'%lsdm_path]
+        post.post_exec = post.post_exec + ['cp %s %s/'%(Kconfig.w_file,paths[cycle]),'cp %s_%s %s/%s_%s'%(cycle+1,os.path.basename(Kconfig.md_input_file),paths[cycle],cycle+1,os.path.basename(Kconfig.md_input_file))]
+        post.output_staging = ['lsdmap.log',Kconfig.w_file,'%s_%s'%(cycle+1,os.path.basename(Kconfig.md_input_file))]
     else:
-        post.post_exec = post.post_exec + ['cp %s %s/'%(Kconfig.w_file,paths[cycle]),'ln -s %s_%s %s/'%(cycle+1,Kconfig.md_input_file,paths[cycle])]
+        post.post_exec = ['cp %s %s/'%(Kconfig.w_file,paths[cycle]),'cp %s_%s %s/%s_%s'%(cycle+1,os.path.basename(Kconfig.md_input_file),paths[cycle],cycle+1,os.path.basename(Kconfig.md_input_file))]
 
+
+    postCU = umgr.submit_units(post)
+    postCU.wait()
 
     try:
-        print 'Analysis Execution time : ',((lsdmCU.stop_time - lsdmCU.start_time).total_seconds()+(post.stop_time - post.start_time).total_seconds())
+        print 'Analysis Execution time : ',((lsdmCU.stop_time - lsdmCU.start_time).total_seconds()+(postCU.stop_time - postCU.start_time).total_seconds())
 
     except:
         pass
