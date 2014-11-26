@@ -71,7 +71,7 @@ pip install --upgrade git+https://github.com/radical-cybertools/radical.ensemble
 **Step 3:** Install ExTASY:
 
 ```
-pip install --upgrade git+https://github.com/radical-cybertools/ExTASY.git@extasy-0.1-rc3#egg=radical.ensemblemd.extasy
+pip install --upgrade git+https://github.com/radical-cybertools/ExTASY.git@extasy-0.1-rc4#egg=radical.ensemblemd.extasy
 ```
 
 Now you should be able to print the installed version of the ExTASY module:
