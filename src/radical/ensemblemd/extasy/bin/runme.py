@@ -143,6 +143,10 @@ def main():
             from Analyzer.LSDMap.analyzer import Analyzer
 
         for i in range(Kconfig.start_iter,Kconfig.num_iterations):
+            if Kconfig.start_iter is not 0:
+                with open('paths.txt','r') as f:
+                    for line in f:
+                        paths.append(line.strip())
             paths=paths + (Preprocessing(Kconfig, umgr, i,paths))
             if Kconfig.simulator:
                 Simulator(umgr, RPconfig, Kconfig, i,paths)
@@ -159,6 +163,10 @@ def main():
                         shutil.copy('lsdmap.log','%s/backup/iter%s/lsdmap.log'%(os.getcwd(),i+1))
                     except:
                         pass
+
+        with open('paths.txt','w') as f:
+            for path in paths:
+                f.write(path + '\n')
 
     except Exception as e:
         print "An error occurred: %s" % ((str(e)))

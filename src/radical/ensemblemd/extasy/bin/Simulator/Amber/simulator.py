@@ -31,11 +31,12 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
     cudesc_list_A = []
     for i in range(Kconfig.num_CUs):
 
-        step_1 = 'pmemd.MPI -O -i {mininfilename} -o min{cycle}.out -inf min{cycle}.inf -r md{cycle}.crd -p {topfilename} -c min{cycle}.crd -ref min{cycle}.crd'.format(**dict)
+        #step_1 = 'pmemd.MPI -O -i {mininfilename} -o min{cycle}.out -inf min{cycle}.inf -r md{cycle}.crd -p {topfilename} -c min{cycle}.crd -ref min{cycle}.crd'.format(**dict)
 
         mdtd = MDTaskDescription()
         mdtd.kernel = "AMBER"
-        mdtd.arguments = ['-l', '-c', " %s" % step_1]
+        mdtd.arguments = ['-O','-i',dict['mininfilename'],'-o','min%s.out'%cycle,'-inf','min%s.inf'%cycle,'-r',
+                          'md%s.crd'%cycle,'-p',dict['topfilename'],'-c','min%s.crd'%cycle,'-ref','min%s.crd'%cycle]
         mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
         cu = radical.pilot.ComputeUnitDescription()
         cu.cores = Kconfig.num_cores_per_sim_cu
@@ -65,7 +66,8 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
 
             mdtd = MDTaskDescription()
             mdtd.kernel = "AMBER"
-            mdtd.arguments = ['-l', '-c', " %s" % step_2]
+            mdtd.arguments = ['-O','-i',dict['mdinfilename'],'-o','md%s.out'%cycle,'-inf','md%s.inf'%cycle,
+                              '-x','md%s.ncdf'%cycle,'-r','md%s.rst'%cycle,'-p',dict['topfilename'],'-c','md%s.crd'%cycle]
             mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
             cudesc = radical.pilot.ComputeUnitDescription()
             cudesc.cores = Kconfig.num_cores_per_sim_cu
