@@ -10,8 +10,6 @@ import saga
 def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
 
 
-    print 'Cycle %s' %cycle
-
     print 'Starting Simulation'
 
     dict = {}
@@ -88,9 +86,10 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
         cu_b.wait()
 
     try:
-        for unit_a,unit_b in cu_list_A_copy,cu_list_B:
-            #print 'Start : ', unit.start_time, 'Stop : ', unit.stop_time
+        for unit_a in cu_list_A_copy:
             start_times.append(unit_a.start_time)
+
+        for unit_b in cu_list_B:
             end_times.append(unit_b.stop_time)
 
         print 'Simulation Execution Time : ', (max(end_times)-min(start_times)).total_seconds()

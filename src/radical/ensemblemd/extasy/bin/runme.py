@@ -148,6 +148,7 @@ def main():
                         paths.append(line.strip())
 
         for i in range(Kconfig.start_iter,Kconfig.start_iter + Kconfig.num_iterations):
+            print 'Cycle : %s'%i
             paths=paths + (Preprocessing(Kconfig, umgr, i,paths))
             if Kconfig.simulator:
                 Simulator(umgr, RPconfig, Kconfig, i,paths)

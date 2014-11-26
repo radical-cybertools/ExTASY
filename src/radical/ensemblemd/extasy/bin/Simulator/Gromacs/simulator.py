@@ -11,7 +11,6 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
 
     curdir = os.path.dirname(os.path.realpath(__file__))
 
-    print 'Cycle %s' %cycle
     grompp_name = os.path.basename(Kconfig.mdp_file)
     topol_name = os.path.basename(Kconfig.top_file)
 

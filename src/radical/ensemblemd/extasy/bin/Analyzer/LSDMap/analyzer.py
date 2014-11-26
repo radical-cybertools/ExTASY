@@ -41,6 +41,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
 
     lsdm_path=saga.Url(lsdmCU.working_directory).path
 
+    print 'Select + Reweighting step'
 
     post=radical.pilot.ComputeUnitDescription()
     post.pre_exec = ['module load python','ln -s %s/post_analyze.py .'%paths[0],'ln -s %s/select.py .'%paths[0],'cp -r %s/lsdmap .'%paths[0],

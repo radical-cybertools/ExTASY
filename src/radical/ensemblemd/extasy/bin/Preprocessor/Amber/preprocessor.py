@@ -10,6 +10,8 @@ def Preprocessing(Kconfig,umgr,cycle,paths):
 
     list_of_files = []
 
+    print 'Preprocessing stage ....'
+
     if(cycle==0):
         curdir = os.path.dirname(os.path.realpath(__file__))
         list_of_files = [Kconfig.initial_crd_file,Kconfig.md_input_file,Kconfig.minimization_input_file
