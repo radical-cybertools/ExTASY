@@ -147,7 +147,7 @@ def main():
                     for line in f:
                         paths.append(line.strip())
 
-        for i in range(Kconfig.start_iter,Kconfig.num_iterations):
+        for i in range(Kconfig.start_iter,Kconfig.start_iter + Kconfig.num_iterations):
             paths=paths + (Preprocessing(Kconfig, umgr, i,paths))
             if Kconfig.simulator:
                 Simulator(umgr, RPconfig, Kconfig, i,paths)
