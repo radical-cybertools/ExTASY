@@ -34,7 +34,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
         if Kconfig.ndx_file is not None:
             ndxfile_name = os.path.basename(Kconfig.ndx_file)
         else:
-            ndx_opts = ''
+            ndxfile_name = ''
         mdtd.arguments = ['run.py','--mdp','%s'%grompp_name,'--gro','start.gro','--top','%s'%topol_name,'--out','out.gro']
         mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
         gromacs_task = radical.pilot.ComputeUnitDescription()
