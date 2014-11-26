@@ -46,5 +46,6 @@ src/radical/ensemblemd/extasy/bin/Simulator/__init__.py
 src/radical/ensemblemd/extasy/bin/Simulator/Amber/__init__.py
 src/radical/ensemblemd/extasy/bin/Simulator/Amber/simulator.py
 src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/__init__.py
+src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/run.py
 src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/run.sh
 src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/simulator.py
