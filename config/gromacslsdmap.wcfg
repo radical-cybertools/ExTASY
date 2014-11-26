@@ -6,7 +6,7 @@ analyzer              = 'LSDMap'            # Analyzer to be loaded
 num_CUs              = 16                   # Number of tasks or Compute Units
 num_iterations       = 3                    # Number of iterations of Simulation-Analysis
 start_iter           = 0                    # Iteration number with which to start
-nsave                = 2                    # Number of iterations after which data is to be saved
+nsave                = 2                    # # Iterations after which output is transfered to local machine
 
 #--------------------------Simulation--------------------------------
 num_cores_per_sim_cu = 1                    # Number of cores per Simulation Compute Units
