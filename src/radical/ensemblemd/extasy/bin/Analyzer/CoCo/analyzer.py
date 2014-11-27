@@ -32,6 +32,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
         cudesc.output_staging = []
         for i in range(0,Kconfig.num_CUs):
             cudesc.output_staging.append('min%s%s.crd'%(cycle+1,i))
+        cudesc.post_exec = cudesc.post_exec + ['cp min%s*.crd %s/'%(cycle+1,paths[cycle])]
     else:
         cudesc.post_exec = cudesc.post_exec + ['cp min%s*.crd %s/'%(cycle+1,paths[cycle])]
 

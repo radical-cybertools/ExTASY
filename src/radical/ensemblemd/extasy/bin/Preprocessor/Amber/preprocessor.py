@@ -32,6 +32,8 @@ def Preprocessing(Kconfig,umgr,cycle,paths):
 
         return [init_path]
 
+
+
     elif((cycle!=0)and(cycle%Kconfig.nsave==0)):
         for file in glob.glob('min%s*.crd'%cycle):
             list_of_files.append(file)
@@ -50,6 +52,7 @@ def Preprocessing(Kconfig,umgr,cycle,paths):
         rem_path=saga.Url(cu.working_directory).path
 
         return [rem_path]
+
 
     else:
 

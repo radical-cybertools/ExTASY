@@ -61,8 +61,8 @@ if __name__ == '__main__':
 
         grompp_opts = os.environ.get('grompp_options','')
         mdrun_opts = os.environ.get('mdrun_options','')
-        ndxfile_name = os.environ.get('ndxfile',None)
-        if ndxfile_name is not None:
+        ndxfile_name = os.environ.get('ndxfile','')
+        if ndxfile_name is not '':
             ndxfile_opts = '-n ' +ndxfile_name
         else:
             ndxfile_opts = ''

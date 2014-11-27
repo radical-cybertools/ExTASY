@@ -22,7 +22,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
     lsdm=radical.pilot.ComputeUnitDescription()
     lsdm.pre_exec = ['module load gromacs']
     lsdm.pre_exec = lsdm.pre_exec + ['ln -s %s/pre_analyze.py'%paths[0],'python pre_analyze.py %s %s %s'%(Kconfig.num_CUs,Kconfig.md_output_file,paths[cycle])]
-    lsdm.pre_exec = lsdm.pre_exec + ['echo 2 | trjconv -f %s -s %s -o tmpha.gro &>/dev/null'%(Kconfig.md_output_file,Kconfig.md_output_file)]
+    lsdm.pre_exec = lsdm.pre_exec + ['echo 2 | trjconv -f %s -s %s -o tmpha.gro'%(Kconfig.md_output_file,Kconfig.md_output_file)]
     lsdm.pre_exec = lsdm.pre_exec + mdtd_bound.pre_exec
     lsdm.executable = mdtd_bound.executable
     lsdm.arguments = mdtd_bound.arguments
