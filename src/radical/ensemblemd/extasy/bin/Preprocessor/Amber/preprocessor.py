@@ -35,16 +35,16 @@ def Preprocessing(Kconfig,umgr,cycle,paths):
 
 
     elif((cycle!=0)and(cycle%Kconfig.nsave==0)):
-        #for file in glob.glob('min%s*.crd'%cycle):
-        #    list_of_files.append(file)
+        for file in glob.glob('min%s*.crd'%cycle):
+            list_of_files.append(file)
 
         cud = radical.pilot.ComputeUnitDescription()
         cud.cores = 1
         cud.mpi = False
         cud.executable = '/bin/echo'
         cud.arguments = ['2']
-        cud.pre_exec = ['ln %s/min%s*.crd .'%(paths[cycle-1],cycle)]
-        #cud.input_staging = list_of_files
+        #cud.pre_exec = ['ln %s/min%s*.crd .'%(paths[cycle-1],cycle)]
+        cud.input_staging = list_of_files
 
         cu = umgr.submit_units(cud)
 

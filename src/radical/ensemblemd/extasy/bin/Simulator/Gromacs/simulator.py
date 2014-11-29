@@ -44,18 +44,18 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
         gromacs_task.cores = Kconfig.num_cores_per_sim_cu
 
         #gromacs_task.input_staging = ['%s/run.sh > run.sh'%curdir,'%s/temp/start%s.gro > start.gro' % (os.getcwd(), i),'%s' % (Kconfig.mdp_file), '%s' % (Kconfig.top_file)]
-        inputs = ['cp %s/run.py .'%paths[0],'cp %s/temp/start%s.gro start.gro'%(paths[cycle],i),'cp %s/%s .'%(paths[0],grompp_name),'cp %s/%s .'%(paths[0],topol_name)]
+        inputs = ['ln %s/run.py .'%paths[0],'ln %s/temp/start%s.gro start.gro'%(paths[cycle],i),'ln %s/%s .'%(paths[0],grompp_name),'ln %s/%s .'%(paths[0],topol_name)]
         gromacs_task.pre_exec = gromacs_task.pre_exec + inputs
 
         if Kconfig.ndx_file is not None:
             #gromacs_task.input_staging.append('%s' % Kconfig.ndx_file)
-            gromacs_task.pre_exec = gromacs_task.pre_exec + ['cp %s/%s .'%(paths[0],ndxfile_name)]
+            gromacs_task.pre_exec = gromacs_task.pre_exec + ['ln %s/%s .'%(paths[0],ndxfile_name)]
         if Kconfig.itp_file_loc is not None:
             # for itpfile in glob.glob(Kconfig.itp_file_loc + '*.itp'):
             #    gromacs_task.input_staging.append('%s' % itpfile)
-            gromacs_task.pre_exec = gromacs_task.pre_exec + ['cp %s/*.itp .' % paths[0]]
+            gromacs_task.pre_exec = gromacs_task.pre_exec + ['ln %s/*.itp .' % paths[0]]
         #gromacs_task.output_staging = ['out.gro > out%s.gro' % i]
-        gromacs_task.post_exec = ['cp out.gro %s/out%s.gro'%(paths[cycle],i)]
+        gromacs_task.post_exec = ['ln out.gro %s/out%s.gro'%(paths[cycle],i)]
 
         gromacs_tasks.append(gromacs_task)
 

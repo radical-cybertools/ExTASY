@@ -27,10 +27,10 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
     lsdm.executable = mdtd_bound.executable
     lsdm.arguments = mdtd_bound.arguments
     #lsdm.input_staging = [Kconfig.lsdm_config_file,Kconfig.md_output_file,'%s/run_analyzer.sh'%curdir,'%s/lsdm.py'%curdir]
-    lsdm.pre_exec = lsdm.pre_exec + ['ln -s %s/%s .'%(paths[0],Kconfig.lsdm_config_file),'ln -s %s/run_analyzer.sh .'% paths[0],'cp %s/lsdm.py .'%paths[0]]
+    lsdm.pre_exec = lsdm.pre_exec + ['ln -s %s/%s .'%(paths[0],Kconfig.lsdm_config_file),'ln -s %s/run_analyzer.sh .'% paths[0],'ln %s/lsdm.py .'%paths[0]]
     if(cycle>0):
         #lsdm.input_staging = lsdm.input_staging + [Kconfig.w_file]
-        lsdm.pre_exec = lsdm.pre_exec + ['cp %s/%s .'%(paths[cycle-1],os.path.basename(Kconfig.w_file))]
+        lsdm.pre_exec = lsdm.pre_exec + ['ln %s/%s .'%(paths[cycle-1],os.path.basename(Kconfig.w_file))]
 
     lsdm.mpi = True
     lsdm.cores = RPconfig.PILOTSIZE
