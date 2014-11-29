@@ -66,9 +66,9 @@ def Preprocessing(Kconfig,umgr,cycle,paths):
         cud.mpi = False
         cud.executable = 'python'
         cud.pre_exec = ['cp %s/gro.py .'% paths[0] ,'cp %s/spliter.py .'% paths[0]]
-        cud.pre_exec = cud.pre_exec + ['cp %s/%s_%s .'%(paths[cycle-1],cycle,os.path.basename(Kconfig.md_input_file))]
+        #cud.pre_exec = cud.pre_exec + ['cp %s/%s_%s .'%(paths[cycle-1],cycle,os.path.basename(Kconfig.md_input_file))]
         cud.arguments = ['spliter.py',Kconfig.num_CUs,'%s_%s'%(cycle,os.path.basename(Kconfig.md_input_file))]
-        #cud.input_staging = list_of_files
+        cud.input_staging = list_of_files
 
         cu = umgr.submit_units(cud)
 

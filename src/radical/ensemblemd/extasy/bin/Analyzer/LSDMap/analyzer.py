@@ -17,7 +17,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
     curdir = os.path.dirname(os.path.realpath(__file__))
     mdtd=MDTaskDescription()
     mdtd.kernel="LSDMAP"
-    mdtd.arguments = ['lsdm.py','-f','config.ini','-c','tmpha.gro','-w','%s'%nearest_neighbor_file,'-n','%s' %Kconfig.w_file]
+    mdtd.arguments = ['lsdm.py','-f','config.ini','-c','tmpha.gro','-n','%s'%nearest_neighbor_file,'-w','%s' %Kconfig.w_file]
     mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
     lsdm=radical.pilot.ComputeUnitDescription()
     lsdm.pre_exec = ['module load gromacs']

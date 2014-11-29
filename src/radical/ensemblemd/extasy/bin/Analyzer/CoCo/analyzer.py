@@ -20,21 +20,18 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
     cudesc.executable = mdtd_bound.executable
     cudesc.pre_exec = mdtd_bound.pre_exec
     cudesc.arguments = mdtd_bound.arguments
-    #cudesc.input_staging = ['%s/postexec.py'%curdir,'%s/pycoco.py'%curdir,'%s'%(Kconfig.top_file)]
-    cudesc.pre_exec = cudesc.pre_exec + ['cp %s/postexec.py .'%paths[0],'cp %s/%s .'%(paths[0],Kconfig.top_file)]
-    #for file in glob.glob('*.ncdf'):
-    #    cudesc.input_staging.append(file)
+    cudesc.pre_exec = cudesc.pre_exec + ['ln %s/postexec.py .'%paths[0],'ln %s/%s .'%(paths[0],Kconfig.top_file)]
     for i in range(0,len(paths)):
-        cudesc.pre_exec = cudesc.pre_exec + ['cp %s/*.ncdf .'%paths[i]]
+        cudesc.pre_exec = cudesc.pre_exec + ['ln %s/*.ncdf .'%paths[i]]
     cudesc.post_exec = ['python postexec.py %s %s' % (Kconfig.num_CUs,cycle)]
     cudesc.mpi = True
     if((cycle+1)%Kconfig.nsave==0):
         cudesc.output_staging = []
         for i in range(0,Kconfig.num_CUs):
             cudesc.output_staging.append('min%s%s.crd'%(cycle+1,i))
-        cudesc.post_exec = cudesc.post_exec + ['cp min%s*.crd %s/'%(cycle+1,paths[cycle])]
+        cudesc.post_exec = cudesc.post_exec + ['ln min%s*.crd %s/'%(cycle+1,paths[cycle])]
     else:
-        cudesc.post_exec = cudesc.post_exec + ['cp min%s*.crd %s/'%(cycle+1,paths[cycle])]
+        cudesc.post_exec = cudesc.post_exec + ['ln min%s*.crd %s/'%(cycle+1,paths[cycle])]
 
     unit = umgr.submit_units(cudesc)
 
