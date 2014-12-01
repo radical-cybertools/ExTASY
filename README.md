@@ -102,48 +102,7 @@ This will reset the PATH variable to also point to the packages which were just 
 
 ## 2.1 Running on Stampede
 
-### 2.1.1 Installing CoCo on Stampede
-
-> **NOTE** : If re-installing/making a fresh installation of coco on Stampede, please remove the contents of .local/lib/python2.7/site-packages/ on Stampede before installing.
-
-> You can skip this step if you have done this already.
-
-CoCo is currently **not installed** on Stampede. In order to run the CoCo/Amber
-example, you need to install it yourself. This also requires you to install **scipy 0.14** (or greater) using the Stampede **python/2.7.3** and **intel/13.0.2.146** modules. 
-
-**Please download [this file](https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy-0.1-rc3/docs/installer.sh) and run it on Stampede.**
-
-Once you have installed numpy/scipy using the installer script from above, double-check the version of scipy and numpy:
-
-```
-module load intel/13.0.2.146
-module load python
-
-python -V
-python -c "import scipy; print scipy.__version__"
-python -c "import numpy; print numpy.__version__"
-```
-
-The result should look like this: 
-
-```
-Python 2.7.3 -- EPD 7.3-2 (64-bit)
-0.15.0.dev-ad016af
-1.10.0.dev-e6e2bb0
-```
-
-Now you can install CoCo itself. Log-on to Stampede check out the CoCo repository and install it:
-
-```
-cd $HOME
-git clone https://bitbucket.org/extasy-project/coco.git
-cd $HOME/coco
-git checkout tags/coco-0.1
-module load python
-python setup.py install --user
-``` 
-
-### 2.1.2 Running the Example Workload
+### 2.1.1 Running the Example Workload
 
 This section is to be done entirely on your **laptop**. The ExTASY tool expects two input files:
 
