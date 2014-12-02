@@ -71,7 +71,8 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
             cudesc.arguments = mdtd_bound.arguments
             #cudesc.input_staging = [dict['mdin']]
             cudesc.pre_exec = cudesc.pre_exec + ['ln %s/%s .'%(paths[0],dict['mdinfilename'])]
-            #cudesc.output_staging = ['md%s.ncdf > md_%s_%s.ncdf'%(cycle,cycle,i)]
+            if((cycle+1)%Kconfig.nsave==0):
+                cudesc.output_staging = ['md%s.ncdf > md_%s_%s.ncdf'%(cycle,cycle,i)]
             cudesc.post_exec = ['ln md%s.ncdf %s/md_%s_%s.ncdf'%(cycle,paths[cycle],cycle,i)]
             cu_b = umgr.submit_units(cudesc)
             i+=1

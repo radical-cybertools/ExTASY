@@ -62,7 +62,7 @@ def Preprocessing(Kconfig,umgr,cycle,paths):
         cud.mpi = False
         cud.executable = '/bin/echo'
         cud.arguments = ['3']
-        cud.pre_exec = ['ln %s/min%s*.crd .'%(paths[cycle-1],cycle)]
+        cud.pre_exec = ['ln %s/*.ncdf .'%(paths[cycle-1])]
 
         cu = umgr.submit_units(cud)
 

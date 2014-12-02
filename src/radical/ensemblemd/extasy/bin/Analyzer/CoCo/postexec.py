@@ -13,6 +13,6 @@ if __name__ == '__main__':
         tl = script.Script()
         tl.append('source leaprc.ff99SB')
         tl.append('x = loadpdb pentaopt%s%s.pdb'%(cycle,rep))
-        tl.append('saveamberparm x delete.me min%s%s.crd'%(cycle+1,rep))
+        tl.append('saveamberparm x delete.me min%s%s.crd'%(cycle,rep))
         tl.append('quit')
         tl.run('tleap -f {}')
