@@ -6,6 +6,11 @@ import glob
 
 def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
 
+
+    if (cycle == 0):
+        print 'Skipping Analysis for iteration 0'
+        return
+
     print 'Starting Analysis'
     curdir = os.path.dirname(os.path.realpath(__file__))
 
@@ -13,7 +18,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
 
     mdtd=MDTaskDescription()
     mdtd.kernel="CoCo"
-    mdtd.arguments = ['-l','-c','pyCoCo --grid %s --dims %s --frontpoints %s --topfile %s --mdfile *.ncdf --output pentaopt%s'%(Kconfig.grid,Kconfig.dims,Kconfig.num_CUs,os.path.basename(Kconfig.top_file),cycle)]
+    mdtd.arguments = ['-l','-c','pyCoCo --grid %s --dims %s --frontpoints %s --topfile %s --mdfile *.ncdf --output pentaopt%s --logfile %s'%(Kconfig.grid,Kconfig.dims,Kconfig.num_CUs,os.path.basename(Kconfig.top_file),cycle,Kconfig.logfile)]
     mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
     cudesc = radical.pilot.ComputeUnitDescription()
     cudesc.cores = RPconfig.PILOTSIZE
@@ -26,12 +31,8 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
     cudesc.post_exec = ['python postexec.py %s %s' % (Kconfig.num_CUs,cycle)]
     cudesc.mpi = True
     if((cycle+1)%Kconfig.nsave==0):
-        cudesc.output_staging = []
-        for i in range(0,Kconfig.num_CUs):
-            cudesc.output_staging.append('min%s%s.crd'%(cycle+1,i))
-        cudesc.post_exec = cudesc.post_exec + ['ln min%s*.crd %s/'%(cycle+1,paths[cycle])]
-    else:
-        cudesc.post_exec = cudesc.post_exec + ['ln min%s*.crd %s/'%(cycle+1,paths[cycle])]
+            cudesc.output_staging = ['%s > %s_%s'%(Kconfig.logfile,cycle,Kconfig.logfile)]
+    cudesc.post_exec = cudesc.post_exec + ['ln min%s*.crd %s/'%(cycle,paths[cycle])]
 
     unit = umgr.submit_units(cudesc)
 

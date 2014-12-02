@@ -150,10 +150,12 @@ def main():
         for i in range(Kconfig.start_iter,Kconfig.start_iter + Kconfig.num_iterations):
             print 'Cycle : %s'%i
             paths=paths + (Preprocessing(Kconfig, umgr, i,paths))
-            if Kconfig.simulator:
+            if (Kconfig.simulator == 'Gromacs' and Kconfig.analyzer == 'LSDMap'):
                 Simulator(umgr, RPconfig, Kconfig, i,paths)
-            if Kconfig.analyzer:
                 Analyzer(umgr, RPconfig, Kconfig, i,paths)
+            elif (Kconfig.simulator == 'Amber' and Kconfig.analyzer == 'CoCo'):
+                Analyzer(umgr, RPconfig, Kconfig, i,paths)
+                Simulator(umgr, RPconfig, Kconfig, i,paths)
             if (Kconfig.simulator == 'Gromacs'):
                 if((i+1)%Kconfig.nsave == 0):
                     if os.path.isdir('%s/backup' % os.getcwd()) is False:

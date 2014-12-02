@@ -14,6 +14,7 @@ md_input_file           = './mdshort.in'    # Entire path to MD Input file - Do 
 minimization_input_file = './min.in'        # Entire path to Minimization file - Do not use $HOME or the likes
 initial_crd_file        = './penta.crd'     # Entire path to Coordinates file - Do not use $HOME or the likes
 top_file                = './penta.top'     # Entire path to Topology file - Do not use $HOME or the likes
+logfile                 = 'coco.log'        # Name of the log file created by pyCoCo
 
 #-------------------------Analysis--------------------------
 grid                    = '5'               # Number of points along each dimension of the CoCo histogram
