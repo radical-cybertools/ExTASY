@@ -44,7 +44,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
     print 'Select + Reweighting step'
 
     post=radical.pilot.ComputeUnitDescription()
-    post.pre_exec = ['module load python','ln -s %s/post_analyze.py .'%paths[0],'ln -s %s/select.py .'%paths[0],'cp -r %s/lsdmap .'%paths[0],
+    post.pre_exec = ['((module load python) ||(module load python numpy)','ln -s %s/post_analyze.py .'%paths[0],'ln -s %s/select.py .'%paths[0],'cp -r %s/lsdmap .'%paths[0],
                       'ln -s %s/reweighting.py .'%paths[0],'cp %s/%s .'%(lsdm_path,nearest_neighbor_file),
                       'cp %s/%s .'%(lsdm_path,evfile),'cp %s/%s .'%(lsdm_path,Kconfig.md_output_file)]
     if(cycle>=1):
