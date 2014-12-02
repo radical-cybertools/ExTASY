@@ -118,7 +118,7 @@ cd $HOME/coam-on-stampede/
 
 **Step 2:** Create a new resource configuration file ``stampede.rcfg``:
 
-(Download it [stampede.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/stampede.rcfg) directly.)
+(Download it [stampede.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config/stampede.rcfg) directly.)
 
 > Change the following values according to your needs:
 > 
@@ -148,7 +148,7 @@ curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/co
 
 **Step 4:** Create a new workload configuration file ``cocoamber.wcfg``:
 
-(Download it [cocoamber.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/cocoamber.wcfg) directly.)
+(Download it [cocoamber.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config/cocoamber.wcfg) directly.)
 
 ```
 #-------------------------Applications----------------------
@@ -203,7 +203,7 @@ cd $HOME/coam-on-archer/
 
 **Step 2:** Create a new resource configuration file ``archer.rcfg``:
 
-(Download it [archer.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/archer.rcfg) directly.)
+(Download it [archer.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config/archer.rcfg) directly.)
 
 > Change the following values according to your needs:
 > 
@@ -235,7 +235,7 @@ curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/co
 
 > The file is identical with the one in 2.1 Running on Stampede.
 
-(Download it [cocoamber.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/cocoamber.wcfg) directly.)
+(Download it [cocoamber.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config/cocoamber.wcfg) directly.)
 
 
 
@@ -347,7 +347,7 @@ cd $HOME/grlsd-on-stampede/
 
 > This file is identical with the resource configuration file used in "Running CoCo/Amber on Stampede"
 
-(Download it [stampede.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/stampede.rcfg) directly.)
+(Download it [stampede.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config/stampede.rcfg) directly.)
 
 > Change the following values according to your needs:
 > 
@@ -365,7 +365,7 @@ curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gr
 
 **Step 4:** Create a new workload configuration file ``gromacslsdmap.wcfg``:
 
-(Download it [gromacslsdmap.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/gromacslsdmap.wcfg) directly.)
+(Download it [gromacslsdmap.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config/gromacslsdmap.wcfg) directly.)
 
 ```
 #-------------------------Applications----------------------
@@ -436,7 +436,7 @@ cd $HOME/grlsd-on-archer/
 
 > The resource configuration file is identical with the one used in "Running CoCo/Amber on Archer"
 
-(Download it [archer.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/archer.rcfg) directly.)
+(Download it [archer.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config/archer.rcfg) directly.)
 
 > Change the following values according to your needs:
 > 
@@ -456,7 +456,7 @@ curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gr
 
 > The file is identical with the workload configuration file used in "Running GROMACS/LSDMap on Stampede"
 
-(Download it [gromacslsdmap.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/config/gromacslsdmap.wcfg) directly.)
+(Download it [gromacslsdmap.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config/gromacslsdmap.wcfg) directly.)
 
 **Step 5a:** Install NumPy:
 
