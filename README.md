@@ -95,12 +95,13 @@ This will reset the PATH variable to also point to the packages which were just 
 
 # 2. Running a Coco/Amber Workload 
 
-  This section will discuss details about the installation and execution phase. Depending on the remote/target machine,
-  some of the modules might need to be manually installed as discussed below. The input to the tool is given in terms of
+  This section will discuss details about the execution phase. The input to the tool is given in terms of
   a resource configuration file and a workload configuration file. The execution is started based on the parameters set in
   these configuration files. 
 
 ## 2.1 Running on Stampede
+
+> CoCo is already installed on Stampede so you don't need to install it yourself.
 
 ### 2.1.1 Running the Example Workload
 
@@ -264,8 +265,7 @@ be seen, per iteration, there are **(num_CUs+1)** tasks executed.
 
 # 3. Runing a Gromacs/LSDMap Workload
 
-This section will discuss details about the installation and execution phase. Depending on the remote/target machine,
-some of the modules might need to be manually installed as discussed below. The input to the tool is given in terms of
+This section will discuss details about the execution phase. The input to the tool is given in terms of
 a resource configuration file and a workload configuration file. The execution is started based on the parameters set in
 these configuration files. 
 
@@ -276,6 +276,9 @@ these configuration files.
 -->
 
 ## 3.1 Running on Stampede
+
+> LSDMap is already installed on Stampede so you don't need to install it yourself.
+
 
 ### 3.1.1 Running the Example Workload
 
@@ -364,6 +367,8 @@ RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig stampede.rc
 ===================================================================
 -->
 ## 3.2 Running on Archer
+
+> LSDMap is already installed as a module on Archer so you don't need to install it yourself.
 
 
 ### 3.2.1 Running the Example Workload
