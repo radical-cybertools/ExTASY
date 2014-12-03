@@ -277,59 +277,7 @@ these configuration files.
 
 ## 3.1 Running on Stampede
 
-### 3.1.1 Installing LSDMap on Stampede
-
-> **NOTE** : If re-installing/making a fresh installation of lsdmap on Stampede, please remove the contents of .local/lib/python2.7/site-packages/ on Stampede before installing.
-
-LSDMap is currently **not installed** on Stampede. In order to run the Gromacs/LSDMap
-example, you need to install it in your home directory. 
-
-Log in to stampede and load the required modules:
-
-```
-module load -intel intel/14.0.1.106
-module load python
-```
-
-```
-python -V
-python -c "import scipy; print scipy.__version__"
-python -c "import numpy; print numpy.__version__"
-```
-
-The commands above should returns these versions:
-
-```
-Python 2.7.6
-'0.13.3' (default)
-'1.8.0'  (default)
-```
-If you also have dependencies of coco installed, the scipy and numpy versions would be that of those scipy and numpy
-packages. Since they match the version criteria for lsdmap, you can use the same for lsdmap installation.
-
-
-Now you can install LSDMap itself. Log-on to Stampede check out the LSDMap repository and install it:
-
-```
-module load -intel intel/14.0.1.106
-module load python
-
-wget http://cython.org/release/Cython-0.21.tar.gz
-tar xvfz Cython-0.21.tar.gz
-cd Cython-0.21
-python setup.py install --user
-
-cd ..
-
-git clone git://git.code.sf.net/p/lsdmap/git lsdmap
-cd lsdmap
-git checkout tags/extasy-0.1-rc2
-python setup.py install --user
-```
-
-**Installation is complete!** 
-
-### 3.1.2 Running the Example Workload
+### 3.1.1 Running the Example Workload
 
 This section is to be done entirely on your **laptop**. The ExTASY tool expects two input files:
 
