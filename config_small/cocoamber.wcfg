@@ -5,7 +5,7 @@ analyzer                 = 'CoCo'           # Analyzer to be loaded
 #-------------------------General---------------------------
 num_iterations          = 2                 # Number of iterations of Simulation-Analysis
 start_iter              = 0                 # Iteration number with which to start
-num_CUs = 8                                 # Number of tasks or Compute Units
+num_CUs = 4                                 # Number of tasks or Compute Units
 nsave = 1
 
 #-------------------------Simulation-----------------------
