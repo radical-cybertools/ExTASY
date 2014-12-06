@@ -1,0 +1,115 @@
+$ RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig archer.rcfg --Kconfig cocoamber.wcfg 2> extasy.log
+Session UID: 54833a102330e0731810d437 
+Pilot UID       : 54833a102330e0731810d439 
+Loading kernel configurations from /home/vivek/Research/rc5-tests/test/lib/python2.7/site-packages/radical/ensemblemd/mdkernels/configs/lsdmap.json
+Loading kernel configurations from /home/vivek/Research/rc5-tests/test/lib/python2.7/site-packages/radical/ensemblemd/mdkernels/configs/coco.json
+Loading kernel configurations from /home/vivek/Research/rc5-tests/test/lib/python2.7/site-packages/radical/ensemblemd/mdkernels/configs/test.json
+Loading kernel configurations from /home/vivek/Research/rc5-tests/test/lib/python2.7/site-packages/radical/ensemblemd/mdkernels/configs/sleep.json
+Loading kernel configurations from /home/vivek/Research/rc5-tests/test/lib/python2.7/site-packages/radical/ensemblemd/mdkernels/configs/mmpbsa.json
+Loading kernel configurations from /home/vivek/Research/rc5-tests/test/lib/python2.7/site-packages/radical/ensemblemd/mdkernels/configs/amber.json
+Loading kernel configurations from /home/vivek/Research/rc5-tests/test/lib/python2.7/site-packages/radical/ensemblemd/mdkernels/configs/namd.json
+Loading kernel configurations from /home/vivek/Research/rc5-tests/test/lib/python2.7/site-packages/radical/ensemblemd/mdkernels/configs/gromacs.json
+Cycle : 0
+Preprocessing stage ....
+[Callback]: ComputeUnit '54833a152330e0731810d43b' state changed to PendingInputStaging.
+[Callback]: ComputeUnit '54833a152330e0731810d43b' state changed to StagingInput.
+[Callback]: ComputePilot '54833a102330e0731810d439' state changed to Launching.
+[Callback]: ComputeUnit '54833a152330e0731810d43b' state changed to PendingExecution.
+[Callback]: ComputePilot '54833a102330e0731810d439' state changed to PendingActive.
+[Callback]: ComputePilot '54833a102330e0731810d439' state changed to Active.
+[Callback]: ComputeUnit '54833a152330e0731810d43b' state changed to Scheduling.
+[Callback]: ComputeUnit '54833a152330e0731810d43b' state changed to Executing.
+[Callback]: ComputeUnit '54833a152330e0731810d43b' state changed to Done.
+Skipping Analysis for iteration 0
+Starting Simulation
+[Callback]: ComputeUnit '54833a9a2330e0731810d43d' state changed to PendingExecution.
+[Callback]: ComputeUnit '54833a9a2330e0731810d43f' state changed to PendingExecution.
+[Callback]: ComputeUnit '54833a9a2330e0731810d43c' state changed to PendingExecution.
+[Callback]: ComputeUnit '54833a9a2330e0731810d43e' state changed to PendingExecution.
+[Callback]: ComputeUnit '54833a9a2330e0731810d43c' state changed to Scheduling.
+[Callback]: ComputeUnit '54833a9a2330e0731810d43c' state changed to Executing.
+[Callback]: ComputeUnit '54833a9a2330e0731810d43d' state changed to Scheduling.
+[Callback]: ComputeUnit '54833a9a2330e0731810d43d' state changed to Executing.
+[Callback]: ComputeUnit '54833a9a2330e0731810d43e' state changed to Scheduling.
+[Callback]: ComputeUnit '54833a9a2330e0731810d43e' state changed to Executing.
+[Callback]: ComputeUnit '54833a9a2330e0731810d43f' state changed to Scheduling.
+[Callback]: ComputeUnit '54833a9a2330e0731810d43f' state changed to Executing.
+[Callback]: ComputeUnit '54833a9a2330e0731810d43c' state changed to Done.
+[Callback]: ComputeUnit '54833a9e2330e0731810d440' state changed to PendingExecution.
+[Callback]: ComputeUnit '54833a9e2330e0731810d440' state changed to Scheduling.
+[Callback]: ComputeUnit '54833a9e2330e0731810d440' state changed to Executing.
+[Callback]: ComputeUnit '54833a9a2330e0731810d43d' state changed to Done.
+[Callback]: ComputeUnit '54833a9a2330e0731810d43e' state changed to Done.
+[Callback]: ComputeUnit '54833aa22330e0731810d441' state changed to PendingExecution.
+[Callback]: ComputeUnit '54833aa22330e0731810d442' state changed to PendingExecution.
+[Callback]: ComputeUnit '54833aa22330e0731810d441' state changed to Scheduling.
+[Callback]: ComputeUnit '54833aa22330e0731810d441' state changed to Executing.
+[Callback]: ComputeUnit '54833aa22330e0731810d442' state changed to Scheduling.
+[Callback]: ComputeUnit '54833aa22330e0731810d442' state changed to Executing.
+[Callback]: ComputeUnit '54833a9a2330e0731810d43f' state changed to Done.
+[Callback]: ComputeUnit '54833aa52330e0731810d443' state changed to PendingExecution.
+[Callback]: ComputeUnit '54833aa52330e0731810d443' state changed to Scheduling.
+[Callback]: ComputeUnit '54833aa52330e0731810d443' state changed to Executing.
+[Callback]: ComputeUnit '54833a9e2330e0731810d440' state changed to StagingOutput.
+[Callback]: ComputeUnit '54833a9e2330e0731810d440' state changed to Done.
+[Callback]: ComputeUnit '54833aa22330e0731810d442' state changed to StagingOutput.
+[Callback]: ComputeUnit '54833aa22330e0731810d442' state changed to Done.
+[Callback]: ComputeUnit '54833aa52330e0731810d443' state changed to StagingOutput.
+[Callback]: ComputeUnit '54833aa52330e0731810d443' state changed to Done.
+[Callback]: ComputeUnit '54833aa22330e0731810d441' state changed to StagingOutput.
+[Callback]: ComputeUnit '54833aa22330e0731810d441' state changed to Done.
+Simulation Execution Time :  57.785
+Cycle : 1
+Preprocessing stage ....
+[Callback]: ComputeUnit '54833ad62330e0731810d444' state changed to PendingExecution.
+[Callback]: ComputeUnit '54833ad62330e0731810d444' state changed to Scheduling.
+[Callback]: ComputeUnit '54833ad62330e0731810d444' state changed to Executing.
+[Callback]: ComputeUnit '54833ad62330e0731810d444' state changed to Done.
+Starting Analysis
+Submitting COCO Compute Unit
+[Callback]: ComputeUnit '54833ad92330e0731810d445' state changed to PendingExecution.
+[Callback]: ComputeUnit '54833ad92330e0731810d445' state changed to Scheduling.
+[Callback]: ComputeUnit '54833ad92330e0731810d445' state changed to Executing.
+[Callback]: ComputeUnit '54833ad92330e0731810d445' state changed to StagingOutput.
+[Callback]: ComputeUnit '54833ad92330e0731810d445' state changed to Done.
+Analysis Execution time :  179.208
+Starting Simulation
+[Callback]: ComputeUnit '54833b8f2330e0731810d446' state changed to PendingExecution.
+[Callback]: ComputeUnit '54833b8f2330e0731810d447' state changed to PendingExecution.
+[Callback]: ComputeUnit '54833b8f2330e0731810d449' state changed to PendingExecution.
+[Callback]: ComputeUnit '54833b8f2330e0731810d448' state changed to PendingExecution.
+[Callback]: ComputeUnit '54833b8f2330e0731810d446' state changed to Scheduling.
+[Callback]: ComputeUnit '54833b8f2330e0731810d446' state changed to Executing.
+[Callback]: ComputeUnit '54833b8f2330e0731810d447' state changed to Scheduling.
+[Callback]: ComputeUnit '54833b8f2330e0731810d447' state changed to Executing.
+[Callback]: ComputeUnit '54833b8f2330e0731810d448' state changed to Scheduling.
+[Callback]: ComputeUnit '54833b8f2330e0731810d448' state changed to Executing.
+[Callback]: ComputeUnit '54833b8f2330e0731810d449' state changed to Scheduling.
+[Callback]: ComputeUnit '54833b8f2330e0731810d449' state changed to Executing.
+[Callback]: ComputeUnit '54833b8f2330e0731810d446' state changed to Done.
+[Callback]: ComputeUnit '54833b922330e0731810d44a' state changed to PendingExecution.
+[Callback]: ComputeUnit '54833b922330e0731810d44a' state changed to Scheduling.
+[Callback]: ComputeUnit '54833b922330e0731810d44a' state changed to Executing.
+[Callback]: ComputeUnit '54833b8f2330e0731810d447' state changed to Done.
+[Callback]: ComputeUnit '54833b8f2330e0731810d448' state changed to Done.
+[Callback]: ComputeUnit '54833b962330e0731810d44b' state changed to PendingExecution.
+[Callback]: ComputeUnit '54833b962330e0731810d44c' state changed to PendingExecution.
+[Callback]: ComputeUnit '54833b962330e0731810d44b' state changed to Scheduling.
+[Callback]: ComputeUnit '54833b962330e0731810d44b' state changed to Executing.
+[Callback]: ComputeUnit '54833b962330e0731810d44c' state changed to Scheduling.
+[Callback]: ComputeUnit '54833b962330e0731810d44c' state changed to Executing.
+[Callback]: ComputeUnit '54833b8f2330e0731810d449' state changed to Done.
+[Callback]: ComputeUnit '54833b9a2330e0731810d44d' state changed to PendingExecution.
+[Callback]: ComputeUnit '54833b9a2330e0731810d44d' state changed to Scheduling.
+[Callback]: ComputeUnit '54833b9a2330e0731810d44d' state changed to Executing.
+[Callback]: ComputeUnit '54833b962330e0731810d44b' state changed to StagingOutput.
+[Callback]: ComputeUnit '54833b962330e0731810d44b' state changed to Done.
+[Callback]: ComputeUnit '54833b9a2330e0731810d44d' state changed to StagingOutput.
+[Callback]: ComputeUnit '54833b9a2330e0731810d44d' state changed to Done.
+[Callback]: ComputeUnit '54833b922330e0731810d44a' state changed to StagingOutput.
+[Callback]: ComputeUnit '54833b922330e0731810d44a' state changed to Done.
+[Callback]: ComputeUnit '54833b962330e0731810d44c' state changed to StagingOutput.
+[Callback]: ComputeUnit '54833b962330e0731810d44c' state changed to Done.
+Simulation Execution Time :  50.293
+Closing session, exiting now ...
+
