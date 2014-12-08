@@ -181,6 +181,11 @@ RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig stampede.rc
 
 A **sample output** with expected callbacks and simulation/analysis can be found at [here](https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/coam-on-stampede)
 
+-------------------------------------------------
+|           Stage --->> | Simulation | Analysis |
+|-----------------------|------------|----------|
+|Expected TTC/iteration |   30-35 s  |  ~100s   |
+-------------------------------------------------
 <!-- 
 ===================================================================
 ===================================================================
@@ -249,6 +254,12 @@ RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig archer.rcfg
 ```
 
 A **sample output** with expected callbacks and simulation/analysis can be found at [here](https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/coam-on-archer)
+
+-------------------------------------------------
+|           Stage --->> | Simulation | Analysis |
+|-----------------------|------------|----------|
+|Expected TTC/iteration |   ~60 s    |  ~150s   |
+-------------------------------------------------
 
 There are two stages in the execution phase - Simulation and Analysis. Execution starts with any Preprocessing that 
 might be required on the input data and then moves to Simulation stage. In the Simulation stage, a number of tasks (num_CUs)
@@ -370,6 +381,13 @@ RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig stampede.rc
 
 A **sample output** with expected callbacks and simulation/analysis can be found at [here](https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/grlsd-on-stampede)
 
+-------------------------------------------------
+|           Stage --->> | Simulation | Analysis |
+|-----------------------|------------|----------|
+|Expected TTC/iteration |  50-100 s  |  ~100s   |
+-------------------------------------------------
+
+
 <!-- LSDMAP / ARCHER
 ===================================================================
 ===================================================================
@@ -432,6 +450,12 @@ pip install numpy
 ```
 RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg 2> extasy.log
 ```
+-------------------------------------------------
+|           Stage --->> | Simulation | Analysis |
+|-----------------------|------------|----------|
+|Expected TTC/iteration |  200-250 s |  ~30s    |
+-------------------------------------------------
+
 
 A **sample output** with expected callbacks and simulation/analysis can be found at [here](https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/grlsd-on-archer)
 
