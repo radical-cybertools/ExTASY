@@ -179,7 +179,7 @@ Now you are can run the workload:
 RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg 2> extasy.log
 ```
 
-An example output with expected callbacks and simulation/analysis can be found at [here](https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/coam-on-stampede)
+A **sample output** with expected callbacks and simulation/analysis can be found at [here](https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/coam-on-stampede)
 
 <!-- 
 ===================================================================
@@ -248,7 +248,7 @@ Now you can run the workload:
 RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig archer.rcfg --Kconfig cocoamber.wcfg 2> extasy.log
 ```
 
-An example output with expected callbacks and simulation/analysis can be found at [here](https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/coam-on-archer)
+A **sample output** with expected callbacks and simulation/analysis can be found at [here](https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/coam-on-archer)
 
 There are two stages in the execution phase - Simulation and Analysis. Execution starts with any Preprocessing that 
 might be required on the input data and then moves to Simulation stage. In the Simulation stage, a number of tasks (num_CUs)
@@ -368,7 +368,7 @@ pip install numpy
 RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg 2> extasy.log
 ```
 
-An example output with expected callbacks and simulation/analysis can be found at [here](https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/grlsd-on-stampede)
+A **sample output** with expected callbacks and simulation/analysis can be found at [here](https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/grlsd-on-stampede)
 
 <!-- LSDMAP / ARCHER
 ===================================================================
@@ -433,7 +433,7 @@ pip install numpy
 RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg 2> extasy.log
 ```
 
-An example output with expected callbacks and simulation/analysis can be found at [here](https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/grlsd-on-archer)
+A **sample output** with expected callbacks and simulation/analysis can be found at [here](https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/grlsd-on-archer)
 
 There are two stages in the execution phase - Simulation and Analysis. Execution starts with any Preprocessing that 
 might be required on the input data and then moves to Simulation stage. In the Simulation stage, a number of tasks (num_CUs)
