@@ -14,6 +14,7 @@ expandable as to support more Simulators and Analyzers.
 * **3. Running a Gromacs/LSDMap Workload**
 * **3.1 ... on Stampede**
 * **3.2 ... on Archer**
+* **4.0 Troubleshooting**
 
 
 # 1. Installation
@@ -469,3 +470,28 @@ As each task attains 'Done' (completed) state, the remain tasks are scheduled ti
 This is followed by the Analysis stage, one task is scheduled on the target machine which takes all the cores as the 
 PILOTSIZE to perform the analysis and returns the data required for the next iteration of the Simulation stage. As can
 be seen, per iteration, there are **(num_CUs+1)** tasks executed.
+
+# 4. Troubleshooting
+
+## Execution fails with "Couldn't read packet: Connection reset by peer" 
+
+You encounter the following error when running any of the extasy workflows:
+
+```
+...
+#######################
+##       ERROR       ##
+#######################
+Pilot 54808707f8cdba339a7204ce has FAILED. Can't recover.
+Pilot log: [u'Pilot launching failed: Insufficient system resources: Insufficient system resources: read from process failed \'[Errno 5] Input/output error\' : (Shared connection to stampede.tacc.utexas.edu closed.\n)
+...
+```
+
+TO fix this, create a file `~/.saga/cfg` in your home directory and add the following two lines:
+
+```
+[saga.utils.pty]
+ssh_share_mode = no
+```
+
+This switches the SSH transfer layer into "compatibility" mode which should address the "Connection reset by peer" problem. 
