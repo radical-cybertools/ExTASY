@@ -28,7 +28,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
     cudesc.pre_exec = cudesc.pre_exec + ['ln %s/postexec.py .'%paths[0],'ln %s/%s .'%(paths[0],Kconfig.top_file)]
     for i in range(0,len(paths)):
         cudesc.pre_exec = cudesc.pre_exec + ['ln %s/*.ncdf .'%paths[i]]
-    cudesc.post_exec = ['export PYTHONPATH=/home1/01915/laughton/.public/lib/python2.7/site-packages/extasy.coco-0.1-py2.7.egg:$PYTHONPATH','python postexec.py %s %s' % (Kconfig.num_CUs,cycle)]
+    cudesc.post_exec = ['python postexec.py %s %s' % (Kconfig.num_CUs,cycle)]
     cudesc.mpi = True
     if((cycle+1)%Kconfig.nsave==0):
             cudesc.output_staging = ['%s > %s_%s'%(Kconfig.logfile,cycle,Kconfig.logfile)]
