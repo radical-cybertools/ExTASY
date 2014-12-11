@@ -59,8 +59,8 @@ def Preprocessing(Kconfig,umgr,cycle,paths):
 
 
     elif((cycle!=0)and(cycle%Kconfig.nsave==0)):
-        list_of_files = ['{0}/back/iter{1}/{1}_{2}'.format(os.getcwd(),cycle,os.path.basename(Kconfig.md_input_file)),
-                         '{0}/back/iter{1}/weight.w'.format(os.getcwd(),cycle)]
+        list_of_files = ['{0}/backup/iter{1}/{1}_{2}'.format(os.getcwd(),cycle,os.path.basename(Kconfig.md_input_file)),
+                         '{0}/backup/iter{1}/weight.w'.format(os.getcwd(),cycle)]
 
         cud = radical.pilot.ComputeUnitDescription()
         cud.cores = 1
