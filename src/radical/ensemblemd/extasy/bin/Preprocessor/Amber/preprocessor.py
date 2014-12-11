@@ -35,7 +35,7 @@ def Preprocessing(Kconfig,umgr,cycle,paths):
 
 
     elif((cycle!=0)and(cycle%Kconfig.nsave==0)):
-        for file in glob.glob('min%s*.crd'%cycle):
+        for file in glob.glob('%s/backup/iter%s/*.ncdf'%(os.getcwd(),cycle)):
             list_of_files.append(file)
 
         cud = radical.pilot.ComputeUnitDescription()
