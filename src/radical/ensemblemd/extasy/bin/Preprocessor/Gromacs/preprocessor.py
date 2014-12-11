@@ -59,13 +59,14 @@ def Preprocessing(Kconfig,umgr,cycle,paths):
 
 
     elif((cycle!=0)and(cycle%Kconfig.nsave==0)):
-        list_of_files = ['{1}_{2}'.format(os.getcwd(),cycle,os.path.basename(Kconfig.md_input_file))]
+        list_of_files = ['{0}/back/iter{1}/{1}_{2}'.format(os.getcwd(),cycle,os.path.basename(Kconfig.md_input_file)),
+                         '{0}/back/iter{1}/weight.w'.format(os.getcwd(),cycle)]
 
         cud = radical.pilot.ComputeUnitDescription()
         cud.cores = 1
         cud.mpi = False
         cud.executable = 'python'
-        cud.pre_exec = ['cp %s/gro.py .'% paths[0] ,'cp %s/spliter.py .'% paths[0]]
+        cud.pre_exec = ['ln %s/gro.py .'% paths[0] ,'ln %s/spliter.py .'% paths[0]]
         #cud.pre_exec = cud.pre_exec + ['cp %s/%s_%s .'%(paths[cycle-1],cycle,os.path.basename(Kconfig.md_input_file))]
         cud.arguments = ['spliter.py',Kconfig.num_CUs,'%s_%s'%(cycle,os.path.basename(Kconfig.md_input_file))]
         cud.input_staging = list_of_files
@@ -85,7 +86,8 @@ def Preprocessing(Kconfig,umgr,cycle,paths):
         cud.mpi = False
         cud.executable = 'python'
         cud.arguments = ['spliter.py',Kconfig.num_CUs,'%s_%s'%(cycle,os.path.basename(Kconfig.md_input_file))]
-        cud.pre_exec = ['cp %s/gro.py .'%paths[0],'cp %s/spliter.py .'% paths[0], 'cp %s/%s_%s .' %(paths[cycle-1],cycle,os.path.basename(Kconfig.md_input_file))]
+        cud.pre_exec = ['ln %s/gro.py .'%paths[0],'ln %s/spliter.py .'% paths[0], 'ln %s/%s_%s .' %(paths[cycle-1],cycle,os.path.basename(Kconfig.md_input_file)),
+                        'ln %s/weight.w .' %(paths[cycle-1])]
 
         cu = umgr.submit_units(cud)
 
