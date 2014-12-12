@@ -150,10 +150,13 @@ def main():
         if ( Kconfig.analyzer == 'LSDMap'):
             from Analyzer.LSDMap.analyzer import Analyzer
 
+        path_cnt = 0
         if Kconfig.start_iter is not 0:
-                with open('paths.txt','r') as f:
-                    for line in f:
+            with open('paths.txt','r') as f:
+                for line in f:
+                    if path_cnt < Kconfig.start_iter:
                         paths.append(line.strip())
+                        path_cnt+=1
 
         for i in range(Kconfig.start_iter,Kconfig.start_iter + Kconfig.num_iterations):
             print 'Cycle : %s'%i
