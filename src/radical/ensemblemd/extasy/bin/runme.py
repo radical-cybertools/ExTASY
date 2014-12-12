@@ -180,7 +180,8 @@ def main():
                         os.mkdir('%s/backup' % os.getcwd())
                     try:
                         os.mkdir('%s/backup/iter%s/'%(os.getcwd(),i+1))
-                        shutil.move('%s_%s'%(i+1,Kconfig.logfile),'%s/backup/iter%s/%s_%s'%(os.getcwd(),i+1,i+1,Kconfig.logfile))
+                        if(i>0):
+                            shutil.move('%s_%s'%(i+1,Kconfig.logfile),'%s/backup/iter%s/%s_%s'%(os.getcwd(),i+1,i+1,Kconfig.logfile))
                         os.system('mv *.ncdf %s/backup/iter%s/'%(os.getcwd(),i+1))
                     except:
                         pass
