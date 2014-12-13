@@ -168,11 +168,14 @@ def main():
                 Analyzer(umgr, RPconfig, Kconfig, i,paths)
                 Simulator(umgr, RPconfig, Kconfig, i,paths)
             if((i+1)%Kconfig.nsave == 0):
-                if (Kconfig.simulator == 'Gromacs'):
-                    if os.path.isdir('%s/backup' % os.getcwd()) is False:
+                if os.path.isdir('%s/backup' % os.getcwd()) is False:
                         os.mkdir('%s/backup' % os.getcwd())
+
+                if (Kconfig.simulator == 'Gromacs'):
                     try:
                         print 'Creating backup...'
+                        if os.path.isdir('%s/backup/iter%s/'%(os.getcwd(),i+1)) is True:
+                            shutil.rmtree('%s/backup/iter%s'%(os.getcwd(),i+1))
                         os.mkdir('%s/backup/iter%s/'%(os.getcwd(),i+1))
                         shutil.move('%s_%s'%(i+1,os.path.basename(Kconfig.md_input_file)),'%s/backup/iter%s/%s_%s'%(os.getcwd(),i+1,i+1,os.path.basename(Kconfig.md_input_file)))
                         shutil.move(Kconfig.w_file,'%s/backup/iter%s/%s'%(os.getcwd(),i+1,os.path.basename(Kconfig.w_file)))
@@ -181,10 +184,10 @@ def main():
                         print 'Failed to create backup..'
                         pass
                 else:
-                    if os.path.isdir('%s/backup' % os.getcwd()) is False:
-                        os.mkdir('%s/backup' % os.getcwd())
                     try:
                         print 'Creating backup...'
+                        if os.path.isdir('%s/backup/iter%s/'%(os.getcwd(),i+1)) is True:
+                            shutil.rmtree('%s/backup/iter%s'%(os.getcwd(),i+1))
                         os.mkdir('%s/backup/iter%s/'%(os.getcwd(),i+1))
                         if(i>0):
                             shutil.move('%s_%s'%(i+1,Kconfig.logfile),'%s/backup/iter%s/%s_%s'%(os.getcwd(),i+1,i+1,Kconfig.logfile))
