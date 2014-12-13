@@ -172,21 +172,25 @@ def main():
                     if os.path.isdir('%s/backup' % os.getcwd()) is False:
                         os.mkdir('%s/backup' % os.getcwd())
                     try:
+                        print 'Creating backup...'
                         os.mkdir('%s/backup/iter%s/'%(os.getcwd(),i+1))
                         shutil.move('%s_%s'%(i+1,os.path.basename(Kconfig.md_input_file)),'%s/backup/iter%s/%s_%s'%(os.getcwd(),i+1,i+1,os.path.basename(Kconfig.md_input_file)))
                         shutil.move(Kconfig.w_file,'%s/backup/iter%s/%s'%(os.getcwd(),i+1,os.path.basename(Kconfig.w_file)))
                         shutil.move('lsdmap.log','%s/backup/iter%s/lsdmap.log'%(os.getcwd(),i+1))
                     except:
+                        print 'Failed to create backup..'
                         pass
                 else:
                     if os.path.isdir('%s/backup' % os.getcwd()) is False:
                         os.mkdir('%s/backup' % os.getcwd())
                     try:
+                        print 'Creating backup...'
                         os.mkdir('%s/backup/iter%s/'%(os.getcwd(),i+1))
                         if(i>0):
                             shutil.move('%s_%s'%(i+1,Kconfig.logfile),'%s/backup/iter%s/%s_%s'%(os.getcwd(),i+1,i+1,Kconfig.logfile))
                         os.system('mv *.ncdf %s/backup/iter%s/'%(os.getcwd(),i+1))
                     except:
+                        print 'Failed to create backup..'
                         pass
 
         with open('paths.txt','w') as f:
