@@ -366,13 +366,6 @@ max_alive_neighbors  = ''
 max_dead_neighbors   = ''
 
 ```
-**Step 5a:** Install NumPy:
-
-The LSDMap update stage currently requires a local installation of numpy. 
-
-```
-pip install numpy
-```
 
 **Step 5:** Run the workload:
 
@@ -438,13 +431,6 @@ curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gr
 
 (Download it [gromacslsdmap.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config/gromacslsdmap.wcfg) directly.)
 
-**Step 5a:** Install NumPy:
-
-The LSDMap update stage currently requires a local installation of numpy. 
-
-```
-pip install numpy
-```
 
 **Step 5:** Run the workload:
 
