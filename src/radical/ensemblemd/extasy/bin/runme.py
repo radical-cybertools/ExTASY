@@ -158,6 +158,9 @@ def main():
                         paths.append(line.strip())
                         path_cnt+=1
 
+        if (os.path.isdir('%s/backup' % os.getcwd())and(Kconfig.start_iter==0)) is True:
+            shutil.rmtree('%s/backup' % os.getcwd())
+
         for i in range(Kconfig.start_iter,Kconfig.start_iter + Kconfig.num_iterations):
             print 'Cycle : %s'%i
             paths=paths + (Preprocessing(Kconfig, umgr, i,paths))
@@ -190,7 +193,7 @@ def main():
                             shutil.rmtree('%s/backup/iter%s'%(os.getcwd(),i+1))
                         os.mkdir('%s/backup/iter%s/'%(os.getcwd(),i+1))
                         if(i>0):
-                            shutil.move('%s_%s'%(i+1,Kconfig.logfile),'%s/backup/iter%s/%s_%s'%(os.getcwd(),i+1,i+1,Kconfig.logfile))
+                            shutil.move('%s_%s'%(i,Kconfig.logfile),'%s/backup/iter%s/%s_%s'%(os.getcwd(),i+1,i+1,Kconfig.logfile))
                         os.system('mv *.ncdf %s/backup/iter%s/'%(os.getcwd(),i+1))
                     except:
                         print 'Failed to create backup..'
