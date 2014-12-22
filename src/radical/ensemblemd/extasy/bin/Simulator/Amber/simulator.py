@@ -5,12 +5,17 @@ from radical.ensemblemd.mdkernels import MDTaskDescription
 import os
 import time
 import saga
+import sys
 
 
 def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
 
 
     print 'Starting Simulation'
+
+    if (Kconfig.num_cores_per_sim_cu < 2):
+        print 'Amber MPI requires num_cores_per_sim_cu to be greater than or equal to 2'
+        sys.exit(1)
 
     dict = {}
     dict['crdfile'] = Kconfig.initial_crd_file
