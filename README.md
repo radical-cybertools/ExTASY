@@ -120,7 +120,7 @@ cd $HOME/coam-on-stampede/
 
 **Step 2:** Create a new resource configuration file ``stampede.rcfg``:
 
-(Download it [stampede.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config/stampede.rcfg) directly.)
+(Download it [stampede.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-stampede/stampede.rcfg) directly.)
 
 > Change the following values according to your needs:
 > 
@@ -142,15 +142,16 @@ DBURL       = 'mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/'
 **Step 3:** Download the sample input data:
 
 ```
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/coco_examples/mdshort.in
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/coco_examples/min.in
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/coco_examples/penta.crd
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/coco_examples/penta.top
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-stampede/mdshort.in
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-stampede/min.in
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-stampede/penta.crd
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-stampede/penta.top
 ```
 
 **Step 4:** Create a new workload configuration file ``cocoamber.wcfg``:
 
-(Download it [cocoamber.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config/cocoamber.wcfg) directly.)
+(Download it [cocoamber.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-stampede/cocoamber.wcfg
+) directly.)
 
 ```
 #-------------------------Applications----------------------
@@ -185,7 +186,7 @@ A **sample output** with expected callbacks and simulation/analysis can be found
 -------------------------------------------------
 |           Stage --->> | Simulation | Analysis |
 |-----------------------|------------|----------|
-|Expected TTC/iteration |   30-35 s  |  ~100s   |
+|Expected TTC/iteration |   30-35 s  |  25-30s  |
 -------------------------------------------------
 <!-- 
 ===================================================================
@@ -212,7 +213,7 @@ cd $HOME/coam-on-archer/
 
 **Step 2:** Create a new resource configuration file ``archer.rcfg``:
 
-(Download it [archer.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config/archer.rcfg) directly.)
+(Download it [archer.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-archer/archer.rcfg) directly.)
 
 > Change the following values according to your needs:
 > 
@@ -234,17 +235,17 @@ DBURL       = 'mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/'
 **Step 3:** Download the sample input data:
 
 ```
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/coco_examples/mdshort.in
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/coco_examples/min.in
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/coco_examples/penta.crd
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/coco_examples/penta.top
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-archer/mdshort.in
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-archer/min.in
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-archer/penta.crd
+curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-archer/penta.top
 ```
 
 **Step 4:** Create a new workload configuration file ``cocoamber.wcfg``:
 
 > The file is identical with the one in 2.1 Running on Stampede.
 
-(Download it [cocoamber.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config/cocoamber.wcfg) directly.)
+(Download it [cocoamber.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-archer/cocoamber.wcfg) directly.)
 
 
 
@@ -259,7 +260,7 @@ A **sample output** with expected callbacks and simulation/analysis can be found
 -------------------------------------------------
 |           Stage --->> | Simulation | Analysis |
 |-----------------------|------------|----------|
-|Expected TTC/iteration |   ~60 s    |  ~150s   |
+|Expected TTC/iteration |  60-100 s  | 150-200s |
 -------------------------------------------------
 
 There are two stages in the execution phase - Simulation and Analysis. Execution starts with any Preprocessing that 
@@ -316,7 +317,7 @@ cd $HOME/grlsd-on-stampede/
 
 > This file is identical with the resource configuration file used in "Running CoCo/Amber on Stampede"
 
-(Download it [stampede.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config/stampede.rcfg) directly.)
+(Download it [stampede.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-stampede/stampede.rcfg) directly.)
 
 > Change the following values according to your needs:
 > 
@@ -326,15 +327,15 @@ cd $HOME/grlsd-on-stampede/
 **Step 3:** Download the sample input data:
 
 ```
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gromacs_lsdmap_example/config.ini
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gromacs_lsdmap_example/grompp.mdp
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gromacs_lsdmap_example/input.gro
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gromacs_lsdmap_example/topol.top
+curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/grlsd-on-stampede/config.ini
+curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/grlsd-on-stampede/grompp.mdp
+curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/grlsd-on-stampede/input.gro
+curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/grlsd-on-stampede/topol.top
 ```
 
 **Step 4:** Create a new workload configuration file ``gromacslsdmap.wcfg``:
 
-(Download it [gromacslsdmap.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config/gromacslsdmap.wcfg) directly.)
+(Download it [gromacslsdmap.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-stampede/gromacslsdmap.wcfg) directly.)
 
 ```
 #-------------------------Applications----------------------
@@ -378,7 +379,7 @@ A **sample output** with expected callbacks and simulation/analysis can be found
 -------------------------------------------------
 |           Stage --->> | Simulation | Analysis |
 |-----------------------|------------|----------|
-|Expected TTC/iteration |  50-100 s  |  ~100s   |
+|Expected TTC/iteration |  50-100 s  |  ~30s    |
 -------------------------------------------------
 
 
@@ -409,7 +410,7 @@ cd $HOME/grlsd-on-archer/
 
 > The resource configuration file is identical with the one used in "Running CoCo/Amber on Archer"
 
-(Download it [archer.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config/archer.rcfg) directly.)
+(Download it [archer.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-archer/archer.rcfg) directly.)
 
 > Change the following values according to your needs:
 > 
@@ -419,17 +420,17 @@ cd $HOME/grlsd-on-archer/
 **Step 3:** Download the sample input data:
 
 ```
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gromacs_lsdmap_example/config.ini
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gromacs_lsdmap_example/grompp.mdp
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gromacs_lsdmap_example/input.gro
-curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/gromacs_lsdmap_example/topol.top
+curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/grlsd-on-archer/config.ini
+curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/grlsd-on-archer/grompp.mdp
+curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/grlsd-on-archer/input.gro
+curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/grlsd-on-archer/topol.top
 ```
 
 **Step 4:** Create a new workload configuration file ``gromacslsdmap.wcfg``:
 
 > The file is identical with the workload configuration file used in "Running GROMACS/LSDMap on Stampede"
 
-(Download it [gromacslsdmap.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config/gromacslsdmap.wcfg) directly.)
+(Download it [gromacslsdmap.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-archer/gromacslsdmap.wcfg) directly.)
 
 
 **Step 5:** Run the workload:
@@ -443,7 +444,7 @@ A **sample output** with expected callbacks and simulation/analysis can be found
 -------------------------------------------------
 |           Stage --->> | Simulation | Analysis |
 |-----------------------|------------|----------|
-|Expected TTC/iteration |  200-250 s |  ~30s    |
+|Expected TTC/iteration |  200-350 s |  ~30s    |
 -------------------------------------------------
 
 
