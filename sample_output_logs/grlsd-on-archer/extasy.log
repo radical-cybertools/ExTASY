@@ -55,7 +55,7 @@
 2014:12:06 14:39:30 32174  MainThread   saga.saga.adaptor.ssh : [INFO    ] ignore ssh key at /home/vivek/.ssh/known_hosts (no public key: /home/vivek/.ssh/known_hosts.pub)
 2014:12:06 14:39:30 32174  MainThread   saga.ContextSSH       : [INFO    ] init SSH context for key  at '/home/vivek/.ssh/id_rsa' done
 2014:12:06 14:39:30 32174  MainThread   saga.DefaultSession   : [DEBUG   ] default context [saga.adaptor.ssh    ] : {'LifeTime' : '-1', 'Type' : 'ssh', 'UserCert' : '/home/vivek/.ssh/id_rsa.pub', 'UserKey' : '/home/vivek/.ssh/id_rsa'}
-2014:12:06 14:39:30 radical.pilot.MainProcess: [INFO    ] using database url  mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/
+2014:12:06 14:39:30 radical.pilot.MainProcess: [INFO    ] using database url  mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot
 2014:12:06 14:39:30 radical.pilot.MainProcess: [INFO    ] using database name radicalpilot
 2014:12:06 14:39:30 radical.pilot.MainProcess: [INFO    ] Loaded resource configurations for local.localhost
 2014:12:06 14:39:30 radical.pilot.MainProcess: [INFO    ] Loaded resource configurations for ncar.yellowstone
@@ -75,7 +75,7 @@
 2014:12:06 14:39:31 radical.pilot.MainProcess: [INFO    ] Loaded resource configurations for futuregrid.alamo
 2014:12:06 14:39:31 radical.pilot.MainProcess: [INFO    ] Loaded resource configurations for futuregrid.hotel
 2014:12:06 14:39:31 radical.pilot.MainProcess: [INFO    ] Loaded resource configurations for futuregrid.india
-2014:12:06 14:39:31 radical.pilot.MainProcess: [INFO    ] New Session created{'uid': '54835b732330e07dae2dfe6c', 'created': datetime.datetime(2014, 12, 6, 19, 39, 31, 46516), 'database_auth': ':', 'database_name': 'radicalpilot', 'database_url': 'mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/radicalpilot', 'last_reconnect': None}.
+2014:12:06 14:39:31 radical.pilot.MainProcess: [INFO    ] New Session created{'uid': '54835b732330e07dae2dfe6c', 'created': datetime.datetime(2014, 12, 6, 19, 39, 31, 46516), 'database_auth': ':', 'database_name': 'radicalpilot', 'database_url': 'mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilotradicalpilot', 'last_reconnect': None}.
 2014:12:06 14:39:31 radical.pilot.MainProcess: [DEBUG   ] Worker thread (ID: Thread-1[140676134459136]) for PilotManager 54835b732330e07dae2dfe6d started.
 2014:12:06 14:39:31 radical.pilot.MainProcess: [WARNING ] using alias 'epsrc.archer' for deprecated resource key 'archer.ac.uk'
 2014:12:06 14:39:31 radical.pilot.MainProcess: [DEBUG   ] saga.utils.PTYShell ('sftp://login.archer.ac.uk/')

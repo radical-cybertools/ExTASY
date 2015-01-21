@@ -1,8 +1,8 @@
 # ExTASY Coupled Simulation-Analysis Execution
 ==============================================
 
-Provides a command line interface to run multiple Molecular Dynamics (MD) simulations, which can be coupled to an analysis tool. The coupled simulation-analysis execution pattern (aka ExTASY pattern) currently supports two examples: 
-(a) Gromacs as the "Simulator" and LSDMap as the "Analyzer"; (b) AMBER as the "Simulator" and COCO as the "Analyzer". Due to the plugin-based architecture, this execution pattern, will be 
+Provides a command line interface to run multiple Molecular Dynamics (MD) simulations, which can be coupled to an analysis tool. The coupled simulation-analysis execution pattern (aka ExTASY pattern) currently supports two examples:
+(a) Gromacs as the "Simulator" and LSDMap as the "Analyzer"; (b) AMBER as the "Simulator" and COCO as the "Analyzer". Due to the plugin-based architecture, this execution pattern, will be
 expandable as to support more Simulators and Analyzers.
 
 ### Table of Contents
@@ -22,7 +22,7 @@ expandable as to support more Simulators and Analyzers.
 > **!! Requirements !!**
 >
 > The following are the minimal requirements to install the ExTASY module.
-> 
+>
 > * python >= 2.7
 > * virtualenv >= 1.11
 > * pip >= 1.5
@@ -30,9 +30,9 @@ expandable as to support more Simulators and Analyzers.
 >   (see e.g., http://www.linuxproblem.org/art_9.html)
 
 
-The easiest way to install ExTASY is to create virtualenv. This way, ExTASY and 
-its dependencies can easily be installed in user-space without clashing with 
-potentially incompatible system-wide packages. 
+The easiest way to install ExTASY is to create virtualenv. This way, ExTASY and
+its dependencies can easily be installed in user-space without clashing with
+potentially incompatible system-wide packages.
 
 > If the virtualenv command is not availble (e.g., on Stampede):
 >
@@ -53,13 +53,13 @@ virtualenv $HOME/ExTASY-tools/
 If your shell is **BASH**:
 
 ```
-source $HOME/ExTASY-tools/bin/activate 
+source $HOME/ExTASY-tools/bin/activate
 ```
 
 If your shell is **CSH**:
 
 ```
-source $HOME/ExTASY-tools/bin/activate.csh 
+source $HOME/ExTASY-tools/bin/activate.csh
 ```
 
 **Step 2:** Install ExTASY's dependencies:
@@ -84,7 +84,7 @@ python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
 If your shell is **CSH**:
 
 ```
-rehash 
+rehash
 ```
 This will reset the PATH variable to also point to the packages which were just installed.
 
@@ -94,11 +94,11 @@ This will reset the PATH variable to also point to the packages which were just 
 
 ==========
 
-# 2. Running a Coco/Amber Workload 
+# 2. Running a Coco/Amber Workload
 
   This section will discuss details about the execution phase. The input to the tool is given in terms of
   a resource configuration file and a workload configuration file. The execution is started based on the parameters set in
-  these configuration files. 
+  these configuration files.
 
 ## 2.1 Running on Stampede
 
@@ -123,7 +123,7 @@ cd $HOME/coam-on-stampede/
 (Download it [stampede.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-stampede/stampede.rcfg) directly.)
 
 > Change the following values according to your needs:
-> 
+>
 > * UNAME
 > * ALLOCATION
 
@@ -136,7 +136,8 @@ PILOTSIZE   = 16                          # Number of cores to be reserved
 WORKDIR     = None                        # Working directory on the remote machine
 QUEUE       = 'normal'                    # Name of the queue in the remote machine
 
-DBURL       = 'mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot'        
+DBURL       = 'mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot'
+
 ```
 
 **Step 3:** Download the sample input data:
@@ -191,7 +192,7 @@ A **sample output** with expected callbacks and simulation/analysis can be found
 |-----------------------|------------|----------|
 |Expected TTC/iteration |   30-35 s  |  25-30s  |
 -------------------------------------------------
-<!-- 
+<!--
 ===================================================================
 ===================================================================
 -->
@@ -219,7 +220,7 @@ cd $HOME/coam-on-archer/
 (Download it [archer.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-archer/archer.rcfg) directly.)
 
 > Change the following values according to your needs:
-> 
+>
 > * UNAME
 > * ALLOCATION
 
@@ -288,19 +289,19 @@ A **sample output** with expected callbacks and simulation/analysis can be found
 |Expected TTC/iteration |  60-100 s  | 150-200s |
 -------------------------------------------------
 
-There are two stages in the execution phase - Simulation and Analysis. Execution starts with any Preprocessing that 
+There are two stages in the execution phase - Simulation and Analysis. Execution starts with any Preprocessing that
 might be required on the input data and then moves to Simulation stage. In the Simulation stage, a number of tasks (num_CUs)
-are launched to execute on the target machine. The number of tasks set to execute depends on the **PILOTSIZE, num_CUs, 
+are launched to execute on the target machine. The number of tasks set to execute depends on the **PILOTSIZE, num_CUs,
 num_cores_per_sim_cu**, the number of tasks in execution state simultaneously would be **PILOTSIZE/num_cores_per_sim_cu**.
 As each task attains 'Done' (completed) state, the remain tasks are scheduled till all the **num_CUs** tasks are completed.
- 
-This is followed by the Analysis stage, one task is scheduled on the target machine which takes all the cores as the 
+
+This is followed by the Analysis stage, one task is scheduled on the target machine which takes all the cores as the
 PILOTSIZE to perform the analysis and returns the data required for the next iteration of the Simulation stage. As can
 be seen, per iteration, there are **(num_CUs+1)** tasks executed.
 
 
 
-<!-- 
+<!--
 ===================================================================
 ===================================================================
 -->
@@ -311,7 +312,7 @@ be seen, per iteration, there are **(num_CUs+1)** tasks executed.
 
 This section will discuss details about the execution phase. The input to the tool is given in terms of
 a resource configuration file and a workload configuration file. The execution is started based on the parameters set in
-these configuration files. 
+these configuration files.
 
 
 <!-- LSDMAP / STAMPEDE
@@ -344,7 +345,7 @@ cd $HOME/grlsd-on-stampede/
 
 
 > Change the following values according to your needs:
-> 
+>
 > * UNAME
 > * ALLOCATION
 
@@ -449,7 +450,7 @@ cd $HOME/grlsd-on-archer/
 (Download it [archer.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-archer/archer.rcfg) directly.)
 
 > Change the following values according to your needs:
-> 
+>
 > * UNAME
 > * ALLOCATION
 
@@ -527,19 +528,19 @@ A **sample output** with expected callbacks and simulation/analysis can be found
 -------------------------------------------------
 
 
-There are two stages in the execution phase - Simulation and Analysis. Execution starts with any Preprocessing that 
+There are two stages in the execution phase - Simulation and Analysis. Execution starts with any Preprocessing that
 might be required on the input data and then moves to Simulation stage. In the Simulation stage, a number of tasks (num_CUs)
-are launched to execute on the target machine. The number of tasks set to execute depends on the **PILOTSIZE, num_CUs, 
+are launched to execute on the target machine. The number of tasks set to execute depends on the **PILOTSIZE, num_CUs,
 num_cores_per_sim_cu**, the number of tasks in execution state simultaneously would be **PILOTSIZE/num_cores_per_sim_cu**.
 As each task attains 'Done' (completed) state, the remain tasks are scheduled till all the **num_CUs** tasks are completed.
- 
-This is followed by the Analysis stage, one task is scheduled on the target machine which takes all the cores as the 
+
+This is followed by the Analysis stage, one task is scheduled on the target machine which takes all the cores as the
 PILOTSIZE to perform the analysis and returns the data required for the next iteration of the Simulation stage. As can
 be seen, per iteration, there are **(num_CUs+1)** tasks executed.
 
 # 4. Troubleshooting
 
-## Execution fails with "Couldn't read packet: Connection reset by peer" 
+## Execution fails with "Couldn't read packet: Connection reset by peer"
 
 You encounter the following error when running any of the extasy workflows:
 
@@ -560,4 +561,4 @@ TO fix this, create a file `~/.saga/cfg` in your home directory and add the foll
 ssh_share_mode = no
 ```
 
-This switches the SSH transfer layer into "compatibility" mode which should address the "Connection reset by peer" problem. 
+This switches the SSH transfer layer into "compatibility" mode which should address the "Connection reset by peer" problem.
