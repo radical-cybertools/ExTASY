@@ -132,11 +132,11 @@ REMOTE_HOST = 'stampede.tacc.utexas.edu'  # Label/Name of the Remote Machine
 UNAME       = 'username'                  # Username on the Remote Machine
 ALLOCATION  = 'TG-MCB090174'              # Allocation to be charged
 WALLTIME    = 60                          # Walltime to be requested for the pilot
-PILOTSIZE   = 64                          # Number of cores to be reserved
+PILOTSIZE   = 16                          # Number of cores to be reserved
 WORKDIR     = None                        # Working directory on the remote machine
 QUEUE       = 'normal'                    # Name of the queue in the remote machine
 
-DBURL       = 'mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/'        
+DBURL       = 'mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot'        
 ```
 
 **Step 3:** Download the sample input data:
@@ -159,9 +159,10 @@ simulator                = 'Amber'          # Simulator to be loaded
 analyzer                 = 'CoCo'           # Analyzer to be loaded
 
 #-------------------------General---------------------------
-num_iterations          = 16                 # Number of iterations of Simulation-Analysis
+num_iterations          = 4                 # Number of iterations of Simulation-Analysis
 start_iter              = 0                 # Iteration number with which to start
-num_CUs = 16                                 # Number of tasks or Compute Units
+num_CUs 		= 16                # Number of tasks or Compute Units
+nsave			= 2		    # Iterations after which output is transfered to local machine
 
 #-------------------------Simulation-----------------------
 num_cores_per_sim_cu    = 2                 # Number of cores per Simulation Compute Units
@@ -169,10 +170,12 @@ md_input_file           = './mdshort.in'    # Entire path to MD Input file - Do 
 minimization_input_file = './min.in'        # Entire path to Minimization file - Do not use $HOME or the likes
 initial_crd_file        = './penta.crd'     # Entire path to Coordinates file - Do not use $HOME or the likes
 top_file                = './penta.top'     # Entire path to Topology file - Do not use $HOME or the likes
+logfile                 = 'coco.log'        # Name of the log file created by pyCoCo
 
 #-------------------------Analysis--------------------------
 grid                    = '5'               # Number of points along each dimension of the CoCo histogram
 dims                    = '3'               # The number of projections to consider from the input pcz file
+
 ```
 
 Now you are can run the workload:
@@ -224,12 +227,12 @@ cd $HOME/coam-on-archer/
 REMOTE_HOST = 'archer.ac.uk'              # Label/Name of the Remote Machine
 UNAME       = 'username'                  # Username on the Remote Machine
 ALLOCATION  = 'e290'                      # Allocation to be charged
-WALLTIME    = 10                          # Walltime to be requested for the pilot
+WALLTIME    = 60                          # Walltime to be requested for the pilot
 PILOTSIZE   = 24                          # Number of cores to be reserved
 WORKDIR     = None                        # Working directory on the remote machine
-QUEUE       = 'debug'                     # Name of the queue in the remote machine
+QUEUE       = 'standard'                  # Name of the queue in the remote machine
 
-DBURL       = 'mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/'        
+DBURL       = 'mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot'        
 ```
 
 **Step 3:** Download the sample input data:
@@ -243,10 +246,32 @@ curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/i
 
 **Step 4:** Create a new workload configuration file ``cocoamber.wcfg``:
 
-> The file is identical with the one in 2.1 Running on Stampede.
-
 (Download it [cocoamber.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-archer/cocoamber.wcfg) directly.)
 
+
+```
+#-------------------------Applications----------------------
+simulator                = 'Amber'          # Simulator to be loaded
+analyzer                 = 'CoCo'           # Analyzer to be loaded
+
+#-------------------------General---------------------------
+num_iterations          = 2                 # Number of iterations of Simulation-Analysis
+start_iter              = 0                 # Iteration number with which to start
+num_CUs 		= 8                # Number of tasks or Compute Units
+nsave			= 1		    # Iterations after which output is transfered to local machine
+
+#-------------------------Simulation-----------------------
+num_cores_per_sim_cu    = 2                 # Number of cores per Simulation Compute Units
+md_input_file           = './mdshort.in'    # Entire path to MD Input file - Do not use $HOME or the likes
+minimization_input_file = './min.in'        # Entire path to Minimization file - Do not use $HOME or the likes
+initial_crd_file        = './penta.crd'     # Entire path to Coordinates file - Do not use $HOME or the likes
+top_file                = './penta.top'     # Entire path to Topology file - Do not use $HOME or the likes
+logfile                 = 'coco.log'        # Name of the log file created by pyCoCo
+
+#-------------------------Analysis--------------------------
+grid                    = '5'               # Number of points along each dimension of the CoCo histogram
+dims                    = '3'               # The number of projections to consider from the input pcz file
+```
 
 
 Now you can run the workload:
@@ -315,14 +340,27 @@ cd $HOME/grlsd-on-stampede/
 
 **Step 2:** Create a new resource configuration file ``stampede.rcfg``:
 
-> This file is identical with the resource configuration file used in "Running CoCo/Amber on Stampede"
-
 (Download it [stampede.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-stampede/stampede.rcfg) directly.)
+
 
 > Change the following values according to your needs:
 > 
 > * UNAME
 > * ALLOCATION
+
+
+```
+REMOTE_HOST = 'stampede.tacc.utexas.edu'  # Label/Name of the Remote Machine
+UNAME       = 'username'                  # Username on the Remote Machine
+ALLOCATION  = 'TG-MCB090174'              # Allocation to be charged
+WALLTIME    = 60                          # Walltime to be requested for the pilot
+PILOTSIZE   = 16                          # Number of cores to be reserved
+WORKDIR     = None                        # Working directory on the remote machine
+QUEUE       = 'normal'                    # Name of the queue in the remote machine
+
+DBURL       = 'mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot'
+```
+
 
 **Step 3:** Download the sample input data:
 
@@ -339,32 +377,32 @@ curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/in
 
 ```
 #-------------------------Applications----------------------
-simulator             = 'Gromacs'
-analyzer              = 'LSDMap'
+simulator             = 'Gromacs'           # Simulator to be loaded
+analyzer              = 'LSDMap'            # Analyzer to be loaded
 
 #--------------------------General--------------------------------
-num_CUs              = 64 #num of CUs
-num_iterations       = 1
-start_iter           = 0
-nsave                = 2
+num_CUs              = 16                   # Number of tasks or Compute Units
+num_iterations       = 3                    # Number of iterations of Simulation-Analysis
+start_iter           = 0                    # Iteration number with which to start
+nsave                = 2                    # # Iterations after which output is transfered to local machine
 
 #--------------------------Simulation--------------------------------
-num_cores_per_sim_cu = 2
-md_input_file        = './input.gro'
-mdp_file             = './grompp.mdp'
-top_file             = './topol.top'
-ndx_file             = ''
-grompp_options       = ''
-mdrun_options        = ''
-itp_file_loc         = ''
-md_output_file       = 'tmp.gro'
+num_cores_per_sim_cu = 1                    # Number of cores per Simulation Compute Units
+md_input_file        = './input.gro'        # Entire path to the MD Input file - Do not use $HOME or the likes
+mdp_file             = './grompp.mdp'       # Entire path to the MD Parameters file - Do not use $HOME or the likes
+top_file             = './topol.top'        # Entire path to the Topology file - Do not use $HOME or the likes
+ndx_file             = None                   # Entire path to the Index file - Do not use $HOME or the likes
+grompp_options       = None                   # Command line options for when grompp is used
+mdrun_options        = None                   # Command line options for when mdrun is used
+itp_file_loc         = None                   # Entire path to the location of .itp files - Do not use $HOME or the likes
+md_output_file       = 'tmp.gro'            # Filename to be used for the simulation output
 
 #--------------------------Analysis----------------------------------
-lsdm_config_file     = './config.ini'
-num_runs             = 10000
-w_file               = 'weight.w'
-max_alive_neighbors  = ''
-max_dead_neighbors   = ''
+lsdm_config_file     = './config.ini'       # Entire path to the LSDMap configuration file - Do not use $HOME or the likes
+num_runs             = 1000                # Number of runs to be performed in the Selection step in Analysis
+w_file               = 'weight.w'           # Filename to be used for the weight file
+max_alive_neighbors  = '10'                 # Maximum alive neighbors to be considered while reweighting
+max_dead_neighbors   = '1'                  # Maximum dead neighbors to be considered while reweighting
 
 ```
 
@@ -408,14 +446,25 @@ cd $HOME/grlsd-on-archer/
 
 **Step 2:** Create a new resource configuration file ``archer.rcfg``:
 
-> The resource configuration file is identical with the one used in "Running CoCo/Amber on Archer"
-
 (Download it [archer.rcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-archer/archer.rcfg) directly.)
 
 > Change the following values according to your needs:
 > 
 > * UNAME
 > * ALLOCATION
+
+```
+REMOTE_HOST = 'archer.ac.uk'              # Label/Name of the Remote Machine
+UNAME       = 'username'                  # Username on the Remote Machine
+ALLOCATION  = 'e290'                      # Allocation to be charged
+WALLTIME    = 60                          # Walltime to be requested for the pilot
+PILOTSIZE   = 24                          # Number of cores to be reserved
+WORKDIR     = None                        # Working directory on the remote machine
+QUEUE       = 'standard'                  # Name of the queue in the remote machine
+
+DBURL       = 'mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot'
+```
+
 
 **Step 3:** Download the sample input data:
 
@@ -428,9 +477,40 @@ curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/in
 
 **Step 4:** Create a new workload configuration file ``gromacslsdmap.wcfg``:
 
-> The file is identical with the workload configuration file used in "Running GROMACS/LSDMap on Stampede"
-
 (Download it [gromacslsdmap.wcfg](https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-archer/gromacslsdmap.wcfg) directly.)
+
+
+```
+#-------------------------Applications----------------------
+simulator             = 'Gromacs'           # Simulator to be loaded
+analyzer              = 'LSDMap'            # Analyzer to be loaded
+
+#--------------------------General--------------------------------
+num_CUs              = 24                   # Number of tasks or Compute Units
+num_iterations       = 2                    # Number of iterations of Simulation-Analysis
+start_iter           = 0                    # Iteration number with which to start
+nsave                = 1                    # # Iterations after which output is transfered to local machine
+
+#--------------------------Simulation--------------------------------
+num_cores_per_sim_cu = 1                    # Number of cores per Simulation Compute Units
+md_input_file        = './input.gro'        # Entire path to the MD Input file - Do not use $HOME or the likes
+mdp_file             = './grompp.mdp'       # Entire path to the MD Parameters file - Do not use $HOME or the likes
+top_file             = './topol.top'        # Entire path to the Topology file - Do not use $HOME or the likes
+ndx_file             = None                   # Entire path to the Index file - Do not use $HOME or the likes
+grompp_options       = None                   # Command line options for when grompp is used
+mdrun_options        = None                   # Command line options for when mdrun is used
+itp_file_loc         = None                   # Entire path to the location of .itp files - Do not use $HOME or the likes
+md_output_file       = 'tmp.gro'            # Filename to be used for the simulation output
+
+#--------------------------Analysis----------------------------------
+lsdm_config_file     = './config.ini'       # Entire path to the LSDMap configuration file - Do not use $HOME or the likes
+num_runs             = 100                # Number of runs to be performed in the Selection step in Analysis
+w_file               = 'weight.w'           # Filename to be used for the weight file
+max_alive_neighbors  = '10'                 # Maximum alive neighbors to be considered while reweighting
+max_dead_neighbors   = '1'                  # Maximum dead neighbors to be considered while reweighting
+
+
+```
 
 
 **Step 5:** Run the workload:
