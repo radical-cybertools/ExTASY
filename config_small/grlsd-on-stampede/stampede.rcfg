@@ -6,4 +6,4 @@ PILOTSIZE   = 16                          # Number of cores to be reserved
 WORKDIR     = None                        # Working directory on the remote machine
 QUEUE       = 'development'                    # Name of the queue in the remote machine
 
-DBURL       = 'mongodb://ec2-184-72-89-141.compute-1.amazonaws.com:27017/'          #MongoDB link to be used for coordination purposes
+DBURL       = 'mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot'          #MongoDB link to be used for coordination purposes
