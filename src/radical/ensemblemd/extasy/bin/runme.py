@@ -215,9 +215,9 @@ def main():
         if session is not None:
             print "Closing session, exiting now ..."
             if os.getenv("EXTASY_DEBUG") is not None:
-                session.close(delete=False)
+                session.close(cleanup=False)
             else:
-                session.close(delete=True)
+                session.close(cleanup=True)
         else:
             print 'Exception triggered, no session created, exiting now...'
             sys.exit(-1)
