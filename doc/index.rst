@@ -13,15 +13,12 @@ https://github.com/radical-cybertools/ExTASY
 **Mailing List**
 
 Users : https://groups.google.com/forum/#!forum/extasy-project
-
 Developers : https://groups.google.com/forum/#!forum/extasy-devel
 
 **Build Status**
 
 .. image:: http://ci.radical-project.org/buildStatus/icon?job=ExTASY
       :target: http://ci.radical-project.org/job/ExTASY
-
-Contents:
 
 .. toctree::
    :numbered:
