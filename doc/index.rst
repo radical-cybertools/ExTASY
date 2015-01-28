@@ -21,12 +21,11 @@ Developers : https://groups.google.com/forum/#!forum/extasy-devel
 .. image:: http://ci.radical-project.org/buildStatus/icon?job=ExTASY
       :target: http://ci.radical-project.org/job/ExTASY
 
+**Contents**
+
 .. toctree::
    :numbered:
    :maxdepth: 2
-
-
-**Contents**
 
    pages/intro.rst
    pages/installation.rst
