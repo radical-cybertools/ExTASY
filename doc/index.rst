@@ -13,7 +13,6 @@ https://github.com/radical-cybertools/ExTASY
 **Mailing List**
 
 Users : https://groups.google.com/forum/#!forum/extasy-project
-
 Developers : https://groups.google.com/forum/#!forum/extasy-devel
 
 **Build Status**
@@ -22,8 +21,8 @@ Developers : https://groups.google.com/forum/#!forum/extasy-devel
       :target: http://ci.radical-project.org/job/ExTASY
 
 
-**Contents**
 
+**Contents**
 
 .. toctree::
    :numbered:
