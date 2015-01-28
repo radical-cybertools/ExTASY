@@ -17,8 +17,8 @@ https://github.com/radical-cybertools/ExTASY
 
 **Build Status**
 
-.. image:: http://ci.radical-project.org/buildStatus/icon?job=ExTASY
-      :target: http://ci.radical-project.org/job/ExTASY
+    .. image:: http://ci.radical-project.org/buildStatus/icon?job=ExTASY
+        :target: http://ci.radical-project.org/job/ExTASY
 
 
 **Contents**
