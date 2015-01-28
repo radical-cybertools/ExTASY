@@ -13,6 +13,7 @@ https://github.com/radical-cybertools/ExTASY
 **Mailing List**
 
 Users : https://groups.google.com/forum/#!forum/extasy-project
+
 Developers : https://groups.google.com/forum/#!forum/extasy-devel
 
 **Build Status**
@@ -23,6 +24,9 @@ Developers : https://groups.google.com/forum/#!forum/extasy-devel
 .. toctree::
    :numbered:
    :maxdepth: 2
+
+
+**Contents**
 
    pages/intro.rst
    pages/installation.rst
