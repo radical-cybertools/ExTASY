@@ -3,23 +3,28 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to ExTASY's documentation!
-==================================
+ExTASY |VERSION|
+================
 
-Provides a command line interface to run multiple Molecular Dynamics (MD) simulations,
-which can be coupled to an analysis tool. The coupled simulation-analysis execution
-pattern (aka ExTASY pattern) currently supports two examples:
+**Github Page**
 
-    (a) Gromacs as the "Simulator" and LSDMap as the "Analyzer"
-    (b) AMBER as the "Simulator" and COCO as the "Analyzer"
+https://github.com/radical-cybertools/ExTASY
 
-Due to the plugin-based architecture, this execution pattern, will be expandable as to
-support more Simulators and Analyzers.
+**Mailing List**
+
+Users : https://groups.google.com/forum/#!forum/extasy-project
+Developers : https://groups.google.com/forum/#!forum/extasy-devel
+
+**Build Status**
+
+.. image:: http://ci.radical-project.org/buildStatus/icon?job=ExTASY
+      :target: http://ci.radical-project.org/job/ExTASY
 
 .. toctree::
    :numbered:
    :maxdepth: 2
 
+   pages/intro.rst
    pages/installation.rst
    pages/coam.rst
    pages/grlsd.rst
@@ -31,3 +36,4 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`search`
 
+.. |VERSION| replace:: 0.1-beta

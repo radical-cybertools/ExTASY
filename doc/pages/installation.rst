@@ -23,7 +23,7 @@ incompatible system-wide packages.
     .. parsed-literal:: wget --no-check-certificate https://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.9.tar.gz
                         tar xzf virtualenv-1.9.tar.gz
                         python virtualenv-1.9/virtualenv.py --system-site-packages $HOME/ExTASY-tools/
-                        source $HOME/ExTASY-tools/
+                        source $HOME/ExTASY-tools/bin/activate
 
 **Step 1** : Create the virtualenv,
 
