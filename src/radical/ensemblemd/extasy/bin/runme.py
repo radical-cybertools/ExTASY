@@ -49,8 +49,8 @@ def unit_state_change_cb(unit, state):
             print "#######################"
             print "ComputeUnit {0} has FAILED. Can't recover.".format(unit.uid)
             print "ComputeUnit log: {0}".format(unit.log)
-            print "STDERR : {0}".format(unit.stderr)
-            print "STDOUT : {0}".format(unit.stdout)
+            print u"STDERR : {0}".format(unit.stderr)
+            print u"STDOUT : {0}".format(unit.stdout)
             sys.exit(1)
 
         elif state == radical.pilot.states.CANCELED:
