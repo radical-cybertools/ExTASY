@@ -6,6 +6,10 @@ import glob
 import sys
 import os
 
+def param_check(Kconfig):
+
+    pass
+
 def Preprocessing(Kconfig,umgr,cycle,paths):
 
     list_of_files = []
