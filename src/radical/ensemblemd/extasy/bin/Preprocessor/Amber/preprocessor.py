@@ -6,10 +6,6 @@ import glob
 import sys
 import os
 
-def param_check(Kconfig):
-
-    pass
-
 def Preprocessing(Kconfig,umgr,cycle,paths):
 
     list_of_files = []
@@ -17,6 +13,9 @@ def Preprocessing(Kconfig,umgr,cycle,paths):
     print 'Preprocessing stage ....'
 
     if(cycle==0):
+
+        param_check(Kconfig)
+
         curdir = os.path.dirname(os.path.realpath(__file__))
         list_of_files = [Kconfig.initial_crd_file,Kconfig.md_input_file,Kconfig.minimization_input_file
             ,Kconfig.top_file,'%s/../../Analyzer/CoCo/postexec.py'%curdir]

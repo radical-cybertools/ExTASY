@@ -63,6 +63,15 @@ def unit_state_change_cb(unit, state):
 
 #---------------------------------------------------------------------------------
 
+def check_config_vals(Kconfig,RPconfig):
+
+    if Kconfig.num_cores_per_sim_cu > RPconfig.PILOTSIZE:
+        print '#####################'
+        print 'Error : Cores allocated to each CU greater than the Pilotsize .. Please check the config files'
+        print '#####################'
+        sys.exit(1)
+
+
 def startPilot(Kconfig,RPconfig):
 
     session = radical.pilot.Session(database_url=RPconfig.DBURL)
@@ -129,6 +138,8 @@ def main():
 
         RPconfig = imp.load_source('RPconfig', args.RPconfig)
         Kconfig = imp.load_source('Kconfig', args.Kconfig)
+
+        check_config_vals(Kconfig,RPconfig)
 
         paths = []
 
