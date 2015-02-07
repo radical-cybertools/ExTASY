@@ -14,8 +14,6 @@ def Preprocessing(Kconfig,umgr,cycle,paths):
 
     if(cycle==0):
 
-        param_check(Kconfig)
-
         curdir = os.path.dirname(os.path.realpath(__file__))
         list_of_files = [Kconfig.initial_crd_file,Kconfig.md_input_file,Kconfig.minimization_input_file
             ,Kconfig.top_file,'%s/../../Analyzer/CoCo/postexec.py'%curdir]
