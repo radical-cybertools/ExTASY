@@ -136,6 +136,11 @@ def main():
 
     try:
 
+        #Version printing
+
+        import radical.ensemblemd.extasy as extasy
+        print 'ExTASY version : ',extasy.version
+
         RPconfig = imp.load_source('RPconfig', args.RPconfig)
         Kconfig = imp.load_source('Kconfig', args.Kconfig)
 

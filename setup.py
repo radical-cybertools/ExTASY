@@ -60,7 +60,7 @@ def get_version():
 
 
         # make sure the version files exist for the runtime version inspection
-        open ('%s/VERSION' % srcroot, 'w').write (long_version+"\n")
+        #open ('%s/VERSION' % srcroot, 'w').write (long_version+"\n")
         open ('%s/src/radical/ensemblemd/extasy/VERSION' % srcroot, 'w').write (long_version+"\n")
 
 
@@ -78,7 +78,9 @@ short_version, long_version = get_version()
 # check python version. we need > 2.5, <3.x
 if sys.hexversion < 0x02050000 or sys.hexversion >= 0x03000000:
     raise RuntimeError("ExTASY requires Python 2.x (2.5 or higher)")
+#-----------------------------------------------------------------------------
 
+srcroot = os.path.dirname(os.path.realpath(__file__))
 #-----------------------------------------------------------------------------
 #
 def read(*rnames):
@@ -87,7 +89,7 @@ def read(*rnames):
 #-----------------------------------------------------------------------------
 setup_args = {
     'name' : 'radical.ensemblemd.extasy',
-    'version' : short_version,
+    'version' : open ('{0}/src/radical/ensemblemd/extasy/VERSION'.format(srcroot), 'r').readline().rstrip(),
     'description' :" A library to run bulk Coupled Simulator-Analyzer tasks on DCI.",
     'long_description' : (read('README.md') + '\n\n' + read('CHANGES.md')),
     'author' : 'RADICAL Group at Rutgers University',
@@ -124,7 +126,7 @@ setup_args = {
     'packages' : find_packages('src'),
     'package_dir' : {'': 'src'},
 
-    'package_data' : {'': ['*.sh', 'VERSION', 'VERSION.git', ]},
+    'package_data' : {'': ['*.sh', 'VERSION', 'VERSION.git']},
     'install_requires' : ['setuptools',
                           'radical.pilot',
                           'argparse'
