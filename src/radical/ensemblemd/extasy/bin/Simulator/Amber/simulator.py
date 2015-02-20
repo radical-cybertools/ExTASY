@@ -17,6 +17,8 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
         print 'Amber MPI requires num_cores_per_sim_cu to be greater than or equal to 2'
         sys.exit(1)
 
+    MY_STAGING_AREA = 'staging:///'
+
     dict = {}
     dict['crdfile'] = Kconfig.initial_crd_file
     dict['crdfilename'] = os.path.basename(dict['crdfile'])
@@ -42,13 +44,48 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
         cu = radical.pilot.ComputeUnitDescription()
         cu.cores = Kconfig.num_cores_per_sim_cu
         cu.mpi = True
+        #----------------------------------------------------------
+        # data staging
+
+         # Configure the staging directive for shared input file.
+        if(cycle==0):
+
+            crd_stage = {
+                        'source': MY_STAGING_AREA + dict['crdfilename'],
+                        'target': 'min0.crd',
+                        'action': radical.pilot.LINK
+                        }
+        else:
+
+            crd_stage = {
+                        'source': MY_STAGING_AREA + 'iter{0}/min{0}{1}.crd'.format(cycle,i),
+                        'target': 'min{0}.crd'.format(cycle),
+                        'action': radical.pilot.LINK
+                        }
+
+        top_stage = {
+                    'source': MY_STAGING_AREA + dict['topfilename'],
+                    'target': dict['topfilename'],
+                    'action': radical.pilot.LINK
+                    }
+        minin_stage = {
+                    'source': MY_STAGING_AREA + dict['mininfilename'],
+                    'target': dict['mininfilename'],
+                    'action': radical.pilot.LINK
+                    }
+
+        md_stage_out = {
+                    'source': 'md{0}.crd'.format(cycle),
+                    'target': MY_STAGING_AREA + 'iter{0}/md{1}.crd'.format(cycle,i),
+                    'action': radical.pilot.LINK
+                    }
+        #----------------------------------------------------------
+
         cu.executable = mdtd_bound.executable
         cu.pre_exec = mdtd_bound.pre_exec
         cu.arguments = mdtd_bound.arguments
-        if(cycle==0):
-            cu.pre_exec = cu.pre_exec + ['ln %s/%s min%s.crd'%(paths[0],dict['crdfilename'],cycle),'ln %s/%s .'%(paths[0],dict['topfilename']),'ln %s/%s .'%(paths[0],dict['mininfilename'])]
-        else:
-            cu.pre_exec = cu.pre_exec + ['ln %s/min%s%s.crd min%s.crd'%(paths[cycle],cycle,i,cycle),'ln %s/%s .'%(paths[0],dict['topfilename']),'ln %s/%s .'%(paths[0],dict['mininfilename'])]
+        cu.input_staging = [crd_stage,top_stage,minin_stage]
+        cu.output_staging = [md_stage_out]
         cudesc_list_A.append(cu)
 
     cu_list_A = umgr.submit_units(cudesc_list_A)
@@ -71,14 +108,34 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
             cudesc = radical.pilot.ComputeUnitDescription()
             cudesc.cores = Kconfig.num_cores_per_sim_cu
             cudesc.mpi = True
+            #----------------------------------------------------------
+            # data-staging
+            md_stage_in = {
+                            'source': MY_STAGING_AREA + 'iter{0}/md{1}.crd'.format(cycle,i),
+                            'target': 'md{0}.crd'.format(cycle),
+                            'action': radical.pilot.LINK
+                            }
+            mdin_stage = {
+                            'source': MY_STAGING_AREA + dict['mdinfilename'],
+                            'target': dict['mdinfilename'],
+                            'action': radical.pilot.LINK
+                            }
+
+            ncdf_stage_out = {
+                            'source': 'md{0}.ncdf'.format(cycle),
+                            'target': MY_STAGING_AREA + 'iter{0}/md_{0}_{1}.ncdf'.format(cycle,i),
+                            'action': radical.pilot.LINK
+                            }
+            #----------------------------------------------------------
             cudesc.executable = mdtd_bound.executable
-            cudesc.pre_exec = ['ln %s/* .'%path] + mdtd_bound.pre_exec
+            #cudesc.pre_exec = ['ln %s/* .'%path] + mdtd_bound.pre_exec
             cudesc.arguments = mdtd_bound.arguments
-            #cudesc.input_staging = [dict['mdin']]
-            cudesc.pre_exec = cudesc.pre_exec + ['ln %s/%s .'%(paths[0],dict['mdinfilename'])]
+            cudesc.input_staging = [md_stage_in,mdin_stage]
+            cudesc.output_staging = [ncdf_stage_out]
+            #cudesc.pre_exec = cudesc.pre_exec + ['ln %s/%s .'%(paths[0],dict['mdinfilename'])]
             if((cycle+1)%Kconfig.nsave==0):
-                cudesc.output_staging = ['md%s.ncdf > md_%s_%s.ncdf'%(cycle,cycle,i)]
-            cudesc.post_exec = ['ln md%s.ncdf %s/md_%s_%s.ncdf'%(cycle,paths[cycle],cycle,i)]
+                cudesc.output_staging += ['md%s.ncdf > md_%s_%s.ncdf'%(cycle,cycle,i)]
+            #cudesc.post_exec = ['ln md%s.ncdf %s/md_%s_%s.ncdf'%(cycle,paths[cycle],cycle,i)]
             cu_b = umgr.submit_units(cudesc)
             i+=1
             cu_list_B.append(cu_b)

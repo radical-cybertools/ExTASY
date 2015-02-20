@@ -1,6 +1,9 @@
 __author__ = 'vivek'
 
 import radical.pilot
+import saga
+import glob
+import sys
 import os
 
 def Preprocessing(Kconfig,umgr,cycle,paths,pilot):
@@ -34,6 +37,10 @@ def Preprocessing(Kconfig,umgr,cycle,paths,pilot):
                 }
         sd_pilot.append(dict)
 
+    print sd_pilot
+
     pilot.stage_in(sd_pilot)
+    print 'staged'
 
     umgr.add_pilots(pilot)
+    print 'added'
