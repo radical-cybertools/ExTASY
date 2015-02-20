@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: radical.ensemblemd.extasy
-Version: 0.1.2-beta-2-g48c0187
+Version: 0.1.2-beta-3-g4093beb
 Summary:  A library to run bulk Coupled Simulator-Analyzer tasks on DCI.
 Home-page: https://github.com/radical-cybertools
 Author: Vivek Balasubramanian

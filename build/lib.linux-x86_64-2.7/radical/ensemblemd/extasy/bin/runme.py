@@ -168,32 +168,23 @@ def main():
         if ( Kconfig.analyzer == 'LSDMap'):
             from Analyzer.LSDMap.analyzer import Analyzer
 
-        path_cnt = 0
-        if Kconfig.start_iter is not 0:
-            with open('paths.txt','r') as f:
-                for line in f:
-                    if path_cnt < Kconfig.start_iter:
-                        paths.append(line.strip())
-                        path_cnt+=1
-
         if (os.path.isdir('%s/backup' % os.getcwd())and(Kconfig.start_iter==0)) is True:
             shutil.rmtree('%s/backup' % os.getcwd())
 
         Preprocessing(Kconfig, umgr, 0, paths, pilot)
 
-        umgr.wait_units()
-
-        '''
 
         for i in range(Kconfig.start_iter,Kconfig.start_iter + Kconfig.num_iterations):
             print 'Cycle : %s'%i
-            paths=paths + (Preprocessing(Kconfig, umgr, i,paths))
+
             if (Kconfig.simulator == 'Gromacs' and Kconfig.analyzer == 'LSDMap'):
                 Simulator(umgr, RPconfig, Kconfig, i,paths)
                 Analyzer(umgr, RPconfig, Kconfig, i,paths)
             elif (Kconfig.simulator == 'Amber' and Kconfig.analyzer == 'CoCo'):
                 Analyzer(umgr, RPconfig, Kconfig, i,paths)
                 Simulator(umgr, RPconfig, Kconfig, i,paths)
+
+            '''
             if((i+1)%Kconfig.nsave == 0):
                 if os.path.isdir('%s/backup' % os.getcwd()) is False:
                         os.mkdir('%s/backup' % os.getcwd())
@@ -222,12 +213,8 @@ def main():
                     except:
                         print 'Failed to create backup..'
                         pass
+            '''
 
-        with open('paths.txt','w') as f:
-            for path in paths:
-                f.write(path + '\n')
-
-        '''
     except Exception as e:
         print "An error occurred: %s" % ((str(e)))
         sys.exit(-1)
