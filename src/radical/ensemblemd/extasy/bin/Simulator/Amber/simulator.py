@@ -184,7 +184,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
             # Directive to transfer data to localhost
             if((cycle+1)%Kconfig.nsave==0):
                 md_transfer = {
-                            'source': 'md{0}.crd'.format(cycle),
+                            'source': 'md{0}.ncdf'.format(cycle),
                             'target': 'backup/md_{0}_{1}.ncdf'.format(cycle,i)
                             }
                 cudesc.output_staging.append(md_transfer)
