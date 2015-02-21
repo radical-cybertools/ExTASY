@@ -19,6 +19,8 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
 
     MY_STAGING_AREA = 'staging:///'
 
+    #------------------------------------------------------------------
+    # Extract filenames from paths from Kconfig file
     dict = {}
     dict['crdfile'] = Kconfig.initial_crd_file
     dict['crdfilename'] = os.path.basename(dict['crdfile'])
@@ -29,12 +31,17 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
     dict['minin']   = Kconfig.minimization_input_file
     dict['mininfilename'] = os.path.basename(dict['minin'])
     dict['cycle'] = cycle
+    #------------------------------------------------------------------
 
     start_times = []
     end_times = []
-
     cudesc_list_A = []
+
+
     for i in range(Kconfig.num_CUs):
+
+        #==================================================================
+        # CU Definition for Amber - Stage 1
 
         mdtd = MDTaskDescription()
         mdtd.kernel = "AMBER"
@@ -50,10 +57,16 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
         cu = radical.pilot.ComputeUnitDescription()
         cu.cores = Kconfig.num_cores_per_sim_cu
         cu.mpi = True
-        #----------------------------------------------------------
-        # data staging
+        cu.executable = mdtd_bound.executable
+        cu.pre_exec = mdtd_bound.pre_exec
+        cu.arguments = mdtd_bound.arguments
 
-         # Configure the staging directive for shared input file.
+        #==================================================================
+        # Data Staging for the CU
+
+        #------------------------------------------------------------------
+        # Coordinate file staging
+
         if(cycle==0):
 
             crd_stage = {
@@ -68,7 +81,10 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
                         'target': 'min{0}.crd'.format(cycle),
                         'action': radical.pilot.LINK
                         }
+        #------------------------------------------------------------------
 
+        #------------------------------------------------------------------
+        # Configure the staging directive for shared input file.
         top_stage = {
                     'source': MY_STAGING_AREA + dict['topfilename'],
                     'target': dict['topfilename'],
@@ -79,53 +95,34 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
                     'target': dict['mininfilename'],
                     'action': radical.pilot.LINK
                     }
+        #------------------------------------------------------------------
+
+        #------------------------------------------------------------------
+        # Stage OUT the output to the staging area
 
         md_stage_out = {
                     'source': 'md{0}.crd'.format(cycle),
                     'target': MY_STAGING_AREA + 'md{0}{1}.crd'.format(cycle,i),
-                    'action': radical.pilot.COPY
+                    'action': radical.pilot.LINK
                     }
-
-        file1 = {
-                    'source': 'min{0}.out'.format(cycle),
-                    'target': MY_STAGING_AREA + 'min{0}{1}.out'.format(cycle,i),
-                    'action': radical.pilot.COPY
-                    }
-
-        file2 = {
-                    'source': 'min{0}.inf'.format(cycle),
-                    'target': MY_STAGING_AREA + 'min{0}{1}.inf'.format(cycle,i),
-                    'action': radical.pilot.COPY
-                    }
-
-        file3 = {
-                    'source': 'min{0}.crd'.format(cycle),
-                    'target': MY_STAGING_AREA + 'min{0}{1}.crd'.format(cycle,i),
-                    'action': radical.pilot.COPY
-                    }
-
         #----------------------------------------------------------
 
-        cu.executable = mdtd_bound.executable
-        cu.pre_exec = mdtd_bound.pre_exec
-        cu.arguments = mdtd_bound.arguments
         cu.input_staging = [crd_stage,top_stage,minin_stage]
-        cu.output_staging = [md_stage_out,file1,file2,file3]
+        cu.output_staging = [md_stage_out]
         cudesc_list_A.append(cu)
 
     cu_list_A = umgr.submit_units(cudesc_list_A)
 
-
     cu_list_B = []
-
     cu_list_A_copy = cu_list_A[:]
-
 
     i=0
     while cu_list_A:
         for cu_a in cu_list_A:
             cu_a.wait ()
-            path=saga.Url(cu_a.working_directory).path
+
+            #==================================================================
+            # CU Definition for Amber - Stage 2
 
             mdtd = MDTaskDescription()
             mdtd.kernel = "AMBER"
@@ -142,63 +139,57 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
             cudesc = radical.pilot.ComputeUnitDescription()
             cudesc.cores = Kconfig.num_cores_per_sim_cu
             cudesc.mpi = True
-            #----------------------------------------------------------
-            # data-staging
+            cudesc.executable = mdtd_bound.executable
+            cudesc.arguments = mdtd_bound.arguments
+            cudesc.pre_exec = mdtd_bound.pre_exec
+
+            #==================================================================
+            # Data Staging
+
+            #------------------------------------------------------------------
+            # Link to output from first-stage of Amber
             md_stage_in = {
                             'source': MY_STAGING_AREA + 'md{0}{1}.crd'.format(cycle,i),
                             'target': 'md{0}.crd'.format(cycle),
-                            'action': radical.pilot.COPY
+                            'action': radical.pilot.LINK
                             }
+
+            # Link to shared data from staging area
             mdin_stage = {
                             'source': MY_STAGING_AREA + dict['mdinfilename'],
                             'target': dict['mdinfilename'],
-                            'action': radical.pilot.COPY
-                            }
-            top_stage = {
-                    'source': MY_STAGING_AREA + dict['topfilename'],
-                    'target': dict['topfilename'],
-                    'action': radical.pilot.COPY
-                    }
-
-            ncdf_stage_out = {
-                            'source': 'md{0}.ncdf'.format(cycle),
-                            'target': MY_STAGING_AREA + 'md_{0}_{1}.ncdf'.format(cycle,i),
                             'action': radical.pilot.LINK
                             }
-            file1 = {
-                            'source': MY_STAGING_AREA + 'min{0}{1}.out'.format(cycle,i),
-                            'target': 'min{0}.out'.format(cycle),
-                            'action': radical.pilot.COPY
+            top_stage = {
+                            'source': MY_STAGING_AREA + dict['topfilename'],
+                            'target': dict['topfilename'],
+                            'action': radical.pilot.LINK
+                        }
+
+            cudesc.input_staging = [md_stage_in,mdin_stage,top_stage]
+            #------------------------------------------------------------------
+
+
+            #------------------------------------------------------------------
+            # Link output data to staging area
+            ncdf_stage_out = {
+                            'source': 'md{0}.ncdf'.format(cycle),
+                            'target': MY_STAGING_AREA + 'md_{0}_{1}.ncdf'.format(cycle, i),
+                            'action': radical.pilot.LINK
                             }
-
-
-            file2 = {
-                            'source': MY_STAGING_AREA + 'min{0}{1}.inf'.format(cycle,i),
-                            'target': 'min{0}.inf'.format(cycle),
-                            'action': radical.pilot.COPY
-                            }
-
-            file3 = {
-                            'source': MY_STAGING_AREA + 'min{0}{1}.crd'.format(cycle,i),
-                            'target': 'min{0}.crd'.format(cycle),
-                            'action': radical.pilot.COPY
-                            }
-            minin_stage = {
-                    'source': MY_STAGING_AREA + dict['mininfilename'],
-                    'target': dict['mininfilename'],
-                    'action': radical.pilot.LINK
-                    }
-
-            #----------------------------------------------------------
-            cudesc.executable = mdtd_bound.executable
-            #cudesc.pre_exec = ['ln %s/* .'%path] + mdtd_bound.pre_exec
-            cudesc.arguments = mdtd_bound.arguments
-            cudesc.input_staging = [md_stage_in,mdin_stage,top_stage,file1,file2,file3,minin_stage]
             cudesc.output_staging = [ncdf_stage_out]
-            #cudesc.pre_exec = cudesc.pre_exec + ['ln %s/%s .'%(paths[0],dict['mdinfilename'])]
-            #if((cycle+1)%Kconfig.nsave==0):
-            #    cudesc.output_staging += ['md{0}.ncdf > md_{0}_%s.ncdf'%(cycle,cycle,i)]
-            #cudesc.post_exec = ['ln md%s.ncdf %s/md_%s_%s.ncdf'%(cycle,paths[cycle],cycle,i)]
+            #------------------------------------------------------------------
+
+            #------------------------------------------------------------------
+            # Directive to transfer data to localhost
+            if((cycle+1)%Kconfig.nsave==0):
+                md_transfer = {
+                            'source': 'md{0}.crd'.format(cycle),
+                            'target': 'backup/md_{0}_{1}.ncdf'.format(cycle,i)
+                            }
+                cudesc.output_staging.append(md_transfer)
+            #----------------------------------------------------------
+
             cu_b = umgr.submit_units(cudesc)
             i+=1
             cu_list_B.append(cu_b)

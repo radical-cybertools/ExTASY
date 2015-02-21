@@ -4,6 +4,8 @@ import radical.pilot
 import os
 import glob
 
+MY_STAGING_AREA = 'staging:///'
+
 def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
 
 
@@ -12,9 +14,11 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
         return
 
     print 'Starting Analysis'
-    curdir = os.path.dirname(os.path.realpath(__file__))
 
     print 'Submitting COCO Compute Unit'
+
+    #==================================================================
+    # CU Definition for CoCo
 
     mdtd=MDTaskDescription()
     mdtd.kernel="CoCo"
@@ -25,14 +29,64 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
     cudesc.executable = mdtd_bound.executable
     cudesc.pre_exec = mdtd_bound.pre_exec
     cudesc.arguments = mdtd_bound.arguments
-    cudesc.pre_exec = cudesc.pre_exec + ['ln %s/postexec.py .'%paths[0],'ln %s/%s .'%(paths[0],Kconfig.top_file)]
-    for i in range(0,len(paths)):
-        cudesc.pre_exec = cudesc.pre_exec + ['ln %s/*.ncdf .'%paths[i]]
     cudesc.post_exec = mdtd_bound.post_exec + ['python postexec.py %s %s' % (Kconfig.num_CUs,cycle)]
     cudesc.mpi = True
-    if((cycle+1)%Kconfig.nsave==0):
-            cudesc.output_staging = ['%s > %s_%s'%(Kconfig.logfile,cycle,Kconfig.logfile)]
-    cudesc.post_exec = cudesc.post_exec + ['ln min%s*.crd %s/'%(cycle,paths[cycle])]
+
+
+    #==================================================================
+    # Data Staging for the CU
+
+    #------------------------------------------------------------------
+    # postexec and topology file staging
+
+    postexec_stage = {
+                    'source': MY_STAGING_AREA + 'postexec.py',
+                    'target': 'postexec.py',
+                    'action': radical.pilot.LINK
+                }
+
+    top_stage = {
+                    'source': MY_STAGING_AREA + os.path.basename(Kconfig.top_file),
+                    'target': os.path.basename(Kconfig.top_file),
+                    'action': radical.pilot.LINK
+                }
+    cudesc.input_staging = [postexec_stage,top_stage]
+    #------------------------------------------------------------------
+
+
+    #------------------------------------------------------------------
+    # stage in the ncdf files from all previous iterations
+    for iter in range(0,cycle):
+        for inst in range(0,Kconfig.num_CUs):
+            dir = {
+                    'source': MY_STAGING_AREA + 'md_{0}_{1}.ncdf'.format(iter,inst),
+                    'target': 'md_{0}_{1}.ncdf'.format(iter,inst),
+                    'action': radical.pilot.LINK
+                    }
+            cudesc.input_staging.append(dir)
+    #------------------------------------------------------------------
+
+    cudesc.output_staging = []
+    #------------------------------------------------------------------
+    # stage out the crd files to staging area
+    for inst in range(0,Kconfig.num_CUs):
+        dir = {
+                'source': 'min{0}{1}.crd'.format(cycle,inst),
+                'target': MY_STAGING_AREA + 'min{0}{1}.crd'.format(cycle,inst),
+                'action': radical.pilot.LINK
+                }
+        cudesc.output_staging.append(dir)
+    #------------------------------------------------------------------
+
+    #------------------------------------------------------------------
+    # transfer logfile to localhost
+    if((cycle+1)%Kconfig.nsave == 0):
+        logfile_transfer = {
+                            'source': '%s'%Kconfig.logfile,
+                            'target': 'backup/{0}_{1}'.format(cycle,Kconfig.logfile)
+                        }
+        cudesc.output_staging.append(logfile_transfer)
+    #------------------------------------------------------------------
 
     unit = umgr.submit_units(cudesc)
 

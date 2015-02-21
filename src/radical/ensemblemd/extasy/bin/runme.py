@@ -171,6 +171,8 @@ def main():
         if (os.path.isdir('%s/backup' % os.getcwd())and(Kconfig.start_iter==0)) is True:
             shutil.rmtree('%s/backup' % os.getcwd())
 
+        os.mkdir('%s/backup'%os.getcwd())
+
         Preprocessing(Kconfig, umgr, 0, paths, pilot)
 
 
