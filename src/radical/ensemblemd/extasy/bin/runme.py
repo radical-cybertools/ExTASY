@@ -173,7 +173,7 @@ def main():
 
         os.mkdir('%s/backup'%os.getcwd())
 
-        Preprocessing(Kconfig, umgr, 0, paths, pilot)
+        Preprocessing(Kconfig, umgr,pilot)
 
 
         for i in range(Kconfig.start_iter,Kconfig.start_iter + Kconfig.num_iterations):
@@ -200,18 +200,6 @@ def main():
                         shutil.move('%s_%s'%(i+1,os.path.basename(Kconfig.md_input_file)),'%s/backup/iter%s/%s_%s'%(os.getcwd(),i+1,i+1,os.path.basename(Kconfig.md_input_file)))
                         shutil.move(Kconfig.w_file,'%s/backup/iter%s/%s'%(os.getcwd(),i+1,os.path.basename(Kconfig.w_file)))
                         shutil.move('lsdmap.log','%s/backup/iter%s/lsdmap.log'%(os.getcwd(),i+1))
-                    except:
-                        print 'Failed to create backup..'
-                        pass
-                else:
-                    try:
-                        print 'Creating backup...'
-                        if os.path.isdir('%s/backup/iter%s/'%(os.getcwd(),i+1)) is True:
-                            shutil.rmtree('%s/backup/iter%s'%(os.getcwd(),i+1))
-                        os.mkdir('%s/backup/iter%s/'%(os.getcwd(),i+1))
-                        if(i>0):
-                            shutil.move('%s_%s'%(i,Kconfig.logfile),'%s/backup/iter%s/%s_%s'%(os.getcwd(),i+1,i+1,Kconfig.logfile))
-                        os.system('mv *.ncdf %s/backup/iter%s/'%(os.getcwd(),i+1))
                     except:
                         print 'Failed to create backup..'
                         pass

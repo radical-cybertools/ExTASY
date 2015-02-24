@@ -24,13 +24,13 @@ if __name__ == '__main__':
     for idx in xrange(nextraruns):
         nruns_per_task[idx] += 1
 
-    if os.path.isdir('%s/temp'%curdir) is True:
-        shutil.rmtree('%s/temp' % curdir)
-    os.mkdir('%s/temp'%curdir)
+    if os.path.isdir('%s/iter0'%curdir) is True:
+        shutil.rmtree('%s/iter0' % curdir)
+    os.mkdir('%s/iter0'%curdir)
 
     with open(grofile_obj.filename, 'r') as grofile:
         for idx in xrange(num_tasks):
-            start_grofile_name = curdir + '/temp/start%s.gro'%idx
+            start_grofile_name = curdir + '/iter0/start%s.gro'%idx
             with open(start_grofile_name, 'w') as start_grofile:
                 nlines_per_task = nruns_per_task[idx]*grofile_obj.nlines_per_run
                 for jdx in xrange(nlines_per_task):

@@ -7,9 +7,11 @@ import time
 import glob
 
 
-def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
+def Simulator(umgr,RPconfig,Kconfig,cycle):
 
     curdir = os.path.dirname(os.path.realpath(__file__))
+
+    MY_STAGING_AREA = 'staging:///'
 
     grompp_name = os.path.basename(Kconfig.mdp_file)
     topol_name = os.path.basename(Kconfig.top_file)
@@ -34,28 +36,65 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
             ndxfile_name = os.path.basename(Kconfig.ndx_file)
         else:
             ndxfile_name = ''
-        mdtd.arguments = ['run.py','--mdp','%s'%grompp_name,'--gro','start.gro','--top','%s'%topol_name,'--out','out.gro']
+        mdtd.arguments = ['run.py', '--mdp', '%s' % grompp_name, '--gro', 'start.gro', '--top', '%s' % topol_name, '--out', 'out.gro']
         mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
         gromacs_task = radical.pilot.ComputeUnitDescription()
-        gromacs_task.pre_exec = ['export grompp_options="%s" mdrun_options="%s" ndxfile="%s"'%(grompp_opts,mdrun_opts,ndxfile_name)] + mdtd_bound.pre_exec
+        gromacs_task.pre_exec = ['export grompp_options="%s" mdrun_options="%s" ndxfile="%s"' % (grompp_opts, mdrun_opts, ndxfile_name)] + mdtd_bound.pre_exec
         gromacs_task.executable = 'python'
         gromacs_task.arguments = mdtd_bound.arguments
         gromacs_task.mpi = True
         gromacs_task.cores = Kconfig.num_cores_per_sim_cu
 
-        #gromacs_task.input_staging = ['%s/run.sh > run.sh'%curdir,'%s/temp/start%s.gro > start.gro' % (os.getcwd(), i),'%s' % (Kconfig.mdp_file), '%s' % (Kconfig.top_file)]
-        inputs = ['ln %s/run.py .'%paths[0],'ln %s/temp/start%s.gro start.gro'%(paths[cycle],i),'ln %s/%s .'%(paths[0],grompp_name),'ln %s/%s .'%(paths[0],topol_name)]
-        gromacs_task.pre_exec = gromacs_task.pre_exec + inputs
+        run_stage = {
+                        'source': MY_STAGING_AREA + 'run.py',
+                        'target': 'run.py',
+                        'action': radical.pilot.LINK
+                    }
+
+        gro_stage = {
+                        'source': MY_STAGING_AREA + 'iter{0}/start{1}.gro'.format(cycle, i),
+                        'target': 'start.gro',
+                        'action': radical.pilot.LINK
+                    }
+
+        grompp_stage = {
+                        'source': MY_STAGING_AREA + grompp_name,
+                        'target': grompp_name,
+                        'action': radical.pilot.LINK
+                    }
+
+        topol_stage = {
+                        'source': MY_STAGING_AREA + topol_name,
+                        'target': topol_name,
+                        'action': radical.pilot.LINK
+                    }
+
+        gromacs_task.input_staging = [run_stage, gro_stage, grompp_stage, topol_stage]
 
         if Kconfig.ndx_file is not None:
-            #gromacs_task.input_staging.append('%s' % Kconfig.ndx_file)
-            gromacs_task.pre_exec = gromacs_task.pre_exec + ['ln %s/%s .'%(paths[0],ndxfile_name)]
+            ndx_stage = {
+                            'source': MY_STAGING_AREA + ndxfile_name,
+                            'target': ndxfile_name,
+                            'action': radical.pilot.LINK
+                        }
+            gromacs_task.input_staging.append(ndx_stage)
+
         if Kconfig.itp_file_loc is not None:
-            # for itpfile in glob.glob(Kconfig.itp_file_loc + '*.itp'):
-            #    gromacs_task.input_staging.append('%s' % itpfile)
-            gromacs_task.pre_exec = gromacs_task.pre_exec + ['ln %s/*.itp .' % paths[0]]
-        #gromacs_task.output_staging = ['out.gro > out%s.gro' % i]
-        gromacs_task.post_exec = ['ln out.gro %s/out%s.gro'%(paths[cycle],i)]
+            for itpfile in glob.glob(Kconfig.itp_file_loc + '*.itp'):
+                temp = {
+                            'source': MY_STAGING_AREA + itpfile,
+                            'target': itpfile,
+                            'action': radical.pilot.LINK
+                        }
+                gromacs_task.input_staging.append(temp)
+
+        out_stage = {
+                        'source': 'out.gro',
+                        'target': MY_STAGING_AREA + 'iter{0}/out{1}.gro'.format(cycle, i),
+                        'action':radical.pilot.LINK
+                    }
+
+        gromacs_task.output_staging = [out_stage]
 
         gromacs_tasks.append(gromacs_task)
 
@@ -69,7 +108,6 @@ def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
 
     try:
         for unit in units:
-            #print 'Start : ', unit.start_time, 'Stop : ', unit.stop_time
             start_times.append(unit.start_time)
             end_times.append(unit.stop_time)
     

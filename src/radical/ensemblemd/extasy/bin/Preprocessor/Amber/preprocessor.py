@@ -3,7 +3,7 @@ __author__ = 'vivek'
 import radical.pilot
 import os
 
-def Preprocessing(Kconfig,umgr,cycle,paths,pilot):
+def Preprocessing(Kconfig,umgr,pilot):
 
     print 'Preprocessing stage ....'
 

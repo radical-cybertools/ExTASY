@@ -8,6 +8,8 @@ import os
 def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
 
     print 'Starting Analysis'
+    MY_STAGING_AREA = 'staging:///'
+
     nearest_neighbor_file = 'neighbors.nn'
     egfile = 'tmpha.eg'
     evfile = 'tmpha.ev'
@@ -21,13 +23,32 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
     mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
     lsdm=radical.pilot.ComputeUnitDescription()
     lsdm.pre_exec = ['module load gromacs']
-    lsdm.pre_exec = lsdm.pre_exec + ['ln %s/pre_analyze.py'%paths[0],'python pre_analyze.py %s %s %s'%(Kconfig.num_CUs,Kconfig.md_output_file,paths[cycle])]
+    lsdm.pre_exec = lsdm.pre_exec + ['python pre_analyze.py %s %s %s'%(Kconfig.num_CUs,Kconfig.md_output_file,paths[cycle])]
     lsdm.pre_exec = lsdm.pre_exec + ['echo 2 | trjconv -f %s -s %s -o tmpha.gro'%(Kconfig.md_output_file,Kconfig.md_output_file)]
     lsdm.pre_exec = lsdm.pre_exec + mdtd_bound.pre_exec
     lsdm.executable = mdtd_bound.executable
     lsdm.arguments = mdtd_bound.arguments
-    #lsdm.input_staging = [Kconfig.lsdm_config_file,Kconfig.md_output_file,'%s/run_analyzer.sh'%curdir,'%s/lsdm.py'%curdir]
-    lsdm.pre_exec = lsdm.pre_exec + ['ln %s/%s .'%(paths[0],Kconfig.lsdm_config_file),'ln %s/run_analyzer.sh .'% paths[0],'ln %s/lsdm.py .'%paths[0]]
+
+    pre_ana_stage = {
+                        'source': MY_STAGING_AREA + 'pre_analyze.py',
+                        'target': 'pre_analyze.py',
+                        'action': radical.pilot.LINK
+                    }
+
+    config_stage = {
+                        'source': MY_STAGING_AREA + 'config.ini',
+                        'target': 'config.ini',
+                        'action': radical.pilot.LINK
+                    }
+
+    ana_stage = {
+                        'source': MY_STAGING_AREA + 'run_analyzer.sh',
+                        'target': 'run_analyzer.sh',
+                        'action': radical.pilot.LINK
+                }
+
+    lsdm.input_staging = [pre_ana_stage,config_stage,ana_stage]
+
     if(cycle>0):
         #lsdm.input_staging = lsdm.input_staging + [Kconfig.w_file]
         lsdm.pre_exec = lsdm.pre_exec + ['ln %s/%s .'%(paths[cycle],os.path.basename(Kconfig.w_file))]
