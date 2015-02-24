@@ -1,7 +1,6 @@
 __author__ = 'vivek'
 
 from radical.ensemblemd.mdkernels import MDTaskDescription
-import saga
 import radical.pilot
 import os
 
@@ -11,7 +10,6 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
     MY_STAGING_AREA = 'staging:///'
 
     nearest_neighbor_file = 'neighbors.nn'
-    egfile = 'tmpha.eg'
     evfile = 'tmpha.ev'
     num_clone_files = 'ncopies.nc'
     outgrofile_name = 'out.gro'
@@ -28,6 +26,8 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
     lsdm.pre_exec = lsdm.pre_exec + mdtd_bound.pre_exec
     lsdm.executable = mdtd_bound.executable
     lsdm.arguments = mdtd_bound.arguments
+    lsdm.mpi = True
+    lsdm.cores = RPconfig.PILOTSIZE
 
     pre_ana_stage = {
                         'source': MY_STAGING_AREA + 'pre_analyze.py',
@@ -50,38 +50,144 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
     lsdm.input_staging = [pre_ana_stage,config_stage,ana_stage]
 
     if(cycle>0):
-        #lsdm.input_staging = lsdm.input_staging + [Kconfig.w_file]
-        lsdm.pre_exec = lsdm.pre_exec + ['ln %s/%s .'%(paths[cycle],os.path.basename(Kconfig.w_file))]
+        weight_stage_in = {
+                            'source': MY_STAGING_AREA + 'iter{0}/weight.w'.format(cycle-1),
+                            'transfer': 'weight.w',
+                            'action': radical.pilot.LINK
+                    }
+        lsdm.input_staging.append (weight_stage_in)
 
-    lsdm.mpi = True
-    lsdm.cores = RPconfig.PILOTSIZE
+    weight_stage_inter = {
+                            'source': 'weight.w',
+                            'target': MY_STAGING_AREA + 'iter{0}/weight_inter.w'.format(cycle),
+                            'action': radical.pilot.LINK
+                    }
+
+    nn_stage_out = {
+                        'source': nearest_neighbor_file,
+                        'target': MY_STAGING_AREA + 'iter{0}/{1}'.format(cycle,nearest_neighbor_file),
+                        'action': radical.pilot.LINK
+                    }
+
+    ev_stage_out = {
+                        'source': evfile,
+                        'target': MY_STAGING_AREA + 'iter{0}/{1}'.format(cycle,evfile),
+                        'action': radical.pilot.LINK
+                    }
+
+    md_stage_out = {
+                        'source': Kconfig.md_output_file,
+                        'target': MY_STAGING_AREA + 'iter{0}/{1}'.format(cycle,Kconfig.md_output_file),
+                        'action': radical.pilot.LINK
+                    }
+
+    logfile_transfer = {
+                        'source': 'lsdmap.log',
+                        'target': 'backup/iter{0}/lsdmap.log'.format(cycle)
+                        }
+
+    lsdm.output_staging = [weight_stage_inter,nn_stage_out,ev_stage_out,md_stage_out,logfile_transfer]
 
     lsdmCU = umgr.submit_units(lsdm)
 
     lsdmCU.wait()
 
-    lsdm_path=saga.Url(lsdmCU.working_directory).path
-
     print 'Select + Reweighting step'
 
     post=radical.pilot.ComputeUnitDescription()
-    post.pre_exec = mdtd_bound.post_exec + ['ln %s/post_analyze.py .'%paths[0],'ln %s/select.py .'%paths[0],'cp -r %s/lsdmap .'%paths[0],
-                      'ln %s/reweighting.py .'%paths[0],'ln %s/%s .'%(lsdm_path,nearest_neighbor_file),
-                      'ln %s/%s .'%(lsdm_path,evfile),'ln %s/%s .'%(lsdm_path,Kconfig.md_output_file)]
-    if(cycle>=1):
-        post.pre_exec = post.pre_exec +['cp %s/%s .'%(lsdm_path,Kconfig.w_file)]
+    post.pre_exec = mdtd_bound.post_exec
+
+    post_ana_stage = {
+                        'source': MY_STAGING_AREA + 'post_analyze.py',
+                        'target': 'post_analyze.py',
+                        'action': radical.pilot.LINK
+                    }
+
+    select_stage = {
+                        'source': MY_STAGING_AREA + 'select.py',
+                        'target': 'select.py',
+                        'action': radical.pilot.LINK
+                    }
+
+    reweight_stage = {
+                        'source': MY_STAGING_AREA + 'reweighting.py',
+                        'target': 'reweighting.py',
+                        'action': radical.pilot.LINK
+                    }
+
+    nn_stage_in = {
+                        'source': MY_STAGING_AREA + 'iter{0}/{1}'.format(cycle,nearest_neighbor_file),
+                        'target': nearest_neighbor_file,
+                        'action': radical.pilot.LINK
+                }
+
+    ev_stage_in = {
+                        'source': MY_STAGING_AREA + 'iter{0}/{1}'.format(cycle,evfile),
+                        'target': evfile,
+                        'action': radical.pilot.LINK
+                }
+
+    md_stage_in = {
+                        'source': MY_STAGING_AREA + 'iter{0}/{1}'.format(cycle,Kconfig.md_output_file)
+                        'target': Kconfig.md_output_file,
+                        'action': radical.pilot.LINK
+                }
+
+    post.input_staging = [post_ana_stage,select_stage,reweight_stage,nn_stage_in,ev_stage_in,md_stage_in]
+
+    weight_stage_out = {
+                        'source': MY_STAGING_AREA + 'iter{0}/weight_inter.w'.format(cycle),
+                        'target': 'weight.w',
+                        'action': radical.pilot.LINK
+                }
+    post.output_staging = [weight_stage_out]
+
     post.executable = 'python'
     post.arguments = ['post_analyze.py',Kconfig.num_runs,evfile,num_clone_files,Kconfig.md_output_file,nearest_neighbor_file,
                          Kconfig.w_file,outgrofile_name,Kconfig.max_alive_neighbors,Kconfig.max_dead_neighbors,
                          os.path.basename(Kconfig.md_input_file),cycle]
 
-    #lsdm.output_staging = [' tmpha.eg > %s'%(egfile),'tmpha.ev > %s'%(evfile),nearest_neighbor_file,'lsdmap.log']
+
     if((cycle+1)%Kconfig.nsave==0):
-        post.post_exec = ['ln %s/lsdmap.log .'%lsdm_path]
-        post.post_exec = post.post_exec + ['ln %s %s/'%(Kconfig.w_file,paths[cycle]),'ln %s_%s %s/%s_%s'%(cycle+1,os.path.basename(Kconfig.md_input_file),paths[cycle],cycle+1,os.path.basename(Kconfig.md_input_file))]
-        post.output_staging = ['lsdmap.log',Kconfig.w_file,'%s_%s'%(cycle+1,os.path.basename(Kconfig.md_input_file))]
+
+        wfile_transfer = {
+                            'source': 'weight.w',
+                            'target': 'backup/iter{0}/weight.w'.format(cycle)
+                        }
+        wfile_stage = {
+                            'source': 'weight.w',
+                            'target': MY_STAGING_AREA + 'iter{0}/weight.w'.format(cycle),
+                            'action': radical.pilot.LINK
+                        }
+
+        md_transfer = {
+                            'source': '{0}_{1}'.format(cycle+1,os.path.basename(Kconfig.md_input_file)),
+                            'target': 'backup/iter{0}/{1}_{2}'.format(cycle,cycle+1,os.path.basename(Kconfig.md_input_file)),
+        }
+
+        md_stage = {
+                            'source': '{0}_{1}'.format(cycle+1,os.path.basename(Kconfig.md_input_file))
+                            'target': MY_STAGING_AREA + '{0}_{1}'.format(cycle+1,os.path.basename(Kconfig.md_input_file))
+                            'action': radical.pilot.LINK
+        }
+
+        post.output_staging = [wfile_stage,wfile_transfer,md_transfer,md_stage]
     else:
-        post.post_exec = ['ln %s %s/'%(Kconfig.w_file,paths[cycle]),'ln %s_%s %s/%s_%s'%(cycle+1,os.path.basename(Kconfig.md_input_file),paths[cycle],cycle+1,os.path.basename(Kconfig.md_input_file))]
+
+        wfile_stage = {
+                            'source': 'weight.w',
+                            'target': MY_STAGING_AREA + 'iter{0}/weight.w'.format(cycle),
+                            'action': radical.pilot.LINK
+                        }
+
+        md_stage = {
+                            'source': '{0}_{1}'.format(cycle+1,os.path.basename(Kconfig.md_input_file))
+                            'target': MY_STAGING_AREA + '{0}_{1}'.format(cycle+1,os.path.basename(Kconfig.md_input_file))
+                            'action': radical.pilot.LINK
+        }
+
+        post.output_staging = [wfile_stage,md_stage]
+
 
 
     postCU = umgr.submit_units(post)
