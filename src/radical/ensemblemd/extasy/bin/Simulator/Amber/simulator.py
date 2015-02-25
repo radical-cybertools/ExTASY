@@ -51,7 +51,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
                           '-inf', 'min%s.inf'%cycle,
                           '-r', 'md%s.crd'%cycle,
                           '-p', dict['topfilename'],
-                          '-c', 'min%s.crd'%cycle,#
+                          '-c', dict['crdfilename'],#
                           '-ref','min%s.crd'%cycle]
         mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
         cu = radical.pilot.ComputeUnitDescription()
@@ -95,6 +95,12 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
                     'target': dict['mininfilename'],
                     'action': radical.pilot.LINK
                     }
+
+        init_crd_stage = {
+                    'source': MY_STAGING_AREA + dict['crdfilename'],
+                    'target': dict['crdfilename'],
+                    'action': radical.pilot.LINK
+        }
         #------------------------------------------------------------------
 
         #------------------------------------------------------------------
@@ -107,7 +113,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
                     }
         #----------------------------------------------------------
 
-        cu.input_staging = [crd_stage,top_stage,minin_stage]
+        cu.input_staging = [crd_stage,top_stage,minin_stage,init_crd_stage]
         cu.output_staging = [md_stage_out]
         cudesc_list_A.append(cu)
 

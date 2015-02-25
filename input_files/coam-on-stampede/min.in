@@ -1,4 +1,4 @@
-Basic minimisation, weakly restraining backbone
+Basic minimisation, moving initial structure towards CoCo-generated target
  &cntrl
    imin=1, maxcyc=500,
    ntpr=50,
@@ -6,12 +6,9 @@ Basic minimisation, weakly restraining backbone
    ntb=0, cut=25.0, igb=2, 
  &end
 Atoms to be restrained
-0.1
+1.0
 FIND
-CA * * *
-N * * *
-C * * *
-O * * *
+* * * *
 SEARCH
 RES 1 999
 END
