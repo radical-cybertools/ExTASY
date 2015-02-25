@@ -16,8 +16,6 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
     print 'Starting Analysis'
 
-    print 'Submitting COCO Compute Unit'
-
     #==================================================================
     # CU Definition for CoCo
 
