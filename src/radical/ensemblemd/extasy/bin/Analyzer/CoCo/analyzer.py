@@ -7,7 +7,7 @@ import os
 
 MY_STAGING_AREA = 'staging:///'
 
-def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
+def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
 
     if (cycle == 0):

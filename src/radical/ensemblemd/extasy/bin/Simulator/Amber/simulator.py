@@ -8,7 +8,7 @@ import saga
 import sys
 
 
-def Simulator(umgr,RPconfig,Kconfig,cycle,paths):
+def Simulator(umgr,RPconfig,Kconfig,cycle):
 
 
     print 'Starting Simulation'
