@@ -6,7 +6,7 @@ import sys
 if __name__ == '__main__':
     num_CUs = int(sys.argv[1])
     md_output_file = sys.argv[2]
-    path = sys.argv[3]
+    path = os.getcwd()
 
     with open(md_output_file, 'w') as output_grofile:
         for i in range(0,num_CUs):

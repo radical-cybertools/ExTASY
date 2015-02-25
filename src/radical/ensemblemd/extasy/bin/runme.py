@@ -180,11 +180,11 @@ def main():
             print 'Cycle : %s'%i
 
             if (Kconfig.simulator == 'Gromacs' and Kconfig.analyzer == 'LSDMap'):
-                Simulator(umgr, RPconfig, Kconfig, i,paths)
-                Analyzer(umgr, RPconfig, Kconfig, i,paths)
+                Simulator(umgr, RPconfig, Kconfig, i)
+                Analyzer(umgr, RPconfig, Kconfig, i)
             elif (Kconfig.simulator == 'Amber' and Kconfig.analyzer == 'CoCo'):
-                Analyzer(umgr, RPconfig, Kconfig, i,paths)
-                Simulator(umgr, RPconfig, Kconfig, i,paths)
+                Analyzer(umgr, RPconfig, Kconfig, i)
+                Simulator(umgr, RPconfig, Kconfig, i)
 
             '''
             if((i+1)%Kconfig.nsave == 0):

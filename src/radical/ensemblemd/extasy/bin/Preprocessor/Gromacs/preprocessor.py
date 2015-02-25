@@ -39,11 +39,11 @@ def Preprocessing(Kconfig,umgr,pilot):
                 list_of_files.append('%s' % itpfile)
 
     for item in list_of_files:
-
+        '''
         source = radical.pilot.Url()
         source.schema = 'file'
         source.path = item
-        source = str(str)
+        source = str(source)
 
         target = radical.pilot.Url()
         target.schema = 'staging'
@@ -57,10 +57,24 @@ def Preprocessing(Kconfig,umgr,pilot):
                 }
 
         sd_pilot.append(dict)
+        '''
+        if item.startswith('.'):
+            dict = {
+                'source': 'file://%s/%s'%(os.getcwd(),os.path.basename(item)),
+                'target': "%s%s" % (MY_STAGING_AREA,os.path.basename(item)),
+                'action': radical.pilot.TRANSFER
+                }
+        else:
+            dict = {
+                'source': 'file://%s'%(item),
+                'target': "%s%s" % (MY_STAGING_AREA,os.path.basename(item)),
+                'action': radical.pilot.TRANSFER
+                }
+        sd_pilot.append(dict)
 
     pilot.stage_in(sd_pilot)
 
-    umgr.add_pilot(pilot)
+    umgr.add_pilots(pilot)
 
     cud = radical.pilot.ComputeUnitDescription()
     cud.cores = 1
@@ -79,6 +93,15 @@ def Preprocessing(Kconfig,umgr,pilot):
                     'target' : os.path.basename(Kconfig.md_input_file),
                     'action' : radical.pilot.LINK
     }
+
+    cud.output_staging = []
+    for i in range(0,Kconfig.num_CUs):
+        temp = {
+                    'source': 'temp/start{0}.gro'.format(i),
+                    'target': MY_STAGING_AREA + 'iter0/start{0}.gro'.format(i),
+                    'action': radical.pilot.LINK
+        }
+        cud.output_staging.append(temp)
 
     cud.input_staging = [prep_stage,md_stage]
 

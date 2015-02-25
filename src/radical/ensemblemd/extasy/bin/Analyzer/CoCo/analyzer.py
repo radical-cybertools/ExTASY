@@ -1,8 +1,9 @@
+__author__ = 'vivek'
 
 from radical.ensemblemd.mdkernels import MDTaskDescription
 import radical.pilot
 import os
-import glob
+
 
 MY_STAGING_AREA = 'staging:///'
 
@@ -83,7 +84,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,paths):
     if((cycle+1)%Kconfig.nsave == 0):
         logfile_transfer = {
                             'source': '%s'%Kconfig.logfile,
-                            'target': 'backup/{0}_{1}'.format(cycle,Kconfig.logfile)
+                            'target': 'backup/iter{0}/{0}_{1}'.format(cycle,Kconfig.logfile)
                         }
         cudesc.output_staging.append(logfile_transfer)
     #------------------------------------------------------------------

@@ -15,6 +15,7 @@ if __name__ =='__main__':
     max_dead_neighbors = int(sys.argv[9])
     md_input_file = sys.argv[10]
     cycle = int(sys.argv[11])
+    numCUs = int(sys.argv[12])
 
     os.system('python select.py %s -s %s -o %s' %(num_runs,evfile,num_clone_files))
     #Update Boltzman weights
@@ -23,3 +24,5 @@ if __name__ =='__main__':
 
     #Rename outputfile as inputfile for next iteration
     os.system('mv %s %s_%s'%(outgrofile_name,cycle+1,md_input_file))
+
+    os.system('python spliter.py %s %s_%s'%(numCUs,cycle+1,md_input_file))
