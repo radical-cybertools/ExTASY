@@ -204,7 +204,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
                             'transfer': 'weight.w',
                             'action': radical.pilot.COPY
                     }
-        post.input_staging.append (weight_stage_in)
+        post.input_staging.append(weight_stage_in)
 
     #-------------------------------------------------------------------------------------------------------------------
     
