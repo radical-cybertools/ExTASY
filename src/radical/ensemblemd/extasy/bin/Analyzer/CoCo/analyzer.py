@@ -90,13 +90,13 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
     #------------------------------------------------------------------
     # transfer the ncdf files from all previous iterations
-    for iter in range(0,cycle):
-        for inst in range(0,Kconfig.num_CUs):
-            dir = {
+        for iter in range(0,cycle):
+            for inst in range(0,Kconfig.num_CUs):
+                dir = {
                     'source': 'md_{0}_{1}.ncdf'.format(iter,inst),
-                    'target': 'backup/iter{0}/md_{0}_{1}.ncdf'.format(iter,inst),
+                    'target': 'backup/iter{2}/md_{0}_{1}.ncdf'.format(iter,inst,cycle),
                     }
-            cudesc.output_staging.append(dir)
+                cudesc.output_staging.append(dir)
     #------------------------------------------------------------------
 
     unit = umgr.submit_units(cudesc)

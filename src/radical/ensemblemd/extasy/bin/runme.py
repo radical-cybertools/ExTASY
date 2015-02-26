@@ -176,7 +176,7 @@ def main():
 
         # Restart case - test if iter? folder exists
         elif ((Kconfig.start_iter!=0) and ( not (os.path.isdir('{0}/backup/iter{1}'.format(os.getcwd(),Kconfig.start_iter-1))))) is True:
-            print 'Backups not found .. You need have a backup/iter{0} folder ..'.format(Kconfig.start_iter - 1)
+            print 'Backups not found .. You need to have a backup/iter{0} folder ..'.format(Kconfig.start_iter - 1)
             print 'Exiting ...'
             exit(0)
 
