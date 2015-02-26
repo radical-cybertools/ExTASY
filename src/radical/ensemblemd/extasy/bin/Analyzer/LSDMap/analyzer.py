@@ -92,16 +92,6 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
 
     #-------------------------------------------------------------------------------------------------------------------
-    # Stage-out the intermediate weight file
-    weight_stage_inter_out = {
-                            'source': 'weight.w',
-                            'target': MY_STAGING_AREA + 'iter{0}/weight_inter.w'.format(cycle),
-                            'action': radical.pilot.LINK
-                    }
-    #-------------------------------------------------------------------------------------------------------------------
-
-
-    #-------------------------------------------------------------------------------------------------------------------
     # Stage-out neighbors, eigen vector file + output of lsdmap
     nn_stage_out = {
                         'source': nearest_neighbor_file,
@@ -121,7 +111,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
                         'action': radical.pilot.LINK
                     }
     
-    lsdm.output_staging = [weight_stage_inter_out,nn_stage_out,ev_stage_out,md_stage_out]
+    lsdm.output_staging = [nn_stage_out,ev_stage_out,md_stage_out]
     
     #-------------------------------------------------------------------------------------------------------------------
 
@@ -193,11 +183,6 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
                         'action': radical.pilot.LINK
                 }
 
-    weight_stage_inter_in = {
-                        'source': MY_STAGING_AREA + 'iter{0}/weight_inter.w'.format(cycle),
-                        'target': 'weight.w',
-                        'action': radical.pilot.LINK
-                }
     #-------------------------------------------------------------------------------------------------------------------
 
     #-------------------------------------------------------------------------------------------------------------------
@@ -211,7 +196,15 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
                 }
 
     post.input_staging = [post_ana_stage,select_stage,reweight_stage,nn_stage_in,ev_stage_in,md_stage_in,
-                          weight_stage_inter_in,spliter_stage]
+                          spliter_stage]
+
+    if(cycle>0):
+        weight_stage_in = {
+                            'source': MY_STAGING_AREA + 'iter{0}/weight.w'.format(cycle-1),
+                            'transfer': 'weight.w',
+                            'action': radical.pilot.COPY
+                    }
+        post.input_staging.append (weight_stage_in)
 
     #-------------------------------------------------------------------------------------------------------------------
     
@@ -234,7 +227,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
         wfile_stage = {
                             'source': 'weight.w',
                             'target': MY_STAGING_AREA + 'iter{0}/weight.w'.format(cycle),
-                            'action': radical.pilot.LINK
+                            'action': radical.pilot.COPY
                         }
 
         md_transfer = {
@@ -255,7 +248,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
         wfile_stage = {
                             'source': 'weight.w',
                             'target': MY_STAGING_AREA + 'iter{0}/weight.w'.format(cycle),
-                            'action': radical.pilot.LINK
+                            'action': radical.pilot.COPY
                         }
 
         md_stage = {
@@ -270,14 +263,14 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
     #-------------------------------------------------------------------------------------------------------------------
     # Stage-out the split coordinate files for next iteration
-        if (cycle < Kconfig.num_iterations):
-            for inst in range(0,Kconfig.num_CUs):
-                temp = {
-                            'source': 'temp/start{0}.gro'.format(inst),
-                            'target': MY_STAGING_AREA + 'iter{0}/start{1}.gro'.format(cycle+1,inst),
-                            'action': radical.pilot.LINK
+    if (cycle < Kconfig.num_iterations):
+        for inst in range(0,Kconfig.num_CUs):
+            temp = {
+                        'source': 'temp/start{0}.gro'.format(inst),
+                        'target': MY_STAGING_AREA + 'iter{0}/start{1}.gro'.format(cycle+1,inst),
+                        'action': radical.pilot.LINK
                 }
-                post.output_staging.append(temp)
+            post.output_staging.append(temp)
     #-------------------------------------------------------------------------------------------------------------------
     postCU = umgr.submit_units(post)
     postCU.wait()
