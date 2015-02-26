@@ -39,4 +39,4 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`search`
 
-.. |VERSION| replace:: 0.1.2-beta
+.. |VERSION| replace:: 0.1.3-beta
