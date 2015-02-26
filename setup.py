@@ -19,6 +19,19 @@ from setuptools import setup, find_packages, Command
 
 
 #-----------------------------------------------------------------------------
+# check python version. we need > 2.5, <3.x
+if sys.hexversion < 0x02050000 or sys.hexversion >= 0x03000000:
+    raise RuntimeError("ExTASY requires Python 2.x (2.5 or higher)")
+#-----------------------------------------------------------------------------
+
+srcroot = os.path.dirname(os.path.realpath(__file__))
+#-----------------------------------------------------------------------------
+#
+def read(*rnames):
+   return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+
+
+#-----------------------------------------------------------------------------
 #
 def get_version():
 
@@ -42,7 +55,7 @@ def get_version():
 
             # the git check failed -- its likely that we are called from
             # a tarball, so use ./VERSION instead
-            out=open ("%s/VERSION" % srcroot, 'r').read().strip()
+            out=open ("%s/VERSION" % ".", 'r').read().strip()
 
 
         # from the full string, extract short and long versions
@@ -54,9 +67,7 @@ def get_version():
 
         # sanity check if we got *something*
         if not short_version or not long_version :
-            sys.stderr.write ("Cannot determine version from git or ./VERSION\n")
-            import sys
-            sys.exit (-1)
+            raise RuntimeError("SETUP ERROR: Cannot determine version from git or ./VERSION\n")
 
 
         # make sure the version files exist for the runtime version inspection
@@ -65,26 +76,12 @@ def get_version():
 
 
     except Exception as e :
-        print 'Could not extract/set version: %s' % e
-        import sys
-        sys.exit (-1)
+        raise RuntimeError("SETUP ERROR: Could not extract/set version: %s" % e)
 
     return short_version, long_version
 
-
-short_version, long_version = get_version()
-
-#-----------------------------------------------------------------------------
-# check python version. we need > 2.5, <3.x
-if sys.hexversion < 0x02050000 or sys.hexversion >= 0x03000000:
-    raise RuntimeError("ExTASY requires Python 2.x (2.5 or higher)")
-#-----------------------------------------------------------------------------
-
 srcroot = os.path.dirname(os.path.realpath(__file__))
-#-----------------------------------------------------------------------------
-#
-def read(*rnames):
-   return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+short_version, long_version = get_version()
 
 #-----------------------------------------------------------------------------
 setup_args = {
