@@ -56,8 +56,8 @@ def Preprocessing(Kconfig,umgr,pilot,restart):
 
     if restart == True:
         cycle=Kconfig.start_iter-1
-        more_files = [os.getcwd() + 'backup/iter{0}/{1}_input.gro'.format(cycle,cycle+1),
-                      os.getcwd() + 'backup/iter{0}/weight.w'.format(cycle)]
+        more_files = [os.getcwd() + '/backup/iter{0}/{1}_input.gro'.format(cycle,cycle+1),
+                      os.getcwd() + '/backup/iter{0}/weight.w'.format(cycle)]
         for item in more_files:
             dict = {
                         'source': 'file://%s'%(item),
@@ -130,7 +130,7 @@ def Preprocessing(Kconfig,umgr,pilot,restart):
         for i in range(0,Kconfig.num_CUs):
             temp = {
                     'source': 'temp/start{0}.gro'.format(i),
-                    'target': MY_STAGING_AREA + 'iter{1}/start{0}.gro'.format(i,Kconfig.start_iter-1),
+                    'target': MY_STAGING_AREA + 'iter{1}/start{0}.gro'.format(i,Kconfig.start_iter),
                     'action': radical.pilot.LINK
             }
             cud.output_staging.append(temp)
