@@ -217,22 +217,15 @@ iteration, there are (num_CUs+1) tasks executed.
 Understanding the Output
 ========================
 
-* In the local machine, a "backup" folder is created and at the end of every checkpoint intervel (=nsave)
-an "iter*" folder is created which contains the necessary files to start the next iteration.
+* In the local machine, a "backup" folder is created and at the end of every checkpoint intervel (=nsave) an "iter*" folder is created which contains the necessary files to start the next iteration.
 
-* The "iter*" folder will not contain any of the initial files such as the topology file, minimization file, etc
-since they already exist on the local machine
+* The "iter*" folder will not contain any of the initial files such as the topology file, minimization file, etc since they already exist on the local machine
 
-* In coco-amber, the "iter*" folder contains the NetCDF files required to start the next iteration and a logfile
- of the CoCo stage of the current iteration.
+* In coco-amber, the "iter*" folder contains the NetCDF files required to start the next iteration and a logfile of the CoCo stage of the current iteration.
 
-* It is important to note that since, in coco-amber, all the NetCDF files of previous and current iterations are
- transfered at each checkpoint, it might be useful to have longer checkpoint intervals. Since smaller intervals
- would lead to heavy data transfer of redundant data.
+* It is important to note that since, in coco-amber, all the NetCDF files of previous and current iterations are transferred at each checkpoint, it might be useful to have longer checkpoint intervals. Since smaller intervals would lead to heavy data transfer of redundant data.
 
-* On the remote machine, inside the pilot-* folder you can find a folder called "staging_area". This location is
-used to exchange/link/move intermediate data. The shared data is kept in "staging_area/" and the iteration
-specific inputs/outputs can be found in their specific folders (="staging_area/iter*").
+* On the remote machine, inside the pilot-* folder you can find a folder called "staging_area". This location is used to exchange/link/move intermediate data. The shared data is kept in "staging_area/" and the iteration specific inputs/outputs can be found in their specific folders (="staging_area/iter*").
 
 
 CoCo/Amber Restart Mechanism
@@ -244,11 +237,11 @@ CoCo/Amber Restart Mechanism
 
 * Example,
 
-        Experiment 1 : num_iterations = 4, start_iter = 0, nsave = 2
+        **Experiment 1** : num_iterations = 4, start_iter = 0, nsave = 2
 
-        Backups created : iter1/ (after 2 iterations) , iter3/ (after 4 iterations)
+        **Backups created** : iter1/ (after 2 iterations) , iter3/ (after 4 iterations)
 
-        Experiment 2 (restart) : num_iterations = 2, start_iter = 4 (=start from 5th iter), nsave = 2
+        **Experiment 2 (restart)** : num_iterations = 2, start_iter = 4 (=start from 5th iter), nsave = 2
 
         **Note** : start_iter should match one of the previous checkpoints and start_iter should be a multiple of nsave.
 
@@ -256,10 +249,13 @@ CoCo/Amber Restart Mechanism
 
 * Having a small checkpoint interval increases redundant data. Example,
 
-        Experiment 1 : num_iterations = 8, start_iter = 0, nsave = 2
+        **Experiment 1** : num_iterations = 8, start_iter = 0, nsave = 2
 
-        Backups created :   iter1/ (contains ncdf files for first 2 iters)
-                            iter3/ (contains ncdf files for first 4 iters)
-                            iter5/ (contains ncdf files for first 6 iters)
-                            iter7/ (contains ncdf files for first 8 iters)
+        **Backups created** :   iter1/ (contains ncdf files for first 2 iters)
+
+                                iter3/ (contains ncdf files for first 4 iters)
+
+                                iter5/ (contains ncdf files for first 6 iters)
+
+                                iter7/ (contains ncdf files for first 8 iters)
 

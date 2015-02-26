@@ -233,17 +233,13 @@ for the next iteration of the Simulation stage. As can be seen, per iteration, t
 Understanding the Output
 ========================
 
-* In the local machine, a "backup" folder is created and at the end of every checkpoint intervel (=nsave)
-an "iter*" folder is created which contains the necessary files to start the next iteration.
+* In the local machine, a "backup" folder is created and at the end of every checkpoint intervel (=nsave) an "iter*" folder is created which contains the necessary files to start the next iteration.
 
-* The "iter*" folder will not contain any of the initial files such as the topology file, minimization file, etc
-since they already exist on the local machine
+* The "iter*" folder will not contain any of the initial files such as the topology file, minimization file, etc since they already exist on the local machine
 
 * In gromacs-lsdmap, the "iter*" folder contains the coordinate file and weight file required in the next iteration.
 
-* On the remote machine, inside the pilot-* folder you can find a folder called "staging_area". This location is
-used to exchange/link/move intermediate data. The shared data is kept in "staging_area/" and the iteration
-specific inputs/outputs can be found in their specific folders (="staging_area/iter*").
+* On the remote machine, inside the pilot-* folder you can find a folder called "staging_area". This location is used to exchange/link/move intermediate data. The shared data is kept in "staging_area/" and the iteration specific inputs/outputs can be found in their specific folders (="staging_area/iter*").
 
 
 
@@ -256,11 +252,11 @@ Gromacs/LSDMap Restart Mechanism
 
 * Example,
 
-        Experiment 1 : num_iterations = 4, start_iter = 0, nsave = 2
+        **Experiment 1** : num_iterations = 4, start_iter = 0, nsave = 2
 
-        Backups created : iter1/ (after 2 iterations) , iter3/ (after 4 iterations)
+        **Backups created** : iter1/ (after 2 iterations) , iter3/ (after 4 iterations)
 
-        Experiment 2 (restart) : num_iterations = 2, start_iter = 4 (=start from 5th iter), nsave = 2
+        **Experiment 2 (restart)** : num_iterations = 2, start_iter = 4 (=start from 5th iter), nsave = 2
 
         **Note** : start_iter should match one of the previous checkpoints and start_iter should be a multiple of nsave.
 
