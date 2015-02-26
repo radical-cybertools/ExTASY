@@ -6,3 +6,5 @@
 * Restart mechanism revisited
 
 * New minimization format for CoCo added
+
+* Added "Understanding the output" section and "Restart mechanism" section in docs.
