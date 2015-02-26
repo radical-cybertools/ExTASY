@@ -70,14 +70,14 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
         if(cycle==0):
 
             crd_stage = {
-                        'source': MY_STAGING_AREA + dict['crdfilename'],
+                        'source': MY_STAGING_AREA + 'iter0/' + dict['crdfilename'],
                         'target': 'min0.crd',
                         'action': radical.pilot.LINK
                         }
         else:
 
             crd_stage = {
-                        'source': MY_STAGING_AREA + 'min{0}{1}.crd'.format(cycle,i),
+                        'source': MY_STAGING_AREA + 'iter{0}/min{0}{1}.crd'.format(cycle,i),
                         'target': 'min{0}.crd'.format(cycle),
                         'action': radical.pilot.LINK
                         }
@@ -108,7 +108,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
 
         md_stage_out = {
                     'source': 'md{0}.crd'.format(cycle),
-                    'target': MY_STAGING_AREA + 'md{0}{1}.crd'.format(cycle,i),
+                    'target': MY_STAGING_AREA + 'iter{0}/md{0}{1}.crd'.format(cycle,i),
                     'action': radical.pilot.LINK
                     }
         #----------------------------------------------------------
@@ -155,7 +155,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
             #------------------------------------------------------------------
             # Link to output from first-stage of Amber
             md_stage_in = {
-                            'source': MY_STAGING_AREA + 'md{0}{1}.crd'.format(cycle,i),
+                            'source': MY_STAGING_AREA + 'iter{0}/md{0}{1}.crd'.format(cycle,i),
                             'target': 'md{0}.crd'.format(cycle),
                             'action': radical.pilot.LINK
                             }
@@ -180,8 +180,8 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
             # Link output data to staging area
             ncdf_stage_out = {
                             'source': 'md{0}.ncdf'.format(cycle),
-                            'target': MY_STAGING_AREA + 'md_{0}_{1}.ncdf'.format(cycle, i),
-                            'action': radical.pilot.LINK
+                            'target': MY_STAGING_AREA + 'iter{0}/md_{0}_{1}.ncdf'.format(cycle, i),
+                            'action': radical.pilot.COPY
                             }
             cudesc.output_staging = [ncdf_stage_out]
             #------------------------------------------------------------------

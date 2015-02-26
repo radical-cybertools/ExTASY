@@ -263,7 +263,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
     #-------------------------------------------------------------------------------------------------------------------
     # Stage-out the split coordinate files for next iteration
-    if (cycle < Kconfig.start_iter + Kconfig.num_iterations):
+    if (cycle < Kconfig.start_iter + Kconfig.num_iterations - 1):
         for inst in range(0,Kconfig.num_CUs):
             temp = {
                         'source': 'temp/start{0}.gro'.format(inst),

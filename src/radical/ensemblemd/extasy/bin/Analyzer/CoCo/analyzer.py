@@ -58,9 +58,9 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     for iter in range(0,cycle):
         for inst in range(0,Kconfig.num_CUs):
             dir = {
-                    'source': MY_STAGING_AREA + 'md_{0}_{1}.ncdf'.format(iter,inst),
+                    'source': MY_STAGING_AREA + 'iter{0}/md_{0}_{1}.ncdf'.format(iter,inst),
                     'target': 'md_{0}_{1}.ncdf'.format(iter,inst),
-                    'action': radical.pilot.LINK
+                    'action': radical.pilot.COPY
                     }
             cudesc.input_staging.append(dir)
     #------------------------------------------------------------------
@@ -71,7 +71,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     for inst in range(0,Kconfig.num_CUs):
         dir = {
                 'source': 'min{0}{1}.crd'.format(cycle,inst),
-                'target': MY_STAGING_AREA + 'min{0}{1}.crd'.format(cycle,inst),
+                'target': MY_STAGING_AREA + 'iter{0}/min{0}{1}.crd'.format(cycle,inst),
                 'action': radical.pilot.LINK
                 }
         cudesc.output_staging.append(dir)
@@ -85,6 +85,18 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
                             'target': 'backup/iter{0}/{0}_{1}'.format(cycle,Kconfig.logfile)
                         }
         cudesc.output_staging.append(logfile_transfer)
+    #------------------------------------------------------------------
+
+
+    #------------------------------------------------------------------
+    # transfer the ncdf files from all previous iterations
+    for iter in range(0,cycle):
+        for inst in range(0,Kconfig.num_CUs):
+            dir = {
+                    'source': 'md_{0}_{1}.ncdf'.format(iter,inst),
+                    'target': 'backup/iter{0}/md_{0}_{1}.ncdf'.format(iter,inst),
+                    }
+            cudesc.output_staging.append(dir)
     #------------------------------------------------------------------
 
     unit = umgr.submit_units(cudesc)

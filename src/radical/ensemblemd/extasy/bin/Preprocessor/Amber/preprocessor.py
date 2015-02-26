@@ -3,7 +3,7 @@ __author__ = 'vivek'
 import radical.pilot
 import os
 
-def Preprocessing(Kconfig,umgr,pilot):
+def Preprocessing(Kconfig,umgr,pilot,restart):
 
     print 'Preprocessing stage ....'
 
@@ -33,6 +33,15 @@ def Preprocessing(Kconfig,umgr,pilot):
                 'action': radical.pilot.TRANSFER
                 }
         sd_pilot.append(dict)
+
+    # Stage-in the crd file for the first iteration
+    dict = {
+                'source': 'file://%s/%s'%(os.getcwd(),os.path.basename(Kconfig.initial_crd_file)),
+                'target': '%siter0/%s'%(MY_STAGING_AREA,os.path.basename(Kconfig.initial_crd_file)),
+                'action': radical.pilot.TRANSFER
+            }
+    sd_pilot.append(dict)
+
 
     pilot.stage_in(sd_pilot)
 
