@@ -6,7 +6,7 @@ import glob
 import sys
 import os
 
-def Preprocessing(Kconfig,umgr,pilot):
+def Preprocessing(Kconfig,umgr,pilot,restart):
 
     list_of_files = []
 
@@ -17,8 +17,7 @@ def Preprocessing(Kconfig,umgr,pilot):
     MY_STAGING_AREA = 'staging:///'
 
 
-    list_of_files = [    Kconfig.md_input_file,
-                         Kconfig.mdp_file,
+    list_of_files = [    Kconfig.mdp_file,
                          Kconfig.top_file,
                          Kconfig.lsdm_config_file,
                          '%s/gro.py'%curdir,
@@ -30,6 +29,8 @@ def Preprocessing(Kconfig,umgr,pilot):
                          '%s/../../Analyzer/LSDMap/select.py'%curdir,
                          '%s/../../Analyzer/LSDMap/reweighting.py'%curdir,
                          ]
+    if restart == False:
+        list_of_files.append(Kconfig.md_input_file)
 
     if Kconfig.ndx_file is not None:
             list_of_files.append('%s' % Kconfig.ndx_file)
@@ -39,25 +40,6 @@ def Preprocessing(Kconfig,umgr,pilot):
                 list_of_files.append('%s' % itpfile)
 
     for item in list_of_files:
-        '''
-        source = radical.pilot.Url()
-        source.schema = 'file'
-        source.path = item
-        source = str(source)
-
-        target = radical.pilot.Url()
-        target.schema = 'staging'
-        target.path = item
-        target = str(target)
-
-        dict = {
-                    'source' : source,
-                    'target' : target,
-                    'action' : radical.pilot.TRANSFER
-                }
-
-        sd_pilot.append(dict)
-        '''
         if item.startswith('.'):
             dict = {
                 'source': 'file://%s/%s'%(os.getcwd(),os.path.basename(item)),
@@ -72,41 +54,92 @@ def Preprocessing(Kconfig,umgr,pilot):
                 }
         sd_pilot.append(dict)
 
+    if restart == True:
+        cycle=Kconfig.start_iter-1
+        more_files = [os.getcwd() + 'backup/iter{0}/{1}_input.gro'.format(cycle,cycle+1),
+                      os.getcwd() + 'backup/iter{0}/weight.w'.format(cycle)]
+        for item in more_files:
+            dict = {
+                        'source': 'file://%s'%(item),
+                        'target': '{0}iter{1}/{2}'.format(MY_STAGING_AREA,cycle,os.path.basename(item)),
+                        'action': radical.pilot.TRANSFER
+            }
+            sd_pilot.append(dict)
+
     pilot.stage_in(sd_pilot)
 
     umgr.add_pilots(pilot)
 
-    cud = radical.pilot.ComputeUnitDescription()
-    cud.cores = 1
-    cud.mpi = False
-    cud.executable = 'python'
-    cud.arguments = ['spliter.py',Kconfig.num_CUs,os.path.basename(Kconfig.md_input_file)]
+    # CUD when restart is False.
+    if restart ==  False:
 
-    prep_stage = {
+        cud = radical.pilot.ComputeUnitDescription()
+        cud.cores = 1
+        cud.mpi = False
+        cud.executable = 'python'
+        cud.arguments = ['spliter.py',Kconfig.num_CUs,os.path.basename(Kconfig.md_input_file)]
+
+        prep_stage = {
                     'source' : MY_STAGING_AREA + 'spliter.py',
                     'target' : 'spliter.py',
                     'action' : radical.pilot.LINK
-    }
+        }
 
-    md_stage = {
+        md_stage = {
                     'source' : MY_STAGING_AREA + os.path.basename(Kconfig.md_input_file),
                     'target' : os.path.basename(Kconfig.md_input_file),
                     'action' : radical.pilot.LINK
-    }
+        }
 
-    cud.output_staging = []
-    for i in range(0,Kconfig.num_CUs):
-        temp = {
+        cud.output_staging = []
+        for i in range(0,Kconfig.num_CUs):
+            temp = {
                     'source': 'temp/start{0}.gro'.format(i),
                     'target': MY_STAGING_AREA + 'iter0/start{0}.gro'.format(i),
                     'action': radical.pilot.LINK
+            }
+            cud.output_staging.append(temp)
+
+        cud.input_staging = [prep_stage,md_stage]
+
+        cu = umgr.submit_units(cud)
+
+        cu.wait()
+
+    else:
+
+        cud = radical.pilot.ComputeUnitDescription()
+        cud.cores = 1
+        cud.mpi = False
+        cud.executable = 'python'
+        cud.arguments = ['spliter.py',Kconfig.num_CUs,'{0}_input.gro'.format(Kconfig.start_iter)]
+
+        prep_stage = {
+                    'source' : MY_STAGING_AREA + 'spliter.py',
+                    'target' : 'spliter.py',
+                    'action' : radical.pilot.LINK
         }
-        cud.output_staging.append(temp)
 
-    cud.input_staging = [prep_stage,md_stage]
+        md_stage = {
+                    'source' : MY_STAGING_AREA + 'iter{0}/{1}_input.gro'.format(Kconfig.start_iter-1,Kconfig.start_iter),
+                    'target' : '{0}_input.gro'.format(Kconfig.start_iter),
+                    'action' : radical.pilot.LINK
+        }
 
-    cu = umgr.submit_units(cud)
+        cud.output_staging = []
+        for i in range(0,Kconfig.num_CUs):
+            temp = {
+                    'source': 'temp/start{0}.gro'.format(i),
+                    'target': MY_STAGING_AREA + 'iter{1}/start{0}.gro'.format(i,Kconfig.start_iter-1),
+                    'action': radical.pilot.LINK
+            }
+            cud.output_staging.append(temp)
 
-    cu.wait()
+        cud.input_staging = [prep_stage,md_stage]
+
+        cu = umgr.submit_units(cud)
+
+        cu.wait()
+
 
 

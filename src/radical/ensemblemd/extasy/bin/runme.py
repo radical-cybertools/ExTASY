@@ -168,12 +168,24 @@ def main():
         if ( Kconfig.analyzer == 'LSDMap'):
             from Analyzer.LSDMap.analyzer import Analyzer
 
+        # Base case - start from 0 !
         if (os.path.isdir('%s/backup' % os.getcwd())and(Kconfig.start_iter==0)) is True:
             shutil.rmtree('%s/backup' % os.getcwd())
+            os.mkdir('%s/backup'%os.getcwd())
+            restart = False
 
-        os.mkdir('%s/backup'%os.getcwd())
+        # Restart case - test if iter? folder exists
+        elif ((Kconfig.start_iter!=0) and ( not (os.path.isdir('{0}/backup/iter{1}'.format(os.getcwd(),Kconfig.start_iter-1))))) is True:
+            print 'Backups not found .. You need have a backup/iter{0} folder ..'.format(Kconfig.start_iter - 1)
+            print 'Exiting ...'
+            exit(0)
 
-        Preprocessing(Kconfig, umgr,pilot)
+        # Restart case - valid
+        else:
+            restart = True
+
+
+        Preprocessing(Kconfig, umgr,pilot,restart)
 
 
         for i in range(Kconfig.start_iter,Kconfig.start_iter + Kconfig.num_iterations):
@@ -185,25 +197,6 @@ def main():
             elif (Kconfig.simulator == 'Amber' and Kconfig.analyzer == 'CoCo'):
                 Analyzer(umgr, RPconfig, Kconfig, i)
                 Simulator(umgr, RPconfig, Kconfig, i)
-
-            '''
-            if((i+1)%Kconfig.nsave == 0):
-                if os.path.isdir('%s/backup' % os.getcwd()) is False:
-                        os.mkdir('%s/backup' % os.getcwd())
-
-                if (Kconfig.simulator == 'Gromacs'):
-                    try:
-                        print 'Creating backup...'
-                        if os.path.isdir('%s/backup/iter%s/'%(os.getcwd(),i+1)) is True:
-                            shutil.rmtree('%s/backup/iter%s'%(os.getcwd(),i+1))
-                        os.mkdir('%s/backup/iter%s/'%(os.getcwd(),i+1))
-                        shutil.move('%s_%s'%(i+1,os.path.basename(Kconfig.md_input_file)),'%s/backup/iter%s/%s_%s'%(os.getcwd(),i+1,i+1,os.path.basename(Kconfig.md_input_file)))
-                        shutil.move(Kconfig.w_file,'%s/backup/iter%s/%s'%(os.getcwd(),i+1,os.path.basename(Kconfig.w_file)))
-                        shutil.move('lsdmap.log','%s/backup/iter%s/lsdmap.log'%(os.getcwd(),i+1))
-                    except:
-                        print 'Failed to create backup..'
-                        pass
-            '''
 
     except Exception as e:
         print "An error occurred: %s" % ((str(e)))
