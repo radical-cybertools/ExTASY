@@ -106,6 +106,8 @@ def Preprocessing(Kconfig,umgr,pilot,restart):
 
         cu.wait()
 
+
+    #CUD when restart is True
     else:
 
         cud = radical.pilot.ComputeUnitDescription()

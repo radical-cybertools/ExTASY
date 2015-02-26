@@ -228,3 +228,25 @@ This is followed by the Analysis stage, one task is scheduled on the target mach
 takes all the cores as the PILOTSIZE to perform the analysis and returns the data required
 for the next iteration of the Simulation stage. As can be seen, per iteration, there are
 (num_CUs+1) tasks executed.
+
+
+Gromacs/LSDMap Restart Mechanism
+================================
+
+* For a valid/successful restart scenario, data from a previous experiment needs to exist
+in the backup/ folder on the local machine.
+
+* Restart can only be done from a checkpoint (defined by nsave in the kernel config file)
+made in the previous experiment.
+
+* Example,
+
+        Experiment 1 : num_iterations = 4, start_iter = 0, nsave = 2
+
+        Backups created : iter1/ (after 2 iterations) , iter3/ (after 4 iterations)
+
+        Experiment 2 (restart) : num_iterations = 2, start_iter = 4 (=start from 5th iter), nsave = 2
+
+        **Note** : start_iter should match one of the previous checkpoints and start_iter
+                    should be a multiple of nsave.
+

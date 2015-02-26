@@ -71,6 +71,24 @@ def check_config_vals(Kconfig,RPconfig):
         print '#####################'
         sys.exit(1)
 
+    # Base case - start from 0 !
+    if (os.path.isdir('%s/backup' % os.getcwd())and(Kconfig.start_iter==0)) is True:
+        shutil.rmtree('%s/backup' % os.getcwd())
+        os.mkdir('%s/backup'%os.getcwd())
+        restart = False
+
+
+    # Restart case - test if iter? folder exists
+    elif ((Kconfig.start_iter!=0) and ( not (os.path.isdir('{0}/backup/iter{1}'.format(os.getcwd(),Kconfig.start_iter-1))))) is True:
+        print 'Backups not found .. You need to have a backup/iter{0} folder ..'.format(Kconfig.start_iter - 1)
+        print 'Exiting ...'
+        exit(0)
+
+    # Restart case - valid
+    else:
+        restart = True
+
+    return restart
 
 def startPilot(Kconfig,RPconfig):
 
@@ -144,9 +162,7 @@ def main():
         RPconfig = imp.load_source('RPconfig', args.RPconfig)
         Kconfig = imp.load_source('Kconfig', args.Kconfig)
 
-        check_config_vals(Kconfig,RPconfig)
-
-        paths = []
+        restart = check_config_vals(Kconfig,RPconfig)
 
         Load_Preprocessor = Kconfig.simulator
 
@@ -167,23 +183,6 @@ def main():
             from Simulator.Gromacs.simulator import Simulator
         if ( Kconfig.analyzer == 'LSDMap'):
             from Analyzer.LSDMap.analyzer import Analyzer
-
-        # Base case - start from 0 !
-        if (os.path.isdir('%s/backup' % os.getcwd())and(Kconfig.start_iter==0)) is True:
-            shutil.rmtree('%s/backup' % os.getcwd())
-            os.mkdir('%s/backup'%os.getcwd())
-            restart = False
-
-        # Restart case - test if iter? folder exists
-        elif ((Kconfig.start_iter!=0) and ( not (os.path.isdir('{0}/backup/iter{1}'.format(os.getcwd(),Kconfig.start_iter-1))))) is True:
-            print 'Backups not found .. You need to have a backup/iter{0} folder ..'.format(Kconfig.start_iter - 1)
-            print 'Exiting ...'
-            exit(0)
-
-        # Restart case - valid
-        else:
-            restart = True
-
 
         Preprocessing(Kconfig, umgr,pilot,restart)
 

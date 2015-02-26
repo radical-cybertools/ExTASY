@@ -35,7 +35,7 @@ def Preprocessing(Kconfig,umgr,pilot,restart):
                 }
         sd_pilot.append(dict)
 
-    # Stage-in the crd file for the first iteration
+    # Transfer the crd file for the first iteration
     if restart == False:
         dict = {
                 'source': 'file://%s/%s'%(os.getcwd(),os.path.basename(Kconfig.initial_crd_file)),
@@ -44,6 +44,8 @@ def Preprocessing(Kconfig,umgr,pilot,restart):
             }
         sd_pilot.append(dict)
 
+
+    # Transfer all the ncdf files from all iterations
     else:
 
         print 'Expecting {0} ncdf files in backup/iter{1} folder'.format(Kconfig.start_iter*Kconfig.num_CUs,Kconfig.start_iter-1)

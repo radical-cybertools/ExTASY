@@ -1,4 +1,8 @@
-Added Analyzer functionality
-Added Iterative Simulator-Analyzer
- 
-Supports Gromacs as Simulator and LSDMap as Analyzer
+0.1.3
+-----
+
+* Uses RP data staging directives
+
+* Restart mechanism revisited
+
+* New minimization format for CoCo added
