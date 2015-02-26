@@ -44,7 +44,7 @@ If your shell is CSH,
 
 **Step 3** : Install ExTASY,
 
-.. parsed-literal:: pip install --upgrade git+https://github.com/radical-cybertools/ExTASY.git@extasy-0.1.3-beta#egg=radical.ensemblemd.extasy
+.. parsed-literal:: pip install --upgrade git+https://github.com/radical-cybertools/ExTASY.git@master#egg=radical.ensemblemd.extasy
 
 
 Now you should be able to print the installed version of the ExTASY module using,
