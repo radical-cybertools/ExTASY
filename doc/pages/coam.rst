@@ -231,5 +231,4 @@ CoCo/Amber Restart Mechanism
 
         **Note** : start_iter should match one of the previous checkpoints and start_iter should be a multiple of nsave.
 
-* In CoCo/Amber, at every checkpoint the ncdf files from all the iterations and transferred to the local machine in order to be able to restart. You could set nsave = num_iterations
-to make a one time transfer after all the iterations.
+* In CoCo/Amber, at every checkpoint the ncdf files from all the iterations are transferred to the local machine in order to be able to restart. You could set nsave = num_iterations to make a one time transfer after all the iterations.
