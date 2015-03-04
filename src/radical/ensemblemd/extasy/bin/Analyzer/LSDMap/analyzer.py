@@ -61,7 +61,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
                 }
 
     lsdm_stage = {
-                        'source': 'file://' + curdir + '/lsdm.py'.
+                        'source': 'file://' + curdir + '/lsdm.py',
                         'target': 'lsdm..py',
                         'action': radical.pilot.TRANSFER
     }
