@@ -22,7 +22,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     
     mdtd=MDTaskDescription()
     mdtd.kernel="LSDMAP"
-    mdtd.arguments = ['-f','config.ini','-c','tmpha.gro','-n','%s'%nearest_neighbor_file,'-w','%s' %Kconfig.w_file]
+    mdtd.arguments = ['lsdm.py','-f','config.ini','-c','tmpha.gro','-n','%s'%nearest_neighbor_file,'-w','%s' %Kconfig.w_file]
     mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
     lsdm=radical.pilot.ComputeUnitDescription()
     lsdm.pre_exec = ['module load gromacs']
@@ -60,7 +60,13 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
                         'action': radical.pilot.LINK
                 }
 
-    lsdm.input_staging = [pre_ana_stage,config_stage,ana_stage]
+    lsdm_stage = {
+                        'source': 'file://' + curdir + '/lsdm.py'.
+                        'target': 'lsdm..py',
+                        'action': radical.pilot.TRANSFER
+    }
+
+    lsdm.input_staging = [pre_ana_stage,config_stage,ana_stage,lsdm_stage]
     #-------------------------------------------------------------------------------------------------------------------
     
     
