@@ -28,6 +28,7 @@ def Preprocessing(Kconfig,umgr,pilot,restart):
                          '%s/../../Analyzer/LSDMap/post_analyze.py'%curdir,
                          '%s/../../Analyzer/LSDMap/select.py'%curdir,
                          '%s/../../Analyzer/LSDMap/reweighting.py'%curdir,
+                         '%s/../../Analyzer/LSDMap/lsdm.py'%curdir,
                          ]
     if restart == False:
         list_of_files.append(Kconfig.md_input_file)

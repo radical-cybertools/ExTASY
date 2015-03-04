@@ -61,9 +61,9 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
                 }
 
     lsdm_stage = {
-                        'source': 'file://' + curdir + '/lsdm.py',
+                        'source': MY_STAGING_AREA + 'lsdm.py',
                         'target': 'lsdm..py',
-                        'action': radical.pilot.TRANSFER
+                        'action': radical.pilot.LINK
     }
 
     lsdm.input_staging = [pre_ana_stage,config_stage,ana_stage,lsdm_stage]
