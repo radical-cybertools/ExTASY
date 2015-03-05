@@ -62,7 +62,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
 
     lsdm_stage = {
                         'source': MY_STAGING_AREA + 'lsdm.py',
-                        'target': 'lsdm..py',
+                        'target': 'lsdm.py',
                         'action': radical.pilot.LINK
     }
 
