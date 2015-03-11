@@ -215,5 +215,11 @@ def main():
             print 'Exception triggered, no session created, exiting now...'
             sys.exit(-1)
 
+        #cleanup downloaded lsdm file
+        try:
+            os.remove('%s/lsdm.py'%os.getcwd())
+        except:
+            pass
+
 if __name__ == '__main__':
     main()

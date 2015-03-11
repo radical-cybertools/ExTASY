@@ -1,6 +1,7 @@
 __author__ = 'vivek'
 
 import radical.pilot
+import urllib
 import saga
 import glob
 import sys
@@ -17,6 +18,11 @@ def Preprocessing(Kconfig,umgr,pilot,restart):
     MY_STAGING_AREA = 'staging:///'
 
 
+    #Download the latest lsdm.py file
+    lsdm_file = urllib.URLopener()
+    lsdm_file.retrieve("http://sourceforge.net/p/lsdmap/git/ci/extasy-0.1-rc2/tree/lsdmap/lsdm.py?format=raw","%s/lsdm.py"%os.getcwd())
+
+
     list_of_files = [    Kconfig.mdp_file,
                          Kconfig.top_file,
                          Kconfig.lsdm_config_file,
@@ -28,8 +34,9 @@ def Preprocessing(Kconfig,umgr,pilot,restart):
                          '%s/../../Analyzer/LSDMap/post_analyze.py'%curdir,
                          '%s/../../Analyzer/LSDMap/select.py'%curdir,
                          '%s/../../Analyzer/LSDMap/reweighting.py'%curdir,
-                         '%s/../../Analyzer/LSDMap/lsdm.py'%curdir,
+                         '%s/lsdm.py'%os.getcwd()
                          ]
+                         
     if restart == False:
         list_of_files.append(Kconfig.md_input_file)
 
