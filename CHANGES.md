@@ -1,3 +1,9 @@
+0.1.3.1-beta
+------------
+
+Updated to use the latest lsdm file from sourceforge
+
+
 0.1.3-beta
 ----------
 
