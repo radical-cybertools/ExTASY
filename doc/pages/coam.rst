@@ -11,8 +11,8 @@ The execution is started based on the parameters set in these configuration file
 Running on Stampede
 ===================
 
-Running the Example Workload
-----------------------------
+Running using Example Workload Config and Resource Config
+---------------------------------------------------------
 
 This section is to be done entirely on your **laptop**. The ExTASY tool expects two input
 files:
@@ -31,7 +31,11 @@ files:
 
 **Step 2** : Create a new resource configuration file ``stampede.rcfg`` :
 
-    (Download it `stampede.rcfg <https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-stampede/stampede.rcfg>`_ directly.)
+    Download it using:
+
+    ::
+
+        curl -k -0 https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-stampede/stampede.rcfg
 
 
     .. note::   Change the following values according to your needs :
@@ -62,7 +66,11 @@ files:
 
 **Step 4** : Create a new workload configuration file ``cocoamber.wcfg`` :
 
-    (Download it `cocoamber.wcfg <https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-stampede/cocoamber.wcfg>`_ directly.)
+    Download it using:
+
+    ::
+
+        curl -k -0 https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-stampede/cocoamber.wcfg
 
     ::
 
@@ -102,11 +110,26 @@ A **sample output** with expected callbacks and simulation/analysis can be found
 | Expected TTC/iteration |     30-35 s    |    25-30 s   |
 +------------------------+----------------+--------------+
 
+There are two stages in the execution phase - Simulation and Analysis. Execution
+starts with any Preprocessing that might be required on the input data and then
+moves to Simulation stage. In the Simulation stage, a number of tasks (num_CUs)
+are launched to execute on the target machine. The number of tasks set to execute
+depends on the PILOTSIZE, num_CUs, num_cores_per_sim_cu, the number of tasks in
+execution state simultaneously would be PILOTSIZE/num_cores_per_sim_cu. As each
+task attains 'Done' (completed) state, the remain tasks are scheduled till all
+the num_CUs tasks are completed.
+
+This is followed by the Analysis stage, one task is scheduled on the target machine
+which takes all the cores as the PILOTSIZE to perform the analysis and returns the
+data required for the next iteration of the Simulation stage. As can be seen, per
+iteration, there are (num_CUs+1) tasks executed.
+
+
 Running on Archer
 =================
 
-Running the Example Workload
-----------------------------
+Running using Example Workload Config and Resource Config
+---------------------------------------------------------
 
 This section is to be done entirely on your **laptop**. The ExTASY tool expects two input
 files:
@@ -217,31 +240,55 @@ iteration, there are (num_CUs+1) tasks executed.
 Understanding the Output
 ========================
 
-* In the local machine, a "backup" folder is created and at the end of every checkpoint intervel (=nsave) an "iter*" folder is created which contains the necessary files to start the next iteration.
+In the local machine, a "backup" folder is created and at the end of every checkpoint intervel (=nsave) an "iter*" folder is created which contains the necessary files to start the next iteration.
 
 
-* The "iter*" folder will not contain any of the initial files such as the topology file, minimization file, etc since they already exist on the local machine
+For example, in the case of gromacs-lsdmap on stampede, for 4 iterations with nsave=2:
+
+::
+
+    coam-on-stampede$ ls
+    backup/  cocoamber.wcfg  mdshort.in  min.in  penta.crd  penta.top  stampede.rcfg
+
+    coam-on-stampede/backup$ ls
+    iter1/  iter3/
 
 
-* In coco-amber, the "iter*" folder contains the NetCDF files required to start the next iteration and a logfile of the CoCo stage of the current iteration.
+
+The "iter*" folder will not contain any of the initial files such as the topology file, minimization file, etc since they already exist on the local machine. In coco-amber, the "iter*" folder contains the NetCDF files required to start the next iteration and a logfile of the CoCo stage of the current iteration.
 
 
-* It is important to note that since, in coco-amber, all the NetCDF files of previous and current iterations are transferred at each checkpoint, it might be useful to have longer checkpoint intervals. Since smaller intervals would lead to heavy data transfer of redundant data.
+::
+
+    coam-on-stampede/backup/iter1$ ls
+    1_coco.log    md_0_11.ncdf  md_0_14.ncdf  md_0_2.ncdf  md_0_5.ncdf  md_0_8.ncdf  md_1_10.ncdf  md_1_13.ncdf  md_1_1.ncdf  md_1_4.ncdf  md_1_7.ncdf
+    md_0_0.ncdf   md_0_12.ncdf  md_0_15.ncdf  md_0_3.ncdf  md_0_6.ncdf  md_0_9.ncdf  md_1_11.ncdf  md_1_14.ncdf  md_1_2.ncdf  md_1_5.ncdf  md_1_8.ncdf
+    md_0_10.ncdf  md_0_13.ncdf  md_0_1.ncdf   md_0_4.ncdf  md_0_7.ncdf  md_1_0.ncdf  md_1_12.ncdf  md_1_15.ncdf  md_1_3.ncdf  md_1_6.ncdf  md_1_9.ncdf
 
 
-* On the remote machine, inside the pilot-* folder you can find a folder called "staging_area". This location is used to exchange/link/move intermediate data. The shared data is kept in "staging_area/" and the iteration specific inputs/outputs can be found in their specific folders (="staging_area/iter*").
+It is important to note that since, in coco-amber, all the NetCDF files of previous and current iterations are transferred at each checkpoint, it might be useful to have longer checkpoint intervals. Since smaller intervals would lead to heavy data transfer of redundant data.
+
+
+On the remote machine, inside the pilot-* folder you can find a folder called "staging_area". This location is used to exchange/link/move intermediate data. The shared data is kept in "staging_area/" and the iteration specific inputs/outputs can be found in their specific folders (="staging_area/iter*").
+
+::
+
+    $ cd staging_area/
+    $ ls
+    iter0/  iter1/  iter2/  iter3/  mdshort.in  min.in  penta.crd  penta.top  postexec.py
+
 
 
 CoCo/Amber Restart Mechanism
 ============================
 
-* For a valid/successful restart scenario, data from a previous experiment needs to exist in the backup/ folder on the local machine.
+If the above examples were successful, you can go ahead try and the restart mechanism. The restart mechanism is designed to resume the experiment from one of the checkpoints that you might have made in the previous experiments. 
 
 
-* Restart can only be done from a checkpoint (defined by nsave in the kernel config file) made in the previous experiment.
+Therefor, for a valid/successful restart scenario, data from a previous experiment needs to exist in the backup/ folder on the local machine. Restart can only be done from a checkpoint (defined by nsave in the kernel config file) made in the previous experiment.
 
 
-* Example,
+Example,
 
         **Experiment 1** : num_iterations = 4, start_iter = 0, nsave = 2
 
@@ -251,11 +298,13 @@ CoCo/Amber Restart Mechanism
 
         **Note** : start_iter should match one of the previous checkpoints and start_iter should be a multiple of nsave.
 
+If, in the first experiment, you ran 4 iterations with nsave set to 2, you will have backups created after the 2nd and 4th iteration. Once this is successful, in the second experiment, you can resume from either of the backups/checkpoints. In the above example, the experiment is resumed from the 4th iteration.
 
-* In CoCo/Amber, at every checkpoint the ncdf files from all the iterations are transferred to the local machine in order to be able to restart. You could set nsave = num_iterations to make a one time transfer after all the iterations.
+
+In CoCo/Amber, at every checkpoint the ncdf files from all the iterations are transferred to the local machine in order to be able to restart. You could set nsave = num_iterations to make a one time transfer after all the iterations.
 
 
-* Having a small checkpoint interval increases redundant data. Example,
+Having a small checkpoint interval increases redundant data. Example,
 
         **Experiment 1** : num_iterations = 8, start_iter = 0, nsave = 2
 

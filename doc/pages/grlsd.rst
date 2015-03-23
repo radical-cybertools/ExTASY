@@ -1,8 +1,8 @@
 .. _grlsd:
 
-********************************
-Runing a Gromacs/LSDMap Workload
-********************************
+*********************************
+Running a Gromacs/LSDMap Workload
+*********************************
 
 This section will discuss details about the execution phase. The input to the tool
 is given in terms of a resource configuration file and a workload configuration file.
@@ -11,8 +11,8 @@ The execution is started based on the parameters set in these configuration file
 Running on Stampede
 ===================
 
-Running the Example Workload
-----------------------------
+Running using Example Workload Config and Resource Config
+---------------------------------------------------------
 
 This section is to be done entirely on your **laptop**. The ExTASY tool expects two input
 files:
@@ -31,7 +31,11 @@ files:
 
 **Step 2** : Create a new resource configuration file ``stampede.rcfg`` :
 
-    (Download it `stampede.rcfg <https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-stampede/stampede.rcfg>`_ directly.)
+    Download it using:
+
+    ::  
+
+        curl -k -0 https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-stampede/stampede.rcfg
 
 
     .. note::   Change the following values according to your needs :
@@ -63,7 +67,11 @@ files:
 
 **Step 4** : Create a new workload configuration file ``gromacslsdmap.wcfg`` :
 
-    (Download it `gromacslsdmap.wcfg <https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-stampede/gromacslsdmap.wcfg>`_ directly.)
+    Download it using:
+
+    ::
+
+        curl -k -0 https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-stampede/gromacslsdmap.wcfg
 
     ::
 
@@ -111,11 +119,25 @@ A **sample output** with expected callbacks and simulation/analysis can be found
 | Expected TTC/iteration |    50-100 s    |     ~30 s    |
 +------------------------+----------------+--------------+
 
+
+There are two stages in the execution phase - Simulation and Analysis. Execution starts
+with any Preprocessing that might be required on the input data and then moves to
+Simulation stage. In the Simulation stage, a number of tasks (num_CUs) are launched to
+execute on the target machine. The number of tasks set to execute depends on the PILOTSIZE,
+num_CUs, num_cores_per_sim_cu, the number of tasks in execution state simultaneously would
+be PILOTSIZE/num_cores_per_sim_cu. As each task attains 'Done' (completed) state, the
+remain tasks are scheduled till all the num_CUs tasks are completed.
+
+This is followed by the Analysis stage, one task is scheduled on the target machine which
+takes all the cores as the PILOTSIZE to perform the analysis and returns the data required
+for the next iteration of the Simulation stage. As can be seen, per iteration, there are
+(num_CUs+1) tasks executed.
+
 Running on Archer
 =================
 
-Running the Example Workload
-----------------------------
+Running using Example Workload Config and Resource Config
+---------------------------------------------------------
 
 This section is to be done entirely on your **laptop**. The ExTASY tool expects two input
 files:
@@ -233,29 +255,52 @@ for the next iteration of the Simulation stage. As can be seen, per iteration, t
 Understanding the Output
 ========================
 
-* In the local machine, a "backup" folder is created and at the end of every checkpoint intervel (=nsave) an "iter*" folder is created which contains the necessary files to start the next iteration.
+In the local machine, a "backup" folder is created and at the end of every checkpoint intervel (=nsave) an "iter*" folder is created which contains the necessary files to start the next iteration.
 
 
-* The "iter*" folder will not contain any of the initial files such as the topology file, minimization file, etc since they already exist on the local machine
+For example, in the case of gromacs-lsdmap on stampede, for 4 iterations with nsave=2:
+
+::
+
+    grlsd-on-stampede$ ls
+    backup/  config.ini  gromacslsdmap.wcfg  grompp.mdp  input.gro  stampede.rcfg  topol.top
+
+    grlsd-on-stampede/backup$ ls
+    iter1/  iter3/
 
 
-* In gromacs-lsdmap, the "iter*" folder contains the coordinate file and weight file required in the next iteration.
+
+The "iter*" folder will not contain any of the initial files such as the topology file, minimization file, etc since they already exist on the local machine. In gromacs-lsdmap, the "iter*" folder contains the coordinate file and weight file required in the next iteration. It also contains a logfile about the lsdmap stage of the current iteration.
+
+::
+
+    grlsd-on-stampede/backup/iter1$ ls
+    2_input.gro  lsdmap.log  weight.w
 
 
-* On the remote machine, inside the pilot-* folder you can find a folder called "staging_area". This location is used to exchange/link/move intermediate data. The shared data is kept in "staging_area/" and the iteration specific inputs/outputs can be found in their specific folders (="staging_area/iter*").
+
+On the remote machine, inside the pilot-* folder you can find a folder called "staging_area". This location is used to exchange/link/move intermediate data. The shared data is kept in "staging_area/" and the iteration specific inputs/outputs can be found in their specific folders (="staging_area/iter*").
+
+::
+
+    $ cd staging_area/
+    $ ls
+    config.ini  gro.py   input.gro   iter1/  iter3/    post_analyze.py  reweighting.py   run.py     spliter.py
+    grompp.mdp  gro.pyc  iter0/      iter2/  lsdm.py   pre_analyze.py   run_analyzer.sh  select.py  topol.top
+
 
 
 
 Gromacs/LSDMap Restart Mechanism
 ================================
 
-* For a valid/successful restart scenario, data from a previous experiment needs to exist in the backup/ folder on the local machine.
+If the above examples were successful, you can go ahead try and the restart mechanism. The restart mechanism is designed to resume the experiment from one of the checkpoints that you might have made in the previous experiments. 
 
 
-* Restart can only be done from a checkpoint (defined by nsave in the kernel config file) made in the previous experiment.
+Therefor, for a valid/successful restart scenario, data from a previous experiment needs to exist in the backup/ folder on the local machine. Restart can only be done from a checkpoint (defined by nsave in the kernel config file) made in the previous experiment.
 
 
-* Example,
+Example,
 
         **Experiment 1** : num_iterations = 4, start_iter = 0, nsave = 2
 
@@ -265,3 +310,4 @@ Gromacs/LSDMap Restart Mechanism
 
         **Note** : start_iter should match one of the previous checkpoints and start_iter should be a multiple of nsave.
 
+If, in the first experiment, you ran 4 iterations with nsave set to 2, you will have backups created after the 2nd and 4th iteration. Once this is successful, in the second experiment, you can resume from either of the backups/checkpoints. In the above example, the experiment is resumed from the 4th iteration.

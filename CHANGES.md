@@ -1,3 +1,9 @@
+0.1.3.2-beta
+------------
+
+Documentation updates.
+
+
 0.1.3.1-beta
 ------------
 

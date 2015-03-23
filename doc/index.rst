@@ -25,7 +25,7 @@ https://github.com/radical-cybertools/ExTASY
 
 .. toctree::
    :numbered:
-   :maxdepth: 2
+   :maxdepth: 3
 
    pages/intro.rst
    pages/installation.rst
@@ -39,4 +39,4 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`search`
 
-.. |VERSION| replace:: 0.1.3.1-beta
+.. |VERSION| replace:: 0.1.3.2-beta
