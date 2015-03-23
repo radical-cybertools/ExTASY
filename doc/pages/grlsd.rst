@@ -1,6 +1,6 @@
 .. _grlsd:
 
-:tocdepth: 2
+:tocdepth: 4
 
 *********************************
 Running a Gromacs/LSDMap Workload
