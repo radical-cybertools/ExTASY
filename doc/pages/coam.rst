@@ -1,6 +1,6 @@
 .. _coam:
 
-:tocdepth: 3
+:tocdepth: 2
 
 *****************************
 Running a Coco/Amber Workload
