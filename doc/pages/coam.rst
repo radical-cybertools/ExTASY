@@ -37,7 +37,7 @@ files:
 
     ::
 
-        curl -k -0 https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-stampede/stampede.rcfg
+        curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-stampede/stampede.rcfg
 
 
     .. note::   Change the following values according to your needs :
@@ -72,7 +72,7 @@ files:
 
     ::
 
-        curl -k -0 https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-stampede/cocoamber.wcfg
+        curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-stampede/cocoamber.wcfg
 
     ::
 
