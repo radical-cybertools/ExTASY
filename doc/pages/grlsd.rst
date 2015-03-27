@@ -158,7 +158,10 @@ files:
 
 **Step 2** : Create a new resource configuration file ``archer.rcfg`` :
 
-    (Download it `archer.rcfg <https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-archer/archer.rcfg>`_ directly.)
+    Download it using:
+
+    ::
+        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-archer/archer.rcfg
 
 
     .. note::   Change the following values according to your needs :
@@ -191,7 +194,11 @@ files:
 
 **Step 4** : Create a new workload configuration file ``gromacslsdmap.wcfg`` :
 
-    (Download it `gromacslsdmap.wcfg <https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-archer/gromacslsdmap.wcfg>`_ directly.)
+    Download it using:
+
+    ::
+        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-archer/gromacslsdmap.wcfg
+
 
     ::
 

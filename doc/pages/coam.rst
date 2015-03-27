@@ -150,7 +150,10 @@ files:
 
 **Step 2** : Create a new resource configuration file ``archer.rcfg`` :
 
-    (Download it `archer.rcfg <https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-archer/archer.rcfg>`_ directly.)
+    Download it using:
+
+    ::
+        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-archer/archer.rcfg
 
 
     .. note::   Change the following values according to your needs :
@@ -182,7 +185,11 @@ files:
 
 **Step 4** : Create a new workload configuration file ``cocoamber.wcfg`` :
 
-    (Download it `cocoamber.wcfg <https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-archer/cocoamber.wcfg>`_ directly.)
+    Download it using:
+
+    ::
+        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-archer/cocoamber.wcfg
+
 
     ::
 
