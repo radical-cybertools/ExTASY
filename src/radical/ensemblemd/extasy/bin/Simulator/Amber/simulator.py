@@ -205,8 +205,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
             cu_list_B.append(umgr.submit_units(cudesc_list_B[idx]))
             cu_list_A.remove(cu_a)
 
-    for cu_b in cu_list_B:
-        cu_b.wait()
+    umgr.wait_units()
 
     try:
         for unit_a in cu_list_A_copy:
