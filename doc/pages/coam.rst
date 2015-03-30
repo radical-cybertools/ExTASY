@@ -22,7 +22,7 @@ files:
     1. The resource configuration file sets the parameters of the HPC resource we want
        to run the workload on, in this case Stampede.
 
-    2. The workload configuration file defines the CoCo/Amber workload itself.
+    2. The workload configuration file defines the CoCo/Amber workload itself. The configuration file given in this example is strictly meant for the coco-amber usecase only.
 
 **Step 1** : Create a new directory for the example,
 
@@ -98,6 +98,9 @@ files:
         grid                    = '5'               # Number of points along each dimension of the CoCo histogram
         dims                    = '3'               # The number of projections to consider from the input pcz file
 
+
+    All the parameters in the above example file are mandatory for amber-coco. There are no other options currently supported.
+
 **Now you are can run the workload using :**
 
     ::
@@ -139,7 +142,7 @@ files:
     1. The resource configuration file sets the parameters of the HPC resource we want
        to run the workload on, in this case Archer.
 
-    2. The workload configuration file defines the CoCo/Amber workload itself.
+    2. The workload configuration file defines the CoCo/Amber workload itself. The configuration file given in this example is strictly meant for the coco-amber usecase only.
 
 **Step 1** : Create a new directory for the example,
 

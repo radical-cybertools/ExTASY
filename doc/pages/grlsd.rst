@@ -22,7 +22,7 @@ files:
     1. The resource configuration file sets the parameters of the HPC resource we want to
        run the workload on, in this case Stampede.
 
-    2. The workload configuration file defines the GROMACS/LSDMap workload itself.
+    2. The workload configuration file defines the GROMACS/LSDMap workload itself. The configuration file given in this example is strictly meant for the gromacs-lsdmap usecase only.
 
 **Step 1** : Create a new directory for the example,
 
@@ -37,7 +37,7 @@ files:
 
     ::  
 
-        curl -k -0 https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-stampede/stampede.rcfg
+        curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-stampede/stampede.rcfg
 
 
     .. note::   Change the following values according to your needs :
@@ -73,7 +73,7 @@ files:
 
     ::
 
-        curl -k -0 https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-stampede/gromacslsdmap.wcfg
+        curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-stampede/gromacslsdmap.wcfg
 
     ::
 
@@ -106,6 +106,7 @@ files:
         max_dead_neighbors   = '1'                  # Maximum dead neighbors to be considered while reweighting
 
 
+    All the parameters in the above example file are mandatory for gromacs-lsdmap. If *ndxfile*, *grompp_options*, *mdrun_options* and *itp_file_loc* are not required, they should be set to None; but they still have to mentioned in the configuration file.
 
 **Now you are can run the workload using :**
 
@@ -147,7 +148,7 @@ files:
     1. The resource configuration file sets the parameters of the HPC resource we want
        to run the workload on, in this case Archer.
 
-    2. The workload configuration file defines the CoCo/Amber workload itself.
+    2. The workload configuration file defines the CoCo/Amber workload itself. The configuration file given in this example is strictly meant for the gromacs-lsdmap usecase only.
 
 **Step 1** : Create a new directory for the example,
 
@@ -231,6 +232,7 @@ files:
         max_dead_neighbors   = '1'                  # Maximum dead neighbors to be considered while reweighting
 
 
+    All the parameters in the above example file are mandatory for gromacs-lsdmap. If *ndxfile*, *grompp_options*, *mdrun_options* and *itp_file_loc* are not required, they should be set to None; but they still have to mentioned in the configuration file. There are no other options currently supported.
 
 **Now you are can run the workload using :**
 
