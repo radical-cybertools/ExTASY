@@ -106,7 +106,7 @@ files:
         max_dead_neighbors   = '1'                  # Maximum dead neighbors to be considered while reweighting
 
 
-    All the parameters in the above example file are mandatory for gromacs-lsdmap. If *ndxfile*, *grompp_options*, *mdrun_options* and *itp_file_loc* are not required, they should be set to None; but they still have to mentioned in the configuration file.
+    All the parameters in the above example file are mandatory for gromacs-lsdmap. If *ndxfile*, *grompp_options*, *mdrun_options* and *itp_file_loc* are not required, they should be set to None; but they still have to mentioned in the configuration file. There are no other parameters currently supported.
 
 **Now you are can run the workload using :**
 
@@ -232,7 +232,7 @@ files:
         max_dead_neighbors   = '1'                  # Maximum dead neighbors to be considered while reweighting
 
 
-    All the parameters in the above example file are mandatory for gromacs-lsdmap. If *ndxfile*, *grompp_options*, *mdrun_options* and *itp_file_loc* are not required, they should be set to None; but they still have to mentioned in the configuration file. There are no other options currently supported.
+    All the parameters in the above example file are mandatory for gromacs-lsdmap. If *ndxfile*, *grompp_options*, *mdrun_options* and *itp_file_loc* are not required, they should be set to None; but they still have to mentioned in the configuration file. There are no other parameters currently supported.
 
 **Now you are can run the workload using :**
 
