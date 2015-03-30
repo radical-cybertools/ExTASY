@@ -252,7 +252,7 @@ Understanding the Output
 In the local machine, a "backup" folder is created and at the end of every checkpoint intervel (=nsave) an "iter*" folder is created which contains the necessary files to start the next iteration.
 
 
-For example, in the case of gromacs-lsdmap on stampede, for 4 iterations with nsave=2:
+For example, in the case of CoCo-Amber on stampede, for 4 iterations with nsave=2:
 
 ::
 
