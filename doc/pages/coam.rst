@@ -99,7 +99,9 @@ files:
         dims                    = '3'               # The number of projections to consider from the input pcz file
 
 
-    All the parameters in the above example file are mandatory for amber-coco. There are no other parameters currently supported.
+    .. note::
+                
+                All the parameters in the above example file are mandatory for amber-coco. There are no other parameters currently supported.
 
 
 **Now you are can run the workload using :**
@@ -220,7 +222,9 @@ files:
         dims                    = '3'               # The number of projections to consider from the input pcz file
 
 
-     All the parameters in the above example file are mandatory for amber-coco. There are no other parameters currently supported.
+    .. note::
+                
+                All the parameters in the above example file are mandatory for amber-coco. There are no other parameters currently supported.
 
 
 **Now you are can run the workload using :**
