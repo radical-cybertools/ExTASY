@@ -60,6 +60,9 @@ def unit_state_change_cb(unit, state):
             print "ComputeUnit {0} was canceled prematurely because the pilot was terminated. Can't recover.".format(unit.uid)
             sys.exit(1)
 
+    else:
+        return
+
 
 #---------------------------------------------------------------------------------
 
