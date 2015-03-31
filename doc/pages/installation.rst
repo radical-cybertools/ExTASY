@@ -39,7 +39,7 @@ If your shell is CSH,
 
 **Step 2** : Install ExTASY's dependencies,
 
-.. parsed-literal:: pip install --upgrade git+https://github.com/radical-cybertools/radical.ensemblemd.mdkernels.git@master#egg=radical.                    ensemblemd.mdkernels
+.. parsed-literal:: pip install --upgrade git+https://github.com/radical-cybertools/radical.ensemblemd.mdkernels.git@master#egg=radical.ensemblemd.mdkernels
 
 **Step 3** : Install ExTASY,
 
