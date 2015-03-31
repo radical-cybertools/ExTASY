@@ -65,9 +65,7 @@ files:
         curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/grlsd-on-stampede/topol.top
 
 
-**Step 4** : Create a new workload configuration file ``gromacslsdmap.wcfg`` :
-
-    Download it using:
+**Step 4** : Create a new workload configuration file ``gromacslsdmap.wcfg``. Download it using:
 
     ::
 
@@ -156,11 +154,10 @@ files:
         mkdir $HOME/grlsd-on-archer/
         cd $HOME/grlsd-on-archer/
 
-**Step 2** : Create a new resource configuration file ``archer.rcfg`` :
-
-    Download it using:
+**Step 2** : Create a new resource configuration file ``archer.rcfg``. Download it using:
 
     ::
+
         curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-archer/archer.rcfg
 
 
@@ -192,11 +189,10 @@ files:
 
 
 
-**Step 4** : Create a new workload configuration file ``gromacslsdmap.wcfg`` :
-
-    Download it using:
+**Step 4** : Create a new workload configuration file ``gromacslsdmap.wcfg``. Download it using:
 
     ::
+
         curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-archer/gromacslsdmap.wcfg
 
 

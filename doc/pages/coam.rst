@@ -31,9 +31,7 @@ files:
         mkdir $HOME/coam-on-stampede/
         cd $HOME/coam-on-stampede/
 
-**Step 2** : Create a new resource configuration file ``stampede.rcfg`` :
-
-    Download it using:
+**Step 2** : Create a new resource configuration file ``stampede.rcfg``. Download it using:
 
     ::
 
@@ -66,9 +64,7 @@ files:
         curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-stampede/penta.crd
         curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-stampede/penta.top
 
-**Step 4** : Create a new workload configuration file ``cocoamber.wcfg`` :
-
-    Download it using:
+**Step 4** : Create a new workload configuration file ``cocoamber.wcfg``. Download it using:
 
     ::
 
@@ -154,11 +150,10 @@ files:
         mkdir $HOME/coam-on-archer/
         cd $HOME/coam-on-archer/
 
-**Step 2** : Create a new resource configuration file ``archer.rcfg`` :
-
-    Download it using:
+**Step 2** : Create a new resource configuration file ``archer.rcfg``. Download it using:
 
     ::
+
         curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-archer/archer.rcfg
 
 
@@ -189,11 +184,10 @@ files:
         curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-archer/penta.top
 
 
-**Step 4** : Create a new workload configuration file ``cocoamber.wcfg`` :
-
-    Download it using:
+**Step 4** : Create a new workload configuration file ``cocoamber.wcfg``. Download it using:
 
     ::
+    
         curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-archer/cocoamber.wcfg
 
 
