@@ -155,10 +155,11 @@ If you get an error similar to,
 	sftp>  ls /work/e290/e290/e290ib/radical.pilot.sandbox/pilot-55196431d7bf7579ecc ^H3f080/unit-551965f7d7bf7579ecc3f09b/lsdmap.log
 	Couldn't send packet: Broken pipe
 
-This is mostly because of an older version of sftp/scp being used. This can be fixed by setting a file ``.saga.cfg`` (note the dot in the beginning of the filename) in $HOME on your local machine. The contents of the file need to be,
+This is mostly because of an older version of sftp/scp being used. This can be fixed by setting an environment variable ``SAGA_PTY_SSH_SHAREMODE`` to ``no``.
 
 ::
+	
+	export SAGA_PTY_SSH_SHAREMODE=no
 
-	[saga.util.pty]
-	ssh_share_mode = no
+	
 
