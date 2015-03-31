@@ -38,10 +38,13 @@ files:
         curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-stampede/stampede.rcfg
 
 
-    .. note::   Change the following values according to your needs :
+    .. note:: 
+                For the purposes of this example, you require to change only:
 
-                * UNAME
-                * ALLOCATION
+                    * UNAME
+                    * ALLOCATION
+
+                The other parameters in the resource configuration are already set up to successfully execute the workload in this example.
 
     ::
 
@@ -163,7 +166,7 @@ files:
                     * UNAME
                     * ALLOCATION
 
-                The other parameters in the resource configuration are already set up to execute this workload successfully.
+                The other parameters in the resource configuration are already set up to successfully execute the workload in this example.
     ::
 
         REMOTE_HOST = 'archer.ac.uk'              # Label/Name of the Remote Machine
