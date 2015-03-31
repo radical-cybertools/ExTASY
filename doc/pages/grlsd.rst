@@ -31,9 +31,7 @@ files:
         mkdir $HOME/grlsd-on-stampede/
         cd $HOME/grlsd-on-stampede/
 
-**Step 2** : Create a new resource configuration file ``stampede.rcfg`` :
-
-    Download it using:
+**Step 2** : Create a new resource configuration file ``stampede.rcfg``. Download it using:
 
     ::  
 
