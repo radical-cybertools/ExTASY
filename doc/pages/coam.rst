@@ -22,7 +22,7 @@ files:
     1. The resource configuration file sets the parameters of the HPC resource we want
        to run the workload on, in this case Stampede.
 
-    2. The workload configuration file defines the CoCo/Amber workload itself.
+    2. The workload configuration file defines the CoCo/Amber workload itself. The configuration file given in this example is strictly meant for the coco-amber usecase only.
 
 **Step 1** : Create a new directory for the example,
 
@@ -31,19 +31,20 @@ files:
         mkdir $HOME/coam-on-stampede/
         cd $HOME/coam-on-stampede/
 
-**Step 2** : Create a new resource configuration file ``stampede.rcfg`` :
-
-    Download it using:
+**Step 2** : Create a new resource configuration file ``stampede.rcfg``. Download it using:
 
     ::
 
-        curl -k -0 https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-stampede/stampede.rcfg
+        curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-stampede/stampede.rcfg
 
 
-    .. note::   Change the following values according to your needs :
+    .. note:: 
+                For the purposes of this example, you require to change only:
 
-                * UNAME
-                * ALLOCATION
+                    * UNAME
+                    * ALLOCATION
+
+                The other parameters in the resource configuration are already set up to successfully execute the workload in this example.
 
     ::
 
@@ -66,13 +67,11 @@ files:
         curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-stampede/penta.crd
         curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-stampede/penta.top
 
-**Step 4** : Create a new workload configuration file ``cocoamber.wcfg`` :
-
-    Download it using:
+**Step 4** : Create a new workload configuration file ``cocoamber.wcfg``. Download it using:
 
     ::
 
-        curl -k -0 https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-stampede/cocoamber.wcfg
+        curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-stampede/cocoamber.wcfg
 
     ::
 
@@ -97,6 +96,12 @@ files:
         #-------------------------Analysis--------------------------
         grid                    = '5'               # Number of points along each dimension of the CoCo histogram
         dims                    = '3'               # The number of projections to consider from the input pcz file
+
+
+    .. note::
+                
+                All the parameters in the above example file are mandatory for amber-coco. There are no other parameters currently supported.
+
 
 **Now you are can run the workload using :**
 
@@ -139,7 +144,7 @@ files:
     1. The resource configuration file sets the parameters of the HPC resource we want
        to run the workload on, in this case Archer.
 
-    2. The workload configuration file defines the CoCo/Amber workload itself.
+    2. The workload configuration file defines the CoCo/Amber workload itself. The configuration file given in this example is strictly meant for the coco-amber usecase only.
 
 **Step 1** : Create a new directory for the example,
 
@@ -148,16 +153,20 @@ files:
         mkdir $HOME/coam-on-archer/
         cd $HOME/coam-on-archer/
 
-**Step 2** : Create a new resource configuration file ``archer.rcfg`` :
+**Step 2** : Create a new resource configuration file ``archer.rcfg``. Download it using:
 
-    (Download it `archer.rcfg <https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-archer/archer.rcfg>`_ directly.)
+    ::
+
+        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-archer/archer.rcfg
 
 
-    .. note::   Change the following values according to your needs :
+    .. note:: 
+                For the purposes of this example, you require to change only:
 
-                * UNAME
-                * ALLOCATION
+                    * UNAME
+                    * ALLOCATION
 
+                The other parameters in the resource configuration are already set up to successfully execute the workload in this example.
     ::
 
         REMOTE_HOST = 'archer.ac.uk'              # Label/Name of the Remote Machine
@@ -180,9 +189,12 @@ files:
         curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-archer/penta.top
 
 
-**Step 4** : Create a new workload configuration file ``cocoamber.wcfg`` :
+**Step 4** : Create a new workload configuration file ``cocoamber.wcfg``. Download it using:
 
-    (Download it `cocoamber.wcfg <https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-archer/cocoamber.wcfg>`_ directly.)
+    ::
+
+        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-archer/cocoamber.wcfg
+
 
     ::
 
@@ -207,6 +219,11 @@ files:
         #-------------------------Analysis--------------------------
         grid                    = '5'               # Number of points along each dimension of the CoCo histogram
         dims                    = '3'               # The number of projections to consider from the input pcz file
+
+
+    .. note::
+                
+                All the parameters in the above example file are mandatory for amber-coco. There are no other parameters currently supported.
 
 
 **Now you are can run the workload using :**
@@ -245,7 +262,7 @@ Understanding the Output
 In the local machine, a "backup" folder is created and at the end of every checkpoint intervel (=nsave) an "iter*" folder is created which contains the necessary files to start the next iteration.
 
 
-For example, in the case of gromacs-lsdmap on stampede, for 4 iterations with nsave=2:
+For example, in the case of CoCo-Amber on stampede, for 4 iterations with nsave=2:
 
 ::
 

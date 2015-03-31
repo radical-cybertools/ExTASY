@@ -22,7 +22,7 @@ files:
     1. The resource configuration file sets the parameters of the HPC resource we want to
        run the workload on, in this case Stampede.
 
-    2. The workload configuration file defines the GROMACS/LSDMap workload itself.
+    2. The workload configuration file defines the GROMACS/LSDMap workload itself. The configuration file given in this example is strictly meant for the gromacs-lsdmap usecase only.
 
 **Step 1** : Create a new directory for the example,
 
@@ -31,19 +31,20 @@ files:
         mkdir $HOME/grlsd-on-stampede/
         cd $HOME/grlsd-on-stampede/
 
-**Step 2** : Create a new resource configuration file ``stampede.rcfg`` :
-
-    Download it using:
+**Step 2** : Create a new resource configuration file ``stampede.rcfg``. Download it using:
 
     ::  
 
-        curl -k -0 https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-stampede/stampede.rcfg
+        curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-stampede/stampede.rcfg
 
 
-    .. note::   Change the following values according to your needs :
+    .. note:: 
+                For the purposes of this example, you require to change only:
 
-                * UNAME
-                * ALLOCATION
+                    * UNAME
+                    * ALLOCATION
+
+                The other parameters in the resource configuration are already set up to successfully execute the workload in this example.
 
     ::
 
@@ -67,13 +68,11 @@ files:
         curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/grlsd-on-stampede/topol.top
 
 
-**Step 4** : Create a new workload configuration file ``gromacslsdmap.wcfg`` :
-
-    Download it using:
+**Step 4** : Create a new workload configuration file ``gromacslsdmap.wcfg``. Download it using:
 
     ::
 
-        curl -k -0 https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-stampede/gromacslsdmap.wcfg
+        curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-stampede/gromacslsdmap.wcfg
 
     ::
 
@@ -105,7 +104,9 @@ files:
         max_alive_neighbors  = '10'                 # Maximum alive neighbors to be considered while reweighting
         max_dead_neighbors   = '1'                  # Maximum dead neighbors to be considered while reweighting
 
+    .. note:: 
 
+                All the parameters in the above example file are mandatory for gromacs-lsdmap. If *ndxfile*, *grompp_options*, *mdrun_options* and *itp_file_loc* are not required, they should be set to None; but they still have to mentioned in the configuration file. There are no other parameters currently supported.
 
 **Now you are can run the workload using :**
 
@@ -147,7 +148,7 @@ files:
     1. The resource configuration file sets the parameters of the HPC resource we want
        to run the workload on, in this case Archer.
 
-    2. The workload configuration file defines the CoCo/Amber workload itself.
+    2. The workload configuration file defines the CoCo/Amber workload itself. The configuration file given in this example is strictly meant for the gromacs-lsdmap usecase only.
 
 **Step 1** : Create a new directory for the example,
 
@@ -156,15 +157,20 @@ files:
         mkdir $HOME/grlsd-on-archer/
         cd $HOME/grlsd-on-archer/
 
-**Step 2** : Create a new resource configuration file ``archer.rcfg`` :
+**Step 2** : Create a new resource configuration file ``archer.rcfg``. Download it using:
 
-    (Download it `archer.rcfg <https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-archer/archer.rcfg>`_ directly.)
+    ::
+
+        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-archer/archer.rcfg
 
 
-    .. note::   Change the following values according to your needs :
+    .. note:: 
+                For the purposes of this example, you require to change only:
 
-                * UNAME
-                * ALLOCATION
+                    * UNAME
+                    * ALLOCATION
+
+                The other parameters in the resource configuration are already set up to successfully execute the workload in this example.
 
     ::
 
@@ -189,9 +195,12 @@ files:
 
 
 
-**Step 4** : Create a new workload configuration file ``gromacslsdmap.wcfg`` :
+**Step 4** : Create a new workload configuration file ``gromacslsdmap.wcfg``. Download it using:
 
-    (Download it `gromacslsdmap.wcfg <https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-archer/gromacslsdmap.wcfg>`_ directly.)
+    ::
+
+        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-archer/gromacslsdmap.wcfg
+
 
     ::
 
@@ -224,6 +233,9 @@ files:
         max_dead_neighbors   = '1'                  # Maximum dead neighbors to be considered while reweighting
 
 
+    .. note:: 
+
+                All the parameters in the above example file are mandatory for gromacs-lsdmap. If *ndxfile*, *grompp_options*, *mdrun_options* and *itp_file_loc* are not required, they should be set to None; but they still have to mentioned in the configuration file. There are no other parameters currently supported.
 
 **Now you are can run the workload using :**
 
