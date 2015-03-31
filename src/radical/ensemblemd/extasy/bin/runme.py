@@ -29,7 +29,9 @@ def pilot_state_cb(pilot, state):
             print "##       ERROR       ##"
             print "#######################"
             print "Pilot {0} has FAILED. Can't recover.".format(pilot.uid)
-            print "Pilot log: {0}".format(pilot.log)
+            print "Pilot log:- "
+            for log in pilot.log:
+                print log.as_dict()
             sys.exit(1)
 
 #------------------------------------------------------------------------------
@@ -48,7 +50,9 @@ def unit_state_change_cb(unit, state):
             print "##       ERROR       ##"
             print "#######################"
             print "ComputeUnit {0} has FAILED. Can't recover.".format(unit.uid)
-            print "ComputeUnit log: {0}".format(unit.log)
+            print "ComputeUnit log:- "
+            for log in unit.log:
+                print log.as_dict()
             print u"STDERR : {0}".format(unit.stderr)
             print u"STDOUT : {0}".format(unit.stdout)
             sys.exit(1)
