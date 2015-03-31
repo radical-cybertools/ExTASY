@@ -141,3 +141,24 @@ This generally means either the Allocation ID or Queue name present in the resou
 	EXTASY_DEBUG=True SAGA_VERBOSE=DEBUG RADICAL_PILOT_VERBOSE=DEBUG extasy --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg 2> output.log
 
 This should generate a more verbose output. You may look at this verbose output for errors or create a ticket with this log `here <https://github.com/radical-cybertools/ExTASY/issues>`_ )
+
+
+Couldn't send packet: Broken pipe
+---------------------------------
+
+If you get an error similar to,
+
+::
+
+	2015:03:30 16:05:07 radical.pilot.MainProcess: [DEBUG   ] read : [   19] [  159] ( ls /work/e290/e290/e290ib/radical.pilot.sandbox/pilot-55196431d7bf7579ecc ^H3f080/unit-551965f7d7bf7579ecc3f09b/lsdmap.log\nCouldn't send packet: Broken pipe\n)
+	2015:03:30 16:05:08 radical.pilot.MainProcess: [ERROR   ] Output transfer failed: read from process failed '[Errno 5] Input/output error' : (s   --:-- ETA/home/h012/ibethune/testlsdmap2/input.gro     100%  105KB 104.7KB/s   00:00
+	sftp>  ls /work/e290/e290/e290ib/radical.pilot.sandbox/pilot-55196431d7bf7579ecc ^H3f080/unit-551965f7d7bf7579ecc3f09b/lsdmap.log
+	Couldn't send packet: Broken pipe
+
+This is mostly because of an older version of sftp/scp being used. This can be fixed by setting a file ```.saga.cfg``` (note the dot in the beginning of the filename) in $HOME on your local machine. The contents of the file need to be,
+
+::
+
+	[saga.util.pty]
+	ssh_share_mode = no
+
