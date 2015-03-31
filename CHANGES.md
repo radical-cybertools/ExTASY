@@ -1,3 +1,10 @@
+0.1.4-beta
+----------
+
+Documentation updates.
+Amber task scheduling fixed.
+Error log improvments.
+
 0.1.3.2-beta
 ------------
 

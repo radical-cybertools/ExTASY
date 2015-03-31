@@ -39,12 +39,11 @@ If your shell is CSH,
 
 **Step 2** : Install ExTASY's dependencies,
 
-.. parsed-literal:: pip install --upgrade git+https://github.com/radical-cybertools/radical.pilot.git@master#egg=radical.pilot
-                    pip install --upgrade git+https://github.com/radical-cybertools/radical.ensemblemd.mdkernels.git@master#egg=radical.ensemblemd.mdkernels
+.. parsed-literal:: pip install --upgrade git+https://github.com/radical-cybertools/radical.ensemblemd.mdkernels.git@master#egg=radical.                    ensemblemd.mdkernels
 
 **Step 3** : Install ExTASY,
 
-.. parsed-literal:: pip install --upgrade git+https://github.com/radical-cybertools/ExTASY.git@master#egg=radical.ensemblemd.extasy
+.. parsed-literal:: pip install --upgrade git+https://github.com/radical-cybertools/ExTASY.git@extasy-0.1.4-beta#egg=radical.ensemblemd.extasy
 
 
 Now you should be able to print the installed version of the ExTASY module using,
