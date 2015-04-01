@@ -32,6 +32,8 @@ def pilot_state_cb(pilot, state):
             print "Pilot log:- "
             for log in pilot.log:
                 print log.as_dict()
+            print 'Pilot STDOUT : {0}'.format(pilot.stdout)
+            print 'Pilot STDERR : {0}'.format(pilot.stderr)
             sys.exit(1)
 
 #------------------------------------------------------------------------------
