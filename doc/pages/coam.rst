@@ -98,9 +98,20 @@ files:
 
 **Now you are can run the workload using :**
 
+If your shell is BASH,
+
     ::
 
         EXTASY_DEBUG=True RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg 2> extasy.log
+
+If your shell is CSH,
+
+    ::
+
+        setenv EXTASY_DEBUG True
+        setenv RADICAL_PILOT_VERBOSE 'debug'
+        setenv SAGA_VERBOSE 'debug'
+        extasy --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg |& tee extasy.log
 
 A **sample output** with expected callbacks and simulation/analysis can be found at `here <https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/coam-on-stampede>`_.
 
@@ -209,9 +220,22 @@ files:
 
 **Now you are can run the workload using :**
 
+If your shell is BASH,
+
     ::
 
         EXTASY_DEBUG=True RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig archer.rcfg --Kconfig cocoamber.wcfg 2> extasy.log
+
+
+If your shell is CSH,
+
+    ::
+
+        setenv EXTASY_DEBUG True
+        setenv RADICAL_PILOT_VERBOSE 'debug'
+        setenv SAGA_VERBOSE 'debug'
+        extasy --RPconfig archer.rcfg --Kconfig cocoamber.wcfg |& tee extasy.log
+        
 
 A **sample output** with expected callbacks and simulation/analysis can be found at `here <https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/coam-on-archer>`_.
 
