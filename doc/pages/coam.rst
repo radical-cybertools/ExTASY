@@ -8,7 +8,9 @@ Running a Coco/Amber Workload
 
 This section will discuss details about the execution phase. The input to the tool
 is given in terms of a resource configuration file and a workload configuration file.
-The execution is started based on the parameters set in these configuration files.
+The execution is started based on the parameters set in these configuration files. In 
+section 3.1, we discuss execution on Stampede and in section 3.2, we discuss execution 
+on Archer.
 
 Running on Stampede
 ===================
