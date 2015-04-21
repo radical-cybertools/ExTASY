@@ -30,15 +30,17 @@ files:
 
     ::
 
-        mkdir $HOME/coam-on-stampede/
-        cd $HOME/coam-on-stampede/
+        mkdir $HOME/extasy-tutorial/
+        cd $HOME/extasy-tutorial/
 
-**Step 2** : Create a new resource configuration file ``stampede.rcfg``. Download it using:
+**Step 2** : Download the config files and the input files directly using the following link.
 
     ::
 
-        curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-stampede/stampede.rcfg
+        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/tarballs/coam-on-stampede.tar.gz
+        tar xvfz coam-on-stampede.tar.gz
 
+**Step 3** : In the coam-on-stampede folder, a resource configuration file ``stampede.rcfg`` exists. Details and modifications required are as follows:
 
     .. note:: 
                 For the purposes of this example, you require to change only:
@@ -60,20 +62,9 @@ files:
 
         DBURL       = 'mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot'
 
-**Step 3** : Download the sample input data:
 
-    ::
+**Step 4** : In the coam-on-stampede folder, a workload configuration file ``cocoamber.wcfg`` exists. Details and modifications required are as follows:
 
-        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-stampede/mdshort.in
-        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-stampede/min.in
-        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-stampede/penta.crd
-        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-stampede/penta.top
-
-**Step 4** : Create a new workload configuration file ``cocoamber.wcfg``. Download it using:
-
-    ::
-
-        curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-stampede/cocoamber.wcfg
 
     ::
 
@@ -152,15 +143,17 @@ files:
 
     ::
 
-        mkdir $HOME/coam-on-archer/
-        cd $HOME/coam-on-archer/
+        mkdir $HOME/extasy-tutorial/
+        cd $HOME/extasy-tutorial/
 
-**Step 2** : Create a new resource configuration file ``archer.rcfg``. Download it using:
+**Step 2** : Download the config files and the input files directly using the following link.
 
     ::
 
-        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-archer/archer.rcfg
+        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/tarballs/coam-on-archer.tar.gz
+        tar xvfz coam-on-archer.tar.gz
 
+**Step 3** : In the coam-on-archer folder, a resource configuration file ``archer.rcfg`` exists. Details and modifications required are as follows:
 
     .. note:: 
                 For the purposes of this example, you require to change only:
@@ -181,22 +174,8 @@ files:
 
         DBURL       = 'mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot'
 
-**Step 3** : Download the sample input data:
 
-    ::
-
-        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-archer/mdshort.in
-        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-archer/min.in
-        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-archer/penta.crd
-        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/coam-on-archer/penta.top
-
-
-**Step 4** : Create a new workload configuration file ``cocoamber.wcfg``. Download it using:
-
-    ::
-
-        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/coam-on-archer/cocoamber.wcfg
-
+**Step 4** : In the coam-on-archer folder, a resource configuration file ``cocoamber.wcfg`` exists. Details and modifications required are as follows:
 
     ::
 
