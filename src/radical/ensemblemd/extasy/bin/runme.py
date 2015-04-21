@@ -169,6 +169,9 @@ def main():
         import radical.ensemblemd.extasy as extasy
         print 'ExTASY version : ',extasy.version
 
+        # Test if mdkernels is installed - to avoid race condition where pilot callback gets printed before session closes.
+        import radical.ensemblemd.mdkernels
+
         RPconfig = imp.load_source('RPconfig', args.RPconfig)
         Kconfig = imp.load_source('Kconfig', args.Kconfig)
 
