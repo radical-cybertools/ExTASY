@@ -35,6 +35,8 @@ If your shell is BASH,
 
 If your shell is CSH,
 
+Setuptools might not get installed with virtualenv and hence using pip would fail. Please look at `https://pypi.python.org/pypi/setuptools <https://pypi.python.org/pypi/setuptools>`_ for installation instructions.
+
 .. parsed-literal:: source $HOME/ExTASY-tools/bin/activate.csh
 
 **Step 2** : Install ExTASY's dependencies,
