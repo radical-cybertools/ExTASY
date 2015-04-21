@@ -30,8 +30,8 @@ files:
 
     ::
 
-        mkdir $HOME/grlsd-on-stampede/
-        cd $HOME/grlsd-on-stampede/
+        mkdir $HOME/extasy-tutorial/
+        cd $HOME/extasy-tutorial/
 
 **Step 2** : Create a new resource configuration file ``stampede.rcfg``. Download it using:
 
