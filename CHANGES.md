@@ -1,22 +1,4 @@
-0.1.3.2-beta
-------------
+0.2
+---
 
-Documentation updates.
-
-
-0.1.3.1-beta
-------------
-
-Updated to use the latest lsdm file from sourceforge
-
-
-0.1.3-beta
-----------
-
-* Uses RP data staging directives
-
-* Restart mechanism revisited
-
-* New minimization format for CoCo added
-
-* Added "Understanding the output" section and "Restart mechanism" section in docs.
+Moved usecase from ensemblemd repo to new branch in extasy
