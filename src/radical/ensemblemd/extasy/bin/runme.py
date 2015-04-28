@@ -122,8 +122,10 @@ def startPilot(Kconfig,RPconfig):
     pdesc.cores = RPconfig.PILOTSIZE
     if RPconfig.WORKDIR is not None:
         pdesc.sandbox = RPconfig.WORKDIR
-    pdesc.queue = RPconfig.QUEUE
-    pdesc.project = RPconfig.ALLOCATION
+    if RPconfig.QUEUE is not None:
+        pdesc.queue = RPconfig.QUEUE
+    if RPconfig.ALLOCATION is not None:
+        pdesc.project = RPconfig.ALLOCATION
 
 
     # Launch the pilot.
