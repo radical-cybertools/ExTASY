@@ -46,6 +46,11 @@ If your shell is CSH,
 .. parsed-literal:: pip install --upgrade git+https://github.com/radical-cybertools/ExTASY.git@extasy-0.1.4-beta#egg=radical.ensemblemd.extasy
 
 
+To install the development version (unstable),
+
+.. parsed-literal:: pip install --upgrade git+https://github.com/radical-cybertools/ExTASY.git@devel#egg=radical.ensemblemd.extasy
+
+
 Now you should be able to print the installed version of the ExTASY module using,
 
 .. parsed-literal:: python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
