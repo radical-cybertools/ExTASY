@@ -1,0 +1,17 @@
+        pattern_entity  value_type      first_started_abs       last_finished_abs       first_started_rel       last_finished_rel
+0       simulation_iteration_1  pattern_step    2015-03-20 04:07:15.523499      2015-03-20 04:16:32.520677      0 days 00:05:59.167831000       0 days 00:15:16.165009000
+1       simulation_iteration_1  data_stagein
+2       simulation_iteration_1  execution       2015-03-20 04:12:36.826000      2015-03-20 04:16:23.534000      0 days 00:05:59.167831000       0 days 00:09:45.875831000
+3       simulation_iteration_1  data_stageout
+4       analysis_iteration_1    pattern_step    2015-03-20 04:16:33.090037      2015-03-20 04:22:19.442564      0 days 00:15:16.734369000       0 days 00:21:03.086896000
+5       analysis_iteration_1    data_stagein
+6       analysis_iteration_1    execution       2015-03-20 04:19:57.025000      2015-03-20 04:22:07.740000      0 days 00:15:16.734369000       0 days 00:17:27.449369000
+7       analysis_iteration_1    data_stageout
+8       simulation_iteration_2  pattern_step    2015-03-20 04:22:19.442667      2015-03-20 04:35:16.438431      0 days 00:21:03.086999000       0 days 00:34:00.082763000
+9       simulation_iteration_2  data_stagein
+10      simulation_iteration_2  execution       2015-03-20 04:29:55.180000      2015-03-20 04:34:49.345000      0 days 00:21:03.086999000       0 days 00:25:57.251999000
+11      simulation_iteration_2  data_stageout
+12      analysis_iteration_2    pattern_step    2015-03-20 04:35:18.033088      2015-03-20 04:44:18.829091      0 days 00:34:01.677420000       0 days 00:43:02.473423000
+13      analysis_iteration_2    data_stagein
+14      analysis_iteration_2    execution       2015-03-20 04:39:55.677000      2015-03-20 04:43:16.250000      0 days 00:34:01.677420000       0 days 00:37:22.250420000
+15      analysis_iteration_2    data_stageout   2015-03-20 04:43:16.232000      2015-03-20 04:43:40.056000      0 days 00:37:22.232420000       0 days 00:37:46.056420000
