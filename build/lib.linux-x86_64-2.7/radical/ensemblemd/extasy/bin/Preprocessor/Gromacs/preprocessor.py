@@ -32,7 +32,7 @@ def Preprocessing(Kconfig,umgr,pilot,restart):
                          '%s/../../Analyzer/LSDMap/pre_analyze.py'%curdir,
                          '%s/../../Analyzer/LSDMap/run_analyzer.sh'%curdir,
                          '%s/../../Analyzer/LSDMap/post_analyze.py'%curdir,
-                         '%s/../../Analyzer/LSDMap/selection.py'%curdir,
+                         '%s/../../Analyzer/LSDMap/select.py'%curdir,
                          '%s/../../Analyzer/LSDMap/reweighting.py'%curdir,
                          '%s/lsdm.py'%os.getcwd()
                          ]
