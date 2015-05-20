@@ -46,7 +46,7 @@ Setuptools might not get installed with virtualenv and hence using pip would fai
 
 **Step 3** : Install ExTASY,
 
-.. parsed-literal:: pip install --upgrade git+https://github.com/radical-cybertools/ExTASY.git@extasy-0.1.4-beta#egg=radical.ensemblemd.extasy
+.. parsed-literal:: pip install --upgrade git+https://github.com/radical-cybertools/ExTASY.git@emaster#egg=radical.ensemblemd.extasy
 
 
 To install the development version (unstable),
