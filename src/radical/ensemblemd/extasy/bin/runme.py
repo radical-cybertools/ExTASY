@@ -32,6 +32,8 @@ def pilot_state_cb(pilot, state):
             print "Pilot log:- "
             for log in pilot.log:
                 print log.as_dict()
+            print u'Pilot STDOUT : {0}'.format(pilot.stdout)
+            print u'Pilot STDERR : {0}'.format(pilot.stderr)
             sys.exit(1)
 
 #------------------------------------------------------------------------------
@@ -120,8 +122,10 @@ def startPilot(Kconfig,RPconfig):
     pdesc.cores = RPconfig.PILOTSIZE
     if RPconfig.WORKDIR is not None:
         pdesc.sandbox = RPconfig.WORKDIR
-    pdesc.queue = RPconfig.QUEUE
-    pdesc.project = RPconfig.ALLOCATION
+    if RPconfig.QUEUE is not None:
+        pdesc.queue = RPconfig.QUEUE
+    if RPconfig.ALLOCATION is not None:
+        pdesc.project = RPconfig.ALLOCATION
 
 
     # Launch the pilot.
@@ -166,6 +170,9 @@ def main():
 
         import radical.ensemblemd.extasy as extasy
         print 'ExTASY version : ',extasy.version
+
+        # Test if mdkernels is installed - to avoid race condition where pilot callback gets printed before session closes.
+        import radical.ensemblemd.mdkernels
 
         RPconfig = imp.load_source('RPconfig', args.RPconfig)
         Kconfig = imp.load_source('Kconfig', args.Kconfig)

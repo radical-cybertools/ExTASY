@@ -8,7 +8,9 @@ Running a Gromacs/LSDMap Workload
 
 This section will discuss details about the execution phase. The input to the tool
 is given in terms of a resource configuration file and a workload configuration file.
-The execution is started based on the parameters set in these configuration files.
+The execution is started based on the parameters set in these configuration files. In 
+section 4.1, we discuss execution on Stampede and in section 4.2, we discuss execution 
+on Archer.
 
 Running on Stampede
 ===================
@@ -28,15 +30,17 @@ files:
 
     ::
 
-        mkdir $HOME/grlsd-on-stampede/
-        cd $HOME/grlsd-on-stampede/
+        mkdir $HOME/extasy-tutorial/
+        cd $HOME/extasy-tutorial/
 
-**Step 2** : Create a new resource configuration file ``stampede.rcfg``. Download it using:
+**Step 2** : Download the config files and the input files directly using the following link.
 
-    ::  
+    ::
 
-        curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-stampede/stampede.rcfg
+        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/tarballs/grlsd-on-stampede.tar.gz
+        tar xvfz grlsd-on-stampede.tar.gz
 
+**Step 3** : In the grlsd-on-stampede folder, a resource configuration file ``stampede.rcfg`` exists. Details and modifications required are as follows:
 
     .. note:: 
                 For the purposes of this example, you require to change only:
@@ -58,21 +62,9 @@ files:
 
         DBURL       = 'mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot'
 
-**Step 3** : Download the sample input data:
 
-    ::
+**Step 4** : In the grlsd-on-stampede folder, a workload configuration file ``gromacslsdmap.wcfg`` exists. Details and modifications are as follows:
 
-        curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/grlsd-on-stampede/config.ini
-        curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/grlsd-on-stampede/grompp.mdp
-        curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/grlsd-on-stampede/input.gro
-        curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/grlsd-on-stampede/topol.top
-
-
-**Step 4** : Create a new workload configuration file ``gromacslsdmap.wcfg``. Download it using:
-
-    ::
-
-        curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-stampede/gromacslsdmap.wcfg
 
     ::
 
@@ -110,9 +102,21 @@ files:
 
 **Now you are can run the workload using :**
 
+
+If your shell is BASH,
+
     ::
 
         EXTASY_DEBUG=True RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg 2> extasy.log
+
+If your shell is CSH,
+
+    ::
+
+        setenv EXTASY_DEBUG True
+        setenv RADICAL_PILOT_VERBOSE 'debug'
+        setenv SAGA_VERBOSE 'debug'
+        extasy --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg |& tee extasy.log
 
 A **sample output** with expected callbacks and simulation/analysis can be found at `here <https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/grlsd-on-stampede>`_.
 
@@ -154,14 +158,17 @@ files:
 
     ::
 
-        mkdir $HOME/grlsd-on-archer/
-        cd $HOME/grlsd-on-archer/
+        mkdir $HOME/extasy-tutorial/
+        cd $HOME/extasy-tutorial/
 
-**Step 2** : Create a new resource configuration file ``archer.rcfg``. Download it using:
+**Step 2** : Download the config files and the input files directly using the following link.
 
     ::
 
-        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-archer/archer.rcfg
+        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/tarballs/grlsd-on-archer.tar.gz
+        tar xvfz grlsd-on-archer.tar.gz
+
+**Step 3** : In the grlsd-on-archer folder, a resource configuration file ``archer.rcfg`` exists. Details and modifications required are as follows:
 
 
     .. note:: 
@@ -184,23 +191,8 @@ files:
 
         DBURL       = 'mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot'
 
-**Step 3** : Download the sample input data:
 
-    ::
-
-        curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/grlsd-on-archer/config.ini
-        curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/grlsd-on-archer/grompp.mdp
-        curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/grlsd-on-archer/input.gro
-        curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/input_files/grlsd-on-archer/topol.top
-
-
-
-**Step 4** : Create a new workload configuration file ``gromacslsdmap.wcfg``. Download it using:
-
-    ::
-
-        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/config_files/grlsd-on-archer/gromacslsdmap.wcfg
-
+**Step 4** : In the grlsd-on-archer folder, a workload configuration file ``gromacslsdmap.wcfg`` exists. Details and modifications required are as follows:
 
     ::
 
@@ -239,9 +231,21 @@ files:
 
 **Now you are can run the workload using :**
 
+If your shell is BASH,
+
     ::
 
         EXTASY_DEBUG=True RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg 2> extasy.log
+
+
+If your shell is CSH,
+
+    ::
+
+        setenv EXTASY_DEBUG True
+        setenv RADICAL_PILOT_VERBOSE 'debug'
+        setenv SAGA_VERBOSE 'debug'
+        extasy --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg |& tee extasy.log
 
 A **sample output** with expected callbacks and simulation/analysis can be found at `here <https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/grlsd-on-archer>`_.
 

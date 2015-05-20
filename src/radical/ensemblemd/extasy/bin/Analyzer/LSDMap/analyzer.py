@@ -157,8 +157,8 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
                     }
 
     select_stage = {
-                        'source': MY_STAGING_AREA + 'select.py',
-                        'target': 'select.py',
+                        'source': MY_STAGING_AREA + 'selection.py',
+                        'target': 'selection.py',
                         'action': radical.pilot.LINK
                     }
 

@@ -1,0 +1,4 @@
+setuptools
+radical.pilot
+argparse
+radical.ensemblemd.mdkernels

@@ -81,6 +81,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
                         'target': 'min{0}.crd'.format(cycle),
                         'action': radical.pilot.LINK
                         }
+
         #------------------------------------------------------------------
 
         #------------------------------------------------------------------
@@ -97,7 +98,7 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
                     }
 
         init_crd_stage = {
-                    'source': MY_STAGING_AREA + 'iter0/' + dict['crdfilename'],
+                    'source': MY_STAGING_AREA + dict['crdfilename'],
                     'target': dict['crdfilename'],
                     'action': radical.pilot.LINK
         }
