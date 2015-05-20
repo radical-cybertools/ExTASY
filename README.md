@@ -27,7 +27,7 @@ To install the Ensemble MD Toolkit Python modules in a virtual environment,
 open a terminal and run:
 
 ```
-export ENMD_INSTALL_VERSION="master"
+export ENMD_INSTALL_VERSION="devel"
 virtualenv $HOME/EnMDToolkit
 source $HOME/EnMDToolkit/bin/activate
 pip install --upgrade git+https://github.com/radical-cybertools/radical.ensemblemd.git@$ENMD_INSTALL_VERSION#egg=radical.ensemblemd
