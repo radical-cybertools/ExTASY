@@ -163,6 +163,7 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
         k.link_input_data = ['$PRE_LOOP/{0}'.format(os.path.basename(Kconfig.minimization_input_file)),
                              '$PRE_LOOP/{0}'.format(os.path.basename(Kconfig.top_file)),
                              '$PRE_LOOP/{0}'.format(os.path.basename(Kconfig.md_input_file))]
+        k.copy_input_data = 
         if((iteration-1)==0):
             k.link_input_data = k.link_input_data + ['$PRE_LOOP/{0} > min1.crd'.format(os.path.basename(Kconfig.initial_crd_file))]
         else:
