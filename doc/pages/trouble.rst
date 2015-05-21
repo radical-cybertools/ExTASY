@@ -79,7 +79,52 @@ To transfer to Archer,
 		cat ~/.ssh/id_rsa.pub | ssh username@login.archer.ac.uk 'cat - >> ~/.ssh/authorized_keys'
 
 
-Error : Couldn't create new session
+
+Error: Permission denied (publickey,keyboard-interactive) in AGENT.STDERR
+---------------------------------------------------------------------------
+
+The Pilot does not start running and goes to the 'Done' state directly from 'PendingActive'. Please check the AGENT.STDERR file for  "Permission denied (publickey,keyboard-interactive)" .
+
+	::
+
+		Permission denied (publickey,keyboard-interactive).
+		kill: 19932: No such process
+
+You require to setup passwordless, intra-node SSH access. Although this is default in most HPC clusters, this might not be the case always.
+
+On the head-node, run:
+
+	::
+
+		cd ~/.ssh/
+		ssh-keygen -t rsa
+
+**Do not enter a passphrase**. The result should look like this:
+
+	::
+
+		enerating public/private rsa key pair.
+		Enter file in which to save the key (/home/e290/e290/oweidner/.ssh/id_rsa):
+		Enter passphrase (empty for no passphrase):
+		Enter same passphrase again:
+		Your identification has been saved in /home/e290/e290/oweidner/.ssh/id_rsa.
+		Your public key has been saved in /home/e290/e290/oweidner/.ssh/id_rsa.pub.
+		The key fingerprint is:
+		73:b9:cf:45:3d:b6:a7:22:72:90:28:0a:2f:8a:86:fd oweidner@eslogin001
+
+Next, you need to add this key to the authorized_keys file.
+
+	::
+
+		cat id_rsa.pub >> ~/.ssh/authorized_keys
+
+This should be all. Next time you run radical.pilot, you shouldn’t see that error message anymore.
+
+
+
+
+
+Error: Couldn't create new session
 -----------------------------------
 
 If you get an error similar to,
@@ -92,7 +137,7 @@ If you get an error similar to,
 This means no session was created, mostly due to error in the MongoDB URL that is present in the resource configuration file. Please check the URL that you have used. If the URL is correct, you should check the system on which the MongoDB is hosted.
 
 
-Error : Prompted for unkown password
+Error: Prompted for unkown password
 ------------------------------------
 
 If you get an error similar to,
@@ -104,7 +149,7 @@ If you get an error similar to,
 You should check the username that is present in the resource configuration file. If the username is correct, you should check if you have a passwordless login set up for the target machine. You can check this by simply attempting a login to the target machine, if this attempt requires a password, you need to set up a passwordless login to use ExTASY. 
 
 
-Error : Pilot has FAILED. Can't recover
+Error: Pilot has FAILED. Can't recover
 ---------------------------------------
 
 If you get an error similar to,
