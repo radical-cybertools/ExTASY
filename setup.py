@@ -127,7 +127,7 @@ setup_args = {
     'install_requires' : ['setuptools>=1',
                           'radical.pilot==0.33',
                           'argparse',
-                          'radical.ensemblemd.mdkernels==0.1'
+                          'radical.ensemblemd.mdkernels'
                          ],
     'tests_require' : ['setuptools>=1','nose','radical.pilot==0.33','radical.ensemblemd.mdkernels==0.1'],
     'test_suite' : 'radical.ensemblemd.extasy.tests',
