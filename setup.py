@@ -124,12 +124,12 @@ setup_args = {
     'package_dir' : {'': 'src'},
 
     'package_data' : {'': ['*.sh', 'VERSION', 'VERSION.git']},
-    'install_requires' : ['setuptools',
-                          'radical.pilot',
+    'install_requires' : ['setuptools>=1',
+                          'radical.pilot==0.33',
                           'argparse',
-                          'radical.ensemblemd.mdkernels'
+                          'radical.ensemblemd.mdkernels==0.1'
                          ],
-    'tests_require' : ['setuptools>=1','nose','radical.pilot'],
+    'tests_require' : ['setuptools>=1','nose','radical.pilot==0.33','radical.ensemblemd.mdkernels==0.1'],
     'test_suite' : 'radical.ensemblemd.extasy.tests',
 
     'zip_safe' : False,
