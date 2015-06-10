@@ -17,6 +17,65 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     curdir = os.path.dirname(os.path.realpath(__file__))
     
     #==================================================================
+    # CU Definition for Trjconv
+
+    mdtd=MDTaskDescription()
+    mdtd.kernel="GROMACS"
+    mdtd.arguments = ['-l','-c','python pre_analyze.py {0} {1} && echo 2 | trjconv -f {1} -s {1} -o tmpha.gro'.format(Kconfig.num_CUs,Kconfig.md_output_file)]
+    mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
+    trjconv = radical.pilot.ComputeUnitDescription()
+    trjconv.pre_exec = mdtd_bound.pre_exec
+    trjconv.executable = '/bin/bash'
+    trjconv.arguments = mdtd_bound.arguments
+
+
+    #==================================================================
+    # Data Staging for the CU
+
+    #-------------------------------------------------------------------------------------------------------------------
+    # Stage-in the output of the simulation stage which is present 
+    # in the staging area
+
+    pre_ana_stage = {
+                        'source':MY_STAGING_AREA + 'pre_analyze.py',
+                        'target':'pre_analyze.py',
+                        'action': radical.pilot.LINK
+                    }
+
+    trjconv.input_staging = [pre_ana_stage]
+
+    for inst in range(0,Kconfig.num_CUs):
+        temp = {
+                    'source': MY_STAGING_AREA + 'iter{0}/out{1}.gro'.format(cycle,inst),
+                    'target': 'out{0}.gro'.format(inst),
+                    'action': radical.pilot.LINK
+        }
+        trjconv.input_staging.append(temp)    
+    #-------------------------------------------------------------------------------------------------------------------
+
+
+    #-------------------------------------------------------------------------------------------------------------------
+    # Stage out tmpha.gro to the staging area
+
+    md_stage_out = {
+                        'source': Kconfig.md_output_file,
+                        'target': MY_STAGING_AREA + 'iter{0}/{1}'.format(cycle,Kconfig.md_output_file),
+                        'action': radical.pilot.LINK
+                    }
+
+    tmpha_out = {
+                    'source':'tmpha.gro',
+                    'target':MY_STAGING_AREA + 'iter{0}/tmpha.gro'.format(cycle),
+                    'action': radical.pilot.LINK
+                }
+
+    trjconv.output_staging = [md_stage_out,tmpha_out]
+    #-------------------------------------------------------------------------------------------------------------------
+
+    trjconvCU = umgr.submit_units(trjconv)
+    trjconvCU.wait()
+
+    #==================================================================
     # CU Definition for LSDMap
     
     
@@ -25,10 +84,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     mdtd.arguments = ['lsdm.py','-f','config.ini','-c','tmpha.gro','-n','%s'%nearest_neighbor_file,'-w','%s' %Kconfig.w_file]
     mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
     lsdm=radical.pilot.ComputeUnitDescription()
-    lsdm.pre_exec = ['module load gromacs']
-    lsdm.pre_exec = lsdm.pre_exec + ['python pre_analyze.py %s %s'%(Kconfig.num_CUs,Kconfig.md_output_file)]
-    lsdm.pre_exec = lsdm.pre_exec + ['echo 2 | trjconv -f %s -s %s -o tmpha.gro'%(Kconfig.md_output_file,Kconfig.md_output_file)]
-    lsdm.pre_exec = lsdm.pre_exec + mdtd_bound.pre_exec
+    lsdm.pre_exec = mdtd_bound.pre_exec
     lsdm.executable = mdtd_bound.executable
     lsdm.arguments = mdtd_bound.arguments
     lsdm.mpi = True
@@ -40,13 +96,13 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     
     
     #-------------------------------------------------------------------------------------------------------------------
-    # preanalyze, config and analyzer input staging
+    # tmpha, config and analyzer input staging
 
-    pre_ana_stage = {
-                        'source': MY_STAGING_AREA + 'pre_analyze.py',
-                        'target': 'pre_analyze.py',
-                        'action': radical.pilot.LINK
-                    }
+    tmpha_stage = {
+                    'source': MY_STAGING_AREA + 'iter{0}/tmpha.gro'.format(cycle),
+                    'target': 'tmpha.gro',
+                    'action': radical.pilot.LINK
+        }
 
     config_stage = {
                         'source': MY_STAGING_AREA + 'config.ini',
@@ -66,23 +122,9 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
                         'action': radical.pilot.LINK
     }
 
-    lsdm.input_staging = [pre_ana_stage,config_stage,ana_stage,lsdm_stage]
+    lsdm.input_staging = [tmpha_stage,config_stage,ana_stage,lsdm_stage]
     #-------------------------------------------------------------------------------------------------------------------
     
-    
-    #-------------------------------------------------------------------------------------------------------------------
-    # Stage-in the output of the simulation stage which is present 
-    # in the staging area
-    
-    for inst in range(0,Kconfig.num_CUs):
-        temp = {
-                    'source': MY_STAGING_AREA + 'iter{0}/out{1}.gro'.format(cycle,inst),
-                    'target': 'out{0}.gro'.format(inst),
-                    'action': radical.pilot.LINK
-        }
-        lsdm.input_staging.append(temp)
-    
-    #-------------------------------------------------------------------------------------------------------------------
 
     #-------------------------------------------------------------------------------------------------------------------
     # Stage-in the weight file from the previous iteration
@@ -110,14 +152,8 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
                         'target': MY_STAGING_AREA + 'iter{0}/{1}'.format(cycle,evfile),
                         'action': radical.pilot.LINK
                     }
-
-    md_stage_out = {
-                        'source': Kconfig.md_output_file,
-                        'target': MY_STAGING_AREA + 'iter{0}/{1}'.format(cycle,Kconfig.md_output_file),
-                        'action': radical.pilot.LINK
-                    }
     
-    lsdm.output_staging = [nn_stage_out,ev_stage_out,md_stage_out]
+    lsdm.output_staging = [nn_stage_out,ev_stage_out]
     
     #-------------------------------------------------------------------------------------------------------------------
 
@@ -282,7 +318,9 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     postCU.wait()
 
     try:
-        print 'Analysis Execution time : ',((lsdmCU.stop_time - lsdmCU.start_time).total_seconds()+(postCU.stop_time - postCU.start_time).total_seconds())
+        print 'Analysis Execution time : ',((trjconvCU.stop_time-trjconvCU.start_time).total_seconds()+
+                                            (lsdmCU.stop_time - lsdmCU.start_time).total_seconds()+
+                                            (postCU.stop_time - postCU.start_time).total_seconds())
 
     except:
         pass

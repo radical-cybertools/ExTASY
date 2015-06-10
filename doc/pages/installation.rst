@@ -49,6 +49,8 @@ To install the development version (unstable),
 
 .. parsed-literal:: pip install --upgrade git+https://github.com/radical-cybertools/ExTASY.git@devel#egg=radical.ensemblemd.extasy
 
+.. parsed-literal:: pip install --upgrade git+https://github.com/radical-cybertools/radical.ensemblemd.mdkernels.git@master#egg=radical.ensemblemd.mdkernels
+
 
 Now you should be able to print the installed version of the ExTASY module using,
 
