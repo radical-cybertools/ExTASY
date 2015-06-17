@@ -261,19 +261,19 @@ The name of your file (here lrz.json) together with the name of the resource (su
 
 All fields are mandatory, unless indicated otherwise below.
 
-* description: a human readable description of the resource
-* notes: information needed to form valid pilot descriptions, such as which parameter are required, etc.
-* schemas: allowed values for the access_schema parameter of the pilot description. The first schema in the list is used by default. For each schema, a subsection is needed which specifies job_manager_endpoint and filesystem_endpoint.
-* job_manager_endpoint: access url for pilot submission (interpreted by SAGA)
-* filesystem_endpoint: access url for file staging (interpreted by SAGA)
-* default_queue: queue to use for pilot submission (optional)
-* lrms: type of job management system (LOADL, LSF, PBSPRO, SGE, SLURM, TORQUE, FORK)
-* task_launch_method: type of compute node access (required for non-MPI units: SSH,`APRUN` or LOCAL)
-* mpi_launch_method: type of MPI support (required for MPI units: MPIRUN, MPIEXEC, APRUN, IBRUN or POE)
-* python_interpreter: path to python (optional)
-* pre_bootstrap: list of commands to execute for initialization (optional)
-* valid_roots: list of shared file system roots (optional). Pilot sandboxes must lie under these roots.
-* pilot_agent: type of pilot agent to use (radical-pilot-agent-multicore.py)
-* forward_tunnel_endpoint: name of host which can be used to create ssh tunnels from the compute nodes to the outside world (optional)
+* **description**: a human readable description of the resource
+* **notes**: information needed to form valid pilot descriptions, such as which parameter are required, etc.
+* **schemas**: allowed values for the access_schema parameter of the pilot description. The first schema in the list is used by default. For each schema, a subsection is needed which specifies job_manager_endpoint and filesystem_endpoint.
+* **job_manager_endpoint**: access url for pilot submission (interpreted by SAGA)
+* **filesystem_endpoint**: access url for file staging (interpreted by SAGA)
+* **default_queue**: queue to use for pilot submission (optional)
+* **lrms**: type of job management system (LOADL, LSF, PBSPRO, SGE, SLURM, TORQUE, FORK)
+* **task_launch_method**: type of compute node access (required for non-MPI units: SSH,`APRUN` or LOCAL)
+* **mpi_launch_method**: type of MPI support (required for MPI units: MPIRUN, MPIEXEC, APRUN, IBRUN or POE)
+* **python_interpreter**: path to python (optional)
+* **pre_bootstrap**: list of commands to execute for initialization (optional)
+* **valid_roots**: list of shared file system roots (optional). Pilot sandboxes must lie under these roots.
+* **pilot_agent**: type of pilot agent to use (radical-pilot-agent-multicore.py)
+* **forward_tunnel_endpoint**: name of host which can be used to create ssh tunnels from the compute nodes to the outside world (optional)
 
 Several configuration files are part of the RADICAL-Pilot installation, and live under radical/pilot/configs/.
