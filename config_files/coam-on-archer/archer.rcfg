@@ -1,4 +1,4 @@
-REMOTE_HOST = 'archer.ac.uk'              # Label/Name of the Remote Machine
+REMOTE_HOST = 'epsrc.archer'              # Label/Name of the Remote Machine
 UNAME       = 'username'                  # Username on the Remote Machine
 ALLOCATION  = 'e290'                      # Allocation to be charged
 WALLTIME    = 60                          # Walltime to be requested for the pilot
