@@ -6,8 +6,6 @@
 ExTASY |VERSION|
 ================
 
-Contents:
-
 .. toctree::
    :maxdepth: 4
 
