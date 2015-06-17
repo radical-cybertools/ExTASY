@@ -1,0 +1,425 @@
+#!/home/vivek/Research/ExTASY/extasy/bin/python
+# -*- coding: utf-8 -*-
+#
+# data aggregation tool - hostlist collected histograms on numerical data
+
+__version__ = "1.14"
+
+# Copyright (C) 2010 Peter Kjellström <cap@nsc.liu.se>
+#               
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+# 02110-1301, USA.
+
+import sys
+import optparse
+import commands
+import math
+from hostlist import collect_hostlist
+
+def gettermwidth():
+    try:
+        cols = int(commands.getoutput("/bin/stty -F /dev/tty size").split()[1])
+    except:
+        cols = 80
+    return cols
+
+## Statistical functions
+
+def mean(list):
+    return sum(list)/float(len(list))
+
+def median(list):
+    tmp = list[:]
+    tmp.sort()
+    if (len(tmp) % 2) == 0:
+        return (tmp[(len(tmp)/2)-1] + tmp[(len(tmp)/2)]) / 2
+    else:
+        return tmp[int(len(tmp)/2)]
+
+def stdev(list):
+    m = mean(list)
+    return math.sqrt(mean( [ (m - x)**2 for x in list ] ))
+
+# clean and refine indata: list of STRING -> list of [ "hostname", float vaule ]
+def refine_data(rawlist):
+    if opts.debug:
+        print "Debug: read in %i lines of data" % len(rawlist)
+
+    # Transform additional separators -> " "
+    for char in opts.field_separators:
+        if opts.debug:
+            print "Debug: adding additional field separator: \"%s\"" % char
+        for i in range(len(rawlist)):
+            tmp = rawlist[i].replace(char, " ")
+            rawlist[i] = tmp
+
+    if not opts.key:
+        # list to hold candidates for KEY
+        key = []
+        # Lets have a look at the last three lines
+        for lnum in range(len(rawlist)-3,len(rawlist)):
+            sline = rawlist[lnum].strip().split()
+            if len(sline) < 2:
+                key.append(0)
+                continue
+            # The first column that can be converted to a float will be our candidate
+            for i in [ x + 1 for x in range(len(sline[1:])) ]:
+                tmp = None
+                try:
+                    tmp = float(sline[i])
+                except ValueError:
+                    pass
+                if tmp != None:
+                    if opts.debug:
+                        print "Debug: auto-detect row=%i found data at column %i" % (lnum, i)
+                    key.append(i)
+                    break
+        if opts.debug:
+            print "Debug: key list after auto-detect: %s" % str(key)
+
+        # If more than half of the investigated lines have the same candidate...
+        for candidate in key:
+            if key.count(candidate) == len(key):
+                opts.key = candidate
+                if opts.verbose:
+                    print "Info: auto-detect unanimously selected key: %i" % candidate
+                break
+            if key.count(candidate) > (len(key) / 2):
+                opts.key = candidate
+                if opts.verbose:
+                    print "Info: auto-detect selected key: %i by majority choice" % candidate
+                break
+        
+        # No winner found (or winner was 'bad line')
+        if not opts.key or (opts.key == 0):
+            print "Error: Unable to auto-detect KEY from data"
+            exit(1)
+
+    nreject = 0
+    cleandata = []
+    for line in rawlist:
+        sline = line.strip().split()
+        tmp = None
+        try:
+            tmp = float(sline[opts.key])
+        except ValueError:
+            pass
+        if tmp != None:
+            cleandata.append([ sline[0].strip(":"), tmp ])
+        else:
+            nreject += 1
+            if opts.verbose:
+                print "Info: rejected line: \"%s\"" % line.strip()
+
+    return (cleandata, nreject)
+
+def create_merged_buckets(valuelist):
+    pass
+
+def create_custom_buckets(valuelist):
+    pass
+
+# remove duplicate values from a list
+# kent suggested this solution using set()
+def dedupe(l):
+    newlist = []
+    seen = set()
+    for v in l:
+        if not v in seen:
+            newlist.append(v)
+            seen.add(v)
+    return newlist
+
+# Bucket creation function
+def create_buckets(valuelist):
+    minvalue = valuelist[0]
+    maxvalue = valuelist[-1]
+    # size of range
+    rsize = maxvalue - minvalue
+    # initial bucket size
+    bsize = rsize / opts.nbuckets
+    # number of forced buckets
+    nforce = 0
+
+    if opts.debug:
+        print "Debug: smallest value found was %.2f" % minvalue
+        print "Debug: largest value found was %.2f" % maxvalue
+
+    blist = []
+    # -m passed, lets look for large pieces of range with same value
+    if opts.merge_buckets:
+        if opts.verbose:
+            print "Info: Creating buckets around empty regions (--merge-buckets)"
+#        blist = create_merged_buckets(valuelist)
+        # how much of rsize has been covered so far
+        comprange = 0
+        deduped_vlist = dedupe(valuelist)
+        # for each unique value check distance to next value, create bucket if large enough
+        for nval in xrange(len(deduped_vlist)-1):
+            if deduped_vlist[nval+1]-deduped_vlist[nval] > bsize:
+                if opts.debug:
+                    print "Debug: adding bucket with lb: %f ub: %f" % (deduped_vlist[nval],
+                                                                       deduped_vlist[nval+1])
+                ublist = [ blist[x]['ub'] for x in xrange(len(blist)) ]
+                # only add a bucket entry for the lb if it doesn't already exist
+                if deduped_vlist[nval] in ublist:
+                    i = ublist.index(deduped_vlist[nval])
+                    blist[i]['alsolb'] = 1
+                else:
+                    blist.append( { 'ub': deduped_vlist[nval], 'alsolb': 1} )
+                blist.append( { 'ub': deduped_vlist[nval+1] } )
+                comprange += deduped_vlist[nval+1]-deduped_vlist[nval]
+                nforce += 1
+        # sort blist and add end bucket at maxvalue if needed
+        blist.sort(lambda a, b: cmp(a['ub'], b['ub']))
+        if maxvalue not in [ blist[x]['ub'] for x in xrange(len(blist)) ]:
+            blist.append( { 'ub': maxvalue } )
+        # figure out how much work we have left
+        remainingrange = rsize - comprange
+        remainingbuckets = opts.nbuckets - nforce
+        remainingbsize = remainingrange / remainingbuckets
+        if opts.debug:
+            print "Debug: remaining range is targeted at %i buckets" % remainingbuckets
+            print "Debug: remaining range: %.2f -> bsize: %.2f" % (remainingrange,
+                                                                  remainingbsize)
+        # traverse buckets and see if what's below can/should be split
+        if (remainingrange > 0) and (remainingbuckets > 0):
+            for bnum in xrange(len(blist)):
+                if bnum == 0:
+                    lowref = minvalue
+                else:
+                    lowref = blist[bnum-1]['ub']
+                    if 'alsolb' in blist[bnum-1]:
+                        continue
+#                print "candidate range: %.2f to %.2f" % (lowref, blist[bnum]['ub'])
+#                print "1.3 x remainingbsize for this range: %.2f" % ((blist[bnum]['ub']-lowref) / (1.3 * remainingbsize))
+                # 1.3 purely made up but seems quite good ;-)
+                nnew = int((blist[bnum]['ub'] - lowref) / (1.3 * remainingbsize))
+                if nnew > 0:
+                    newbsize = (blist[bnum]['ub'] - lowref) / (nnew + 1)
+#                    print "newbsize: %.2f" % newbsize
+                    for x in xrange(nnew):
+                        if opts.debug:
+                            print "Debug: adding additional bucket at: %.2f" % (lowref + (newbsize * (x + 1)))
+                        blist.append( {'ub': lowref + (newbsize * (x + 1)) })
+        elif opts.debug:
+            print "Debug: no remaining range left to populate"
+        # finish up with a final sort
+        blist.sort(lambda a, b: cmp(a['ub'], b['ub']))
+    elif opts.bucket:
+        if opts.verbose:
+            print "Info: Creating buckets based on custom data"
+#        blist = create_custom_buckets(valuelist)
+        # how much of rsize has been covered so far
+        comprange = 0
+        for b in opts.bucket:
+            # parse the given explicit bucket(s)
+            try:
+                (lb, ub) = map(float, b.replace("-", " ").split())
+            except:
+                print "Error: Incorrect bucket format specified."
+                exit(1)
+            if opts.debug:
+                print "Debug: adding bucket from commandline: %.2f - %.2f" % (lb, ub)
+            blist.append( { 'ub': lb, 'alsolb': 1 } )
+            blist.append( { 'ub': ub } )
+            comprange += ub - lb
+            nforce += 1
+        blist.sort(lambda a, b: cmp(a['ub'], b['ub']))
+        blist.append( { 'ub': maxvalue } )
+        # figure out how much work we have left
+        remainingrange = rsize - comprange
+        remainingbuckets = opts.nbuckets - nforce
+        remainingbsize = remainingrange / remainingbuckets
+        if opts.debug:
+            print "Debug: remaining range is targeted at %i buckets" % remainingbuckets
+            print "Debug: remaining range: %.2f -> bsize: %.2f" % (remainingrange,
+                                                                  remainingbsize)
+        # traverse buckets and see if what's below can/should be split
+        for bnum in xrange(len(blist)):
+            if bnum == 0:
+                lowref = minvalue
+            else:
+                lowref = blist[bnum-1]['ub']
+                if 'alsolb' in blist[bnum-1]:
+                    continue
+#            print "candidate range: %.2f to %.2f" % (lowref, blist[bnum]['ub'])
+#            print "1.3 x remainingbsize for this range: %.2f" % ((blist[bnum]['ub']-lowref) / (1.3 * remainingbsize))
+            # 1.3 purely made up but seems quite good ;-)
+            nnew = int((blist[bnum]['ub'] - lowref) / (1.3 * remainingbsize))
+            if nnew > 0:
+                newbsize = (blist[bnum]['ub'] - lowref) / (nnew + 1)
+#                print "newbsize: %.2f" % newbsize
+                for x in xrange(nnew):
+                    if opts.debug:
+                        print "Debug: adding additional bucket at: %.2f" % (lowref + (newbsize * (x + 1)))
+                    blist.append( {'ub': lowref + (newbsize * (x + 1)) })
+        # finish up with a final sort
+        blist.sort(lambda a, b: cmp(a['ub'], b['ub']))
+    else:
+        if opts.verbose:
+            print "Info: Creating simple linear bucket set"
+        # simple linear bucket creation
+        done = minvalue
+        for bnum in xrange(opts.nbuckets):
+            tmp = {}
+            tmp['ub'] = done + bsize
+            done = done + bsize
+            blist.append(tmp)
+
+    # this makes sure the last bucket ends exactly at the end of the range
+    blist[-1]['ub'] = valuelist[-1]
+
+    if blist[0]['ub'] == valuelist[0]:
+        blist.remove(blist[0])
+
+    return blist
+
+
+##
+### Main program
+##        
+
+optp = optparse.OptionParser(usage="usage: %prog [options] < DATA")
+optp.add_option("-b", "--bucket",
+                action="append", type="string", metavar="LOW-HI",
+                help="explicitly specify a bucket (option may be given more than once)")
+optp.add_option("-k", "--key",
+                action="store", type="int", default=None,
+                help="use data at position KEY (default: auto)")
+optp.add_option("-m", "--merge-buckets",
+                action="store_true", default=False,
+                help="adaptively merge buckets when possible (default: False)")
+optp.add_option("-n", "--nbuckets",
+                action="store", type="int", default=5,
+                help="number of buckets to use (default: %default)")
+optp.add_option("-s", "--statistics",
+                action="store_true", default=False,
+                help="include a statistical summary")
+optp.add_option("-S", "--chop-long-lines",
+                action="store_true", default=False,
+                help="chop too long lines / enforce one output line per bucket")
+optp.add_option("-t", "--field-separators",
+                action="store", type="string", default="",
+                help="_additional_ field separators (default: \"\")")
+optp.add_option("-v", "--verbose",
+                action="store_true", default=False)
+optp.add_option("--debug",
+                action="store_true", default=False)
+(opts, args) = optp.parse_args(sys.argv[1:])
+
+if opts.debug:
+    opts.verbose = True
+
+if args != []:
+    optp.print_help()
+    sys.exit(1)
+
+if opts.nbuckets < 1:
+    print "Error: number of buckets must be a positive integer"
+    exit(1)
+
+termwidth = gettermwidth()
+if opts.debug:
+    print "Debug: termwidth: %i" % termwidth
+
+try:
+    rawdata = sys.stdin.readlines()
+except KeyboardInterrupt:
+    if opts.verbose:
+        print "Info: Caught keyboard interrupt, exiting..."
+    exit(1)
+
+if len(rawdata) <= 3:
+    print "Error: not enough indata (only %i line(s))" % len(rawdata)
+    exit(1)
+
+# do list of str -> list of [ hostname, value ] and discard bad lines
+(data, nbadlines) = refine_data(rawdata)
+# sort it
+data.sort(lambda a, b: cmp(a[1], b[1]))
+# put the values in a simple list
+valuelist = map(lambda(x): x[1], data)
+
+if opts.debug:
+    print "Debug: cleaned up data: %s" % str(data)
+
+# Create the bucket list
+buckets = create_buckets(valuelist)
+if opts.debug:
+    print "Debug: bucketlist created:"
+    for nbucket in xrange(len(buckets)):
+        print "Debug:  bucket[%i] %f" % (nbucket, buckets[nbucket]['ub'])
+
+# Dump out some statistics
+if opts.statistics:
+    print "Statistical summary"
+    print "-" * (termwidth - 1)
+    print " %-25s: %i" % ("Number of values", len(valuelist))
+    print " %-25s: %i" % ("Number of rejected lines", nbadlines)
+    print " %-25s: %f" % ("Min value", valuelist[0])
+    print " %-25s: %f" % ("Max value", valuelist[-1])
+    print " %-25s: %f" % ("Mean", mean(valuelist))
+    print " %-25s: %f" % ("Median", median(valuelist))
+    print " %-25s: %f" % ("Standard deviation", stdev(valuelist))
+    print " %-25s: %f" % ("Sum", sum(valuelist))
+    print
+
+for nbucket in xrange(len(buckets)):
+    buckets[nbucket]['nodelist'] = []
+    
+# Populate the buckets with data
+currentbucket = 0
+for (node, value) in data:
+    while (buckets[currentbucket]['ub'] < value):
+        currentbucket += 1
+        if opts.debug:
+            print "Debug: bumping bucket number..."
+    buckets[currentbucket]['nodelist'].append(node)
+    if opts.debug:
+        print "Debug: %i: adding %s %.2f" % (currentbucket, node, value)
+
+# Compute number of characters needed for printing values and number of nodes
+ncharvalue = len(str("%.2f" % valuelist[-1]))
+ncharnodecnt = max(len(str(max( [ len(bucket['nodelist']) for bucket in buckets ] ))), 3)
+
+if opts.debug:
+    print "Debug: value pad: %i" % ncharvalue
+    print "Debug: node count pad: %i" % ncharnodecnt
+
+# Print out a header if --verbose
+if opts.verbose:
+    print "%sLOW-%sHI: %sCNT  HOSTLIST" % (" " * (ncharvalue - 3),
+                                           " " * (ncharvalue - 2),
+                                           " " * (ncharnodecnt - 3))
+    print "-" * termwidth
+
+# Main output print
+lower = valuelist[0]
+for bucket in buckets:
+    # figure out the padding for each column
+    pad1 = (ncharvalue - len(str("%.2f" % lower))) * " "
+    pad2 = (ncharvalue - len(str("%.2f" % bucket['ub']))) * " "
+    pad3 = (ncharnodecnt - len(str(len(bucket['nodelist'])))) * " "
+
+    nodeliststr = collect_hostlist(bucket['nodelist'])
+    if opts.chop_long_lines and len(nodeliststr) > (termwidth - (ncharvalue * 2 + ncharnodecnt + 5)):
+        nodeliststr = nodeliststr[:(termwidth - (ncharvalue * 2 + ncharnodecnt + 5 + 3))] + "..."
+
+    print "%s%.2f-%s%.2f: %s%i  %s" % (pad1, lower,
+                                       pad2, bucket['ub'],
+                                       pad3, len(bucket['nodelist']),
+                                       nodeliststr)
+    lower = bucket['ub']

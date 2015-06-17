@@ -1,0 +1,4 @@
+saga-python
+radical.utils
+pymongo==2.8
+python-hostlist

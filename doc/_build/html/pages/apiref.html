@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="ExTASY-0.2 0.2 documentation" href="../index.html" />
-    <link rel="next" title="6. Troubleshooting" href="trouble.html" />
+    <link rel="next" title="6. Customization Documentation" href="develop.html" />
     <link rel="prev" title="4. Running a Gromacs/LSDMap Workload" href="grlsd.html" /> 
   </head>
   <body role="document">
@@ -36,7 +36,7 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="trouble.html" title="6. Troubleshooting"
+          <a href="develop.html" title="6. Customization Documentation"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="grlsd.html" title="4. Running a Gromacs/LSDMap Workload"
@@ -54,10 +54,9 @@
 <span id="apiref"></span><h1>5. API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="execution-context-api">
 <h2>5.1. Execution Context API<a class="headerlink" href="#execution-context-api" title="Permalink to this headline">¶</a></h2>
-<div class="topic">
-<p class="topic-title first">class <strong>radical.ensemblemd.SingleClusterEnvironment(resource,cores,walltime,database_url,queue=None,username=None,allocation=None,cleanup=False)</strong></p>
+<blockquote class="highlights">
+<div>class <strong>radical.ensemblemd.SingleClusterEnvironment(resource,cores,walltime,database_url,queue=None,username=None,allocation=None,cleanup=False)</strong></div></blockquote>
 <p>A static execution context provides a fixed set of computational resources.</p>
-</div>
 <ul class="simple">
 <li><strong>name</strong>: Returns the name of the execution context</li>
 <li><strong>allocate()</strong>: Allocates the resources</li>
@@ -68,10 +67,9 @@
 </div>
 <div class="section" id="application-kernel-api">
 <h2>5.2. Application Kernel API<a class="headerlink" href="#application-kernel-api" title="Permalink to this headline">¶</a></h2>
-<div class="topic">
-<p class="topic-title first">class radical.ensemblemd.Kernel(name,args=None)</p>
+<blockquote class="highlights">
+<div>class <strong>radical.ensemblemd.Kernel(name,args=None)</strong></div></blockquote>
 <p>The Kernel provides functions to support file movement as required by the pattern.</p>
-</div>
 <ul class="simple">
 <li><strong>cores</strong>: number of cores the kernel is using.</li>
 <li><strong>upload_input_data</strong>: Instructs the application to upload one or more files or directories from the host the script is running on into the kernel’s execution directory.</li>
@@ -242,8 +240,8 @@
   <p class="topless"><a href="grlsd.html"
                         title="previous chapter">4. Running a Gromacs/LSDMap Workload</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="trouble.html"
-                        title="next chapter">6. Troubleshooting</a></p>
+  <p class="topless"><a href="develop.html"
+                        title="next chapter">6. Customization Documentation</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -275,7 +273,7 @@
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="trouble.html" title="6. Troubleshooting"
+          <a href="develop.html" title="6. Customization Documentation"
              >next</a> |</li>
         <li class="right" >
           <a href="grlsd.html" title="4. Running a Gromacs/LSDMap Workload"

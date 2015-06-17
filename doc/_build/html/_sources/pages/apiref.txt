@@ -9,9 +9,10 @@ API Reference
 Execution Context API
 =====================
 
-.. topic:: class **radical.ensemblemd.SingleClusterEnvironment(resource,cores,walltime,database_url,queue=None,username=None,allocation=None,cleanup=False)**
+.. highlights::
+	class **radical.ensemblemd.SingleClusterEnvironment(resource,cores,walltime,database_url,queue=None,username=None,allocation=None,cleanup=False)**
 	
-	A static execution context provides a fixed set of computational resources.
+A static execution context provides a fixed set of computational resources.
 
 * **name**: Returns the name of the execution context
 * **allocate()**: Allocates the resources
@@ -23,9 +24,11 @@ Execution Context API
 Application Kernel API
 ======================
 
-.. topic:: class radical.ensemblemd.Kernel(name,args=None)
+.. highlights:: 
+
+	class **radical.ensemblemd.Kernel(name,args=None)**
 	
-	The Kernel provides functions to support file movement as required by the pattern.
+The Kernel provides functions to support file movement as required by the pattern.
 
 * **cores**: number of cores the kernel is using.
 * **upload_input_data**: Instructs the application to upload one or more files or directories from the host the script is running on into the kernel’s execution directory. 

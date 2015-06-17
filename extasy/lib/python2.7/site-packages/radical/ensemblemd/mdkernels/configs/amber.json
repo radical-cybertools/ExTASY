@@ -1,0 +1,24 @@
+{
+  "kernel_name": "AMBER",
+  "kernel_configs":
+  {
+    "stampede.tacc.utexas.edu":
+    {
+      "environment" : {},
+      "pre_exec" : ["module load TACC && module load amber"],
+      "executable" : ["pmemd.MPI"]
+    },
+    "archer.ac.uk":
+    {
+      "environment" : {},
+      "pre_exec" : ["module load packages-archer","module load amber"],
+      "executable" : ["pmemd.MPI"]
+    },
+    "biou.rice.edu":
+    {
+      "environment" : {},
+      "pre_exec" : ["module load amber"],
+      "executable" : ["pmemd.MPI"]
+    }
+  }
+}

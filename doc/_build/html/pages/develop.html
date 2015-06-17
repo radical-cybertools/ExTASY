@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>6. Customization Documentation &mdash; ExTASY-0.2 0.2 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="ExTASY-0.2 0.2 documentation" href="../index.html" />
+    <link rel="next" title="7. Troubleshooting" href="trouble.html" />
+    <link rel="prev" title="5. API Reference" href="apiref.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="trouble.html" title="7. Troubleshooting"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="apiref.html" title="5. API Reference"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">ExTASY-0.2 0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="customization-documentation">
+<span id="develop"></span><h1>6. Customization Documentation<a class="headerlink" href="#customization-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="writing-new-application-kernels">
+<h2>6.1. Writing New Application Kernels<a class="headerlink" href="#writing-new-application-kernels" title="Permalink to this headline">¶</a></h2>
+<p>While the current set of available application kernels might provide a good set of tools to start, sooner or later you will probably want to use a tool for which no application Kernel exsits. In this case, you will have to write your own one.</p>
+<p>The easiest way to describe how this works is by example:</p>
+<div class="code highlight-python"><div class="highlight"><pre>from radical.ensemblemd import Kernel
+from radical.ensemblemd import Pipeline
+from radical.ensemblemd import EnsemblemdError
+from radical.ensemblemd import SingleClusterEnvironment
+
+from radical.ensemblemd.engine import get_engine
+from radical.ensemblemd.kernel_plugins.kernel_base import KernelBase
+
+
+# ------------------------------------------------------------------------------
+#
+_KERNEL_INFO = {
+    &quot;name&quot;:         &quot;my.user.defined.kernel&quot;,
+    &quot;description&quot;:  &quot;Brief description of your Kernel.&quot;,
+    &quot;arguments&quot;:   {
+        &quot;--sleep-interval=&quot;: {
+    &quot;mandatory&quot;: True,
+            &quot;description&quot;: &quot;Number of seconds to do nothing.&quot;
+    },
+}
+}
+
+# ------------------------------------------------------------------------------
+#
+class MyUserDefinedKernel(KernelBase):
+
+def __init__(self):
+        &quot;&quot;&quot;Le constructor.
+        &quot;&quot;&quot;
+        super(MyUserDefinedKernel, self).__init__(_KERNEL_INFO)
+
+@staticmethod
+def get_name():
+        return _KERNEL_INFO[&quot;name&quot;]
+
+def _bind_to_resource(self, resource_key):
+        &quot;&quot;&quot;This function binds the Kernel to a specific resource defined in
+        &quot;resource_key&quot;.
+        &quot;&quot;&quot;
+        executable = &quot;/bin/sleep&quot;
+        arguments  = [&#39;{0}&#39;.format(self.get_arg(&quot;--sleep-interval=&quot;))]
+
+        self._executable  = executable
+        self._arguments   = arguments
+        self._environment = None
+        self._uses_mpi    = False
+        self._pre_exec    = None
+        self._post_exec   = None
+
+# ------------------------------------------------------------------------------
+# Register the user-defined kernel with Ensemble MD Toolkit.
+get_engine().add_kernel_plugin(MyUserDefinedKernel)
+
+# ------------------------------------------------------------------------------
+#
+class Sleep(Pipeline):
+    &quot;&quot;&quot;The Sleep class implements a Bag of Task. All ensemble members
+simply sleep for 60 seconds.
+&quot;&quot;&quot;
+
+def __init__(self, instances):
+        Pipeline.__init__(self, instances)
+
+def step_1(self, instance):
+        &quot;&quot;&quot;This step sleeps for 60 seconds.
+        &quot;&quot;&quot;
+        k = Kernel(name=&quot;my.user.defined.kernel&quot;)
+        k.arguments = [&quot;--sleep-interval=60&quot;]
+        return k
+
+# ------------------------------------------------------------------------------
+#
+if __name__ == &quot;__main__&quot;:
+
+    try:
+        # Create a new static execution context with one resource and a fixed
+        # number of cores and runtime.
+        cluster = SingleClusterEnvironment(
+            resource=&quot;localhost&quot;,
+        cores=1,
+        walltime=15,
+        username=None,
+        allocation=None
+        )
+
+        # Allocate the resources.
+        cluster.allocate()
+
+        # Set the &#39;instances&#39; of the pipeline to 16. This means that 16 instances
+        # of each pipeline step are executed.
+        #
+        # Execution of the 16 pipeline instances can happen concurrently or
+        # sequentially, depending on the resources (cores) available in the
+        # SingleClusterEnvironment.
+        sleep = Sleep(instances=16)
+
+        cluster.run(sleep)
+
+except EnsemblemdError, er:
+
+        print &quot;Ensemble MD Toolkit Error: {0}&quot;.format(str(er))
+        raise # Just raise the execption again to get the backtrace
+</pre></div>
+</div>
+<p>The existing kernels can be found <a class="reference external" href="https://github.com/radical-cybertools/radical.ensemblemd/tree/master/src/radical/ensemblemd/kernel_plugins">here</a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">6. Customization Documentation</a><ul>
+<li><a class="reference internal" href="#writing-new-application-kernels">6.1. Writing New Application Kernels</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="apiref.html"
+                        title="previous chapter">5. API Reference</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="trouble.html"
+                        title="next chapter">7. Troubleshooting</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/pages/develop.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="trouble.html" title="7. Troubleshooting"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="apiref.html" title="5. API Reference"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">ExTASY-0.2 0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, RADICAL Group at Rutgers.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

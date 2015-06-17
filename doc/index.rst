@@ -30,6 +30,7 @@ https://github.com/radical-cybertools/ExTASY/tree/extasy_0.2
    pages/coam.rst
    pages/grlsd.rst
    pages/apiref.rst
+   pages/develop.rst
    pages/trouble.rst
 
 Indices and tables

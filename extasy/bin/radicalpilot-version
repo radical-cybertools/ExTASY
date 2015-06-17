@@ -1,0 +1,5 @@
+#!/home/vivek/Research/ExTASY/extasy/bin/python
+
+import radical.pilot
+print  radical.pilot.version_detail
+

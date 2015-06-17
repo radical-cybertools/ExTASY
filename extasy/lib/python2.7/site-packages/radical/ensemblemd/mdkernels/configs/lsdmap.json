@@ -1,0 +1,32 @@
+{
+    "kernel_name": "LSDMAP",
+    "kernel_configs":
+    {
+        "trestles.sdsc.xsede.org":
+        {
+            "environment" : {},
+            "pre_exec" : ["module load python","module load scipy","module load mpi4py","(test -d $HOME/lsdmap || (git clone https://github.com/jp43/lsdmap.git $HOME/lsdmap && python $HOME/lsdmap/setup.py install --user))","export PATH=$PATH:$HOME/lsdmap/bin","chmod +x $HOME/lsdmap/bin/lsdmap"],
+            "executable" : ["/bin/bash"]
+        },
+        "stampede.tacc.utexas.edu":
+        {
+            "environment" : {},
+            "pre_exec" : ["module load -intel +intel/14.0.1.106","export PYTHONPATH=/home1/03036/jp43/.local/lib/python2.7/site-packages","module load python/2.7.6","export PATH=/home1/03036/jp43/.local/bin:$PATH"],
+            "executable" : ["/opt/apps/intel14/mvapich2_2_0/python/2.7.6/lib/python2.7/site-packages/mpi4py/bin/python-mpi"],
+            "post_exec" : ["module load python","export PYTHONPATH=/home1/03036/jp43/.local/lib/python2.7/site-packages:/home1/03036/jp43/.local/lib/python2.7/site-packages/lsdmap/rw:$PYTHONPATH"]
+        },
+        "archer.ac.uk":
+        {
+            "environment" : {},
+            "pre_exec" : ["module unload python/2.7.6-ucs4","module load python","module load numpy","module load scipy/0.13.3-libsci"," module load lsdmap","export PYTHONPATH=/work/y07/y07/cse/lsdmap/lib/python2.7/site-packages:$PYTHONPATH"],
+            "executable" : ["python"],
+            "post_exec" : ["module unload python/2.7.6-ucs4","module load python","module load numpy"]
+        },
+        "biou.rice.edu":
+        {
+            "environment" : {},
+            "pre_exec" : ["module load python"," module load lsdmap"],
+            "executable" : ["python"]
+        }
+    }
+}

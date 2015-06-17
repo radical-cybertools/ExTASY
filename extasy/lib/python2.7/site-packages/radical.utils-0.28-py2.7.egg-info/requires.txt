@@ -1,0 +1,7 @@
+colorama
+
+[nose]
+nose
+
+[pymongo]
+pymongo

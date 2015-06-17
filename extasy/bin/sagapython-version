@@ -1,0 +1,5 @@
+#!/home/vivek/Research/ExTASY/extasy/bin/python
+
+import saga
+print saga.version
+
