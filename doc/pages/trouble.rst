@@ -7,34 +7,60 @@ Troubleshooting
 Some issues that you might face during the execution are discussed here.
 
 
+Execution fails with "Couldn't read packet: Connection reset by peer"
+---------------------------------------------------------------------
+
+You encounter the following error when running any of the extasy workflows:
+
+::
+
+    ...
+    #######################
+    ##       ERROR       ##
+    #######################
+    Pilot 54808707f8cdba339a7204ce has FAILED. Can't recover.
+    Pilot log: [u'Pilot launching failed: Insufficient system resources: Insufficient system resources: read from process failed \'[Errno 5] Input/output error\' : (Shared connection to stampede.tacc.utexas.edu closed.\n)
+    ...
+
+TO fix this, create a file ``~/.saga/cfg`` in your home directory and add the following two lines:
+
+::
+
+    [saga.utils.pty]
+    ssh_share_mode = no
+
+This switches the SSH transfer layer into "compatibility" mode which should address the "Connection reset by peer" problem.
+
+
 Configuring SSH Access
 ----------------------
 
 From a terminal from your local machine, setup a key pair with your email address.
 
-::
+	::
 
-	$ ssh-keygen -t rsa -C "name@email.com"
-	Generating public/private rsa key pair.
-	Enter file in which to save the key (/home/user/.ssh/id_rsa): [Enter]
-	Enter passphrase (empty for no passphrase): [Passphrase]
-	Enter same passphrase again: [Passphrase]
-	Your identification has been saved in /home/user/.ssh/id_rsa.
-	Your public key has been saved in /home/user/.ssh/id_rsa.pub.
-	The key fingerprint is:
-	03:d4:c4:6d:58:0a:e2:4a:f8:73:9a:e8:e3:07:16:c8 your@email.ac.uk
-	The key's randomart image is:
-	+--[ RSA 2048]----+
-	|    . ...+o++++. |
-	| . . . =o..      |
-	|+ . . .......o o |
-	|oE .   .         |
-	|o =     .   S    |
-	|.    +.+     .   |
-	|.  oo            |
-	|.  .             |
-	| ..              |
-	+-----------------+
+		$ ssh-keygen -t rsa -C "name@email.com"
+
+		Generating public/private rsa key pair.
+		Enter file in which to save the key (/home/user/.ssh/id_rsa): [Enter]
+		Enter passphrase (empty for no passphrase): [Passphrase]
+		Enter same passphrase again: [Passphrase]
+		Your identification has been saved in /home/user/.ssh/id_rsa.
+		Your public key has been saved in /home/user/.ssh/id_rsa.pub.
+		The key fingerprint is:
+		03:d4:c4:6d:58:0a:e2:4a:f8:73:9a:e8:e3:07:16:c8 your@email.ac.uk
+		The key's randomart image is:
+		+--[ RSA 2048]----+
+		|    . ...+o++++. |
+		| . . . =o..      |
+		|+ . . .......o o |
+		|oE .   .         |
+		|o =     .   S    |
+		|.    +.+     .   |
+		|.  oo            |
+		|.  .             |
+		| ..              |
+		+-----------------+
 
 
 Next you need to transfer it to the remote machine.
@@ -54,7 +80,64 @@ To transfer to Archer,
 		cat ~/.ssh/id_rsa.pub | ssh username@login.archer.ac.uk 'cat - >> ~/.ssh/authorized_keys'
 
 
-Error : Couldn't create new session
+
+Error: Permission denied (publickey,keyboard-interactive) in AGENT.STDERR
+---------------------------------------------------------------------------
+
+The Pilot does not start running and goes to the 'Done' state directly from 'PendingActive'. Please check the AGENT.STDERR file for  "Permission denied (publickey,keyboard-interactive)" .
+
+	::
+
+		Permission denied (publickey,keyboard-interactive).
+		kill: 19932: No such process
+
+You require to setup passwordless, intra-node SSH access. Although this is default in most HPC clusters, this might not be the case always.
+
+On the head-node, run:
+
+	::
+
+		cd ~/.ssh/
+		ssh-keygen -t rsa
+
+**Do not enter a passphrase**. The result should look like this:
+
+	::
+
+		Generating public/private rsa key pair.
+		Enter file in which to save the key (/home/e290/e290/oweidner/.ssh/id_rsa):
+		Enter passphrase (empty for no passphrase):
+		Enter same passphrase again:
+		Your identification has been saved in /home/e290/e290/oweidner/.ssh/id_rsa.
+		Your public key has been saved in /home/e290/e290/oweidner/.ssh/id_rsa.pub.
+		The key fingerprint is:
+		73:b9:cf:45:3d:b6:a7:22:72:90:28:0a:2f:8a:86:fd oweidner@eslogin001
+		The key's randomart image is:
+		+--[ RSA 2048]----+
+		|    . ...+o++++. |
+		| . . . =o..      |
+		|+ . . .......o o |
+		|oE .   .         |
+		|o =     .   S    |
+		|.    +.+     .   |
+		|.  oo            |
+		|.  .             |
+		| ..              |
+		+-----------------+
+
+Next, you need to add this key to the authorized_keys file.
+
+	::
+
+		cat id_rsa.pub >> ~/.ssh/authorized_keys
+
+This should be all. Next time you run radical.pilot, you shouldn’t see that error message anymore.
+
+
+
+
+
+Error: Couldn't create new session
 -----------------------------------
 
 If you get an error similar to,
@@ -67,7 +150,7 @@ If you get an error similar to,
 This means no session was created, mostly due to error in the MongoDB URL that is present in the resource configuration file. Please check the URL that you have used. If the URL is correct, you should check the system on which the MongoDB is hosted.
 
 
-Error : Prompted for unkown password
+Error: Prompted for unkown password
 ------------------------------------
 
 If you get an error similar to,
@@ -79,7 +162,7 @@ If you get an error similar to,
 You should check the username that is present in the resource configuration file. If the username is correct, you should check if you have a passwordless login set up for the target machine. You can check this by simply attempting a login to the target machine, if this attempt requires a password, you need to set up a passwordless login to use ExTASY. 
 
 
-Error : Pilot has FAILED. Can't recover
+Error: Pilot has FAILED. Can't recover
 ---------------------------------------
 
 If you get an error similar to,
@@ -130,10 +213,11 @@ If you get an error similar to,
 	sftp>  ls /work/e290/e290/e290ib/radical.pilot.sandbox/pilot-55196431d7bf7579ecc ^H3f080/unit-551965f7d7bf7579ecc3f09b/lsdmap.log
 	Couldn't send packet: Broken pipe
 
-This is mostly because of an older version of sftp/scp being used. This can be fixed by setting a file ```.saga.cfg``` (note the dot in the beginning of the filename) in $HOME on your local machine. The contents of the file need to be,
+This is mostly because of an older version of sftp/scp being used. This can be fixed by setting an environment variable ``SAGA_PTY_SSH_SHAREMODE`` to ``no``.
 
 ::
+	
+	export SAGA_PTY_SSH_SHAREMODE=no
 
-	[saga.util.pty]
-	ssh_share_mode = no
+	
 

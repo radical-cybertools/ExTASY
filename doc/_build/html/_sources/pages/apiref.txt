@@ -109,7 +109,7 @@ This module defines and implement all ensemblemd Exceptions.
 	.. parsed-literal::
 		Bases: radical.ensemblemd.exceptions.EnsemblemdError
 
-* **exception radical.ensemblemd.exceptions.NoKernelConfigurationError(kernel_name, resource_key)**: NoKernelConfigurationError is thrown if no kernel configuration could be found for the provided resource key. `[source] <http://radicalensemblemd.readthedocs.org/en/0.2/_modules/radical/ensemblemd/exceptions.html#NoKernelConfigurationError`_
+* **exception radical.ensemblemd.exceptions.NoKernelConfigurationError(kernel_name, resource_key)**: NoKernelConfigurationError is thrown if no kernel configuration could be found for the provided resource key. `[source] <http://radicalensemblemd.readthedocs.org/en/0.2/_modules/radical/ensemblemd/exceptions.html#NoKernelConfigurationError>`_
 	.. parsed-literal::
 		Bases: radical.ensemblemd.exceptions.EnsemblemdError
 

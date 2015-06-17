@@ -26,21 +26,25 @@ files:
 
     2. The workload configuration file defines the CoCo/Amber workload itself. The configuration file given in this example is strictly meant for the coco-amber usecase only.
 
-**Step 1** : Create a new directory for the example,
+
+**Step 1**: Create a new directory for the example,
 
     ::
 
         mkdir $HOME/extasy-tutorial/
         cd $HOME/extasy-tutorial/
 
-**Step 2** : Download the config files and the input files directly using the following link.
+
+**Step 2**: Download the config files and the input files directly using the following link.
 
     ::
 
-        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/tarballs/coam-on-stampede.tar.gz
+    	curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2/tarballs/coam-on-stampede.tar.gz
         tar xvfz coam-on-stampede.tar.gz
+        cd coam-on-stampede
 
-**Step 3** : In the coam-on-stampede folder, a resource configuration file ``stampede.rcfg`` exists. Details and modifications required are as follows:
+
+**Step 3**: In the coam-on-stampede folder, a resource configuration file ``stampede.rcfg`` exists. Details and modifications required are as follows:
 
     .. note:: 
                 For the purposes of this example, you require to change only:
@@ -63,7 +67,7 @@ files:
         DBURL       = 'mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot'
 
 
-**Step 4** : In the coam-on-stampede folder, a workload configuration file ``cocoamber.wcfg`` exists. Details and modifications required are as follows:
+**Step 4**: In the coam-on-stampede folder, a workload configuration file ``cocoamber.wcfg`` exists. Details and modifications required are as follows:
 
 
     ::
@@ -95,6 +99,12 @@ files:
                 
                 All the parameters in the above example file are mandatory for amber-coco. There are no other parameters currently supported.
 
+**Step 5**: Download the script using:
+
+	::
+
+		curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2/example/amber-coco/extasy_amber_coco.py
+
 
 **Now you are can run the workload using :**
 
@@ -102,7 +112,7 @@ If your shell is BASH,
 
     ::
 
-        EXTASY_DEBUG=True RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg 2> extasy.log
+        EXTASY_DEBUG=True RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' python extasy_amber_coco.py --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg extasy.log
 
 If your shell is CSH,
 
@@ -111,29 +121,8 @@ If your shell is CSH,
         setenv EXTASY_DEBUG True
         setenv RADICAL_PILOT_VERBOSE 'debug'
         setenv SAGA_VERBOSE 'debug'
-        extasy --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg |& tee extasy.log
+        python extasy_amber_coco.py --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg |& tee extasy.log
 
-A **sample output** with expected callbacks and simulation/analysis can be found at `here <https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/coam-on-stampede>`_.
-
-+------------------------+----------------+--------------+
-|     Stage              |   Simulation   |   Analysis   |
-+========================+================+==============+
-| Expected TTC/iteration |     30-35 s    |    25-30 s   |
-+------------------------+----------------+--------------+
-
-There are two stages in the execution phase - Simulation and Analysis. Execution
-starts with any Preprocessing that might be required on the input data and then
-moves to Simulation stage. In the Simulation stage, a number of tasks (num_CUs)
-are launched to execute on the target machine. The number of tasks set to execute
-depends on the PILOTSIZE, num_CUs, num_cores_per_sim_cu, the number of tasks in
-execution state simultaneously would be PILOTSIZE/num_cores_per_sim_cu. As each
-task attains 'Done' (completed) state, the remain tasks are scheduled till all
-the num_CUs tasks are completed.
-
-This is followed by the Analysis stage, one task is scheduled on the target machine
-which takes all the cores as the PILOTSIZE to perform the analysis and returns the
-data required for the next iteration of the Simulation stage. As can be seen, per
-iteration, there are (num_CUs+1) tasks executed.
 
 
 Running on Archer
@@ -150,21 +139,24 @@ files:
 
     2. The workload configuration file defines the CoCo/Amber workload itself. The configuration file given in this example is strictly meant for the coco-amber usecase only.
 
-**Step 1** : Create a new directory for the example,
+**Step 1**: Create a new directory for the example,
 
     ::
 
         mkdir $HOME/extasy-tutorial/
         cd $HOME/extasy-tutorial/
 
-**Step 2** : Download the config files and the input files directly using the following link.
+
+**Step 2**: Download the config files and the input files directly using the following link.
 
     ::
 
-        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/tarballs/coam-on-archer.tar.gz
+    	curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2/tarballs/coam-on-archer.tar.gz
         tar xvfz coam-on-archer.tar.gz
+        cd coam-on-archer
 
-**Step 3** : In the coam-on-archer folder, a resource configuration file ``archer.rcfg`` exists. Details and modifications required are as follows:
+
+**Step 3**: In the coam-on-archer folder, a resource configuration file ``archer.rcfg`` exists. Details and modifications required are as follows:
 
     .. note:: 
                 For the purposes of this example, you require to change only:
@@ -173,6 +165,7 @@ files:
                     * ALLOCATION
 
                 The other parameters in the resource configuration are already set up to successfully execute the workload in this example.
+    
     ::
 
         REMOTE_HOST = 'archer.ac.uk'              # Label/Name of the Remote Machine
@@ -186,7 +179,7 @@ files:
         DBURL       = 'mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot'
 
 
-**Step 4** : In the coam-on-archer folder, a resource configuration file ``cocoamber.wcfg`` exists. Details and modifications required are as follows:
+**Step 4**: In the coam-on-archer folder, a resource configuration file ``cocoamber.wcfg`` exists. Details and modifications required are as follows:
 
     ::
 
@@ -218,13 +211,19 @@ files:
                 All the parameters in the above example file are mandatory for amber-coco. There are no other parameters currently supported.
 
 
+**Step 5**: Download the script using:
+
+	::
+
+		curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2/example/amber-coco/extasy_amber_coco.py
+
 **Now you are can run the workload using :**
 
 If your shell is BASH,
 
     ::
 
-        EXTASY_DEBUG=True RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' extasy --RPconfig archer.rcfg --Kconfig cocoamber.wcfg 2> extasy.log
+        EXTASY_DEBUG=True RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' python extasy_amber_coco.py --RPconfig archer.rcfg --Kconfig cocoamber.wcfg 2> extasy.log
 
 
 If your shell is CSH,
@@ -234,31 +233,7 @@ If your shell is CSH,
         setenv EXTASY_DEBUG True
         setenv RADICAL_PILOT_VERBOSE 'debug'
         setenv SAGA_VERBOSE 'debug'
-        extasy --RPconfig archer.rcfg --Kconfig cocoamber.wcfg |& tee extasy.log
-        
-
-A **sample output** with expected callbacks and simulation/analysis can be found at `here <https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/coam-on-archer>`_.
-
-+------------------------+----------------+--------------+
-|     Stage              |   Simulation   |   Analysis   |
-+========================+================+==============+
-| Expected TTC/iteration |     60-100 s   |   150-200 s  |
-+------------------------+----------------+--------------+
-
-
-There are two stages in the execution phase - Simulation and Analysis. Execution
-starts with any Preprocessing that might be required on the input data and then
-moves to Simulation stage. In the Simulation stage, a number of tasks (num_CUs)
-are launched to execute on the target machine. The number of tasks set to execute
-depends on the PILOTSIZE, num_CUs, num_cores_per_sim_cu, the number of tasks in
-execution state simultaneously would be PILOTSIZE/num_cores_per_sim_cu. As each
-task attains 'Done' (completed) state, the remain tasks are scheduled till all
-the num_CUs tasks are completed.
-
-This is followed by the Analysis stage, one task is scheduled on the target machine
-which takes all the cores as the PILOTSIZE to perform the analysis and returns the
-data required for the next iteration of the Simulation stage. As can be seen, per
-iteration, there are (num_CUs+1) tasks executed.
+        python extasy_amber_coco.py --RPconfig archer.rcfg --Kconfig cocoamber.wcfg |& tee extasy.log
 
 
 Understanding the Output
@@ -300,45 +275,3 @@ On the remote machine, inside the pilot-* folder you can find a folder called "s
     $ cd staging_area/
     $ ls
     iter0/  iter1/  iter2/  iter3/  mdshort.in  min.in  penta.crd  penta.top  postexec.py
-
-
-
-CoCo/Amber Restart Mechanism
-============================
-
-If the above examples were successful, you can go ahead try and the restart mechanism. The restart mechanism is designed to resume the experiment from one of the checkpoints that you might have made in the previous experiments. 
-
-
-Therefor, for a valid/successful restart scenario, data from a previous experiment needs to exist in the backup/ folder on the local machine. Restart can only be done from a checkpoint (defined by nsave in the kernel config file) made in the previous experiment.
-
-
-Example,
-
-        **Experiment 1** : num_iterations = 4, start_iter = 0, nsave = 2
-
-        **Backups created** : iter1/ (after 2 iterations) , iter3/ (after 4 iterations)
-
-        **Experiment 2 (restart)** : num_iterations = 2, start_iter = 4 (=start from 5th iter), nsave = 2
-
-        **Note** : start_iter should match one of the previous checkpoints and start_iter should be a multiple of nsave.
-
-If, in the first experiment, you ran 4 iterations with nsave set to 2, you will have backups created after the 2nd and 4th iteration. Once this is successful, in the second experiment, you can resume from either of the backups/checkpoints. In the above example, the experiment is resumed from the 4th iteration.
-
-
-In CoCo/Amber, at every checkpoint the ncdf files from all the iterations are transferred to the local machine in order to be able to restart. You could set nsave = num_iterations to make a one time transfer after all the iterations.
-
-
-Having a small checkpoint interval increases redundant data. Example,
-
-        **Experiment 1** : num_iterations = 8, start_iter = 0, nsave = 2
-
-        **Backups created** :-
-
-                                iter1/ (contains ncdf files for first 2 iters)
-
-                                iter3/ (contains ncdf files for first 4 iters)
-
-                                iter5/ (contains ncdf files for first 6 iters)
-
-                                iter7/ (contains ncdf files for first 8 iters)
-

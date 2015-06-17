@@ -39,19 +39,18 @@ Setuptools might not get installed with virtualenv and hence using pip would fai
 
 .. parsed-literal:: source $HOME/ExTASY-tools/bin/activate.csh
 
-**Step 2** : Install ExTASY's dependencies,
+To install the Ensemble MD Toolkit Python modules in a virtual environment,
+open a terminal and run:
 
-.. parsed-literal:: pip install --upgrade git+https://github.com/radical-cybertools/radical.pilot.git@master#egg=radical.pilot
-                    pip install --upgrade git+https://github.com/radical-cybertools/radical.ensemblemd.mdkernels.git@master#egg=radical.ensemblemd.mdkernels
-
-**Step 3** : Install ExTASY,
-
-.. parsed-literal:: pip install --upgrade git+https://github.com/radical-cybertools/ExTASY.git@master#egg=radical.ensemblemd.extasy
+.. parsed-literal::	export ENMD_INSTALL_VERSION="devel"
+					virtualenv $HOME/EnMDToolkit
+					source $HOME/EnMDToolkit/bin/activate
+					pip install --upgrade git+https://github.com/radical-cybertools/radical.ensemblemd.git@$ENMD_INSTALL_VERSION#egg=radical.ensemblemd
 
 
-Now you should be able to print the installed version of the ExTASY module using,
+You can check the version of Ensemble MD Toolkit with the `ensemblemd-version` command-line tool.
+.. parsed-literal:: ensemblemd-version
 
-.. parsed-literal:: python -c 'import radical.ensemblemd.extasy as extasy; print extasy.version'
 
 .. tip::   If your shell is CSH you would need to do,
 
