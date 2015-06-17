@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5. API Reference &mdash; ExTASY-0.2 0.2 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="ExTASY-0.2 0.2 documentation" href="../index.html" />
+    <link rel="next" title="6. Troubleshooting" href="trouble.html" />
+    <link rel="prev" title="4. Running a Gromacs/LSDMap Workload" href="grlsd.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="trouble.html" title="6. Troubleshooting"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="grlsd.html" title="4. Running a Gromacs/LSDMap Workload"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">ExTASY-0.2 0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="api-reference">
+<span id="apiref"></span><h1>5. API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="execution-context-api">
+<h2>5.1. Execution Context API<a class="headerlink" href="#execution-context-api" title="Permalink to this headline">¶</a></h2>
+<div class="topic">
+<p class="topic-title first">class <strong>radical.ensemblemd.SingleClusterEnvironment(resource,cores,walltime,database_url,queue=None,username=None,allocation=None,cleanup=False)</strong></p>
+<p>A static execution context provides a fixed set of computational resources.</p>
+</div>
+<ul class="simple">
+<li><strong>name</strong>: Returns the name of the execution context</li>
+<li><strong>allocate()</strong>: Allocates the resources</li>
+<li><strong>deallocate()</strong>: Deallocates the resources</li>
+<li><strong>run(pattern, force_plugin=None)</strong>: Create a new SingleClusterEnvironment instance</li>
+<li><strong>get_name()</strong>: Returns the name of the execution pattern</li>
+</ul>
+</div>
+<div class="section" id="application-kernel-api">
+<h2>5.2. Application Kernel API<a class="headerlink" href="#application-kernel-api" title="Permalink to this headline">¶</a></h2>
+<div class="topic">
+<p class="topic-title first">class radical.ensemblemd.Kernel(name,args=None)</p>
+<p>The Kernel provides functions to support file movement as required by the pattern.</p>
+</div>
+<ul class="simple">
+<li><strong>cores</strong>: number of cores the kernel is using.</li>
+<li><strong>upload_input_data</strong>: Instructs the application to upload one or more files or directories from the host the script is running on into the kernel’s execution directory.</li>
+</ul>
+<dl class="docutils">
+<dt>Example:</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="n">k</span> <span class="o">=</span> <span class="n">Kernel</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;misc.ccount&quot;</span><span class="p">)</span>
+<span class="n">k</span><span class="o">.</span><span class="n">arguments</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;--inputfile=input.txt&quot;</span><span class="p">,</span> <span class="s">&quot;--outputfile=output.txt&quot;</span><span class="p">]</span>
+<span class="n">k</span><span class="o">.</span><span class="n">upload_input_data</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;/location/on/HOST/RUNNING/THE/SCRIPT/data.txt &gt; input.txt&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<ul class="simple">
+<li><strong>download_input_data</strong>: Instructs the kernel to download one or more files or directories from a remote HTTP server into the kernel’s execution directory.</li>
+</ul>
+<dl class="docutils">
+<dt>Example:</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="n">k</span> <span class="o">=</span> <span class="n">Kernel</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;misc.ccount&quot;</span><span class="p">)</span>
+<span class="n">k</span><span class="o">.</span><span class="n">arguments</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;--inputfile=input.txt&quot;</span><span class="p">,</span> <span class="s">&quot;--outputfile=output.txt&quot;</span><span class="p">]</span>
+<span class="n">k</span><span class="o">.</span><span class="n">download_input_data</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;http://REMOTE.WEBSERVER/location/data.txt &gt; input.txt&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<ul class="simple">
+<li><strong>copy_input_data</strong>: Instructs the kernel to copy one or more files or directories from the execution host’s filesystem into the kernel’s execution directory.</li>
+</ul>
+<dl class="docutils">
+<dt>Example:</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="n">k</span> <span class="o">=</span> <span class="n">Kernel</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;misc.ccount&quot;</span><span class="p">)</span>
+<span class="n">k</span><span class="o">.</span><span class="n">arguments</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;--inputfile=input.txt&quot;</span><span class="p">,</span> <span class="s">&quot;--outputfile=output.txt&quot;</span><span class="p">]</span>
+<span class="n">k</span><span class="o">.</span><span class="n">copy_input_data</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;/location/on/EXECUTION/HOST/data.txt &gt; input.txt&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<ul class="simple">
+<li><strong>link_input_data</strong>: Instructs the kernel to create a link to one or more files or directories on the execution host’s filesystem in the kernel’s execution directory.</li>
+</ul>
+<dl class="docutils">
+<dt>Example:</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="n">k</span> <span class="o">=</span> <span class="n">Kernel</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;misc.ccount&quot;</span><span class="p">)</span>
+<span class="n">k</span><span class="o">.</span><span class="n">arguments</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;--inputfile=input.txt&quot;</span><span class="p">,</span> <span class="s">&quot;--outputfile=output.txt&quot;</span><span class="p">]</span>
+<span class="n">k</span><span class="o">.</span><span class="n">link_input_data</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;/location/on/EXECUTION/HOST/data.txt &gt; input.txt&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<ul class="simple">
+<li><strong>download_output_data</strong>: Instructs the application to download one or more files or directories from the kernel’s execution directory back to the host the script is running on.</li>
+</ul>
+<dl class="docutils">
+<dt>Example:</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="n">k</span> <span class="o">=</span> <span class="n">Kernel</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;misc.ccount&quot;</span><span class="p">)</span>
+<span class="n">k</span><span class="o">.</span><span class="n">arguments</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;--inputfile=input.txt&quot;</span><span class="p">,</span> <span class="s">&quot;--outputfile=output.txt&quot;</span><span class="p">]</span>
+<span class="n">k</span><span class="o">.</span><span class="n">download_output_data</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;output.txt &gt; output-run-1.txt&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<ul class="simple">
+<li><strong>copy_output_data</strong>: Instructs the application to download one or more files or directories from the kernel’s execution directory to a directory on the execution host&#8217;s filesystem.</li>
+</ul>
+<dl class="docutils">
+<dt>Example:</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="n">k</span> <span class="o">=</span> <span class="n">Kernel</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;misc.ccount&quot;</span><span class="p">)</span>
+<span class="n">k</span><span class="o">.</span><span class="n">arguments</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;--inputfile=input.txt&quot;</span><span class="p">,</span> <span class="s">&quot;--outputfile=output.txt&quot;</span><span class="p">]</span>
+<span class="n">k</span><span class="o">.</span><span class="n">download_output_data</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;output.txt &gt; /location/on/EXECUTION/HOST/output.txt&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<ul class="simple">
+<li><strong>get_raw_args()</strong>: Returns the arguments passed to the kernel.</li>
+<li><strong>get arg(name)</strong>: Returns the value of the kernel argument given by ‘arg_name’.</li>
+</ul>
+</div>
+<div class="section" id="exceptions-errors">
+<h2>5.3. Exceptions &amp; Errors<a class="headerlink" href="#exceptions-errors" title="Permalink to this headline">¶</a></h2>
+<p>This module defines and implement all ensemblemd Exceptions.</p>
+<ul>
+<li><dl class="first docutils">
+<dt><strong>exception radical.ensemblemd.exceptions.EnsemblemdError(msg)</strong>: EnsemblemdError is the base exception thrown by the ensemblemd library. <a class="reference external" href="http://radicalensemblemd.readthedocs.org/en/0.2/_modules/radical/ensemblemd/exceptions.html#EnsemblemdError">[source]</a></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre>Bases: exceptions.Exception
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>exception radical.ensemblemd.exceptions.NotImplementedError(method_name, class_name)</strong>: NotImplementedError is thrown if a class method or function is not implemented. <a class="reference external" href="http://radicalensemblemd.readthedocs.org/en/0.2/_modules/radical/ensemblemd/exceptions.html#NotImplementedError">[source]</a></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre>Bases: radical.ensemblemd.exceptions.EnsemblemdError
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>exception radical.ensemblemd.exceptions.TypeError(expected_type, actual_type)</strong>: TypeError is thrown if a parameter of a wrong type is passed to a method or function. <a class="reference external" href="http://radicalensemblemd.readthedocs.org/en/0.2/_modules/radical/ensemblemd/exceptions.html#TypeError">[source]</a></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre>Bases: radical.ensemblemd.exceptions.EnsemblemdError
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>exception radical.ensemblemd.exceptions.FileError(message)</strong>: FileError is thrown if something goes wrong related to file operations, i.e., if a file doesn’t exist, cannot be copied and so on. <a class="reference external" href="http://radicalensemblemd.readthedocs.org/en/0.2/_modules/radical/ensemblemd/exceptions.html#FileError">[source]</a></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre>Bases: radical.ensemblemd.exceptions.EnsemblemdError
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>exception radical.ensemblemd.exceptions.ArgumentError(kernel_name, message, valid_arguments_set)</strong>: A BadArgumentError is thrown if a wrong set of arguments were passed to a kernel. <a class="reference external" href="http://radicalensemblemd.readthedocs.org/en/0.2/_modules/radical/ensemblemd/exceptions.html#ArgumentError">[source]</a></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre>Bases: radical.ensemblemd.exceptions.EnsemblemdError
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>exception radical.ensemblemd.exceptions.NoKernelPluginError(kernel_name)</strong>: NoKernelPluginError is thrown if no kernel plug-in could be found for a given kernel name. <a class="reference external" href="http://radicalensemblemd.readthedocs.org/en/0.2/_modules/radical/ensemblemd/exceptions.html#NoKernelPluginError">[source]</a></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre>Bases: radical.ensemblemd.exceptions.EnsemblemdError
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>exception radical.ensemblemd.exceptions.NoKernelConfigurationError(kernel_name, resource_key)</strong>: NoKernelConfigurationError is thrown if no kernel configuration could be found for the provided resource key. <a href="#id7"><span class="problematic" id="id8">`[source] &lt;http://radicalensemblemd.readthedocs.org/en/0.2/_modules/radical/ensemblemd/exceptions.html#NoKernelConfigurationError`_</span></a></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre>Bases: radical.ensemblemd.exceptions.EnsemblemdError
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>exception radical.ensemblemd.exceptions.NoExecutionPluginError(pattern_name, context_name, plugin_name)</strong>: NoExecutionPluginError is thrown if a patterns is passed to an execution context via execut() but no execution plugin for the pattern exist. <a class="reference external" href="http://radicalensemblemd.readthedocs.org/en/0.2/_modules/radical/ensemblemd/exceptions.html#NoExecutionPluginError">[source]</a></dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre>Bases: radical.ensemblemd.exceptions.EnsemblemdError
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5. API Reference</a><ul>
+<li><a class="reference internal" href="#execution-context-api">5.1. Execution Context API</a></li>
+<li><a class="reference internal" href="#application-kernel-api">5.2. Application Kernel API</a></li>
+<li><a class="reference internal" href="#exceptions-errors">5.3. Exceptions &amp; Errors</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="grlsd.html"
+                        title="previous chapter">4. Running a Gromacs/LSDMap Workload</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="trouble.html"
+                        title="next chapter">6. Troubleshooting</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/pages/apiref.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="trouble.html" title="6. Troubleshooting"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="grlsd.html" title="4. Running a Gromacs/LSDMap Workload"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">ExTASY-0.2 0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, RADICAL Group at Rutgers.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>
