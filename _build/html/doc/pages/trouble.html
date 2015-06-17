@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5. Troubleshooting &mdash; ExTASY-0.2 0.2 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="ExTASY-0.2 0.2 documentation" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">ExTASY-0.2 0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="troubleshooting">
+<span id="trouble"></span><h1>5. Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h1>
+<p>Some issues that you might face during the execution are discussed here.</p>
+<div class="section" id="configuring-ssh-access">
+<h2>5.1. Configuring SSH Access<a class="headerlink" href="#configuring-ssh-access" title="Permalink to this headline">¶</a></h2>
+<p>From a terminal from your local machine, setup a key pair with your email address.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ssh-keygen -t rsa -C &quot;name@email.com&quot;
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/user/.ssh/id_rsa): [Enter]
+Enter passphrase (empty for no passphrase): [Passphrase]
+Enter same passphrase again: [Passphrase]
+Your identification has been saved in /home/user/.ssh/id_rsa.
+Your public key has been saved in /home/user/.ssh/id_rsa.pub.
+The key fingerprint is:
+03:d4:c4:6d:58:0a:e2:4a:f8:73:9a:e8:e3:07:16:c8 your@email.ac.uk
+The key&#39;s randomart image is:
++--[ RSA 2048]----+
+|    . ...+o++++. |
+| . . . =o..      |
+|+ . . .......o o |
+|oE .   .         |
+|o =     .   S    |
+|.    +.+     .   |
+|.  oo            |
+|.  .             |
+| ..              |
++-----------------+
+</pre></div>
+</div>
+<p>Next you need to transfer it to the remote machine.</p>
+<p>To transfer to Stampede,</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>$cat ~/.ssh/id_rsa.pub | ssh username@stampede.tacc.utexas.edu &#39;cat - &gt;&gt; ~/.ssh/authorized_keys&#39;
+</pre></div>
+</div>
+</div></blockquote>
+<p>To transfer to Archer,</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>cat ~/.ssh/id_rsa.pub | ssh username@login.archer.ac.uk &#39;cat - &gt;&gt; ~/.ssh/authorized_keys&#39;
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="error-couldn-t-create-new-session">
+<h2>5.2. Error : Couldn&#8217;t create new session<a class="headerlink" href="#error-couldn-t-create-new-session" title="Permalink to this headline">¶</a></h2>
+<p>If you get an error similar to,</p>
+<div class="highlight-python"><div class="highlight"><pre>An error occurred: Couldn&#39;t create new session (database URL &#39;mongodb://extasy:extasyproject@extasy-db.epcc.ac.uk/radicalpilot&#39; incorrect?): [Errno -2] Name or service not known
+Exception triggered, no session created, exiting now...
+</pre></div>
+</div>
+<p>This means no session was created, mostly due to error in the MongoDB URL that is present in the resource configuration file. Please check the URL that you have used. If the URL is correct, you should check the system on which the MongoDB is hosted.</p>
+</div>
+<div class="section" id="error-prompted-for-unkown-password">
+<h2>5.3. Error : Prompted for unkown password<a class="headerlink" href="#error-prompted-for-unkown-password" title="Permalink to this headline">¶</a></h2>
+<p>If you get an error similar to,</p>
+<div class="highlight-python"><div class="highlight"><pre>An error occurred: prompted for unknown password (username@stampede.tacc.utexas.edu&#39;s password: ) (/experiments/extasy/local/lib/python2.7/site-packages/saga/utils/pty_shell_factory.py +306 (_initialize_pty)  :  % match))
+</pre></div>
+</div>
+<p>You should check the username that is present in the resource configuration file. If the username is correct, you should check if you have a passwordless login set up for the target machine. You can check this by simply attempting a login to the target machine, if this attempt requires a password, you need to set up a passwordless login to use ExTASY.</p>
+</div>
+<div class="section" id="error-pilot-has-failed-can-t-recover">
+<h2>5.4. Error : Pilot has FAILED. Can&#8217;t recover<a class="headerlink" href="#error-pilot-has-failed-can-t-recover" title="Permalink to this headline">¶</a></h2>
+<p>If you get an error similar to,</p>
+<div class="highlight-python"><div class="highlight"><pre>ExTASY version :  0.1.3-beta-15-g9e16ce7
+Session UID: 55102e9023769c19e7c8a84e
+Pilot UID       : 55102e9123769c19e7c8a850
+[Callback]: ComputePilot &#39;55102e9123769c19e7c8a850&#39; state changed to Launching.
+Loading kernel configurations from /experiments/extasy/lib/python2.7/site-packages/radical/ensemblemd/mdkernels/configs/mmpbsa.json
+Loading kernel configurations from /experiments/extasy/lib/python2.7/site-packages/radical/ensemblemd/mdkernels/configs/coco.json
+Loading kernel configurations from /experiments/extasy/lib/python2.7/site-packages/radical/ensemblemd/mdkernels/configs/namd.json
+Loading kernel configurations from /experiments/extasy/lib/python2.7/site-packages/radical/ensemblemd/mdkernels/configs/lsdmap.json
+Loading kernel configurations from /experiments/extasy/lib/python2.7/site-packages/radical/ensemblemd/mdkernels/configs/amber.json
+Loading kernel configurations from /experiments/extasy/lib/python2.7/site-packages/radical/ensemblemd/mdkernels/configs/gromacs.json
+Loading kernel configurations from /experiments/extasy/lib/python2.7/site-packages/radical/ensemblemd/mdkernels/configs/sleep.json
+Loading kernel configurations from /experiments/extasy/lib/python2.7/site-packages/radical/ensemblemd/mdkernels/configs/test.json
+Preprocessing stage ....
+[Callback]: ComputePilot &#39;55102e9123769c19e7c8a850&#39; state changed to Failed.
+#######################
+##       ERROR       ##
+#######################
+Pilot 55102e9123769c19e7c8a850 has FAILED. Can&#39;t recover.
+Pilot log: [&lt;radical.pilot.logentry.Logentry object at 0x7f41f8043a10&gt;, &lt;radical.pilot.logentry.Logentry object at 0x7f41f8043610&gt;, &lt;radical.pilot.logentry.Logentry object at 0x7f41f80433d0&gt;, &lt;radical.pilot.logentry.Logentry object at 0x7f41f8043750&gt;, &lt;radical.pilot.logentry.Logentry object at 0x7f41f8043710&gt;, &lt;radical.pilot.logentry.Logentry object at 0x7f41f8043690&gt;]
+Execution was interrupted
+Closing session, exiting now ...
+</pre></div>
+</div>
+<p>This generally means either the Allocation ID or Queue name present in the resource configuration file is incorrect. If this is not the case, please re-run the experiment with the environment variables EXTASY_DEBUG=True, SAGA_VERBOSE=DEBUG, RADICAL_PILOT_VERBOSE=DEBUG. Example,</p>
+<div class="highlight-python"><div class="highlight"><pre>EXTASY_DEBUG=True SAGA_VERBOSE=DEBUG RADICAL_PILOT_VERBOSE=DEBUG extasy --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg 2&gt; output.log
+</pre></div>
+</div>
+<p>This should generate a more verbose output. You may look at this verbose output for errors or create a ticket with this log <a class="reference external" href="https://github.com/radical-cybertools/ExTASY/issues">here</a> )</p>
+</div>
+<div class="section" id="couldn-t-send-packet-broken-pipe">
+<h2>5.5. Couldn&#8217;t send packet: Broken pipe<a class="headerlink" href="#couldn-t-send-packet-broken-pipe" title="Permalink to this headline">¶</a></h2>
+<p>If you get an error similar to,</p>
+<div class="highlight-python"><div class="highlight"><pre>2015:03:30 16:05:07 radical.pilot.MainProcess: [DEBUG   ] read : [   19] [  159] ( ls /work/e290/e290/e290ib/radical.pilot.sandbox/pilot-55196431d7bf7579ecc ^H3f080/unit-551965f7d7bf7579ecc3f09b/lsdmap.log\nCouldn&#39;t send packet: Broken pipe\n)
+2015:03:30 16:05:08 radical.pilot.MainProcess: [ERROR   ] Output transfer failed: read from process failed &#39;[Errno 5] Input/output error&#39; : (s   --:-- ETA/home/h012/ibethune/testlsdmap2/input.gro     100%  105KB 104.7KB/s   00:00
+sftp&gt;  ls /work/e290/e290/e290ib/radical.pilot.sandbox/pilot-55196431d7bf7579ecc ^H3f080/unit-551965f7d7bf7579ecc3f09b/lsdmap.log
+Couldn&#39;t send packet: Broken pipe
+</pre></div>
+</div>
+<p>This is mostly because of an older version of sftp/scp being used. This can be fixed by setting a file <code class="docutils literal"><span class="pre">`.saga.cfg`</span></code> (note the dot in the beginning of the filename) in $HOME on your local machine. The contents of the file need to be,</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">saga</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">pty</span><span class="p">]</span>
+<span class="n">ssh_share_mode</span> <span class="o">=</span> <span class="n">no</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5. Troubleshooting</a><ul>
+<li><a class="reference internal" href="#configuring-ssh-access">5.1. Configuring SSH Access</a></li>
+<li><a class="reference internal" href="#error-couldn-t-create-new-session">5.2. Error : Couldn&#8217;t create new session</a></li>
+<li><a class="reference internal" href="#error-prompted-for-unkown-password">5.3. Error : Prompted for unkown password</a></li>
+<li><a class="reference internal" href="#error-pilot-has-failed-can-t-recover">5.4. Error : Pilot has FAILED. Can&#8217;t recover</a></li>
+<li><a class="reference internal" href="#couldn-t-send-packet-broken-pipe">5.5. Couldn&#8217;t send packet: Broken pipe</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/doc/pages/trouble.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">ExTASY-0.2 0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, RADICAL Group at Rutgers.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

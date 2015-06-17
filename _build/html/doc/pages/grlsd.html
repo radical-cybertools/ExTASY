@@ -1,0 +1,426 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>4. Running a Gromacs/LSDMap Workload &mdash; ExTASY-0.2 0.2 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="ExTASY-0.2 0.2 documentation" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">ExTASY-0.2 0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="running-a-gromacs-lsdmap-workload">
+<h1>4. Running a Gromacs/LSDMap Workload<a class="headerlink" href="#running-a-gromacs-lsdmap-workload" title="Permalink to this headline">¶</a></h1>
+<p>This section will discuss details about the execution phase. The input to the tool
+is given in terms of a resource configuration file and a workload configuration file.
+The execution is started based on the parameters set in these configuration files. In
+section 4.1, we discuss execution on Stampede and in section 4.2, we discuss execution
+on Archer.</p>
+<div class="section" id="running-on-stampede">
+<h2>4.1. Running on Stampede<a class="headerlink" href="#running-on-stampede" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="running-using-example-workload-config-and-resource-config">
+<h3>4.1.1. Running using Example Workload Config and Resource Config<a class="headerlink" href="#running-using-example-workload-config-and-resource-config" title="Permalink to this headline">¶</a></h3>
+<p>This section is to be done entirely on your <strong>laptop</strong>. The ExTASY tool expects two input
+files:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>The resource configuration file sets the parameters of the HPC resource we want to
+run the workload on, in this case Stampede.</li>
+<li>The workload configuration file defines the GROMACS/LSDMap workload itself. The configuration file given in this example is strictly meant for the gromacs-lsdmap usecase only.</li>
+</ol>
+</div></blockquote>
+<p><strong>Step 1</strong> : Create a new directory for the example,</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>mkdir $HOME/extasy-tutorial/
+cd $HOME/extasy-tutorial/
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Step 2</strong> : Download the config files and the input files directly using the following link.</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/tarballs/grlsd-on-stampede.tar.gz
+tar xvfz grlsd-on-stampede.tar.gz
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Step 3</strong> : In the grlsd-on-stampede folder, a resource configuration file <code class="docutils literal"><span class="pre">stampede.rcfg</span></code> exists. Details and modifications required are as follows:</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>For the purposes of this example, you require to change only:</p>
+<blockquote>
+<div><ul class="simple">
+<li>UNAME</li>
+<li>ALLOCATION</li>
+</ul>
+</div></blockquote>
+<p class="last">The other parameters in the resource configuration are already set up to successfully execute the workload in this example.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">REMOTE_HOST</span> <span class="o">=</span> <span class="s">&#39;stampede.tacc.utexas.edu&#39;</span>  <span class="c"># Label/Name of the Remote Machine</span>
+<span class="n">UNAME</span>       <span class="o">=</span> <span class="s">&#39;username&#39;</span>                  <span class="c"># Username on the Remote Machine</span>
+<span class="n">ALLOCATION</span>  <span class="o">=</span> <span class="s">&#39;TG-MCB090174&#39;</span>              <span class="c"># Allocation to be charged</span>
+<span class="n">WALLTIME</span>    <span class="o">=</span> <span class="mi">60</span>                          <span class="c"># Walltime to be requested for the pilot</span>
+<span class="n">PILOTSIZE</span>   <span class="o">=</span> <span class="mi">16</span>                          <span class="c"># Number of cores to be reserved</span>
+<span class="n">WORKDIR</span>     <span class="o">=</span> <span class="bp">None</span>                        <span class="c"># Working directory on the remote machine</span>
+<span class="n">QUEUE</span>       <span class="o">=</span> <span class="s">&#39;normal&#39;</span>                    <span class="c"># Name of the queue in the remote machine</span>
+
+<span class="n">DBURL</span>       <span class="o">=</span> <span class="s">&#39;mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Step 4</strong> : In the grlsd-on-stampede folder, a workload configuration file <code class="docutils literal"><span class="pre">gromacslsdmap.wcfg</span></code> exists. Details and modifications are as follows:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span class="c">#-------------------------Applications----------------------</span>
+<span class="n">simulator</span>             <span class="o">=</span> <span class="s">&#39;Gromacs&#39;</span>           <span class="c"># Simulator to be loaded</span>
+<span class="n">analyzer</span>              <span class="o">=</span> <span class="s">&#39;LSDMap&#39;</span>            <span class="c"># Analyzer to be loaded</span>
+
+<span class="c">#--------------------------General--------------------------------</span>
+<span class="n">num_CUs</span>              <span class="o">=</span> <span class="mi">16</span>                   <span class="c"># Number of tasks or Compute Units</span>
+<span class="n">num_iterations</span>       <span class="o">=</span> <span class="mi">3</span>                    <span class="c"># Number of iterations of Simulation-Analysis</span>
+<span class="n">start_iter</span>           <span class="o">=</span> <span class="mi">0</span>                    <span class="c"># Iteration number with which to start</span>
+<span class="n">nsave</span>                <span class="o">=</span> <span class="mi">2</span>                    <span class="c"># # Iterations after which output is transfered to local machine</span>
+
+<span class="c">#--------------------------Simulation--------------------------------</span>
+<span class="n">num_cores_per_sim_cu</span> <span class="o">=</span> <span class="mi">1</span>                    <span class="c"># Number of cores per Simulation Compute Units</span>
+<span class="n">md_input_file</span>        <span class="o">=</span> <span class="s">&#39;./input.gro&#39;</span>        <span class="c"># Entire path to the MD Input file - Do not use $HOME or the likes</span>
+<span class="n">mdp_file</span>             <span class="o">=</span> <span class="s">&#39;./grompp.mdp&#39;</span>       <span class="c"># Entire path to the MD Parameters file - Do not use $HOME or the likes</span>
+<span class="n">top_file</span>             <span class="o">=</span> <span class="s">&#39;./topol.top&#39;</span>        <span class="c"># Entire path to the Topology file - Do not use $HOME or the likes</span>
+<span class="n">ndx_file</span>             <span class="o">=</span> <span class="bp">None</span>                   <span class="c"># Entire path to the Index file - Do not use $HOME or the likes</span>
+<span class="n">grompp_options</span>       <span class="o">=</span> <span class="bp">None</span>                   <span class="c"># Command line options for when grompp is used</span>
+<span class="n">mdrun_options</span>        <span class="o">=</span> <span class="bp">None</span>                   <span class="c"># Command line options for when mdrun is used</span>
+<span class="n">itp_file_loc</span>         <span class="o">=</span> <span class="bp">None</span>                   <span class="c"># Entire path to the location of .itp files - Do not use $HOME or the likes</span>
+<span class="n">md_output_file</span>       <span class="o">=</span> <span class="s">&#39;tmp.gro&#39;</span>            <span class="c"># Filename to be used for the simulation output</span>
+
+<span class="c">#--------------------------Analysis----------------------------------</span>
+<span class="n">lsdm_config_file</span>     <span class="o">=</span> <span class="s">&#39;./config.ini&#39;</span>       <span class="c"># Entire path to the LSDMap configuration file - Do not use $HOME or the likes</span>
+<span class="n">num_runs</span>             <span class="o">=</span> <span class="mi">1000</span>                <span class="c"># Number of runs to be performed in the Selection step in Analysis</span>
+<span class="n">w_file</span>               <span class="o">=</span> <span class="s">&#39;weight.w&#39;</span>           <span class="c"># Filename to be used for the weight file</span>
+<span class="n">max_alive_neighbors</span>  <span class="o">=</span> <span class="s">&#39;10&#39;</span>                 <span class="c"># Maximum alive neighbors to be considered while reweighting</span>
+<span class="n">max_dead_neighbors</span>   <span class="o">=</span> <span class="s">&#39;1&#39;</span>                  <span class="c"># Maximum dead neighbors to be considered while reweighting</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All the parameters in the above example file are mandatory for gromacs-lsdmap. If <em>ndxfile</em>, <em>grompp_options</em>, <em>mdrun_options</em> and <em>itp_file_loc</em> are not required, they should be set to None; but they still have to mentioned in the configuration file. There are no other parameters currently supported.</p>
+</div>
+</div></blockquote>
+<p><strong>Now you are can run the workload using :</strong></p>
+<p>If your shell is BASH,</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>EXTASY_DEBUG=True RADICAL_PILOT_VERBOSE=&#39;debug&#39; SAGA_VERBOSE=&#39;debug&#39; extasy --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg 2&gt; extasy.log
+</pre></div>
+</div>
+</div></blockquote>
+<p>If your shell is CSH,</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>setenv EXTASY_DEBUG True
+setenv RADICAL_PILOT_VERBOSE &#39;debug&#39;
+setenv SAGA_VERBOSE &#39;debug&#39;
+extasy --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg |&amp; tee extasy.log
+</pre></div>
+</div>
+</div></blockquote>
+<p>A <strong>sample output</strong> with expected callbacks and simulation/analysis can be found at <a class="reference external" href="https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/grlsd-on-stampede">here</a>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="44%" />
+<col width="30%" />
+<col width="26%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Stage</th>
+<th class="head">Simulation</th>
+<th class="head">Analysis</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Expected TTC/iteration</td>
+<td>50-100 s</td>
+<td>~30 s</td>
+</tr>
+</tbody>
+</table>
+<p>There are two stages in the execution phase - Simulation and Analysis. Execution starts
+with any Preprocessing that might be required on the input data and then moves to
+Simulation stage. In the Simulation stage, a number of tasks (num_CUs) are launched to
+execute on the target machine. The number of tasks set to execute depends on the PILOTSIZE,
+num_CUs, num_cores_per_sim_cu, the number of tasks in execution state simultaneously would
+be PILOTSIZE/num_cores_per_sim_cu. As each task attains &#8216;Done&#8217; (completed) state, the
+remain tasks are scheduled till all the num_CUs tasks are completed.</p>
+<p>This is followed by the Analysis stage, one task is scheduled on the target machine which
+takes all the cores as the PILOTSIZE to perform the analysis and returns the data required
+for the next iteration of the Simulation stage. As can be seen, per iteration, there are
+(num_CUs+1) tasks executed.</p>
+</div>
+</div>
+<div class="section" id="running-on-archer">
+<h2>4.2. Running on Archer<a class="headerlink" href="#running-on-archer" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>4.2.1. Running using Example Workload Config and Resource Config<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>This section is to be done entirely on your <strong>laptop</strong>. The ExTASY tool expects two input
+files:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>The resource configuration file sets the parameters of the HPC resource we want
+to run the workload on, in this case Archer.</li>
+<li>The workload configuration file defines the CoCo/Amber workload itself. The configuration file given in this example is strictly meant for the gromacs-lsdmap usecase only.</li>
+</ol>
+</div></blockquote>
+<p><strong>Step 1</strong> : Create a new directory for the example,</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>mkdir $HOME/extasy-tutorial/
+cd $HOME/extasy-tutorial/
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Step 2</strong> : Download the config files and the input files directly using the following link.</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/tarballs/grlsd-on-archer.tar.gz
+tar xvfz grlsd-on-archer.tar.gz
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Step 3</strong> : In the grlsd-on-archer folder, a resource configuration file <code class="docutils literal"><span class="pre">archer.rcfg</span></code> exists. Details and modifications required are as follows:</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>For the purposes of this example, you require to change only:</p>
+<blockquote>
+<div><ul class="simple">
+<li>UNAME</li>
+<li>ALLOCATION</li>
+</ul>
+</div></blockquote>
+<p class="last">The other parameters in the resource configuration are already set up to successfully execute the workload in this example.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">REMOTE_HOST</span> <span class="o">=</span> <span class="s">&#39;archer.ac.uk&#39;</span>              <span class="c"># Label/Name of the Remote Machine</span>
+<span class="n">UNAME</span>       <span class="o">=</span> <span class="s">&#39;username&#39;</span>                  <span class="c"># Username on the Remote Machine</span>
+<span class="n">ALLOCATION</span>  <span class="o">=</span> <span class="s">&#39;e290&#39;</span>                      <span class="c"># Allocation to be charged</span>
+<span class="n">WALLTIME</span>    <span class="o">=</span> <span class="mi">60</span>                          <span class="c"># Walltime to be requested for the pilot</span>
+<span class="n">PILOTSIZE</span>   <span class="o">=</span> <span class="mi">24</span>                          <span class="c"># Number of cores to be reserved</span>
+<span class="n">WORKDIR</span>     <span class="o">=</span> <span class="bp">None</span>                        <span class="c"># Working directory on the remote machine</span>
+<span class="n">QUEUE</span>       <span class="o">=</span> <span class="s">&#39;standard&#39;</span>                  <span class="c"># Name of the queue in the remote machine</span>
+
+<span class="n">DBURL</span>       <span class="o">=</span> <span class="s">&#39;mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Step 4</strong> : In the grlsd-on-archer folder, a workload configuration file <code class="docutils literal"><span class="pre">gromacslsdmap.wcfg</span></code> exists. Details and modifications required are as follows:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span class="c">#-------------------------Applications----------------------</span>
+<span class="n">simulator</span>             <span class="o">=</span> <span class="s">&#39;Gromacs&#39;</span>           <span class="c"># Simulator to be loaded</span>
+<span class="n">analyzer</span>              <span class="o">=</span> <span class="s">&#39;LSDMap&#39;</span>            <span class="c"># Analyzer to be loaded</span>
+
+<span class="c">#--------------------------General--------------------------------</span>
+<span class="n">num_CUs</span>              <span class="o">=</span> <span class="mi">24</span>                   <span class="c"># Number of tasks or Compute Units</span>
+<span class="n">num_iterations</span>       <span class="o">=</span> <span class="mi">2</span>                    <span class="c"># Number of iterations of Simulation-Analysis</span>
+<span class="n">start_iter</span>           <span class="o">=</span> <span class="mi">0</span>                    <span class="c"># Iteration number with which to start</span>
+<span class="n">nsave</span>                <span class="o">=</span> <span class="mi">1</span>                    <span class="c"># # Iterations after which output is transfered to local machine</span>
+
+<span class="c">#--------------------------Simulation--------------------------------</span>
+<span class="n">num_cores_per_sim_cu</span> <span class="o">=</span> <span class="mi">1</span>                    <span class="c"># Number of cores per Simulation Compute Units</span>
+<span class="n">md_input_file</span>        <span class="o">=</span> <span class="s">&#39;./input.gro&#39;</span>        <span class="c"># Entire path to the MD Input file - Do not use $HOME or the likes</span>
+<span class="n">mdp_file</span>             <span class="o">=</span> <span class="s">&#39;./grompp.mdp&#39;</span>       <span class="c"># Entire path to the MD Parameters file - Do not use $HOME or the likes</span>
+<span class="n">top_file</span>             <span class="o">=</span> <span class="s">&#39;./topol.top&#39;</span>        <span class="c"># Entire path to the Topology file - Do not use $HOME or the likes</span>
+<span class="n">ndx_file</span>             <span class="o">=</span> <span class="bp">None</span>                   <span class="c"># Entire path to the Index file - Do not use $HOME or the likes</span>
+<span class="n">grompp_options</span>       <span class="o">=</span> <span class="bp">None</span>                   <span class="c"># Command line options for when grompp is used</span>
+<span class="n">mdrun_options</span>        <span class="o">=</span> <span class="bp">None</span>                   <span class="c"># Command line options for when mdrun is used</span>
+<span class="n">itp_file_loc</span>         <span class="o">=</span> <span class="bp">None</span>                   <span class="c"># Entire path to the location of .itp files - Do not use $HOME or the likes</span>
+<span class="n">md_output_file</span>       <span class="o">=</span> <span class="s">&#39;tmp.gro&#39;</span>            <span class="c"># Filename to be used for the simulation output</span>
+
+<span class="c">#--------------------------Analysis----------------------------------</span>
+<span class="n">lsdm_config_file</span>     <span class="o">=</span> <span class="s">&#39;./config.ini&#39;</span>       <span class="c"># Entire path to the LSDMap configuration file - Do not use $HOME or the likes</span>
+<span class="n">num_runs</span>             <span class="o">=</span> <span class="mi">100</span>                <span class="c"># Number of runs to be performed in the Selection step in Analysis</span>
+<span class="n">w_file</span>               <span class="o">=</span> <span class="s">&#39;weight.w&#39;</span>           <span class="c"># Filename to be used for the weight file</span>
+<span class="n">max_alive_neighbors</span>  <span class="o">=</span> <span class="s">&#39;10&#39;</span>                 <span class="c"># Maximum alive neighbors to be considered while reweighting</span>
+<span class="n">max_dead_neighbors</span>   <span class="o">=</span> <span class="s">&#39;1&#39;</span>                  <span class="c"># Maximum dead neighbors to be considered while reweighting</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All the parameters in the above example file are mandatory for gromacs-lsdmap. If <em>ndxfile</em>, <em>grompp_options</em>, <em>mdrun_options</em> and <em>itp_file_loc</em> are not required, they should be set to None; but they still have to mentioned in the configuration file. There are no other parameters currently supported.</p>
+</div>
+</div></blockquote>
+<p><strong>Now you are can run the workload using :</strong></p>
+<p>If your shell is BASH,</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>EXTASY_DEBUG=True RADICAL_PILOT_VERBOSE=&#39;debug&#39; SAGA_VERBOSE=&#39;debug&#39; extasy --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg 2&gt; extasy.log
+</pre></div>
+</div>
+</div></blockquote>
+<p>If your shell is CSH,</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>setenv EXTASY_DEBUG True
+setenv RADICAL_PILOT_VERBOSE &#39;debug&#39;
+setenv SAGA_VERBOSE &#39;debug&#39;
+extasy --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg |&amp; tee extasy.log
+</pre></div>
+</div>
+</div></blockquote>
+<p>A <strong>sample output</strong> with expected callbacks and simulation/analysis can be found at <a class="reference external" href="https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/grlsd-on-archer">here</a>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="44%" />
+<col width="30%" />
+<col width="26%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Stage</th>
+<th class="head">Simulation</th>
+<th class="head">Analysis</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Expected TTC/iteration</td>
+<td>200-350 s</td>
+<td>~30 s</td>
+</tr>
+</tbody>
+</table>
+<p>There are two stages in the execution phase - Simulation and Analysis. Execution starts
+with any Preprocessing that might be required on the input data and then moves to
+Simulation stage. In the Simulation stage, a number of tasks (num_CUs) are launched to
+execute on the target machine. The number of tasks set to execute depends on the PILOTSIZE,
+num_CUs, num_cores_per_sim_cu, the number of tasks in execution state simultaneously would
+be PILOTSIZE/num_cores_per_sim_cu. As each task attains &#8216;Done&#8217; (completed) state, the
+remain tasks are scheduled till all the num_CUs tasks are completed.</p>
+<p>This is followed by the Analysis stage, one task is scheduled on the target machine which
+takes all the cores as the PILOTSIZE to perform the analysis and returns the data required
+for the next iteration of the Simulation stage. As can be seen, per iteration, there are
+(num_CUs+1) tasks executed.</p>
+</div>
+</div>
+<div class="section" id="understanding-the-output">
+<h2>4.3. Understanding the Output<a class="headerlink" href="#understanding-the-output" title="Permalink to this headline">¶</a></h2>
+<p>In the local machine, a &#8220;backup&#8221; folder is created and at the end of every checkpoint intervel (=nsave) an &#8220;iter*&#8221; folder is created which contains the necessary files to start the next iteration.</p>
+<p>For example, in the case of gromacs-lsdmap on stampede, for 4 iterations with nsave=2:</p>
+<div class="highlight-python"><div class="highlight"><pre>grlsd-on-stampede$ ls
+backup/  config.ini  gromacslsdmap.wcfg  grompp.mdp  input.gro  stampede.rcfg  topol.top
+
+grlsd-on-stampede/backup$ ls
+iter1/  iter3/
+</pre></div>
+</div>
+<p>The &#8220;iter*&#8221; folder will not contain any of the initial files such as the topology file, minimization file, etc since they already exist on the local machine. In gromacs-lsdmap, the &#8220;iter*&#8221; folder contains the coordinate file and weight file required in the next iteration. It also contains a logfile about the lsdmap stage of the current iteration.</p>
+<div class="highlight-python"><div class="highlight"><pre>grlsd-on-stampede/backup/iter1$ ls
+2_input.gro  lsdmap.log  weight.w
+</pre></div>
+</div>
+<p>On the remote machine, inside the pilot-* folder you can find a folder called &#8220;staging_area&#8221;. This location is used to exchange/link/move intermediate data. The shared data is kept in &#8220;staging_area/&#8221; and the iteration specific inputs/outputs can be found in their specific folders (=&#8221;staging_area/iter*&#8221;).</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd staging_area/
+$ ls
+config.ini  gro.py   input.gro   iter1/  iter3/    post_analyze.py  reweighting.py   run.py     spliter.py
+grompp.mdp  gro.pyc  iter0/      iter2/  lsdm.py   pre_analyze.py   run_analyzer.sh  select.py  topol.top
+</pre></div>
+</div>
+</div>
+<div class="section" id="gromacs-lsdmap-restart-mechanism">
+<h2>4.4. Gromacs/LSDMap Restart Mechanism<a class="headerlink" href="#gromacs-lsdmap-restart-mechanism" title="Permalink to this headline">¶</a></h2>
+<p>If the above examples were successful, you can go ahead try and the restart mechanism. The restart mechanism is designed to resume the experiment from one of the checkpoints that you might have made in the previous experiments.</p>
+<p>Therefor, for a valid/successful restart scenario, data from a previous experiment needs to exist in the backup/ folder on the local machine. Restart can only be done from a checkpoint (defined by nsave in the kernel config file) made in the previous experiment.</p>
+<p>Example,</p>
+<blockquote>
+<div><p><strong>Experiment 1</strong> : num_iterations = 4, start_iter = 0, nsave = 2</p>
+<p><strong>Backups created</strong> : iter1/ (after 2 iterations) , iter3/ (after 4 iterations)</p>
+<p><strong>Experiment 2 (restart)</strong> : num_iterations = 2, start_iter = 4 (=start from 5th iter), nsave = 2</p>
+<p><strong>Note</strong> : start_iter should match one of the previous checkpoints and start_iter should be a multiple of nsave.</p>
+</div></blockquote>
+<p>If, in the first experiment, you ran 4 iterations with nsave set to 2, you will have backups created after the 2nd and 4th iteration. Once this is successful, in the second experiment, you can resume from either of the backups/checkpoints. In the above example, the experiment is resumed from the 4th iteration.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4. Running a Gromacs/LSDMap Workload</a><ul>
+<li><a class="reference internal" href="#running-on-stampede">4.1. Running on Stampede</a><ul>
+<li><a class="reference internal" href="#running-using-example-workload-config-and-resource-config">4.1.1. Running using Example Workload Config and Resource Config</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#running-on-archer">4.2. Running on Archer</a><ul>
+<li><a class="reference internal" href="#id1">4.2.1. Running using Example Workload Config and Resource Config</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#understanding-the-output">4.3. Understanding the Output</a></li>
+<li><a class="reference internal" href="#gromacs-lsdmap-restart-mechanism">4.4. Gromacs/LSDMap Restart Mechanism</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/doc/pages/grlsd.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">ExTASY-0.2 0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, RADICAL Group at Rutgers.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>
