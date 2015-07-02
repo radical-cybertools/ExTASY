@@ -7,6 +7,7 @@ num_CUs              = 24                   # Number of tasks or Compute Units
 num_iterations       = 2                    # Number of iterations of Simulation-Analysis
 start_iter           = 0                    # Iteration number with which to start
 nsave                = 1                    # # Iterations after which output is transfered to local machine
+checkfiles			 = 4					# Iterations after which to test if the expected files are present on remote/ does not download to local
 
 #--------------------------Simulation--------------------------------
 num_cores_per_sim_cu = 1                    # Number of cores per Simulation Compute Units

@@ -3,8 +3,20 @@ __author__ = 'vivek'
 from radical.ensemblemd.mdkernels import MDTaskDescription
 import radical.pilot
 import os
+import saga
+import subprocess
+import pipes
 
-def Analyzer(umgr,RPconfig,Kconfig,cycle):
+def exists_remote(host, paths):
+    qpath = ''
+    for path in paths:
+        qpath += 'test -f {0};'.format(pipes.quote(path))
+    proc = subprocess.Popen(
+        ['ssh', host, qpath)
+    proc.wait()
+    return proc.returncode == 0
+
+def Analyzer(umgr,RPconfig,Kconfig,cycle,pilot):
 
     print 'Starting Analysis'
     MY_STAGING_AREA = 'staging:///'
@@ -316,6 +328,24 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle):
     #-------------------------------------------------------------------------------------------------------------------
     postCU = umgr.submit_units(post)
     postCU.wait()
+
+
+    if (cycle+1)%Kconfig.checkfiles==0:
+
+        if pilot.resource == 'xsede.stampede':
+            remote='stampede.tacc.utexas.edu'
+        else:
+            remote='login.archer.ac.uk'
+
+        paths=[]
+        for i in range(0,Kconfig.num_CUs):
+            paths.append(saga.Url(pilot.sandbox).path + 'staging_area/iter{0}/start{1}.gro'.format(cycle+1,i))
+        
+        if exists_remote('{0}@{1}'.format(RPconfig.UNAME,remote),paths):
+            print 'All expected files present on remote'
+        else:
+            print 'Error finding expected files on remote'
+            sys.exit(-1)
 
     try:
         print 'Analysis Execution time : ',((trjconvCU.stop_time-trjconvCU.start_time).total_seconds()+

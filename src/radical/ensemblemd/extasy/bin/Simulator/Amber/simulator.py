@@ -6,9 +6,19 @@ import os
 import time
 import saga
 import sys
+import subprocess
+import pipes
 
+def exists_remote(host, paths):
+    qpath = ''
+    for path in paths:
+        qpath += 'test -f {0};'.format(pipes.quote(path))
+    proc = subprocess.Popen(
+        ['ssh', host, qpath)
+    proc.wait()
+    return proc.returncode == 0
 
-def Simulator(umgr,RPconfig,Kconfig,cycle):
+def Simulator(umgr,RPconfig,Kconfig,cycle,pilot):
 
 
     print 'Starting Simulation'
@@ -207,6 +217,24 @@ def Simulator(umgr,RPconfig,Kconfig,cycle):
             cu_list_A.remove(cu_a)
 
     umgr.wait_units()
+
+    if (cycle+1)%Kconfig.checkfiles==0:
+
+        if pilot.resource == 'xsede.stampede':
+            remote='stampede.tacc.utexas.edu'
+        else:
+            remote='login.archer.ac.uk'
+
+        paths=[]
+        for i in range(0,Kconfig.num_CUs):
+            paths.append(saga.Url(pilot.sandbox).path + 'staging_area/iter{0}/md_{0}_{1}.ncdf'.format(cycle,i))
+        
+        if exists_remote('{0}@{1}'.format(RPconfig.UNAME,remote),paths):
+            print 'All expected files present on remote'
+        else:
+            print 'Error finding expected files on remote'
+            sys.exit(-1)
+
 
     try:
         for unit_a in cu_list_A_copy:

@@ -206,11 +206,11 @@ def main():
             print 'Cycle : %s'%i
 
             if (Kconfig.simulator == 'Gromacs' and Kconfig.analyzer == 'LSDMap'):
-                Simulator(umgr, RPconfig, Kconfig, i)
-                Analyzer(umgr, RPconfig, Kconfig, i)
+                Simulator(umgr, RPconfig, Kconfig, i, pilot)
+                Analyzer(umgr, RPconfig, Kconfig, i, pilot)
             elif (Kconfig.simulator == 'Amber' and Kconfig.analyzer == 'CoCo'):
-                Analyzer(umgr, RPconfig, Kconfig, i)
-                Simulator(umgr, RPconfig, Kconfig, i)
+                Analyzer(umgr, RPconfig, Kconfig, i, pilot)
+                Simulator(umgr, RPconfig, Kconfig, i, pilot)
 
     except Exception as e:
         print "An error occurred: %s" % ((str(e)))
