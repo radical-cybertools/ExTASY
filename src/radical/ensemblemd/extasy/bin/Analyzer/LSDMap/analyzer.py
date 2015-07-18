@@ -11,8 +11,7 @@ def exists_remote(host, paths):
     qpath = ''
     for path in paths:
         qpath += 'test -f {0};'.format(pipes.quote(path))
-    proc = subprocess.Popen(
-        ['ssh', host, qpath)
+    proc = subprocess.Popen(['ssh', host, qpath])
     proc.wait()
     return proc.returncode == 0
 

@@ -20,7 +20,10 @@ def Preprocessing(Kconfig,umgr,pilot,restart):
 
     #Download the latest lsdm.py file
     lsdm_file = urllib.URLopener()
-    lsdm_file.retrieve("http://sourceforge.net/p/lsdmap/git/ci/extasy-0.1-rc2/tree/lsdmap/lsdm.py?format=raw","%s/lsdm.py"%os.getcwd())
+    try:
+        lsdm_file.retrieve("http://sourceforge.net/p/lsdmap/git/ci/extasy-0.1-rc2/tree/lsdmap/lsdm.py?format=raw","%s/lsdm.py"%os.getcwd())
+    except:
+        lsdm_file.retrieve("https://raw.githubusercontent.com/radical-cybertools/ExTASY/master/src/radical/ensemblemd/extasy/bin/Analyzer/LSDMap/lsdm.py","%s/lsdm.py"%os.getcwd())
 
 
     list_of_files = [    Kconfig.mdp_file,
