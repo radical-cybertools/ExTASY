@@ -39,12 +39,9 @@ Setuptools might not get installed with virtualenv and hence using pip would fai
 
 .. parsed-literal:: source $HOME/ExTASY-tools/bin/activate.csh
 
-To install the Ensemble MD Toolkit Python modules in a virtual environment,
-open a terminal and run:
+To install the Ensemble MD Toolkit Python modules in the virtual environment, run:
 
 .. parsed-literal::	export ENMD_INSTALL_VERSION="devel"
-					virtualenv $HOME/EnMDToolkit
-					source $HOME/EnMDToolkit/bin/activate
 					pip install --upgrade git+https://github.com/radical-cybertools/radical.ensemblemd.git@$ENMD_INSTALL_VERSION#egg=radical.ensemblemd
 
 
