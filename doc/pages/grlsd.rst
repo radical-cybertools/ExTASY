@@ -104,12 +104,7 @@ files:
                 All the parameters in the above example file are mandatory for gromacs-lsdmap. If *ndxfile*, *grompp_options*, *mdrun_options* and *itp_file_loc* are not required, they should be set to None; but they still have to mentioned in the configuration file. There are no other parameters currently supported.
 
 
-**Step 5**: Download the script using:
-
-	::
-
-		curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2/example/gromacs_lsdmap/extasy_gromacs_lsdmap.py
-
+**Step 5**: You can find the executable script ```extasy_gromacs_lsdmap.py``` in the grlsd-on-stampede folder.
 
 **Now you are can run the workload using :**
 
@@ -220,12 +215,7 @@ files:
 
                 All the parameters in the above example file are mandatory for gromacs-lsdmap. If *ndxfile*, *grompp_options*, *mdrun_options* and *itp_file_loc* are not required, they should be set to None; but they still have to mentioned in the configuration file. There are no other parameters currently supported.
 
-**Step 5**: Download the script using:
-
-	::
-    
-		curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2/example/gromacs_lsdmap/extasy_gromacs_lsdmap.py
-
+**Step 5**: You can find the executable script ```extasy_gromacs_lsdmap.py``` in the grlsd-on-archer folder.
 
 **Now you are can run the workload using :**
 

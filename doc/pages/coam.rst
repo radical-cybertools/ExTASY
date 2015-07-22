@@ -99,12 +99,7 @@ files:
                 
                 All the parameters in the above example file are mandatory for amber-coco. There are no other parameters currently supported.
 
-**Step 5**: Download the script using:
-
-	::
-
-		curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2/example/amber-coco/extasy_amber_coco.py
-
+**Step 5**: You can find the executable script ```extasy_amber_coco.py``` in the coam-on-stampede folder.
 
 **Now you are can run the workload using :**
 
@@ -211,11 +206,7 @@ files:
                 All the parameters in the above example file are mandatory for amber-coco. There are no other parameters currently supported.
 
 
-**Step 5**: Download the script using:
-
-	::
-
-		curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2/example/amber-coco/extasy_amber_coco.py
+**Step 5**: You can find the executable script ```extasy_amber_coco.py``` in the coam-on-archer folder.
 
 **Now you are can run the workload using :**
 
