@@ -108,7 +108,6 @@ files:
 
 	::
 
-		cd grlsd-on-stampede/
 		curl -k -O https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2/example/gromacs_lsdmap/extasy_gromacs_lsdmap.py
 
 
