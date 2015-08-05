@@ -160,7 +160,8 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
                        #"--mdinfile={0}".format(os.path.basename(Kconfig.md_input_file)),
                        "--topfile={0}".format(os.path.basename(Kconfig.top_file)),
                        "--crdfile={0}".format(os.path.basename(Kconfig.initial_crd_file)),
-                       "--cycle=%s"%(iteration)]
+                       "--cycle=%s"%(iteration),
+                       "--instance=%s"%(instance)]
         k1.link_input_data = ['$PRE_LOOP/{0}'.format(os.path.basename(Kconfig.minimization_input_file)),
                              '$PRE_LOOP/{0}'.format(os.path.basename(Kconfig.top_file)),
                              '$PRE_LOOP/{0}'.format(os.path.basename(Kconfig.initial_crd_file))]
@@ -176,7 +177,8 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
         k2.arguments = [
                             "--mdinfile={0}".format(os.path.basename(Kconfig.md_input_file)),
                             "--topfile={0}".format(os.path.basename(Kconfig.top_file)),
-                            "--cycle=%s"%(iteration)
+                            "--cycle=%s"%(iteration),
+                            "--instance=%s"%(instance)
                         ]
         k2.link_input_data = [  
                                 "$PRE_LOOP/{0}".format(os.path.basename(Kconfig.md_input_file)),
@@ -221,7 +223,7 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
             for i in range(1,Kconfig.num_CUs+1):
                 k1.link_input_data = k1.link_input_data + ['$SIMULATION_ITERATION_{0}_INSTANCE_{1}/md{0}.ncdf > md_{0}_{1}.ncdf'.format(iter,i)]
 
-        k1.copy_output_data = ['STDERR > $PRE_LOOP/STDERR']
+        k1.copy_output_data = ['STDERR > $PRE_LOOP/STDERR'] #Dummy
         for i in range(0,Kconfig.num_CUs):
             k1.copy_output_data = k1.copy_output_data + ['pentaopt{0}{1}.pdb > $PRE_LOOP/pentaopt{0}{1}.pdb'.format(iteration,i)]
 
@@ -230,7 +232,7 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
         k2.arguments = ["--numofsims={0}".format(Kconfig.num_CUs),
                         "--cycle={0}".format(iteration)]
 
-        k2.link_input_data = []
+        k2.link_input_data = ['$PRE_LOOP/STDERR > STDERR'] #Dummy
         for i in range(0,Kconfig.num_CUs):
             k2.link_input_data = k2.link_input_data + ['$PRE_LOOP/pentaopt{0}{1}.pdb > pentaopt{0}{1}.pdb'.format(iteration,i)]
 
