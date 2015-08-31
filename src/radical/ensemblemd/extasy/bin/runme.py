@@ -179,8 +179,8 @@ def main():
         Kconfig = imp.load_source('Kconfig', args.Kconfig)
 
         if args.Rcheck is not None:
-            import rcheck 
-            rcheck.resource_config_check(RPconfig,Kconfig)
+            from misc.rcheck import resource_config_check
+            resource_config_check(RPconfig,Kconfig)
             sys.exit(0)
 
         restart = check_config_vals(Kconfig,RPconfig)
