@@ -154,6 +154,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--RPconfig', help='link to Radical Pilot related configurations file')
     parser.add_argument('--Kconfig', help='link to Kernel configurations file')
+    parser.add_argument('--Rcheck',help='check if resource in RPconfig has the environment for kernels in Kconfig')
 
     args = parser.parse_args()
 
@@ -176,6 +177,11 @@ def main():
 
         RPconfig = imp.load_source('RPconfig', args.RPconfig)
         Kconfig = imp.load_source('Kconfig', args.Kconfig)
+
+        if args.Rcheck is not None:
+            import rcheck 
+            rcheck.resource_config_check(RPconfig,Kconfig)
+            sys.exit(0)
 
         restart = check_config_vals(Kconfig,RPconfig)
 
