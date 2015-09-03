@@ -32,12 +32,14 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,pilot):
 
     mdtd=MDTaskDescription()
     mdtd.kernel="GROMACS"
-    mdtd.arguments = ['-l','-c','python pre_analyze.py {0} {1} && echo 2 | trjconv -f {1} -s {1} -o tmpha.gro'.format(Kconfig.num_CUs,Kconfig.md_output_file)]
+    mdtd.arguments = ['pre_analyze.py','{0}'.format(Kconfig.num_CUs),'{0}'.format(Kconfig.md_output_file)]
     mdtd_bound = mdtd.bind(resource=RPconfig.REMOTE_HOST)
     trjconv = radical.pilot.ComputeUnitDescription()
     trjconv.pre_exec = mdtd_bound.pre_exec
-    trjconv.executable = '/bin/bash'
+    trjconv.executable = 'python'
     trjconv.arguments = mdtd_bound.arguments
+    trjconv.mpi = True
+    trjconv.cores = 1
 
 
     #==================================================================
