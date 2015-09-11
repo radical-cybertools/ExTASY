@@ -36,7 +36,7 @@ def Analyzer(umgr,RPconfig,Kconfig,cycle,pilot):
                         '--topfile','%s'%os.path.basename(Kconfig.top_file),
                         '--mdfile','*.ncdf',
                         '--output','pdbs',
-                        '--logfile','%s'%(,Kconfig.logfile),
+                        '--logfile','%s'%(Kconfig.logfile),
                         '--mpi']
     if Kconfig.atom_selection is not None:
         mdtd.arguments.extend(['--selection','%s'%Kconfig.atom_selection])
