@@ -4,6 +4,7 @@ from radical.ensemblemd.mdkernels import MDTaskDescription
 import radical.pilot
 import os
 import saga
+import pipes
 
 def exists_remote(host, paths):
     qpath = ''
