@@ -160,8 +160,7 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
                        #"--mdinfile={0}".format(os.path.basename(Kconfig.md_input_file)),
                        "--topfile={0}".format(os.path.basename(Kconfig.top_file)),
                        "--crdfile={0}".format(os.path.basename(Kconfig.initial_crd_file)),
-                       "--cycle=%s"%(iteration),
-                       "--instance=%s"%(instance)]
+                       "--cycle=%s"%(iteration)]
         k1.link_input_data = ['$PRE_LOOP/{0}'.format(os.path.basename(Kconfig.minimization_input_file)),
                              '$PRE_LOOP/{0}'.format(os.path.basename(Kconfig.top_file)),
                              '$PRE_LOOP/{0}'.format(os.path.basename(Kconfig.initial_crd_file))]
@@ -177,8 +176,7 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
         k2.arguments = [
                             "--mdinfile={0}".format(os.path.basename(Kconfig.md_input_file)),
                             "--topfile={0}".format(os.path.basename(Kconfig.top_file)),
-                            "--cycle=%s"%(iteration),
-                            "--instance=%s"%(instance)
+                            "--cycle=%s"%(iteration)
                         ]
         k2.link_input_data = [  
                                 "$PRE_LOOP/{0}".format(os.path.basename(Kconfig.md_input_file)),
@@ -186,7 +184,7 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
                                 "$PRE_LOOP/md_{0}_{1}.crd > md{0}.crd".format(iteration,instance),
                             ]
         if(iteration%Kconfig.nsave==0):
-            k1.download_output_data = ['md{0}.ncdf > backup/iter{0}/md_{0}_{1}.ncdf'.format(iteration,instance)]
+            k2.download_output_data = ['md{0}.ncdf > backup/iter{0}/md_{0}_{1}.ncdf'.format(iteration,instance)]
 
         k2.cores = 2
         return [k1,k2]
@@ -215,24 +213,25 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
                        "--frontpoints={0}".format(Kconfig.num_CUs),
                        "--topfile={0}".format(os.path.basename(Kconfig.top_file)),
                        "--mdfile=*.ncdf",
-                       "--output=pentaopt%s"%(iteration)]
-        k1.cores = RPconfig.PILOTSIZE
+                       "--output=pdbs"]
+        k1.cores = 1
+        k1.uses_mpi = False
 
         k1.link_input_data = ['$PRE_LOOP/{0}'.format(os.path.basename(Kconfig.top_file))]
         for iter in range(1,iteration+1):
             for i in range(1,Kconfig.num_CUs+1):
                 k1.link_input_data = k1.link_input_data + ['$SIMULATION_ITERATION_{0}_INSTANCE_{1}/md{0}.ncdf > md_{0}_{1}.ncdf'.format(iter,i)]
 
-        k1.copy_output_data = ['STDERR > $PRE_LOOP/STDERR'] #Dummy
+        k1.copy_output_data = list()
         for i in range(0,Kconfig.num_CUs):
-            k1.copy_output_data = k1.copy_output_data + ['pentaopt{0}{1}.pdb > $PRE_LOOP/pentaopt{0}{1}.pdb'.format(iteration,i)]
+            k1.copy_output_data = k1.copy_output_data + ['pdbs/{1}.pdb > $PRE_LOOP/pentaopt{0}{1}.pdb'.format(iteration,i)]
 
 
         k2 = Kernel(name="md.tleap")
         k2.arguments = ["--numofsims={0}".format(Kconfig.num_CUs),
                         "--cycle={0}".format(iteration)]
 
-        k2.link_input_data = ['$PRE_LOOP/STDERR > STDERR'] #Dummy
+        k2.link_input_data = ['$PRE_LOOP/postexec.py > postexec.py']
         for i in range(0,Kconfig.num_CUs):
             k2.link_input_data = k2.link_input_data + ['$PRE_LOOP/pentaopt{0}{1}.pdb > pentaopt{0}{1}.pdb'.format(iteration,i)]
 
@@ -274,7 +273,7 @@ if __name__ == "__main__":
             walltime=RPconfig.WALLTIME,
             username = RPconfig.UNAME, #username
             project = RPconfig.ALLOCATION, #project
-	        queue = RPconfig.QUEUE,
+          queue = RPconfig.QUEUE,
             database_url = RPconfig.DBURL
         )
 
@@ -282,6 +281,8 @@ if __name__ == "__main__":
 
         coco_amber_static = Extasy_CocoAmber_Static(maxiterations=Kconfig.num_iterations, simulation_instances=Kconfig.num_CUs, analysis_instances=1)
         cluster.run(coco_amber_static)
+
+        cluster.deallocate()
 
     except EnsemblemdError, er:
 
