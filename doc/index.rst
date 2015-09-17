@@ -20,7 +20,7 @@ https://github.com/radical-cybertools/ExTASY/tree/extasy_0.2
 
 **Build Status**
 
-    .. image:: http://ci.radical-project.org/buildStatus/icon?job=ExTASY
+    .. image:: http://ci.radical-project.org/buildStatus/icon?job=ExTASY-0.2
         :target: http://ci.radical-project.org/job/ExTASY-0.2
 
 
