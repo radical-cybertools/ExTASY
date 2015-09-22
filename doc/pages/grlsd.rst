@@ -52,7 +52,7 @@ files:
 
     ::
 
-        REMOTE_HOST = 'stampede.tacc.utexas.edu'  # Label/Name of the Remote Machine
+        REMOTE_HOST = 'xsede.stampede'  # Label/Name of the Remote Machine
         UNAME       = 'username'                  # Username on the Remote Machine
         ALLOCATION  = 'TG-MCB090174'              # Allocation to be charged
         WALLTIME    = 60                          # Walltime to be requested for the pilot
@@ -68,7 +68,7 @@ files:
 
     ::
 
-        #-------------------------Applications----------------------
+        ##-------------------------Applications----------------------
         simulator             = 'Gromacs'           # Simulator to be loaded
         analyzer              = 'LSDMap'            # Analyzer to be loaded
 
@@ -77,6 +77,7 @@ files:
         num_iterations       = 3                    # Number of iterations of Simulation-Analysis
         start_iter           = 0                    # Iteration number with which to start
         nsave                = 2                    # # Iterations after which output is transfered to local machine
+        checkfiles           = 4                    # Iterations after which to test if the expected files are present on remote/ does not download to local
 
         #--------------------------Simulation--------------------------------
         num_cores_per_sim_cu = 1                    # Number of cores per Simulation Compute Units
@@ -181,7 +182,7 @@ files:
 
     ::
 
-        REMOTE_HOST = 'archer.ac.uk'              # Label/Name of the Remote Machine
+        REMOTE_HOST = 'epsrc.archer'              # Label/Name of the Remote Machine
         UNAME       = 'username'                  # Username on the Remote Machine
         ALLOCATION  = 'e290'                      # Allocation to be charged
         WALLTIME    = 60                          # Walltime to be requested for the pilot
@@ -205,6 +206,7 @@ files:
         num_iterations       = 2                    # Number of iterations of Simulation-Analysis
         start_iter           = 0                    # Iteration number with which to start
         nsave                = 1                    # # Iterations after which output is transfered to local machine
+        checkfiles           = 4                    # Iterations after which to test if the expected files are present on remote/ does not download to local
 
         #--------------------------Simulation--------------------------------
         num_cores_per_sim_cu = 1                    # Number of cores per Simulation Compute Units

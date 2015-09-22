@@ -52,7 +52,7 @@ files:
 
     ::
 
-        REMOTE_HOST = 'stampede.tacc.utexas.edu'  # Label/Name of the Remote Machine
+        REMOTE_HOST = 'xsede.stampede'  # Label/Name of the Remote Machine
         UNAME       = 'username'                  # Username on the Remote Machine
         ALLOCATION  = 'TG-MCB090174'              # Allocation to be charged
         WALLTIME    = 60                          # Walltime to be requested for the pilot
@@ -75,8 +75,9 @@ files:
         #-------------------------General---------------------------
         num_iterations          = 4                 # Number of iterations of Simulation-Analysis
         start_iter              = 0                 # Iteration number with which to start
-        num_CUs         = 16                # Number of tasks or Compute Units
-        nsave           = 2         # Iterations after which output is transfered to local machine
+        num_CUs                 = 16                # Number of tasks or Compute Units
+        nsave                   = 2                 # Iterations after which output is transfered to local machine
+        checkfiles              = 4                 # Iterations after which to test if the expected files are present on remote/ does not download to local
 
         #-------------------------Simulation-----------------------
         num_cores_per_sim_cu    = 2                 # Number of cores per Simulation Compute Units
@@ -85,6 +86,7 @@ files:
         initial_crd_file        = './penta.crd'     # Entire path to Coordinates file - Do not use $HOME or the likes
         top_file                = './penta.top'     # Entire path to Topology file - Do not use $HOME or the likes
         logfile                 = 'coco.log'        # Name of the log file created by pyCoCo
+        atom_selection          = None              # optional atom selection string that enables pyCoCo to work only on a subset of the biomolecular system
 
         #-------------------------Analysis--------------------------
         grid                    = '5'               # Number of points along each dimension of the CoCo histogram
@@ -175,7 +177,7 @@ files:
                 The other parameters in the resource configuration are already set up to successfully execute the workload in this example.
     ::
 
-        REMOTE_HOST = 'archer.ac.uk'              # Label/Name of the Remote Machine
+        REMOTE_HOST = 'epsrc.archer'              # Label/Name of the Remote Machine
         UNAME       = 'username'                  # Username on the Remote Machine
         ALLOCATION  = 'e290'                      # Allocation to be charged
         WALLTIME    = 60                          # Walltime to be requested for the pilot
@@ -197,8 +199,9 @@ files:
         #-------------------------General---------------------------
         num_iterations          = 2                 # Number of iterations of Simulation-Analysis
         start_iter              = 0                 # Iteration number with which to start
-        num_CUs                 = 8                # Number of tasks or Compute Units
+        num_CUs                 = 8                 # Number of tasks or Compute Units
         nsave                   = 1                 # Iterations after which output is transfered to local machine
+        checkfiles              = 4                 # Iterations after which to test if the expected files are present on remote/ does not download to local
 
         #-------------------------Simulation-----------------------
         num_cores_per_sim_cu    = 2                 # Number of cores per Simulation Compute Units
@@ -207,6 +210,7 @@ files:
         initial_crd_file        = './penta.crd'     # Entire path to Coordinates file - Do not use $HOME or the likes
         top_file                = './penta.top'     # Entire path to Topology file - Do not use $HOME or the likes
         logfile                 = 'coco.log'        # Name of the log file created by pyCoCo
+        atom_selection          = None              # optional atom selection string that enables pyCoCo to work only on a subset of the biomolecular system
 
         #-------------------------Analysis--------------------------
         grid                    = '5'               # Number of points along each dimension of the CoCo histogram
