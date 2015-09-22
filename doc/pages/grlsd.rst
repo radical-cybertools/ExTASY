@@ -55,7 +55,7 @@ files:
 
     ::
 
-        REMOTE_HOST = 'stampede.tacc.utexas.edu'  # Label/Name of the Remote Machine
+        REMOTE_HOST = 'xsede.stampede'            # Label/Name of the Remote Machine
         UNAME       = 'username'                  # Username on the Remote Machine
         ALLOCATION  = 'TG-MCB090174'              # Allocation to be charged
         WALLTIME    = 60                          # Walltime to be requested for the pilot
@@ -80,12 +80,13 @@ files:
         num_iterations       = 3                    # Number of iterations of Simulation-Analysis
         start_iter           = 0                    # Iteration number with which to start
         nsave                = 2                    # # Iterations after which output is transfered to local machine
+        checkfiles           = 4                    # Iterations after which to test if the expected files are present on remote/ does not download to local
 
         #--------------------------Simulation--------------------------------
         num_cores_per_sim_cu = 1                    # Number of cores per Simulation Compute Units
-        md_input_file        = './input.gro'        # Entire path to the MD Input file - Do not use $HOME or the likes
-        mdp_file             = './grompp.mdp'       # Entire path to the MD Parameters file - Do not use $HOME or the likes
-        top_file             = './topol.top'        # Entire path to the Topology file - Do not use $HOME or the likes
+        md_input_file        = './inp_files/input.gro'        # Entire path to the MD Input file - Do not use $HOME or the likes
+        mdp_file             = './inp_files/grompp.mdp'       # Entire path to the MD Parameters file - Do not use $HOME or the likes
+        top_file             = './inp_files/topol.top'        # Entire path to the Topology file - Do not use $HOME or the likes
         ndx_file             = None                   # Entire path to the Index file - Do not use $HOME or the likes
         grompp_options       = None                   # Command line options for when grompp is used
         mdrun_options        = None                   # Command line options for when mdrun is used
@@ -93,15 +94,17 @@ files:
         md_output_file       = 'tmp.gro'            # Filename to be used for the simulation output
 
         #--------------------------Analysis----------------------------------
-        lsdm_config_file     = './config.ini'       # Entire path to the LSDMap configuration file - Do not use $HOME or the likes
+        lsdm_config_file     = './inp_files/config.ini'       # Entire path to the LSDMap configuration file - Do not use $HOME or the likes
         num_runs             = 1000                # Number of runs to be performed in the Selection step in Analysis
         w_file               = 'weight.w'           # Filename to be used for the weight file
         max_alive_neighbors  = '10'                 # Maximum alive neighbors to be considered while reweighting
         max_dead_neighbors   = '1'                  # Maximum dead neighbors to be considered while reweighting
 
+        misc_loc = './misc_files'
+
     .. note:: 
 
-                All the parameters in the above example file are mandatory for gromacs-lsdmap. If *ndxfile*, *grompp_options*, *mdrun_options* and *itp_file_loc* are not required, they should be set to None; but they still have to mentioned in the configuration file. There are no other parameters currently supported.
+                All the parameters in the above example file are mandatory for gromacs-lsdmap. If *ndxfile*, *grompp_options*, *mdrun_options* and *itp_file_loc* are not required, they should be set to None; but they still have to mentioned in the configuration file. There are no other parameters currently supported for these examples.
 
 
 **Step 5**: You can find the executable script ```extasy_gromacs_lsdmap.py``` in the grlsd-on-stampede folder.
@@ -167,7 +170,7 @@ files:
 
     ::
 
-        REMOTE_HOST = 'archer.ac.uk'              # Label/Name of the Remote Machine
+        REMOTE_HOST = 'epsrc.archer'              # Label/Name of the Remote Machine
         UNAME       = 'username'                  # Username on the Remote Machine
         ALLOCATION  = 'e290'                      # Allocation to be charged
         WALLTIME    = 60                          # Walltime to be requested for the pilot
@@ -187,16 +190,17 @@ files:
         analyzer              = 'LSDMap'            # Analyzer to be loaded
 
         #--------------------------General--------------------------------
-        num_CUs              = 24                   # Number of tasks or Compute Units
-        num_iterations       = 2                    # Number of iterations of Simulation-Analysis
+        num_CUs              = 16                   # Number of tasks or Compute Units
+        num_iterations       = 3                    # Number of iterations of Simulation-Analysis
         start_iter           = 0                    # Iteration number with which to start
-        nsave                = 1                    # # Iterations after which output is transfered to local machine
+        nsave                = 2                    # # Iterations after which output is transfered to local machine
+        checkfiles           = 4                    # Iterations after which to test if the expected files are present on remote/ does not download to local
 
         #--------------------------Simulation--------------------------------
         num_cores_per_sim_cu = 1                    # Number of cores per Simulation Compute Units
-        md_input_file        = './input.gro'        # Entire path to the MD Input file - Do not use $HOME or the likes
-        mdp_file             = './grompp.mdp'       # Entire path to the MD Parameters file - Do not use $HOME or the likes
-        top_file             = './topol.top'        # Entire path to the Topology file - Do not use $HOME or the likes
+        md_input_file        = './inp_files/input.gro'        # Entire path to the MD Input file - Do not use $HOME or the likes
+        mdp_file             = './inp_files/grompp.mdp'       # Entire path to the MD Parameters file - Do not use $HOME or the likes
+        top_file             = './inp_files/topol.top'        # Entire path to the Topology file - Do not use $HOME or the likes
         ndx_file             = None                   # Entire path to the Index file - Do not use $HOME or the likes
         grompp_options       = None                   # Command line options for when grompp is used
         mdrun_options        = None                   # Command line options for when mdrun is used
@@ -204,11 +208,13 @@ files:
         md_output_file       = 'tmp.gro'            # Filename to be used for the simulation output
 
         #--------------------------Analysis----------------------------------
-        lsdm_config_file     = './config.ini'       # Entire path to the LSDMap configuration file - Do not use $HOME or the likes
-        num_runs             = 100                # Number of runs to be performed in the Selection step in Analysis
+        lsdm_config_file     = './inp_files/config.ini'       # Entire path to the LSDMap configuration file - Do not use $HOME or the likes
+        num_runs             = 1000                # Number of runs to be performed in the Selection step in Analysis
         w_file               = 'weight.w'           # Filename to be used for the weight file
         max_alive_neighbors  = '10'                 # Maximum alive neighbors to be considered while reweighting
         max_dead_neighbors   = '1'                  # Maximum dead neighbors to be considered while reweighting
+
+        misc_loc = './misc_files'
 
 
     .. note:: 
@@ -235,8 +241,8 @@ If your shell is CSH,
         setenv SAGA_VERBOSE 'debug'
         python extasy_gromacs_lsdmap.py --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg |& tee extasy.log
 
-Understanding the Output
-========================
+Understanding the Output of the Examples
+========================================
 
 In the local machine, a "backup" folder is created and at the end of every checkpoint intervel (=nsave) an "iter*" folder is created which contains the necessary files to start the next iteration.
 
