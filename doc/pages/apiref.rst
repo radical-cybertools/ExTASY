@@ -78,7 +78,7 @@ Application Kernel API
 ======================
 
 class radical.ensemblemd.Kernel (name, args = None)
------------------------------------------------
+---------------------------------------------------
 	
 The Kernel provides functions to support file movement as required by the pattern.
 

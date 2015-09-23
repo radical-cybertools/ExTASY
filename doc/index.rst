@@ -33,6 +33,7 @@ https://github.com/radical-cybertools/ExTASY/tree/extasy_0.2
    pages/intro.rst
    pages/installation.rst
    pages/getting_started.rst
+   pages/examples.rst
    pages/coam.rst
    pages/grlsd.rst
    pages/apiref.rst
