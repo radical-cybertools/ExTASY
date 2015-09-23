@@ -24,7 +24,8 @@ A static execution context provides a fixed set of computational resources.
 Execution Pattern API
 =====================
 
-:pre_loop():
+pre_loop()
+----------
 
 The ``radical.ensemblemd.Kernel`` returned by pre_loop is executed before the main simulation-analysis loop is started. It can be used for example to set up structures, initialize experimental environments, one-time data transfers and so on.
 
