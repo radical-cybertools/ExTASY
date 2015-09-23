@@ -1,13 +1,13 @@
 .. _develop:
 
-***************************
-Customization Documentation
-***************************
+*************
+Customization
+*************
 
 Writing New Application Kernels
 -------------------------------
 
-While the current set of available application kernels might provide a good set of tools to start, sooner or later you will probably want to use a tool for which no application Kernel exsits. In this case, you will have to write your own one.
+While the current set of available application kernels might provide a good set of tools to start, sooner or later you will probably want to use a tool for which no application Kernel exists. In this case, you will have to write your own one.
 
 The easiest way to describe how this works is by example:
 
@@ -116,7 +116,7 @@ The easiest way to describe how this works is by example:
 	        print "Ensemble MD Toolkit Error: {0}".format(str(er))
 	        raise # Just raise the execption again to get the backtrace
 
-The existing kernels can be found `here <https://github.com/radical-cybertools/radical.ensemblemd/tree/master/src/radical/ensemblemd/kernel_plugins>`_
+The existing kernels can be found `here <misc.html>`_
 
 
 Writing a Custom Resource Configuration File

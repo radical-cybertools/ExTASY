@@ -234,6 +234,46 @@ If your shell is CSH,
 Running on localhost
 ====================
 
+The above two sections describes execution on XSEDE.Stampede and EPSRC.Archer, assuming you have access to these machines. This section describes the changes required to the EXISTING scripts in order to get CoCo-Amber running on your local machines (label to be used = ``local.localhost`` as in the generic examples).
+
+**Step 1**: You might have already guessed the first step. You need to create a SingleClusterEnvironment object targetting the localhost machine. You can either directly make changes to the ``extasy_amber_coco.py`` script or create a separate resource configuration file and provide it as an argument.
+
+**Step 2**: The MD tools require some tool specific environment variables to be setup (AMBERHOME, PYTHONPATH, GCC, GROMACS_DIR, etc). Along with this, you would require to set the PATH environment variable to point to the binary file (if any) of the MD tool. Once you determine all the environment variables to be setup, set them on the terminal and test it by executing the MD command (possibly for a sample case). For example, if you have amber installed in $HOME as $HOME/amber14. You probably have to setup AMBERHOME to $HOME/amber14 and append $HOME/amber14/bin to PATH. Please check official documentation of the MD tool.
+
+**Step 3**: There are three options to proceed.
+
+    * Once you tested the environment setup, next you need to add it to the particular kernel definition. You need to, first, locate the particular file to be modified. All the files related to EnsembleMD are located within the virtualenv (say "myenv"). Go into the following path: ``myenv/lib/python-2.7/site-packages/radical/ensemblemd/kernel_plugins/md``. This path contains all the kernels used for the MD examples. You can open the amber.py file and add an entry for local.localhost (in ``"machine_configs"``) as follows:
+
+    .. parsed-literal::
+
+        ..
+        ..
+        "machine_configs":
+        {
+
+            ..
+            ..
+
+            "local.localhost":
+            {
+                "pre_exec"    : ["export AMBERHOME=$HOME/amber14", "export PATH=$HOME/amber14/bin:$PATH"],
+                "executable"  : ["sander"],
+                "uses_mpi"    : False       # Could be True or False
+            },
+
+            ..
+            ..
+
+        }
+        ..
+        ..
+
+    This would have to be repeated for all the kernels.
+
+    * Another option is to perform the same above steps. But leave the ``"pre_exec"`` value as an empty list and set all the environment variables in your bashrc (``$HOME/.bashrc``). Remember that you would still need to set the executable as above.
+
+    * The third option is to create your own kernel plugin as part of your user script. These avoids the entire procedure of locating the existing kernel plugin files. This would also get you comfortable in using kernels other than the ones currently available as part of the package. Creating your own kernel plugins are discussed `here <develop.html>`_
+
 
 Understanding the Output of the Examples
 ========================================
