@@ -241,6 +241,11 @@ If your shell is CSH,
         setenv SAGA_VERBOSE 'debug'
         python extasy_gromacs_lsdmap.py --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg |& tee extasy.log
 
+
+Running on localhost
+====================
+
+
 Understanding the Output of the Examples
 ========================================
 
