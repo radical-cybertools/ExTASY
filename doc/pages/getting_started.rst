@@ -28,8 +28,16 @@ There are also a set of data references that can be used to reference the data i
 * $ANALYSIS_ITERATION_X_INSTANCE_Y - References instance Y of the analysis step of iteration number X.
 
 
-Components of the Pattern
-=========================
+Components of the API
+=====================
+
+There are three components that the user interacts with in order to implement the application:
+
+* Execution Context: The execution context can be see as a container that acquires the resources on the remote machine and provides application level control of these resources.
+
+* Execution Pattern: A pattern can be seen as a parameterized template for an execution trajectory that implements a specific algorithm. A pattern provides placeholder methods for the individual steps or stages of an execution trajectory. These placeholders are populated with Kernels that get executed when it’s the step’s turn to be executed. In ExTASY, we will be using the SAL pattern.
+
+* Application Kernel: A kernel is an object that abstracts a computational task in EnsembleMD. It represents an instantiation of a specific science tool along with its resource specific environment.
 
 
 Example 1: Multiple Simulations Single Analysis Application with SAL pattern

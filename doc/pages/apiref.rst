@@ -9,69 +9,67 @@ API Reference
 Execution Context API
 =====================
 
-.. parsed-literal::
-	class **radical.ensemblemd.SingleClusterEnvironment(resource,cores,walltime,database_url,queue=None,username=None,allocation=None,cleanup=False)**
+class radical.ensemblemd.SingleClusterEnvironment (resource, cores, walltime, database_url, queue = None, username = None, allocation = None, cleanup = False)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 A static execution context provides a fixed set of computational resources.
 
 * **name**: Returns the name of the execution context
 * **allocate()**: Allocates the resources
 * **deallocate()**: Deallocates the resources
-* **run(pattern, force_plugin=None)**: Create a new SingleClusterEnvironment instance
+* **run(pattern, force_plugin = None)**: Create a new SingleClusterEnvironment instance
 * **get_name()**: Returns the name of the execution pattern
 
 
 Execution Pattern API
 =====================
 
-.. topic:: **pre_loop()**
+pre_loop()
+----------
 
-	The ``radical.ensemblemd.Kernel`` returned by pre_loop is executed before the main simulation-analysis loop is started. It can be used for example to set up structures, initialize experimental environments, one-time data transfers and so on.
+The ``radical.ensemblemd.Kernel`` returned by pre_loop is executed before the main simulation-analysis loop is started. It can be used for example to set up structures, initialize experimental environments, one-time data transfers and so on.
 
     *Returns*:
-
-	        Implementations of this method must return either a single or a list of ``radical.ensemblemd.Kernel`` object(s). An exception is thrown otherwise.
-
+	    Implementations of this method must return either a single or a list of ``radical.ensemblemd.Kernel`` object(s). An exception is thrown otherwise.
 
 
 
-.. topic:: **simulation_step(iteration, instance)**
 
-	The ``radical.ensemblemd.Kernel`` returned by simulation_step is executed once per loop iteration before analysis_step.
+simulation_step(iteration, instance)
+------------------------------------
+
+The ``radical.ensemblemd.Kernel`` returned by simulation_step is executed once per loop iteration before analysis_step.
 
     *Arguments*:
-
-    	    * iteration [int] - The iteration parameter is a positive integer and references the current iteration of the simulation-analysis loop.
-        	* instance [int] - The instance parameter is a positive integer and references the instance of the simulation step, which is in the range [1 .. simulation_instances].
+    	* iteration [int] - The iteration parameter is a positive integer and references the current iteration of the simulation-analysis loop.
+    	* instance [int] - The instance parameter is a positive integer and references the instance of the simulation step, which is in the range [1 .. simulation_instances].
 
     *Returns*:
-
-    	    Implementations of this method must return either a single or a list of ``radical.ensemblemd.Kernel`` object(s). An exception is thrown otherwise.
-
+    	Implementations of this method must return either a single or a list of ``radical.ensemblemd.Kernel`` object(s). An exception is thrown otherwise.
 
 
 
-.. topic:: **analysis_step(iteration,instance)**
 
-	The ``radical.ensemblemd.Kernel`` returned by analysis_step is executed once per loop iteration after simulation_step.
+analysis_step(iteration, instance)
+----------------------------------
+
+The ``radical.ensemblemd.Kernel`` returned by analysis_step is executed once per loop iteration after simulation_step.
 
     *Arguments*:
-
-        	* iteration [int] - The iteration parameter is a positive integer and references the current iteration of the simulation-analysis loop.
-        	* instance [int] - The instance parameter is a positive integer and references the instance of the simulation step, which is in the range [1 .. simulation_instances].
-
-    *Returns*:
-
-    	    Implementations of this method must return either a single or a list of ``radical.ensemblemd.Kernel`` object(s). An exception is thrown otherwise.
-
-
-.. topic:: **post_loop()**
-
-	The ``radical.ensemblemd.Kernel`` returned by post_loop is executed after the main simulation-analysis loop has finished. It can be used for example to set up structures, initialize experimental environments and so on.
+        * iteration [int] - The iteration parameter is a positive integer and references the current iteration of the simulation-analysis loop.
+    	* instance [int] - The instance parameter is a positive integer and references the instance of the simulation step, which is in the range [1 .. simulation_instances].
 
     *Returns*:
+    	Implementations of this method must return either a single or a list of ``radical.ensemblemd.Kernel`` object(s). An exception is thrown otherwise.
 
-        	Implementations of this method must return a single ``radical.ensemblemd.Kernel`` object. An exception is thrown otherwise.
+
+post_loop()
+-----------
+
+The ``radical.ensemblemd.Kernel`` returned by post_loop is executed after the main simulation-analysis loop has finished. It can be used for example to set up structures, initialize experimental environments and so on.
+
+    *Returns*:
+        Implementations of this method must return a single ``radical.ensemblemd.Kernel`` object. An exception is thrown otherwise.
 
 
 
@@ -79,9 +77,8 @@ Execution Pattern API
 Application Kernel API
 ======================
 
-.. highlights:: 
-
-	class **radical.ensemblemd.Kernel(name,args=None)**
+class radical.ensemblemd.Kernel (name, args = None)
+-----------------------------------------------
 	
 The Kernel provides functions to support file movement as required by the pattern.
 
