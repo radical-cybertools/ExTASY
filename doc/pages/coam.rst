@@ -119,7 +119,9 @@ If your shell is CSH,
         setenv SAGA_VERBOSE 'debug'
         python extasy_amber_coco.py --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg |& tee extasy.log
 
+.. note::
 
+            Time to completion: ~240 seconds (from the time job goes through LRMS)
 
 Running on Archer
 =================
@@ -229,6 +231,11 @@ If your shell is CSH,
         setenv RADICAL_PILOT_VERBOSE 'debug'
         setenv SAGA_VERBOSE 'debug'
         python extasy_amber_coco.py --RPconfig archer.rcfg --Kconfig cocoamber.wcfg |& tee extasy.log
+
+
+.. note::
+
+            Time to completion: ~240 seconds (from the time job goes through LRMS)
 
 
 Running on localhost

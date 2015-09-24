@@ -126,7 +126,8 @@ If your shell is CSH,
         setenv SAGA_VERBOSE 'debug'
         python extasy_gromacs_lsdmap.py --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg |& tee extasy.log
 
-
+.. note::
+            Time to completion: ~13 mins (from the time job goes through LRMS)
 
 Running on Archer
 =================
@@ -241,6 +242,10 @@ If your shell is CSH,
         setenv SAGA_VERBOSE 'debug'
         python extasy_gromacs_lsdmap.py --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg |& tee extasy.log
 
+
+.. note::
+            Time to completion: ~13 mins (from the time job goes through LRMS)
+            
 
 Running on localhost
 ====================
