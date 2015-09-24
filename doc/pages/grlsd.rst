@@ -99,7 +99,7 @@ files:
         max_alive_neighbors  = '10'                 # Maximum alive neighbors to be considered while reweighting
         max_dead_neighbors   = '1'                  # Maximum dead neighbors to be considered while reweighting
 
-        misc_loc = './misc_files'
+        helper_scripts = './helper_scripts'
 
     .. note:: 
 
@@ -214,7 +214,7 @@ files:
         max_alive_neighbors  = '10'                 # Maximum alive neighbors to be considered while reweighting
         max_dead_neighbors   = '1'                  # Maximum dead neighbors to be considered while reweighting
 
-        misc_loc = './misc_files'
+        helper_scripts = './helper_scripts'
 
 
     .. note:: 

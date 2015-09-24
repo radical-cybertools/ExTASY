@@ -93,7 +93,7 @@ files:
         grid                    = '5'               # Number of points along each dimension of the CoCo histogram
         dims                    = '3'               # The number of projections to consider from the input pcz file
 
-        misc_loc = './misc_files'
+        helper_scripts = './helper_scripts'
 
 
     .. note::
@@ -202,7 +202,7 @@ files:
         grid                    = '5'               # Number of points along each dimension of the CoCo histogram
         dims                    = '3'               # The number of projections to consider from the input pcz file
 
-        misc_loc = './misc_files'
+        helper_scripts = './helper_scripts'
 
 
     .. note::
