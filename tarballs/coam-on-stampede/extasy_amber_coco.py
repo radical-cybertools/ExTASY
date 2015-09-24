@@ -136,7 +136,7 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
                                Kconfig.md_input_file,
                                Kconfig.minimization_input_file,
                                Kconfig.top_file,
-                               '{0}/postexec.py'.format(Kconfig.misc_loc)]
+                               '{0}/postexec.py'.format(Kconfig.helper_scripts)]
         return k
 
 

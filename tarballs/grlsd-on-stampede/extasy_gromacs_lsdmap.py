@@ -141,14 +141,14 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
                                Kconfig.lsdm_config_file,
                                Kconfig.top_file,
                                Kconfig.mdp_file,
-                               '{0}/spliter.py'.format(Kconfig.misc_loc),
-                               '{0}/gro.py'.format(Kconfig.misc_loc),
-                               '{0}/run.py'.format(Kconfig.misc_loc),
-                               '{0}/pre_analyze.py'.format(Kconfig.misc_loc),
-                               '{0}/post_analyze.py'.format(Kconfig.misc_loc),
-                               '{0}/select.py'.format(Kconfig.misc_loc),
-                               '{0}/reweighting.py'.format(Kconfig.misc_loc),
-                               '{0}/lsdm.py'.format(Kconfig.misc_loc)]
+                               '{0}/spliter.py'.format(Kconfig.helper_scripts),
+                               '{0}/gro.py'.format(Kconfig.helper_scripts),
+                               '{0}/run.py'.format(Kconfig.helper_scripts),
+                               '{0}/pre_analyze.py'.format(Kconfig.helper_scripts),
+                               '{0}/post_analyze.py'.format(Kconfig.helper_scripts),
+                               '{0}/select.py'.format(Kconfig.helper_scripts),
+                               '{0}/reweighting.py'.format(Kconfig.helper_scripts),
+                               '{0}/lsdm.py'.format(Kconfig.helper_scripts)]
         #k.download_input_data = ['http://sourceforge.net/p/lsdmap/git/ci/extasy-0.1-rc2/tree/lsdmap/lsdm.py?format=raw > lsdm.py']
         k.arguments = ["--inputfile={0}".format(os.path.basename(Kconfig.md_input_file)),"--numCUs={0}".format(Kconfig.num_CUs)]
         return k
