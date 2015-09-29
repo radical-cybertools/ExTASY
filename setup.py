@@ -128,7 +128,7 @@ setup_args = {
                           'radical.pilot',
                           'argparse'
                          ],
-    'tests_require' : ['setuptools>=1','nose','radical.pilot==0.33','radical.ensemblemd.mdkernels==0.1'],
+    'tests_require' : ['setuptools>=1','nose','radical.pilot','radical.ensemblemd.mdkernels==0.1'],
     'test_suite' : 'radical.ensemblemd.extasy.tests',
 
     'zip_safe' : False,
