@@ -16,7 +16,7 @@ minimization_input_file = './min.in'        # Entire path to Minimization file -
 initial_crd_file        = './penta.crd'     # Entire path to Coordinates file - Do not use $HOME or the likes
 top_file                = './penta.top'     # Entire path to Topology file - Do not use $HOME or the likes
 logfile                 = 'coco.log'        # Name of the log file created by pyCoCo
-atom_selection 			= None				# optional atom selection string that enables pyCoCo to work only on a subset of the biomolecular system
+atom_selection 			= 'protein'				# optional atom selection string that enables pyCoCo to work only on a subset of the biomolecular system
 
 #-------------------------Analysis--------------------------
 grid                    = '5'               # Number of points along each dimension of the CoCo histogram
