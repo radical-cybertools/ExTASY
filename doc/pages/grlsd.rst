@@ -37,7 +37,7 @@ files:
 
     ::
 
-        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/tarballs/grlsd-on-stampede.tar.gz
+        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.1/tarballs/grlsd-on-stampede.tar.gz
         tar xvfz grlsd-on-stampede.tar.gz
 
 **Step 3** : In the grlsd-on-stampede folder, a resource configuration file ``stampede.rcfg`` exists. Details and modifications required are as follows:
@@ -119,7 +119,7 @@ If your shell is CSH,
         setenv SAGA_VERBOSE 'debug'
         extasy --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg |& tee extasy.log
 
-A **sample output** with expected callbacks and simulation/analysis can be found at `here <https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/grlsd-on-stampede>`_.
+A **sample output** with expected callbacks and simulation/analysis can be found at `here <https://github.com/radical-cybertools/ExTASY/tree/extasy_0.1/sample_output_logs/grlsd-on-stampede>`_.
 
 +------------------------+----------------+--------------+
 |     Stage              |   Simulation   |   Analysis   |
@@ -166,7 +166,7 @@ files:
 
     ::
 
-        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/devel/tarballs/grlsd-on-archer.tar.gz
+        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.1/tarballs/grlsd-on-archer.tar.gz
         tar xvfz grlsd-on-archer.tar.gz
 
 **Step 3** : In the grlsd-on-archer folder, a resource configuration file ``archer.rcfg`` exists. Details and modifications required are as follows:
@@ -249,7 +249,7 @@ If your shell is CSH,
         setenv SAGA_VERBOSE 'debug'
         extasy --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg |& tee extasy.log
 
-A **sample output** with expected callbacks and simulation/analysis can be found at `here <https://github.com/radical-cybertools/ExTASY/tree/master/sample_output_logs/grlsd-on-archer>`_.
+A **sample output** with expected callbacks and simulation/analysis can be found at `here <https://github.com/radical-cybertools/ExTASY/tree/extasy_0.1/sample_output_logs/grlsd-on-archer>`_.
 
 +------------------------+----------------+--------------+
 |     Stage              |   Simulation   |   Analysis   |
