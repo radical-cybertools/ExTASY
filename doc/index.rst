@@ -11,7 +11,7 @@ ExTASY |VERSION|
 
 **Github Page**
 
-https://github.com/radical-cybertools/ExTASY/tree/extasy_0.2
+https://github.com/radical-cybertools/ExTASY
 
 **Mailing List**
 
