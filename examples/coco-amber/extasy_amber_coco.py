@@ -215,8 +215,8 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
                        "--mdfile=*.ncdf",
                        "--output=pdbs",
                        "--atom_selection={0}".format(Kconfig.atom_selection)]
-        k1.cores = 1
-        k1.uses_mpi = False
+        k1.cores = Kconfig.num_CUs
+        k1.uses_mpi = True
 
         k1.link_input_data = ['$PRE_LOOP/{0}'.format(os.path.basename(Kconfig.top_file))]
         for iter in range(1,iteration+1):
