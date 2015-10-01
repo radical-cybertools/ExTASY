@@ -20,8 +20,13 @@ https://github.com/radical-cybertools/ExTASY/tree/extasy_0.2
 
 **Build Status**
 
+<<<<<<< HEAD
     .. image:: http://ci.radical-project.org/buildStatus/icon?job=ExTASY-0.2
         :target: http://ci.radical-project.org/job/ExTASY-0.2
+=======
+    .. image:: http://ci.radical-project.org/buildStatus/icon?job=ExTASY-0.1
+        :target: http://ci.radical-project.org/job/ExTASY-0.1
+>>>>>>> master
 
 
 **Contents**
@@ -47,4 +52,8 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`search`
 
+<<<<<<< HEAD
 .. |VERSION| replace:: 0.2
+=======
+.. |VERSION| replace:: 0.1
+>>>>>>> master

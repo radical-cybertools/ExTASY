@@ -11,79 +11,149 @@ Arguments : --mdp = name of the gromacs parameter file
             --gro = name of the coordinate file
             --out = name of the output file
 
+<<<<<<< HEAD:examples/gromacs-lsdmap/helper_scripts/run.py
+=======
+Changes :   - the script evaluates RP_CORE_COUNT and manages a process pool
+              which runs that number of concurrent processes
+
+>>>>>>> master:src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/run.py
 '''
 
 
 import os
+import time
 import argparse
+import multiprocessing as mp
+
 from mpi4py import MPI
 
-def write_script(grofile_name,output_grofile_name,grompp_options,ndxfile_options,mdpfile_name,topfile_name,tprfile_name,size,mdrun_options,trrfile_name,edrfile_name):
-    with open('run.sh','w') as file:
-        script="""#!/bin/bash
-        startgro=%(grofile_name)s
-        tmpstartgro=tmpstart.gro
-        outgro=%(output_grofile_name)s
 
-        natoms=$(sed -n '2p' $startgro)
-        nlines_per_frame=$((natoms+3))
+# ------------------------------------------------------------------------------
+#
+def write_scripts (grofile_name, mdpfile_name, topfile_name,
+                   grompp_opts,  mdrun_opts,   ndxfile_opts, threadnum):
 
+    scripts = list()
 
-        nlines=`wc -l $startgro| cut -d' ' -f1`
-        nframes=$((nlines/nlines_per_frame))
+    with open(grofile_name) as f1:
+        lines  = f1.readlines()
+        nlines = len(lines)
+        natoms = int(lines[1])
 
-        rm -rf $outgro
-
-        for idx in `seq 1 $nframes`; do
-
-            start=$(($nlines_per_frame*(idx-1)+1))
-            end=$(($nlines_per_frame*idx))
-            sed "$start"','"$end"'!d' $startgro > $tmpstartgro
-
-            # gromacs preprocessing & MD
-            grompp %(grompp_options)s %(ndxfile_options)s -f %(mdpfile_name)s -c $tmpstartgro -p %(topfile_name)s -o %(tprfile_name)s
-            mdrun -nt %(size)s %(mdrun_options)s -s %(tprfile_name)s -o %(trrfile_name)s -e %(edrfile_name)s
-
-            # store data
-            cat confout.gro >> $outgro
-
-        done
-        rm -f $tmpstartgro
-        """%locals()
-
-        file.write(script)
+    lpf     = natoms + 3        # lines per frame
+    nframes = int(nlines / lpf) # number of frames
 
 
+    for idx in range(nframes):
+
+        start = lpf *  idx + 1  # first 1 on frame 'idx'
+        end   = lpf * (idx + 1) # last line line of frame 'idx'
+                                # = first line on frame (idx+1) - 1
+
+        script = 'run_%05d.sh' % idx
+        with open(script,'w') as f2:
+
+            tmp="""#!/bin/bash
+
+idx=%(idx)05d
+
+exec  > stdout_$idx
+exec 2> stdout_$idx
+
+sed "%(start)s"','"%(end)s"'!d' %(grofile_name)s > start_$idx.gro
+
+grompp %(grompp_opts)s \\
+       %(ndxfile_opts)s \\
+       -f  %(mdpfile_name)s \\
+       -p  %(topfile_name)s \\
+       -c  start_$idx.gro \\
+       -o  topol_$idx.tpr \\
+       -po mdout_$idx.mdp
+
+mdrun  -nt %(threadnum)s \\
+       %(mdrun_opts)s \\
+       -o traj_$idx.trr \\
+       -e ener_$idx.edr \\
+       -s topol_$idx.tpr \\
+       -g mdlog_$idx.log \\
+       -cpo state_$idx.cpt \\
+       -c outgro_$idx
+
+""" % locals()
+
+            f2.write(tmp)
+            scripts.append(script)
+
+    return scripts
+
+
+# ------------------------------------------------------------------------------
+#
+def run_script(script):
+    os.system ('sh ./%s' % script)
+    return script
+
+
+# ------------------------------------------------------------------------------
+#
+def log_result(result):
+    # This is called whenever run_script() returns a result.  This callcack is
+    # in the main thread.
+    print '%s finished' % result
+
+
+# ------------------------------------------------------------------------------
+#
+def run_scripts_in_pool(scripts, n=1):
+    pool = mp.Pool(processes=n)
+    for script in scripts:
+        pool.apply_async(run_script, args=[script], callback=log_result)
+    pool.close()
+    pool.join()
+
+
+# ------------------------------------------------------------------------------
+#
 if __name__ == '__main__':
 
-    #initialize mpi variables
+    # initialize mpi variables
+    comm  = MPI.COMM_WORLD  # MPI environment
+    cores = comm.Get_size() # number of threads
+    rank  = comm.Get_rank() # number of the current thread
 
-    comm = MPI.COMM_WORLD # MPI environment
-    size = comm.Get_size() # number of threads
-    rank = comm.Get_rank() # number of the current thread
-    if rank==0:
+    if rank == 0:
         parser = argparse.ArgumentParser()
-        parser.add_argument('--mdp',dest='mdpfile_name',required=True,type=str)
-        parser.add_argument('--gro',dest='grofile_name',required=True,type=str)
-        parser.add_argument('--top',dest='topfile_name',required=True,type=str)
-        parser.add_argument('--out',dest='output_grofile_name',required=True,type=str)
+        parser.add_argument('--mdp', dest='mdpfile_name', required=True, type=str)
+        parser.add_argument('--gro', dest='grofile_name', required=True, type=str)
+        parser.add_argument('--top', dest='topfile_name', required=True, type=str)
+        parser.add_argument('--out', dest='output_grofile_name', required=True, type=str)
         args = parser.parse_args()
 
-        tprfile_name='topol.tpr'
-        trrfile_name='traj.trr'
-        edrfile_name='ener.edr'
-
-        grompp_opts = os.environ.get('grompp_options','')
-        mdrun_opts = os.environ.get('mdrun_options','')
+        grompp_opts  = os.environ.get('grompp_options','')
+        mdrun_opts   = os.environ.get('mdrun_options','')
         ndxfile_name = os.environ.get('ndxfile','')
-        if ndxfile_name is not '':
-            ndxfile_opts = '-n ' +ndxfile_name
+        thread_num   = 1
+
+        if ndxfile_name:
+            ndxfile_opts = '-n ' + ndxfile_name
         else:
             ndxfile_opts = ''
 
+<<<<<<< HEAD:examples/gromacs-lsdmap/helper_scripts/run.py
         write_script(args.grofile_name,args.output_grofile_name,grompp_opts,ndxfile_opts,args.mdpfile_name,args.topfile_name,tprfile_name,size,mdrun_opts,trrfile_name,edrfile_name)
         os.system('sh run.sh')
+=======
+        # create all scripts
+        scripts = write_scripts(args.grofile_name, args.mdpfile_name, args.topfile_name,
+                                grompp_opts, mdrun_opts, ndxfile_opts, cores)
 
-    else:
-        pass
+        # runs scripts in a pool of size==#cores
+        run_scripts_in_pool (scripts, n=cores)
+
+        # collect results
+        os.system('cat outgro_* >> %s' % args.output_grofile_name)
+
+>>>>>>> master:src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/run.py
+
+# ------------------------------------------------------------------------------
 

@@ -42,11 +42,25 @@ Setuptools might not get installed with virtualenv and hence using pip would fai
 
 .. parsed-literal:: source $HOME/ExTASY-tools/bin/activate.csh
 
+<<<<<<< HEAD
 To install the Ensemble MD Toolkit Python modules in the virtual environment, run:
 
 .. parsed-literal::	export ENMD_INSTALL_VERSION="devel"
 					pip install --upgrade git+https://github.com/radical-cybertools/radical.ensemblemd.git@$ENMD_INSTALL_VERSION#egg=radical.ensemblemd
 
+=======
+
+**Step 2** : Install ExTASY,
+
+.. parsed-literal:: pip install --upgrade git+https://github.com/radical-cybertools/ExTASY.git@extasy-0.1#egg=radical.ensemblemd.extasy
+
+
+To install the development version (unstable),
+
+.. parsed-literal:: pip install --upgrade git+https://github.com/radical-cybertools/ExTASY.git@devel#egg=radical.ensemblemd.extasy
+
+.. parsed-literal:: pip install --upgrade git+https://github.com/radical-cybertools/radical.ensemblemd.mdkernels.git@master#egg=radical.ensemblemd.mdkernels
+>>>>>>> master
 
 You can check the version of Ensemble MD Toolkit with the `ensemblemd-version` command-line tool.
 
@@ -60,6 +74,7 @@ You can check the version of Ensemble MD Toolkit with the `ensemblemd-version` c
     This will reset the PATH variable to also point to the packages which were just installed.
 
 **Installation is complete !**
+<<<<<<< HEAD
 
 Preparing the Environment
 =========================
@@ -191,3 +206,5 @@ From now on you can log into ``cluster`` as ``user_b`` from ``workstation`` as
             - Put the public key in ``.ssh/authorized_keys2`` (note the **2**)
             - Change the permissions of .ssh to 700
             - Change the permissions of .ssh/authorized_keys2 to 640
+=======
+>>>>>>> master
