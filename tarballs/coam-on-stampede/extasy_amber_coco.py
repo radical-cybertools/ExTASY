@@ -213,9 +213,10 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
                        "--frontpoints={0}".format(Kconfig.num_CUs),
                        "--topfile={0}".format(os.path.basename(Kconfig.top_file)),
                        "--mdfile=*.ncdf",
-                       "--output=pdbs"]
-        k1.cores = 1
-        k1.uses_mpi = False
+                       "--output=pdbs",
+		       "--selection={0}".format(Kconfig.atom_selection)]
+        k1.cores = Kconfig.num_CUs
+        k1.uses_mpi = True
 
         k1.link_input_data = ['$PRE_LOOP/{0}'.format(os.path.basename(Kconfig.top_file))]
         for iter in range(1,iteration+1):
@@ -224,7 +225,7 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
 
         k1.copy_output_data = list()
         for i in range(0,Kconfig.num_CUs):
-            k1.copy_output_data = k1.copy_output_data + ['pdbs/{1}.pdb > $PRE_LOOP/pentaopt{0}{1}.pdb'.format(iteration,i)]
+            k1.copy_output_data = k1.copy_output_data + ['pdbs{1}.pdb > $PRE_LOOP/pentaopt{0}{1}.pdb'.format(iteration,i)]
 
 
         k2 = Kernel(name="md.tleap")
