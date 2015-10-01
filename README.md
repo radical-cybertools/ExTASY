@@ -11,7 +11,7 @@ by ExTASY.
 
 # Documentation
 
-Documentation can be found at http://extasy.readthedocs.org/en/extasy_0.2/index.html
+Documentation can be found at http://extasy.readthedocs.org/en/latest/
  
 # Mailing List
 
