@@ -104,11 +104,8 @@ On the head-node, run:
 
 	::
 
-<<<<<<< HEAD
 		Generating public/private rsa key pair.
-=======
-		enerating public/private rsa key pair.
->>>>>>> master
+
 		Enter file in which to save the key (/home/e290/e290/oweidner/.ssh/id_rsa):
 		Enter passphrase (empty for no passphrase):
 		Enter same passphrase again:
@@ -116,7 +113,6 @@ On the head-node, run:
 		Your public key has been saved in /home/e290/e290/oweidner/.ssh/id_rsa.pub.
 		The key fingerprint is:
 		73:b9:cf:45:3d:b6:a7:22:72:90:28:0a:2f:8a:86:fd oweidner@eslogin001
-<<<<<<< HEAD
 		The key's randomart image is:
 		+--[ RSA 2048]----+
 		|    . ...+o++++. |
@@ -129,8 +125,6 @@ On the head-node, run:
 		|.  .             |
 		| ..              |
 		+-----------------+
-=======
->>>>>>> master
 
 Next, you need to add this key to the authorized_keys file.
 
@@ -226,10 +220,6 @@ This is mostly because of an older version of sftp/scp being used. This can be f
 	
 	export SAGA_PTY_SSH_SHAREMODE=no
 
-	
-
-<<<<<<< HEAD
-=======
 Writing a Custom Resource Configuration File
 --------------------------------------------
 
@@ -299,4 +289,3 @@ All fields are mandatory, unless indicated otherwise below.
 * **forward_tunnel_endpoint**: name of host which can be used to create ssh tunnels from the compute nodes to the outside world (optional)
 
 Several configuration files are part of the RADICAL-Pilot installation, and live under radical/pilot/configs/.
->>>>>>> master

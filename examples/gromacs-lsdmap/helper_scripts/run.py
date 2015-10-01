@@ -11,12 +11,8 @@ Arguments : --mdp = name of the gromacs parameter file
             --gro = name of the coordinate file
             --out = name of the output file
 
-<<<<<<< HEAD:examples/gromacs-lsdmap/helper_scripts/run.py
-=======
 Changes :   - the script evaluates RP_CORE_COUNT and manages a process pool
               which runs that number of concurrent processes
-
->>>>>>> master:src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/run.py
 '''
 
 
@@ -139,10 +135,6 @@ if __name__ == '__main__':
         else:
             ndxfile_opts = ''
 
-<<<<<<< HEAD:examples/gromacs-lsdmap/helper_scripts/run.py
-        write_script(args.grofile_name,args.output_grofile_name,grompp_opts,ndxfile_opts,args.mdpfile_name,args.topfile_name,tprfile_name,size,mdrun_opts,trrfile_name,edrfile_name)
-        os.system('sh run.sh')
-=======
         # create all scripts
         scripts = write_scripts(args.grofile_name, args.mdpfile_name, args.topfile_name,
                                 grompp_opts, mdrun_opts, ndxfile_opts, cores)
@@ -152,8 +144,6 @@ if __name__ == '__main__':
 
         # collect results
         os.system('cat outgro_* >> %s' % args.output_grofile_name)
-
->>>>>>> master:src/radical/ensemblemd/extasy/bin/Simulator/Gromacs/run.py
 
 # ------------------------------------------------------------------------------
 
