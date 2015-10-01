@@ -10,7 +10,7 @@ ExTASY |VERSION|
 
 **Github Page**
 
-https://github.com/radical-cybertools/ExTASY
+https://github.com/radical-cybertools/ExTASY/tree/extasy_0.1
 
 **Mailing List**
 
@@ -19,8 +19,8 @@ https://github.com/radical-cybertools/ExTASY
 
 **Build Status**
 
-    .. image:: http://ci.radical-project.org/buildStatus/icon?job=ExTASY
-        :target: http://ci.radical-project.org/job/ExTASY
+    .. image:: http://ci.radical-project.org/buildStatus/icon?job=ExTASY-0.1
+        :target: http://ci.radical-project.org/job/ExTASY-0.1
 
 
 **Contents**
