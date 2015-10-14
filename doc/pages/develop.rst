@@ -7,7 +7,7 @@ Customization
 Writing New Application Kernels
 -------------------------------
 
-While the current set of available application kernels might provide a good set of tools to start, sooner or later you will probably want to use a tool for which no application Kernel exists. In this case, you will have to write your own one.
+While the current set of available application kernels might provide a good set of tools to start, sooner or later you will probably want to use a tool for which no application Kernel exists. In this section, we discuss how you can add 
 
 The easiest way to describe how this works is by example:
 
