@@ -227,6 +227,9 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
         for i in range(0,Kconfig.num_CUs):
             k1.copy_output_data = k1.copy_output_data + ['pdbs{1}.pdb > $PRE_LOOP/pentaopt{0}{1}.pdb'.format(iteration,i)]
 
+        if(iteration%Kconfig.nsave==0):
+            k1.download_output_data = ['coco.log > output/iter{0}/coco.log'.format(iteration,instance)]
+
 
         k2 = Kernel(name="md.tleap")
         k2.arguments = ["--numofsims={0}".format(Kconfig.num_CUs),
