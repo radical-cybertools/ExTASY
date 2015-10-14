@@ -7,9 +7,9 @@ Customization Documentation
 Writing New Application Kernels
 -------------------------------
 
-While the current set of available application kernels might provide a good set of tools to start, sooner or later you will probably want to use a tool for which no application Kernel exsits. In this case, you will have to write your own one.
+While the current set of available application kernels might provide a good set of tools to start, sooner or later you will probably want to use a tool for which no application Kernel exsits. This section describes how you can add your custom kernels. 
 
-The easiest way to describe how this works is by example:
+We have two files, user_script.py which contains the user application which **uses** our custom kernel, kernek.py 
 
 .. code::
 
