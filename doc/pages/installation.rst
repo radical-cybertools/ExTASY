@@ -73,6 +73,8 @@ ExTASY is developed using Ensemble MD Toolkit which is a client-side library and
    :align: center
    :alt: MongoDB and SSH ports.
 
+.. note:: For the purposes of the examples in this guide, we provide access to a mongodb url (mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot). This is for trying out these examples **only** and is periodically purged. We recommend setting up your own mongodb instances for production simulations/experiments.
+
 
 MongoDB Server
 --------------

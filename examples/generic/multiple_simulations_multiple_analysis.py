@@ -53,7 +53,8 @@ if __name__ == "__main__":
             cores=1,
             walltime=30,
             username=None,
-            project=None
+            project=None,
+            database_url="mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot"
         )
 
         # Allocate the resources.

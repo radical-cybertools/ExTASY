@@ -39,6 +39,7 @@ https://github.com/radical-cybertools/ExTASY
    pages/grlsd.rst
    pages/apiref.rst
    pages/develop.rst
+   pages/resources.rst
    pages/trouble.rst
    pages/misc.rst
 

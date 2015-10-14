@@ -29,10 +29,8 @@ class MSSA(SimulationAnalysisLoop):
         return k
 
     def analysis_step(self, iteration, instance):
-        """In the analysis step we use the ``$PREV_SIMULATION`` data reference
-           to refer to the previous simulation. The same
-           instance is picked implicitly, i.e., if this is instance 5, the
-           previous simulation with instance 5 is referenced.
+        """In the analysis step we use the ``$PREV_SIMULATION_INSTANCE_X`` data reference
+           to refer to instance X of the previous simulation. 
         """
         link_input_data = []
         for i in range(1, self.simlation_instances+1):
@@ -57,14 +55,14 @@ if __name__ == "__main__":
             cores=1,
             walltime=30,
             username=None,
-            project=None
+            project=None,
+            database_url="mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot"
         )
 
         # Allocate the resources.
         cluster.allocate()
 
-        # We set both the the simulation and the analysis step 'instances' to 16.
-        # If they
+        # We set both the the simulation instances to 16 and the number of analysis instances to 1.
         mssa = MSSA(iterations=4, simulation_instances=16, analysis_instances=1)
 
         cluster.run(mssa)

@@ -122,7 +122,7 @@ The existing kernels can be found `here <misc.html>`_
 Writing a Custom Resource Configuration File
 --------------------------------------------
 
-If you want to use RADICAL-Pilot with a resource that is not in any of the provided configuration files, you can write your own, and drop it in $HOME/.radical/pilot/configs/<your_site>.json.
+A number of resources are already supported by RADICAL-Pilot, they are list in :ref:`chapter_resources`. If you want to use RADICAL-Pilot with a resource that is not in any of the provided configuration files, you can write your own, and drop it in $HOME/.radical/pilot/configs/<your_site>.json.
 
 .. note:: Be advised that you may need system admin level knowledge for the target cluster to do so. Also, while RADICAL-Pilot can handle very different types of systems and batch system, it may run into trouble on specific configurationsor versions we did not encounter before. If you run into trouble using a cluster not in our list of officially supported ones, please drop us a note on the users mailing list.
 
