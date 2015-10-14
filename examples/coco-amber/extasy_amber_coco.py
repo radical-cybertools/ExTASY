@@ -14,7 +14,7 @@ is provided in their respective config files.
 In this particular usecase example, there are 16 simulation instances followed
 by 1 analysis instance forming one iteration. The experiment is run for two
 such iterations. The output of the second iteration is stored on the local
-machine under a folder called "backup".
+machine under a folder called "output".
 
 
 .. code-block:: none
@@ -68,7 +68,7 @@ see log messages about simulation progress::
 
     RADICAL_ENMD_VERBOSE=info python 01_static_amber_coco_loop.py --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg
 
-Once the script has finished running, you should see a folder called "iter2" inside backup/
+Once the script has finished running, you should see a folder called "iter2" inside output/
 which would contain 16 .ncdf files which are the output of the second simulation stage. You
 see 16 .ncdf files since there were 16 simulation instances.
 
@@ -88,7 +88,7 @@ by modifying num_iterations(Kconfig), num_CUs (Kconfig), nsave (Kconfig), etc. :
         project=None # add your allocation or project id here if required
     )
 
-Once the default script has finished running, you should see a folder called "iter2" inside backup/
+Once the default script has finished running, you should see a folder called "iter2" inside output/
 which would contain 16 .ncdf files which are the output of the second simulation stage. You
 see 16 .ncdf files since there were 16 simulation instances.
 
@@ -184,7 +184,7 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
                                 "$PRE_LOOP/md_{0}_{1}.crd > md{0}.crd".format(iteration,instance),
                             ]
         if(iteration%Kconfig.nsave==0):
-            k2.download_output_data = ['md{0}.ncdf > backup/iter{0}/md_{0}_{1}.ncdf'.format(iteration,instance)]
+            k2.download_output_data = ['md{0}.ncdf > output/iter{0}/md_{0}_{1}.ncdf'.format(iteration,instance)]
 
         k2.cores = 2
         return [k1,k2]

@@ -15,7 +15,7 @@ respective config files.
 In this particular usecase example, there are 16 simulation instances followed
 by 1 analysis instance forming one iteration. The experiment is run for two
 such iterations. The output of the second iteration is stored on the local
-machine under a folder called "backup".
+machine under a folder called "output".
 
 
 .. code-block:: none
@@ -62,7 +62,7 @@ machine by setting the following parameters in your RPconfig file::
     DBURL       = 'mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot'
 
 
-Once the script has finished running, you should see a folder called "iter2" inside backup/
+Once the script has finished running, you should see a folder called "iter2" inside output/
 which would contain
 
 Run Remotely
@@ -89,7 +89,7 @@ see log messages about simulation progress::
     RADICAL_ENMD_VERBOSE=info python 01_static_gromacs_lsdmap_loop.py --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg
 
 
-Once the default script has finished running, you should see a folder called "iter2" inside backup/
+Once the default script has finished running, you should see a folder called "iter2" inside output/
 which would contain the coordinate file for the next iteration(out.gro), output log of lsdmap (lsdmap.log)
 and the weight file (weight.w).
 
@@ -241,7 +241,7 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
         lsdmap.copy_output_data = ['tmpha.ev > $PRE_LOOP/tmpha.ev','out.nn > $PRE_LOOP/out.nn']
         
         if(iteration%Kconfig.nsave==0):
-          lsdmap.download_output_data=['lsdmap.log > backup/iter{0}/lsdmap.log'.format(iteration)]
+          lsdmap.download_output_data=['lsdmap.log > output/iter{0}/lsdmap.log'.format(iteration)]
 
         post_ana = Kernel(name="md.post_lsdmap")
         post_ana.link_input_data = ["$PRE_LOOP/post_analyze.py > post_analyze.py",
@@ -265,8 +265,8 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
             post_ana.link_input_data += ['$ANALYSIS_ITERATION_{0}_INSTANCE_1/weight.w > weight_new.w'.format(iteration-1)]
 
         if(iteration%Kconfig.nsave==0):
-            post_ana.download_output_data = ['out.gro > backup/iter{0}/out.gro'.format(iteration),
-                                             'weight.w > backup/iter{0}/weight.w'.format(iteration)]
+            post_ana.download_output_data = ['out.gro > output/iter{0}/out.gro'.format(iteration),
+                                             'weight.w > output/iter{0}/weight.w'.format(iteration)]
 
         return [pre_ana,lsdmap,post_ana]
 
