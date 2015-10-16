@@ -1,5 +1,5 @@
 REMOTE_HOST = 'xsede.stampede'  # Label/Name of the Remote Machine
-UNAME       = 'username'                  # Username on the Remote Machine
+UNAME       = 'vivek91'                  # Username on the Remote Machine
 ALLOCATION  = 'TG-MCB090174'              # Allocation to be charged
 WALLTIME    = 20                          # Walltime to be requested for the pilot
 PILOTSIZE   = 16                          # Number of cores to be reserved
