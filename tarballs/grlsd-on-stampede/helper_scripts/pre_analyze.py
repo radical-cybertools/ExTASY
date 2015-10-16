@@ -26,10 +26,5 @@ if __name__ == '__main__':
             with open('%s/out%s.gro' % (path,i), 'r') as output_file:
                 for line in output_file:
                     print >> output_grofile, line.replace("\n", "")
-
-    with open('run.sh','w') as file:
-        script="""#!/bin/bash
-            echo 2 | trjconv -f tmp.gro -s tmp.gro -o tmpha.gro
-            """
-        file.write(script)
-    os.system('sh run.sh')
+                    
+    os.system('echo 2 | trjconv -f tmp.gro -s tmp.gro -o tmpha.gro')

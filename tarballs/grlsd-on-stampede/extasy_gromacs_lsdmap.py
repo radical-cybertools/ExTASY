@@ -1,104 +1,5 @@
 #!/usr/bin/env python
 
-"""
-
-This example shows how to use the Ensemble MD Toolkit ``SimulationAnalysis``
-pattern for the Gromacs-LSDMap usecase which has multiple Gromacs based Simulation
-instances and a single LSDMap Analysis stage. Although the user is free to use
-any method to mention the inputs, this usecase example uses two configuration
-files - a RPconfig file (stampede.rcfg in this example) which consists of values
-required to set up a pilot on the target machine, a Kconfig file (gromacslsdmap.wcfg
-in this example) which consists of filenames/ parameter values required by
-Gromacs/LSDMap. The description of each of these parameters is provided in their
-respective config files.
-
-In this particular usecase example, there are 16 simulation instances followed
-by 1 analysis instance forming one iteration. The experiment is run for two
-such iterations. The output of the second iteration is stored on the local
-machine under a folder called "backup".
-
-
-.. code-block:: none
-
-    [S]    [S]    [S]    [S]    [S]    [S]    [S]
-     |      |      |      |      |      |      |
-     \-----------------------------------------/
-                          |
-                         [A]
-                          |
-     /-----------------------------------------\
-     |      |      |      |      |      |      |
-    [S]    [S]    [S]    [S]    [S]    [S]    [S]
-     |      |      |      |      |      |      |
-     \-----------------------------------------/
-                          |
-                         [A]
-                          :
-
-Run Locally
-^^^^^^^^^^^
-
-.. warning:: In order to run this example, you need access to a MongoDB server and
-             set the ``RADICAL_PILOT_DBURL`` in your environment accordingly.
-             The format is ``mongodb://hostname:port``. Read more about it
-             MongoDB in chapter :ref:`envpreparation`.
-
-.. warning:: Running locally would require you that have Gromacs and LSDMap installed on
-             your machine. Please go through Gromacs, LSDMap documentation to see how this
-             can be done.
-
-
-By default, this example is setup to run on Stampede. You can also run it on your local
-machine by setting the following parameters in your RPconfig file::
-
-    REMOTE_HOST = 'localhost'
-    UNAME       = ''
-    ALLOCATION  = ''
-    QUEUE       = ''
-    WALLTIME    = 60
-    PILOTSIZE   = 16
-    WORKDIR     = None
-
-    DBURL       = 'mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot'
-
-
-Once the script has finished running, you should see a folder called "iter2" inside backup/
-which would contain
-
-Run Remotely
-^^^^^^^^^^^^
-
-The script is configured to run on Stampede. You can increase the number
-of cores to see how this affects the runtime of the script as the individual
-simulations instances can run in parallel. You can try more variations
-by modifying num_iterations(Kconfig), num_CUs (Kconfig), nsave (Kconfig), etc. ::
-
-    SingleClusterEnvironment(
-        resource="stampede.tacc.utexas.edu",
-        cores=16,
-        walltime=30,
-        username=None,  # add your username here
-        project=None # add your allocation or project id here if required
-    )
-
-**Step 1:** View and download the example sources :ref:`below <01_static_gromacs_lsdmap_loop.py>`.
-
-**Step 2:** Run this example with ``RADICAL_ENMD_VERBOSE`` set to ``info`` if you want to
-see log messages about simulation progress::
-
-    RADICAL_ENMD_VERBOSE=info python 01_static_gromacs_lsdmap_loop.py --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg
-
-
-Once the default script has finished running, you should see a folder called "iter2" inside backup/
-which would contain the coordinate file for the next iteration(out.gro), output log of lsdmap (lsdmap.log)
-and the weight file (weight.w).
-
-.. _01_static_gromacs_lsdmap_loop.py:
-
-Example Source
-^^^^^^^^^^^^^^
-"""
-
 __author__        = "Vivek <vivek.balasubramanian@rutgers.edu>"
 __copyright__     = "Copyright 2014, http://radical.rutgers.edu"
 __license__       = "MIT"
@@ -114,7 +15,7 @@ import sys
 import imp
 import argparse
 import os
-import pprint
+
 
 
 # ------------------------------------------------------------------------------
@@ -146,10 +47,8 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
                                '{0}/run.py'.format(Kconfig.helper_scripts),
                                '{0}/pre_analyze.py'.format(Kconfig.helper_scripts),
                                '{0}/post_analyze.py'.format(Kconfig.helper_scripts),
-                               '{0}/select.py'.format(Kconfig.helper_scripts),
-                               '{0}/reweighting.py'.format(Kconfig.helper_scripts),
-                               '{0}/lsdm.py'.format(Kconfig.helper_scripts)]
-        #k.download_input_data = ['http://sourceforge.net/p/lsdmap/git/ci/extasy-0.1-rc2/tree/lsdmap/lsdm.py?format=raw > lsdm.py']
+                               '{0}/selection.py'.format(Kconfig.helper_scripts),
+                               '{0}/reweighting.py'.format(Kconfig.helper_scripts)]
         k.arguments = ["--inputfile={0}".format(os.path.basename(Kconfig.md_input_file)),"--numCUs={0}".format(Kconfig.num_CUs)]
         return k
 
@@ -225,7 +124,6 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
 
         pre_ana = Kernel(name="md.pre_lsdmap")
         pre_ana.arguments = ["--numCUs={0}".format(Kconfig.num_CUs)]
-        pre_ana.post_exec = ["echo 2 | trjconv -f tmp.gro -s tmp.gro -o tmpha.gro"]
         pre_ana.link_input_data = ["$PRE_LOOP/pre_analyze.py > pre_analyze.py"]
         for i in range(1,Kconfig.num_CUs+1):
             pre_ana.link_input_data = pre_ana.link_input_data + ["$SIMULATION_ITERATION_{2}_INSTANCE_{0}/out.gro > out{1}.gro".format(i,i-1,iteration)]
@@ -233,7 +131,7 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
 
         lsdmap = Kernel(name="md.lsdmap")
         lsdmap.arguments = ["--config={0}".format(os.path.basename(Kconfig.lsdm_config_file))]
-        lsdmap.link_input_data = ['$PRE_LOOP/{0} > {0}'.format(os.path.basename(Kconfig.lsdm_config_file)),'$PRE_LOOP/lsdm.py > lsdm.py','$PRE_LOOP/tmpha.gro > tmpha.gro']
+        lsdmap.link_input_data = ['$PRE_LOOP/{0} > {0}'.format(os.path.basename(Kconfig.lsdm_config_file)),'$PRE_LOOP/tmpha.gro > tmpha.gro']
         lsdmap.cores = RPconfig.PILOTSIZE
         if iteration > 1:
             lsdmap.link_input_data += ['$ANALYSIS_ITERATION_{0}_INSTANCE_1/weight.w > weight.w'.format(iteration-1)]
@@ -245,7 +143,7 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
 
         post_ana = Kernel(name="md.post_lsdmap")
         post_ana.link_input_data = ["$PRE_LOOP/post_analyze.py > post_analyze.py",
-                                    "$PRE_LOOP/select.py > select.py",
+                                    "$PRE_LOOP/selection.py > selection.py",
                                     "$PRE_LOOP/reweighting.py > reweighting.py",
                                     "$PRE_LOOP/spliter.py > spliter.py",
                                     "$PRE_LOOP/gro.py > gro.py",

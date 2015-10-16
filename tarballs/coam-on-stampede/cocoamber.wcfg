@@ -3,11 +3,10 @@ simulator                = 'Amber'          # Simulator to be loaded
 analyzer                 = 'CoCo'           # Analyzer to be loaded
 
 #-------------------------General---------------------------
-num_iterations          = 4                 # Number of iterations of Simulation-Analysis
+num_iterations          = 2                 # Number of iterations of Simulation-Analysis
 start_iter              = 0                 # Iteration number with which to start
-num_CUs 				= 16                # Number of tasks or Compute Units
-nsave					= 2		    		# Iterations after which output is transfered to local machine
-checkfiles				= 4					# Iterations after which to test if the expected files are present on remote/ does not download to local
+num_CUs 		= 16                # Number of tasks or Compute Units
+nsave			= 2		    # Iterations after which output is transferred to local machine
 
 #-------------------------Simulation-----------------------
 num_cores_per_sim_cu    = 2                 # Number of cores per Simulation Compute Units
@@ -16,10 +15,11 @@ minimization_input_file = './inp_files/min.in'        # Entire path to Minimizat
 initial_crd_file        = './inp_files/penta.crd'     # Entire path to Coordinates file - Do not use $HOME or the likes
 top_file                = './inp_files/penta.top'     # Entire path to Topology file - Do not use $HOME or the likes
 logfile                 = 'coco.log'        # Name of the log file created by pyCoCo
-atom_selection		= 'protein'	    # Can be protein or None
+atom_selection          = 'protein'
 
 #-------------------------Analysis--------------------------
 grid                    = '5'               # Number of points along each dimension of the CoCo histogram
 dims                    = '3'               # The number of projections to consider from the input pcz file
 
-helper_scripts = './helper_scripts'
+#-------------------------Misc--------------------------
+helper_scripts = './helper_scripts'                  # Location of miscellaneous files
