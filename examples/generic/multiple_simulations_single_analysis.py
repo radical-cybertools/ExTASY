@@ -67,7 +67,7 @@ if __name__ == "__main__":
 
         cluster.run(mssa)
 
-	cluster.deallocate()
+        cluster.deallocate()
 
     except EnsemblemdError, er:
 
