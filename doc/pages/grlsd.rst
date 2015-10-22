@@ -58,7 +58,7 @@ files:
 **Step 4**: In the grlsd-on-stampede folder, a workload configuration file ``gromacslsdmap.wcfg`` exists. Details and modifications are as follows:
 
 
-.. literalinclude:: ../../examples/gromacs_lsdmap/gromacslsdmap_on_stampede.rcfg
+.. literalinclude:: ../../examples/gromacs_lsdmap/gromacslsdmap_on_stampede.wcfg
 
 .. note:: 
 
