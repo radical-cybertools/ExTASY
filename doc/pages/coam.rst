@@ -106,17 +106,15 @@ files:
 
 If your shell is BASH,
 
-    ::
+.. code-block:: bash
 
-        EXTASY_DEBUG=True RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' python extasy_amber_coco.py --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg 2> extasy.log
+        RADICAL_ENMD_VERBOSE=REPORT python extasy_amber_coco.py --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg 2> extasy.log
 
 If your shell is CSH,
 
-    ::
+.. code-block:: csh
 
-        setenv EXTASY_DEBUG True
-        setenv RADICAL_PILOT_VERBOSE 'debug'
-        setenv SAGA_VERBOSE 'debug'
+        setenv RADICAL_ENMD_VERBOSE 'REPORT'
         python extasy_amber_coco.py --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg |& tee extasy.log
 
 .. note::
@@ -218,18 +216,16 @@ files:
 
 If your shell is BASH,
 
-    ::
+.. code-block:: bash
 
-        EXTASY_DEBUG=True RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' python extasy_amber_coco.py --RPconfig archer.rcfg --Kconfig cocoamber.wcfg 2> extasy.log
+        RADICAL_ENMD_VERBOSE=REPORT python extasy_amber_coco.py --RPconfig archer.rcfg --Kconfig cocoamber.wcfg 2> extasy.log
 
 
 If your shell is CSH,
 
-    ::
+.. code-block:: csh
 
-        setenv EXTASY_DEBUG True
-        setenv RADICAL_PILOT_VERBOSE 'debug'
-        setenv SAGA_VERBOSE 'debug'
+        setenv RADICAL_ENMD_VERBOSE 'REPORT'
         python extasy_amber_coco.py --RPconfig archer.rcfg --Kconfig cocoamber.wcfg |& tee extasy.log
 
 
