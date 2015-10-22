@@ -144,14 +144,14 @@ files:
 
 If your shell is BASH,
 
-.. code-block::bash
+.. code-block:: bash
 
         RADICAL_ENMD_VERBOSE=REPORT python extasy_gromacs_lsdmap.py --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg
 
 
 If your shell is CSH,
 
-.. code-block::csh
+.. code-block:: csh
 
         setenv RADICAL_ENMD_VERBOSE 'REPORT'
         python extasy_gromacs_lsdmap.py --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg
