@@ -164,7 +164,7 @@ If your shell is CSH,
 
 .. note::
 
-            Time to completion: ~240 seconds (from the time job goes through LRMS)
+            Time to completion: ~600 seconds (from the time job goes through LRMS)
 
 
 Running on localhost
