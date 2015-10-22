@@ -70,7 +70,7 @@ The following list of resources are supported by the underlying layers of ExTASY
   "resource_xsede.json"]
 
     for res in resource_list:
-      response = urllib2.urlopen('https://raw.githubusercontent.com/radical-cybertools/radical.pilot/feature/docs_am/src/radical/pilot/configs/%s'%res)
+      response = urllib2.urlopen('https://raw.githubusercontent.com/radical-cybertools/radical.pilot/devel/src/radical/pilot/configs/%s'%res)
       html = response.read()
       with open('resource_list/'+res,'w') as f:
         f.write(html)
