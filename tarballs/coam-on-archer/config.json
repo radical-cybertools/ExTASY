@@ -9,6 +9,5 @@
 
         	"xsede.stampede" : {
             				"schema"   : "gsissh"
-        			},
-
+        			}
 }
