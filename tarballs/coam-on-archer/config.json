@@ -1,0 +1,14 @@
+{
+	"local.localhost" : {
+            				"schema"   : "local"
+        			},
+
+        	"epsrc.archer" : {
+            				"schema"   : null
+        			},
+
+        	"xsede.stampede" : {
+            				"schema"   : "gsissh"
+        			},
+
+}

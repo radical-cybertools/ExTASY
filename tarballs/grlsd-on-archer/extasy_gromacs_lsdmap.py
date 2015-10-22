@@ -15,7 +15,7 @@ import sys
 import imp
 import argparse
 import os
-
+import json
 
 
 # ------------------------------------------------------------------------------
@@ -175,6 +175,8 @@ if __name__ == "__main__":
 
   try:
 
+      with open('%s/config.json'%os.path.dirname(os.path.abspath(__file__))) as data_file:
+            config = json.load(data_file)
 
       parser = argparse.ArgumentParser()
       parser.add_argument('--RPconfig', help='link to Radical Pilot related configurations file')
@@ -203,7 +205,8 @@ if __name__ == "__main__":
             username = RPconfig.UNAME, #username
             project = RPconfig.ALLOCATION, #project
             queue = RPconfig.QUEUE,
-            database_url = RPconfig.DBURL 
+            database_url = RPconfig.DBURL,
+            access_schema = config[RPconfig.REMOTE_HOST]['schema']      # This is so to support different access methods - gsissh, ssh - remove this if always running using ssh
       )
 
       cluster.allocate()
