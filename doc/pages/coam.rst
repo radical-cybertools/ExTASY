@@ -35,7 +35,7 @@ files:
 
 **Step 2**: Download the config files and the input files directly using the following link.
 
-.. code-block =:: bash
+.. code-block:: bash
 
         curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2-devel/tarballs/coam-on-stampede.tar.gz
         tar xvfz coam-on-stampede.tar.gz
