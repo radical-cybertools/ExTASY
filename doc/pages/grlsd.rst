@@ -27,7 +27,7 @@ files:
 
 **Step 1**: Create a new directory for the example,
 
-    ::
+.. code-block:: bash
 
         mkdir $HOME/extasy-tutorial/
         cd $HOME/extasy-tutorial/
@@ -35,9 +35,9 @@ files:
 
 **Step 2**: Download the config files and the input files directly using the following link.
 
-    ::
+.. code-block:: bash
 
-    	curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2-devel/tarballs/grlsd-on-stampede.tar.gz
+        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2-devel/tarballs/grlsd-on-stampede.tar.gz
         tar xvfz grlsd-on-stampede.tar.gz
         cd grlsd-on-stampede
 
@@ -52,54 +52,13 @@ files:
 
                 The other parameters in the resource configuration are already set up to successfully execute the workload in this example.
 
-    ::
-
-        REMOTE_HOST = 'xsede.stampede'            # Label/Name of the Remote Machine
-        UNAME       = 'username'                  # Username on the Remote Machine
-        ALLOCATION  = 'TG-MCB090174'              # Allocation to be charged
-        WALLTIME    = 60                          # Walltime to be requested for the pilot
-        PILOTSIZE   = 16                          # Number of cores to be reserved
-        WORKDIR     = None                        # Working directory on the remote machine
-        QUEUE       = 'normal'                    # Name of the queue in the remote machine
-
-        DBURL       = 'mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot'
+.. literalinclude:: ../../examples/groamcs_lsdmap/stampede.rcfg
 
 
 **Step 4**: In the grlsd-on-stampede folder, a workload configuration file ``gromacslsdmap.wcfg`` exists. Details and modifications are as follows:
 
 
-    ::
-
-        #-------------------------Applications----------------------
-        simulator             = 'Gromacs'           # Simulator to be loaded
-        analyzer              = 'LSDMap'            # Analyzer to be loaded
-
-        #--------------------------General--------------------------------
-        num_CUs              = 16                   # Number of tasks or Compute Units
-        num_iterations       = 3                    # Number of iterations of Simulation-Analysis
-        start_iter           = 0                    # Iteration number with which to start
-        nsave                = 2                    # # Iterations after which output is transfered to local machine
-        checkfiles           = 4                    # Iterations after which to test if the expected files are present on remote/ does not download to local
-
-        #--------------------------Simulation--------------------------------
-        num_cores_per_sim_cu = 1                    # Number of cores per Simulation Compute Units
-        md_input_file        = './inp_files/input.gro'        # Entire path to the MD Input file - Do not use $HOME or the likes
-        mdp_file             = './inp_files/grompp.mdp'       # Entire path to the MD Parameters file - Do not use $HOME or the likes
-        top_file             = './inp_files/topol.top'        # Entire path to the Topology file - Do not use $HOME or the likes
-        ndx_file             = None                   # Entire path to the Index file - Do not use $HOME or the likes
-        grompp_options       = None                   # Command line options for when grompp is used
-        mdrun_options        = None                   # Command line options for when mdrun is used
-        itp_file_loc         = None                   # Entire path to the location of .itp files - Do not use $HOME or the likes
-        md_output_file       = 'tmp.gro'            # Filename to be used for the simulation output
-
-        #--------------------------Analysis----------------------------------
-        lsdm_config_file     = './inp_files/config.ini'       # Entire path to the LSDMap configuration file - Do not use $HOME or the likes
-        num_runs             = 1000                # Number of runs to be performed in the Selection step in Analysis
-        w_file               = 'weight.w'           # Filename to be used for the weight file
-        max_alive_neighbors  = '10'                 # Maximum alive neighbors to be considered while reweighting
-        max_dead_neighbors   = '1'                  # Maximum dead neighbors to be considered while reweighting
-
-        helper_scripts = './helper_scripts'
+.. literalinclude:: ../../examples/gromacs_lsdmap/gromacslsdmap_on_stampede.rcfg
 
     .. note:: 
 
@@ -119,7 +78,7 @@ If your shell is BASH,
 
 If your shell is CSH,
 
-.. code-block::csh
+.. code-block:: csh
 
         setenv RADICAL_ENMD_VERBOSE 'REPORT'
         python extasy_gromacs_lsdmap.py --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg
@@ -144,16 +103,16 @@ files:
 
 **Step 1**: Create a new directory for the example,
 
-    ::
+.. code-block:: bash
 
         mkdir $HOME/extasy-tutorial/
         cd $HOME/extasy-tutorial/
 
 **Step 2**: Download the config files and the input files directly using the following link.
 
-    ::
+.. code-block:: bash
     
-    	curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2-devel/tarballs/grlsd-on-archer.tar.gz
+        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2-devel/tarballs/grlsd-on-archer.tar.gz
         tar xvfz grlsd-on-archer.tar.gz
         cd grlsd-on-archer
 
@@ -168,58 +127,16 @@ files:
 
                 The other parameters in the resource configuration are already set up to successfully execute the workload in this example.
 
-    ::
-
-        REMOTE_HOST = 'epsrc.archer'              # Label/Name of the Remote Machine
-        UNAME       = 'username'                  # Username on the Remote Machine
-        ALLOCATION  = 'e290'                      # Allocation to be charged
-        WALLTIME    = 60                          # Walltime to be requested for the pilot
-        PILOTSIZE   = 24                          # Number of cores to be reserved
-        WORKDIR     = None                        # Working directory on the remote machine
-        QUEUE       = 'standard'                  # Name of the queue in the remote machine
-
-        DBURL       = 'mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot'
-
+.. literalinclude:: ../../examples/gromacs_lsdmap/archer.rcfg
 
 **Step 4**: In the grlsd-on-archer folder, a workload configuration file ``gromacslsdmap.wcfg`` exists. Details and modifications required are as follows:
 
-    ::
-
-        #-------------------------Applications----------------------
-        simulator             = 'Gromacs'           # Simulator to be loaded
-        analyzer              = 'LSDMap'            # Analyzer to be loaded
-
-        #--------------------------General--------------------------------
-        num_CUs              = 16                   # Number of tasks or Compute Units
-        num_iterations       = 3                    # Number of iterations of Simulation-Analysis
-        start_iter           = 0                    # Iteration number with which to start
-        nsave                = 2                    # # Iterations after which output is transfered to local machine
-        checkfiles           = 4                    # Iterations after which to test if the expected files are present on remote/ does not download to local
-
-        #--------------------------Simulation--------------------------------
-        num_cores_per_sim_cu = 1                    # Number of cores per Simulation Compute Units
-        md_input_file        = './inp_files/input.gro'        # Entire path to the MD Input file - Do not use $HOME or the likes
-        mdp_file             = './inp_files/grompp.mdp'       # Entire path to the MD Parameters file - Do not use $HOME or the likes
-        top_file             = './inp_files/topol.top'        # Entire path to the Topology file - Do not use $HOME or the likes
-        ndx_file             = None                   # Entire path to the Index file - Do not use $HOME or the likes
-        grompp_options       = None                   # Command line options for when grompp is used
-        mdrun_options        = None                   # Command line options for when mdrun is used
-        itp_file_loc         = None                   # Entire path to the location of .itp files - Do not use $HOME or the likes
-        md_output_file       = 'tmp.gro'            # Filename to be used for the simulation output
-
-        #--------------------------Analysis----------------------------------
-        lsdm_config_file     = './inp_files/config.ini'       # Entire path to the LSDMap configuration file - Do not use $HOME or the likes
-        num_runs             = 1000                # Number of runs to be performed in the Selection step in Analysis
-        w_file               = 'weight.w'           # Filename to be used for the weight file
-        max_alive_neighbors  = '10'                 # Maximum alive neighbors to be considered while reweighting
-        max_dead_neighbors   = '1'                  # Maximum dead neighbors to be considered while reweighting
-
-        helper_scripts = './helper_scripts'
-
+.. literalinclude:: ../../examples/gromacs_lsdmap/gromacslsdmap_on_archer.wcfg
 
     .. note:: 
 
                 All the parameters in the above example file are mandatory for gromacs-lsdmap. If *ndxfile*, *grompp_options*, *mdrun_options* and *itp_file_loc* are not required, they should be set to None; but they still have to mentioned in the configuration file. There are no other parameters currently supported.
+
 
 **Step 5**: You can find the executable script ```extasy_gromacs_lsdmap.py``` in the grlsd-on-archer folder.
 
@@ -291,7 +208,7 @@ The above two sections describes execution on XSEDE.Stampede and EPSRC.Archer, a
 Understanding the Output of the Examples
 ========================================
 
-In the local machine, a "backup" folder is created and at the end of every checkpoint intervel (=nsave) an "iter*" folder is created which contains the necessary files to start the next iteration.
+In the local machine, a "output" folder is created and at the end of every checkpoint intervel (=nsave) an "iter*" folder is created which contains the necessary files to start the next iteration.
 
 
 For example, in the case of gromacs-lsdmap on stampede, for 4 iterations with nsave=2:
@@ -299,9 +216,9 @@ For example, in the case of gromacs-lsdmap on stampede, for 4 iterations with ns
 ::
 
     grlsd-on-stampede$ ls
-    backup/  config.ini  gromacslsdmap.wcfg  grompp.mdp  input.gro  stampede.rcfg  topol.top
+    output/  config.ini  gromacslsdmap.wcfg  grompp.mdp  input.gro  stampede.rcfg  topol.top
 
-    grlsd-on-stampede/backup$ ls
+    grlsd-on-stampede/output$ ls
     iter1/  iter3/
 
 
@@ -310,7 +227,7 @@ The "iter*" folder will not contain any of the initial files such as the topolog
 
 ::
 
-    grlsd-on-stampede/backup/iter1$ ls
+    grlsd-on-stampede/output/iter1$ ls
     2_input.gro  lsdmap.log  weight.w
 
 
