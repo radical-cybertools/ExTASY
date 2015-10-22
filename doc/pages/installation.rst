@@ -41,9 +41,9 @@ Setuptools might not get installed with virtualenv and hence using pip would fai
 
 To install the Ensemble MD Toolkit Python modules in the virtual environment, run:
 
-.. parsed-literal::	export ENMD_INSTALL_VERSION="devel"
-					pip install --upgrade git+https://github.com/radical-cybertools/radical.ensemblemd.git@$ENMD_INSTALL_VERSION#egg=radical.ensemblemd
+.. code-block:: bash
 
+    pip install radical.ensemblemd
 
 You can check the version of Ensemble MD Toolkit with the `ensemblemd-version` command-line tool.
 .. parsed-literal:: ensemblemd-version
