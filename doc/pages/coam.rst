@@ -138,9 +138,9 @@ files:
 
 .. literalinclude:: ../../examples/coco_amber/cocoamber_on_archer.wcfg
 
-    .. note::
+.. note::
                 
-                All the parameters in the above example file are mandatory for amber-coco. There are no other parameters currently supported.
+        All the parameters in the above example file are mandatory for amber-coco. There are no other parameters currently supported.
 
 
 **Step 5**: You can find the executable script ```extasy_amber_coco.py``` in the coam-on-archer folder.
