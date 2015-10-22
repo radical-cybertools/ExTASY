@@ -113,18 +113,17 @@ files:
 
 If your shell is BASH,
 
-    ::
+.. code-block:: bash
 
-        EXTASY_DEBUG=True RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' python extasy_gromacs_lsdmap.py --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg 2> extasy.log
+        RADICAL_ENMD_VERBOSE=REPORT python extasy_gromacs_lsdmap.py --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg
 
 If your shell is CSH,
 
-    ::
+.. code-block::csh
 
-        setenv EXTASY_DEBUG True
-        setenv RADICAL_PILOT_VERBOSE 'debug'
-        setenv SAGA_VERBOSE 'debug'
-        python extasy_gromacs_lsdmap.py --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg |& tee extasy.log
+        setenv RADICAL_ENMD_VERBOSE 'REPORT'
+        python extasy_gromacs_lsdmap.py --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg
+
 
 .. note::
             Time to completion: ~13 mins (from the time job goes through LRMS)
@@ -228,19 +227,17 @@ files:
 
 If your shell is BASH,
 
-    ::
+.. code-block::bash
 
-        EXTASY_DEBUG=True RADICAL_PILOT_VERBOSE='debug' SAGA_VERBOSE='debug' python extasy_gromacs_lsdmap.py --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg 2> extasy.log
+        RADICAL_ENMD_VERBOSE=REPORT python extasy_gromacs_lsdmap.py --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg
 
 
 If your shell is CSH,
 
-    ::
+.. code-block::csh
 
-        setenv EXTASY_DEBUG True
-        setenv RADICAL_PILOT_VERBOSE 'debug'
-        setenv SAGA_VERBOSE 'debug'
-        python extasy_gromacs_lsdmap.py --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg |& tee extasy.log
+        setenv RADICAL_ENMD_VERBOSE 'REPORT'
+        python extasy_gromacs_lsdmap.py --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg
 
 
 .. note::

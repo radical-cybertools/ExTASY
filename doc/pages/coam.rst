@@ -108,14 +108,14 @@ If your shell is BASH,
 
 .. code-block:: bash
 
-        RADICAL_ENMD_VERBOSE=REPORT python extasy_amber_coco.py --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg 2> extasy.log
+        RADICAL_ENMD_VERBOSE=REPORT python extasy_amber_coco.py --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg
 
 If your shell is CSH,
 
 .. code-block:: csh
 
         setenv RADICAL_ENMD_VERBOSE 'REPORT'
-        python extasy_amber_coco.py --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg |& tee extasy.log
+        python extasy_amber_coco.py --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg
 
 .. note::
 
@@ -218,7 +218,7 @@ If your shell is BASH,
 
 .. code-block:: bash
 
-        RADICAL_ENMD_VERBOSE=REPORT python extasy_amber_coco.py --RPconfig archer.rcfg --Kconfig cocoamber.wcfg 2> extasy.log
+        RADICAL_ENMD_VERBOSE=REPORT python extasy_amber_coco.py --RPconfig archer.rcfg --Kconfig cocoamber.wcfg
 
 
 If your shell is CSH,
@@ -226,7 +226,7 @@ If your shell is CSH,
 .. code-block:: csh
 
         setenv RADICAL_ENMD_VERBOSE 'REPORT'
-        python extasy_amber_coco.py --RPconfig archer.rcfg --Kconfig cocoamber.wcfg |& tee extasy.log
+        python extasy_amber_coco.py --RPconfig archer.rcfg --Kconfig cocoamber.wcfg
 
 
 .. note::
