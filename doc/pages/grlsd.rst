@@ -60,9 +60,9 @@ files:
 
 .. literalinclude:: ../../examples/gromacs_lsdmap/gromacslsdmap_on_stampede.rcfg
 
-    .. note:: 
+.. note:: 
 
-                All the parameters in the above example file are mandatory for gromacs-lsdmap. If *ndxfile*, *grompp_options*, *mdrun_options* and *itp_file_loc* are not required, they should be set to None; but they still have to mentioned in the configuration file. There are no other parameters currently supported for these examples.
+        All the parameters in the above example file are mandatory for gromacs-lsdmap. If *ndxfile*, *grompp_options*, *mdrun_options* and *itp_file_loc* are not required, they should be set to None; but they still have to mentioned in the configuration file. There are no other parameters currently supported for these examples.
 
 
 **Step 5**: You can find the executable script ```extasy_gromacs_lsdmap.py``` in the grlsd-on-stampede folder.
@@ -133,9 +133,9 @@ files:
 
 .. literalinclude:: ../../examples/gromacs_lsdmap/gromacslsdmap_on_archer.wcfg
 
-    .. note:: 
+.. note:: 
 
-                All the parameters in the above example file are mandatory for gromacs-lsdmap. If *ndxfile*, *grompp_options*, *mdrun_options* and *itp_file_loc* are not required, they should be set to None; but they still have to mentioned in the configuration file. There are no other parameters currently supported.
+        All the parameters in the above example file are mandatory for gromacs-lsdmap. If *ndxfile*, *grompp_options*, *mdrun_options* and *itp_file_loc* are not required, they should be set to None; but they still have to mentioned in the configuration file. There are no other parameters currently supported.
 
 
 **Step 5**: You can find the executable script ```extasy_gromacs_lsdmap.py``` in the grlsd-on-archer folder.
