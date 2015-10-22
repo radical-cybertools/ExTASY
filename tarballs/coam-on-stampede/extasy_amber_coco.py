@@ -185,7 +185,7 @@ if __name__ == "__main__":
             username = RPconfig.UNAME, #username
             project = RPconfig.ALLOCATION, #project
             queue = RPconfig.QUEUE,
-            database_url = RPconfig.DBURL
+            database_url = RPconfig.DBURL,
             access_schema = config[RPconfig.REMOTE_HOST]['schema']      # This is so to support different access methods - gsissh, ssh - remove this if always running using ssh
         )
 
