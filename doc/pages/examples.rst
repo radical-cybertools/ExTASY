@@ -58,7 +58,7 @@ If your shell is BASH,
 
 If your shell is CSH,
 
-.. code-block::
+.. code-block:: csh
 
 	setenv RADICAL_ENMD_VERBOSE 'REPORT'
 	python multiple_simulations_single_analysis.py
@@ -135,7 +135,7 @@ Run locally
 
 * Step 1: View the example sources :ref:`below <msma>`. You can download the generic examples using the following (same link as above):
 
-. code-block:: bash
+.. code-block:: bash
 
 	curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2-devel/tarballs/generic.tar.gz
 	tar xfz generic.tar.gz
