@@ -69,19 +69,13 @@ files:
 
 **Now you are can run the workload using :**
 
-
-If your shell is BASH,
-
 .. code-block:: bash
 
-        RADICAL_ENMD_VERBOSE=REPORT python extasy_gromacs_lsdmap.py --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg
-
-If your shell is CSH,
-
-.. code-block:: csh
-
-        setenv RADICAL_ENMD_VERBOSE 'REPORT'
         python extasy_gromacs_lsdmap.py --RPconfig stampede.rcfg --Kconfig gromacslsdmap.wcfg
+
+
+
+.. note:: Environment variable RADICAL_ENMD_VERBOSE is set to REPORT in the python script. This specifies the verbosity of the output. For more verbose output, you can use INFO or DEBUG.
 
 
 .. note::
@@ -142,20 +136,12 @@ files:
 
 **Now you are can run the workload using :**
 
-If your shell is BASH,
-
 .. code-block:: bash
 
-        RADICAL_ENMD_VERBOSE=REPORT python extasy_gromacs_lsdmap.py --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg
-
-
-If your shell is CSH,
-
-.. code-block:: csh
-
-        setenv RADICAL_ENMD_VERBOSE 'REPORT'
         python extasy_gromacs_lsdmap.py --RPconfig archer.rcfg --Kconfig gromacslsdmap.wcfg
 
+
+.. note:: Environment variable RADICAL_ENMD_VERBOSE is set to REPORT in the python script. This specifies the verbosity of the output. For more verbose output, you can use INFO or DEBUG.
 
 .. note::
             Time to completion: ~15 mins (from the time job goes through LRMS)

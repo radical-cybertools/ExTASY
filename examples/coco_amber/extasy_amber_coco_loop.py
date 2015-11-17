@@ -15,6 +15,10 @@ import argparse
 import sys
 import os
 
+
+if os.environ.get('RADICAL_ENMD_VERBOSE') == None:
+    os.environ['RADICAL_ENMD_VERBOSE'] = 'REPORT'
+
 # ------------------------------------------------------------------------------
 #
 

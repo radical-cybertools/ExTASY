@@ -10,6 +10,10 @@ from radical.ensemblemd import Kernel
 from radical.ensemblemd import SimulationAnalysisLoop
 from radical.ensemblemd import EnsemblemdError
 from radical.ensemblemd import SingleClusterEnvironment
+import os
+
+if os.environ.get('RADICAL_ENMD_VERBOSE') == None:
+    os.environ['RADICAL_ENMD_VERBOSE'] = 'REPORT'
 
 # ------------------------------------------------------------------------------
 #

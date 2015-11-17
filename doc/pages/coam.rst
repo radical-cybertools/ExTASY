@@ -71,18 +71,11 @@ files:
 
 **Now you are can run the workload using :**
 
-If your shell is BASH,
-
 .. code-block:: bash
 
-        RADICAL_ENMD_VERBOSE=REPORT python extasy_amber_coco.py --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg
-
-If your shell is CSH,
-
-.. code-block:: bash
-
-        setenv RADICAL_ENMD_VERBOSE 'REPORT'
         python extasy_amber_coco.py --RPconfig stampede.rcfg --Kconfig cocoamber.wcfg
+
+.. note:: Environment variable RADICAL_ENMD_VERBOSE is set to REPORT in the python script. This specifies the verbosity of the output. For more verbose output, you can use INFO or DEBUG.
 
 .. note::
 
@@ -147,20 +140,12 @@ files:
 
 **Now you are can run the workload using :**
 
-If your shell is BASH,
-
 .. code-block:: bash
 
-        RADICAL_ENMD_VERBOSE=REPORT python extasy_amber_coco.py --RPconfig archer.rcfg --Kconfig cocoamber.wcfg
-
-
-If your shell is CSH,
-
-.. code-block:: csh
-
-        setenv RADICAL_ENMD_VERBOSE 'REPORT'
         python extasy_amber_coco.py --RPconfig archer.rcfg --Kconfig cocoamber.wcfg
 
+
+.. note:: Environment variable RADICAL_ENMD_VERBOSE is set to REPORT in the python script. This specifies the verbosity of the output. For more verbose output, you can use INFO or DEBUG.
 
 .. note::
 
