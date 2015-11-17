@@ -11,14 +11,9 @@ by ExTASY.
 
 # Documentation
 
-Documentation can be found at http://extasy.readthedocs.org/en/latest/index.html
- 
+Documentation can be found at http://extasy.readthedocs.org/en/latest/
  
 # Mailing List
 
 * Users : https://groups.google.com/forum/#!forum/extasy-project
 * Developers : https://groups.google.com/forum/#!forum/extasy-devel
-
-# Build Status
-
-[![Build Status](http://ci.radical-project.org/buildStatus/icon?job=ExTASY)](http://ci.radical-project.org/job/ExTASY)

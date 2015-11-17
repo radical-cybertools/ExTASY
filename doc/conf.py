@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# ExTASY documentation build configuration file, created by
-# sphinx-quickstart on Fri Jan 23 12:42:20 2015.
+# ExTASY-0.2 documentation build configuration file, created by
+# sphinx-quickstart on Tue Jun 16 13:24:49 2015.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -14,13 +14,126 @@
 
 import sys
 import os
+import shlex
+import urllib2
+import radical.utils as ru
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.insert(0, os.path.abspath('.'))
 
-# -- General configuration ------------------------------------------------
+script_dir = os.path.dirname(os.path.realpath(__file__))
+
+################################################################################
+##
+print "* Generating resource configuration docs: resources.rst"
+
+try:
+    os.remove("{0}/resources.rst".format(script_dir))
+except OSError:
+    pass
+
+try:
+    os.mkdir('resource_list')
+except OSError:
+    pass
+
+with open("{0}/pages/resources.rst".format(script_dir), "w") as resources_rst:
+
+    resources_rst.write("""
+.. _chapter_resources:
+
+List of Pre-Configured Resources
+================================
+
+The following list of resources are supported by the underlying layers of ExTASY. 
+
+.. note:: To configure your applications to run on these machines, you would need to add entries to your kernel definitions and specify the environment to be loaded for execution, executable, arguments, etc.
+
+""")
+
+    resource_list = [ 
+  "resource_das4.json",
+  "resource_epsrc.json",
+  "resource_futuregrid.json",
+  "resource_iu.json",
+  "resource_local.json",
+  "resource_lrz.json",
+  "resource_ncar.json",
+  "resource_ncsa.json",
+  "resource_nersc.json",
+  "resource_ornl.json",
+  "resource_radical.json",
+  "resource_rice.json",
+  "resource_stfc.json",
+  "resource_xsede.json"]
+
+    for res in resource_list:
+      response = urllib2.urlopen('https://raw.githubusercontent.com/radical-cybertools/radical.pilot/devel/src/radical/pilot/configs/%s'%res)
+      html = response.read()
+      with open('resource_list/'+res,'w') as f:
+        f.write(html)
+      f.close()
+    import glob
+    configs = glob.glob("resource_list/resource_*.json" )
+    for config in configs:
+
+        if not config.endswith(".json"):
+            continue # skip all non-python files
+
+        if "/resource_aliases" in config:
+            continue # skip alias files
+
+        print " * %s" % config
+
+        try: 
+             json_data = ru.read_json_str(config)
+        except Exception, ex:
+             print "    * JSON PARSING ERROR: %s" % str(ex)
+             continue
+
+        config = config.split('/')[-1]
+
+        resources_rst.write("{0}\n".format(config[:-5].upper()))
+        resources_rst.write("{0}\n\n".format("-"*len(config[:-5])))
+
+        for host_key, resource_config in json_data.iteritems():
+            resource_key = "%s.%s" % (config[:-5], host_key)
+            print "   * %s" % resource_key
+            try:
+                default_queue = resource_config["default_queue"]
+            except Exception, ex:
+                default_queue = None
+
+            try:
+                working_dir = resource_config["default_remote_workdir"]
+            except Exception, ex:
+                working_dir = "$HOME"
+
+            try:
+                python_interpreter = resource_config["python_interpreter"]
+            except Exception, ex:
+                python_interpreter = None
+
+            try:
+                access_schemas = resource_config["schemas"]
+            except Exception, ex:
+                access_schemas = ['n/a']
+
+            resources_rst.write("{0}\n".format(host_key.upper()))
+            resources_rst.write("{0}\n\n".format("*"*len(host_key)))
+            resources_rst.write("{0}\n\n".format(resource_config["description"]))
+            resources_rst.write("* **Resource label**      : ``{0}``\n".format(resource_key[9:]))
+            resources_rst.write("* **Raw config**          : :download:`{0} <../../src/radical/pilot/configs/{0}>`\n".format(config))
+            if resource_config["notes"] != "None":
+                resources_rst.write("* **Note**            : {0}\n".format(resource_config["notes"]))
+            resources_rst.write("* **Default values** for ComputePilotDescription attributes:\n\n")
+            resources_rst.write(" * ``queue         : {0}``\n".format(default_queue))
+            resources_rst.write(" * ``sandbox       : {0}``\n".format(working_dir))
+            resources_rst.write(" * ``access_schema : {0}``\n\n".format(access_schemas[0]))
+            resources_rst.write("* **Available schemas**   : ``{0}``\n".format(', '.join(access_schemas)))
+            resources_rst.write("\n")
 
 # If your documentation needs a minimal Sphinx version, state it here.
 #needs_sphinx = '1.0'
@@ -29,7 +142,7 @@ import os
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc',
+	'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
@@ -39,10 +152,13 @@ extensions = [
     'sphinx.ext.viewcode',
 ]
 
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
-# The suffix of source filenames.
+# The suffix(es) of source filenames.
+# You can specify multiple suffix as a list of string:
+# source_suffix = ['.rst', '.md']
 source_suffix = '.rst'
 
 # The encoding of source files.
@@ -52,20 +168,24 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'ExTASY'
+project = u'ExTASY-0.2'
 copyright = u'2015, RADICAL Group at Rutgers'
+
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-version = '0.1'
+version = '0.2'
 # The full version, including alpha/beta/rc tags.
-release = '0.1-beta'
+release = '0.2'
 
 # The language for content autogenerated by Sphinx. Refer to documentation
 # for a list of supported languages.
+#
+# This is also used if you do content translation via gettext catalogs.
+# Usually you set "language" from the command line for these cases.
 #language = None
 
 # There are two options for replacing |today|: either, you set today to some
@@ -102,12 +222,15 @@ pygments_style = 'sphinx'
 # If true, keep warnings as "system message" paragraphs in the built documents.
 #keep_warnings = False
 
+# If true, `todo` and `todoList` produce output, else they produce nothing.
+#todo_include_todos = False
+
 
 # -- Options for HTML output ----------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'default'
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -184,9 +307,22 @@ html_static_path = ['_static']
 # This is the file name suffix for HTML files (e.g. ".xhtml").
 #html_file_suffix = None
 
-# Output file base name for HTML help builder.
-htmlhelp_basename = 'ExTASYdoc'
+# Language to be used for generating the HTML full-text search index.
+# Sphinx supports the following languages:
+#   'da', 'de', 'en', 'es', 'fi', 'fr', 'hu', 'it', 'ja'
+#   'nl', 'no', 'pt', 'ro', 'ru', 'sv', 'tr'
+#html_search_language = 'en'
 
+# A dictionary with options for the search language support, empty by default.
+# Now only 'ja' uses this config value
+#html_search_options = {'type': 'default'}
+
+# The name of a javascript file (relative to the configuration directory) that
+# implements a search results scorer. If empty, the default will be used.
+#html_search_scorer = 'scorer.js'
+
+# Output file base name for HTML help builder.
+htmlhelp_basename = 'ExTASY-02doc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -199,13 +335,16 @@ latex_elements = {
 
 # Additional stuff for the LaTeX preamble.
 #'preamble': '',
+
+# Latex figure (float) alignment
+#'figure_align': 'htbp',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'ExTASY.tex', u'ExTASY Documentation',
+  (master_doc, 'ExTASY-02.tex', u'ExTASY-0.2 Documentation',
    u'RADICAL Group at Rutgers', 'manual'),
 ]
 
@@ -235,7 +374,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'extasy', u'ExTASY Documentation',
+    (master_doc, 'extasy-02', u'ExTASY-0.2 Documentation',
      [u'RADICAL Group at Rutgers'], 1)
 ]
 
@@ -249,8 +388,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'ExTASY', u'ExTASY Documentation',
-   u'RADICAL Group at Rutgers', 'ExTASY', 'One line description of project.',
+  (master_doc, 'ExTASY-02', u'ExTASY-0.2 Documentation',
+   u'RADICAL Group at Rutgers', 'ExTASY-02', 'One line description of project.',
    'Miscellaneous'),
 ]
 
@@ -265,7 +404,6 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
-
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {'http://docs.python.org/': None}

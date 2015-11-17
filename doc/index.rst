@@ -1,12 +1,13 @@
-.. ExTASY documentation master file, created by
-   sphinx-quickstart on Fri Jan 23 12:42:20 2015.
+.. ExTASY-0.2 documentation master file, created by
+   sphinx-quickstart on Tue Jun 16 13:24:49 2015.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-:tocdepth: 4
-
 ExTASY |VERSION|
 ================
+
+.. toctree::
+   :maxdepth: 4
 
 **Github Page**
 
@@ -19,8 +20,9 @@ https://github.com/radical-cybertools/ExTASY
 
 **Build Status**
 
-    .. image:: http://ci.radical-project.org/buildStatus/icon?job=ExTASY
-        :target: http://ci.radical-project.org/job/ExTASY
+    .. image:: http://ci.radical-project.org/buildStatus/icon?job=ExTASY-0.2
+        :target: http://ci.radical-project.org/job/ExTASY-0.2
+
 
 
 **Contents**
@@ -31,9 +33,15 @@ https://github.com/radical-cybertools/ExTASY
 
    pages/intro.rst
    pages/installation.rst
+   pages/getting_started.rst
+   pages/examples.rst
    pages/coam.rst
    pages/grlsd.rst
+   pages/apiref.rst
+   pages/develop.rst
+   pages/resources.rst
    pages/trouble.rst
+   pages/misc.rst
 
 Indices and tables
 ==================
@@ -41,4 +49,4 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`search`
 
-.. |VERSION| replace:: 0.1
+.. |VERSION| replace:: 0.2

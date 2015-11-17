@@ -1,9 +1,0 @@
-***********
-The Kernels
-***********
-
-.. toctree::
-   :maxdepth: 1
-
-
-
