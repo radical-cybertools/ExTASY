@@ -139,7 +139,8 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
         lsdmap.copy_output_data = ['tmpha.ev > $PRE_LOOP/tmpha.ev','out.nn > $PRE_LOOP/out.nn']
         
         if(iteration%Kconfig.nsave==0):
-          lsdmap.download_output_data=['lsdmap.log > backup/iter{0}/lsdmap.log'.format(iteration)]
+          lsdmap.download_output_data=['lsdmap.log > backup/iter{0}/lsdmap.log'.format(iteration),'tmpha.ev > backup/iter{0}/tmpha.ev'.format(iteration),
+          'tmpha.eg > backup/iter{0}/tmpha.eg'.format(iteration)]
 
         post_ana = Kernel(name="md.post_lsdmap")
         post_ana.link_input_data = ["$PRE_LOOP/post_analyze.py > post_analyze.py",
