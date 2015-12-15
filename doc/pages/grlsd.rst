@@ -218,11 +218,11 @@ The "iter*" folder will not contain any of the initial files such as the topolog
 
 
 
-On the remote machine, inside the pilot-* folder you can find a folder called "staging_area". This location is used to exchange/link/move intermediate data. The shared data is kept in "staging_area/" and the iteration specific inputs/outputs can be found in their specific folders (="staging_area/iter*").
+On the remote machine, inside the pilot-* folder you can find a folder called "unit.00000". This location is used to exchange/link/move intermediate data. The shared data is kept in "unit.00000/" and the iteration specific inputs/outputs can be found in their specific folders (="unit.00000/iter*").
 
 ::
 
-    $ cd staging_area/
+    $ cd unit.00000/
     $ ls
     config.ini  gro.py   input.gro   iter1/  iter3/    post_analyze.py  reweighting.py   run.py     spliter.py
     grompp.mdp  gro.pyc  iter0/      iter2/  lsdm.py   pre_analyze.py   run_analyzer.sh  select.py  topol.top

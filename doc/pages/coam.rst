@@ -228,10 +228,10 @@ The "iter*" folder will not contain any of the initial files such as the topolog
 It is important to note that since, in coco-amber, all the NetCDF files of previous and current iterations are transferred at each checkpoint, it might be useful to have longer checkpoint intervals. Since smaller intervals would lead to heavy data transfer of redundant data.
 
 
-On the remote machine, inside the pilot-* folder you can find a folder called "staging_area". This location is used to exchange/link/move intermediate data. The shared data is kept in "staging_area/" and the iteration specific inputs/outputs can be found in their specific folders (="staging_area/iter*").
+On the remote machine, inside the pilot-* folder you can find a folder called "unit.00000". This location is used to exchange/link/move intermediate data. The shared data is kept in "unit.00000/" and the iteration specific inputs/outputs can be found in their specific folders (="unit.00000/iter*").
 
 ::
 
-    $ cd staging_area/
+    $ cd unit.00000/
     $ ls
     iter0/  iter1/  iter2/  iter3/  mdshort.in  min.in  penta.crd  penta.top  postexec.py
