@@ -17,7 +17,11 @@ import argparse
 import os
 import json
 
+# ------------------------------------------------------------------------------
+# Set default verbosity
 
+if os.environ.get('RADICAL_ENMD_VERBOSE') == None:
+    os.environ['RADICAL_ENMD_VERBOSE'] = 'REPORT'
 
 # ------------------------------------------------------------------------------
 #

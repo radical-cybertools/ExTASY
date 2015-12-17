@@ -8,6 +8,6 @@
         			},
 
         	"xsede.stampede" : {
-            				"schema"   : "gsissh"
+            				"schema"   : "ssh"
         			}
 }

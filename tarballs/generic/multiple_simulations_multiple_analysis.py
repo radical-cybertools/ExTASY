@@ -15,6 +15,13 @@ from radical.ensemblemd import SimulationAnalysisLoop
 from radical.ensemblemd import EnsemblemdError
 from radical.ensemblemd import SingleClusterEnvironment
 
+
+# ------------------------------------------------------------------------------
+# Set default verbosity
+
+if os.environ.get('RADICAL_ENMD_VERBOSE') == None:
+    os.environ['RADICAL_ENMD_VERBOSE'] = 'REPORT'
+
 # ------------------------------------------------------------------------------
 #
 class MSMA(SimulationAnalysisLoop):
