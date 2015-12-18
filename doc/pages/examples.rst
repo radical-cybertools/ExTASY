@@ -38,7 +38,7 @@ Run locally
 
 .. code-block:: bash
 
-	curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2-devel/tarballs/generic.tar.gz
+	curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_data/tarballs/generic.tar.gz
 	tar xfz generic.tar.gz
 	cd generic
 
@@ -130,7 +130,7 @@ Run locally
 
 .. code-block:: bash
 
-	curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2-devel/tarballs/generic.tar.gz
+	curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_data/tarballs/generic.tar.gz
 	tar xfz generic.tar.gz
 	cd generic
 

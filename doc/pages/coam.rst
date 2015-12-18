@@ -37,7 +37,7 @@ files:
 
 .. code-block:: bash
 
-        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2-devel/tarballs/coam-on-stampede.tar.gz
+        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_data/tarballs/coam-on-stampede.tar.gz
         tar xvfz coam-on-stampede.tar.gz
         cd coam-on-stampede
 
@@ -108,7 +108,7 @@ files:
 
 .. code-block:: bash
         
-        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2-devel/tarballs/coam-on-archer.tar.gz
+        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_data/tarballs/coam-on-archer.tar.gz
         tar xvfz coam-on-archer.tar.gz
         cd coam-on-archer
 

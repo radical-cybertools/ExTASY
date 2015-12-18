@@ -12,6 +12,11 @@ by ExTASY.
 # Documentation
 
 Documentation can be found at http://extasy.readthedocs.org/en/latest/
+
+#Build Status
+
+    .. image:: http://ci.radical-project.org/buildStatus/icon?job=ExTASY-0.2
+        :target: http://ci.radical-project.org/job/ExTASY-0.2
  
 # Mailing List
 

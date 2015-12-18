@@ -37,7 +37,7 @@ files:
 
 .. code-block:: bash
 
-        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2-devel/tarballs/grlsd-on-stampede.tar.gz
+        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_data/tarballs/grlsd-on-stampede.tar.gz
         tar xvfz grlsd-on-stampede.tar.gz
         cd grlsd-on-stampede
 
@@ -106,7 +106,7 @@ files:
 
 .. code-block:: bash
     
-        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_0.2-devel/tarballs/grlsd-on-archer.tar.gz
+        curl -k -O  https://raw.githubusercontent.com/radical-cybertools/ExTASY/extasy_data/tarballs/grlsd-on-archer.tar.gz
         tar xvfz grlsd-on-archer.tar.gz
         cd grlsd-on-archer
 
