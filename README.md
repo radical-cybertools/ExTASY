@@ -20,5 +20,5 @@ Documentation can be found at http://extasy.readthedocs.org/en/latest/
  
 # Mailing List
 
-* Users : https://groups.google.com/forum/#!forum/extasy-project
-* Developers : https://groups.google.com/forum/#!forum/extasy-devel
+* Users: https://groups.google.com/forum/#!forum/extasy-project
+* Developers: https://groups.google.com/forum/#!forum/extasy-devel
