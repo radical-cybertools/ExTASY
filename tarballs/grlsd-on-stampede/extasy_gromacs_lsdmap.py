@@ -54,6 +54,11 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
                                '{0}/post_analyze.py'.format(Kconfig.helper_scripts),
                                '{0}/selection.py'.format(Kconfig.helper_scripts),
                                '{0}/reweighting.py'.format(Kconfig.helper_scripts)]
+
+
+        if ndx_file is not None:
+            k.upload_input_data.append(ndx_file)
+
         k.arguments = ["--inputfile={0}".format(os.path.basename(Kconfig.md_input_file)),"--numCUs={0}".format(Kconfig.num_CUs)]
         return k
 
@@ -84,6 +89,15 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
 
         else:
             gromacs.link_input_data.append('$ANALYSIS_ITERATION_{0}_INSTANCE_1/temp/start{1}.gro > start.gro'.format(iteration-1,instance-1))
+
+
+        if grompp_options is not None:
+            gromacs.environment = {'grompp_options':grompp_options}
+        if mdrun_options is not None:
+            gromacs.environment = {'mdrun_options':mdrun_options}
+        if ndx_file is not None:
+            gromacs.environment = {'ndxfile',os.path.basename(ndx_file)}
+            gromacs.link_input_data.append('$PRE_LOOP/{0}'.format(os.path.basename(ndx_file)))
 
         return gromacs
     

@@ -15,7 +15,6 @@ top_file             = './inp_files/topol.top'        # Entire path to the Topol
 ndx_file             = None                   # Entire path to the Index file - Do not use $HOME or the likes
 grompp_options       = None                   # Command line options for when grompp is used
 mdrun_options        = None                   # Command line options for when mdrun is used
-itp_file_loc         = None                   # Entire path to the location of .itp files - Do not use $HOME or the likes
 md_output_file       = 'tmp.gro'            # Filename to be used for the simulation output
 
 #--------------------------Analysis----------------------------------
