@@ -1,7 +1,7 @@
 __author__ = 'vivek'
 import os
 import sys
-from extasy import script
+from coco import script
 
 if __name__ == '__main__':
     print 'creating new crd files...'

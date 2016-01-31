@@ -10,6 +10,7 @@ from radical.ensemblemd import Kernel
 from radical.ensemblemd import EnsemblemdError
 from radical.ensemblemd import SimulationAnalysisLoop
 from radical.ensemblemd import SingleClusterEnvironment
+from radical.ensemblemd.engine import get_engine
 import imp
 import argparse
 import sys
@@ -21,6 +22,25 @@ import json
 
 if os.environ.get('RADICAL_ENMD_VERBOSE') == None:
     os.environ['RADICAL_ENMD_VERBOSE'] = 'REPORT'
+
+# ------------------------------------------------------------------------------
+#Load all custom Kernels
+
+from kernel_defs.amber import kernel_amber
+get_engine().add_kernel_plugin(kernel_amber)
+
+from kernel_defs.pre_coam_loop import kernel_pre_coam_loop
+get_engine().add_kernel_plugin(kernel_pre_coam_loop)
+
+from kernel_defs.coco import kernel_coco
+get_engine().add_kernel_plugin(kernel_coco)
+
+from kernel_defs.tleap import kernel_tleap
+get_engine().add_kernel_plugin(kernel_tleap)
+
+
+# ------------------------------------------------------------------------------
+
 
 # ------------------------------------------------------------------------------
 #
@@ -40,7 +60,7 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
 
                 Arguments : None
         '''
-        k = Kernel(name="md.pre_coam_loop")
+        k = Kernel(name="custom.pre_coam_loop")
         k.upload_input_data = [Kconfig.initial_crd_file,
                                Kconfig.md_input_file,
                                Kconfig.minimization_input_file,
@@ -64,7 +84,7 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
                             --topfile   = Topology filename
                             --cycle     = current iteration number
         '''
-        k1 = Kernel(name="md.amber")
+        k1 = Kernel(name="custom.amber")
         k1.arguments = ["--mininfile={0}".format(os.path.basename(Kconfig.minimization_input_file)),
                        #"--mdinfile={0}".format(os.path.basename(Kconfig.md_input_file)),
                        "--topfile={0}".format(os.path.basename(Kconfig.top_file)),
@@ -81,7 +101,7 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
         k1.copy_output_data = ['md{0}.crd > $PRE_LOOP/md_{0}_{1}.crd'.format(iteration,instance)]
         
 
-        k2 = Kernel(name="md.amber")
+        k2 = Kernel(name="custom.amber")
         k2.arguments = [
                             "--mdinfile={0}".format(os.path.basename(Kconfig.md_input_file)),
                             "--topfile={0}".format(os.path.basename(Kconfig.top_file)),
@@ -117,7 +137,7 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
                             --output        = Output filename
                             --cycle         = Current iteration number
         '''
-        k1 = Kernel(name="md.coco")
+        k1 = Kernel(name="custom.coco")
         k1.arguments = ["--grid={0}".format(Kconfig.grid),
                        "--dims={0}".format(Kconfig.dims),
                        "--frontpoints={0}".format(Kconfig.num_CUs),
@@ -141,7 +161,7 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
             k1.download_output_data = ['coco.log > output/iter{0}/coco.log'.format(iteration,instance)]
 
 
-        k2 = Kernel(name="md.tleap")
+        k2 = Kernel(name="custom.tleap")
         k2.arguments = ["--numofsims={0}".format(Kconfig.num_CUs),
                         "--cycle={0}".format(iteration)]
 
@@ -160,10 +180,6 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
 if __name__ == "__main__":
 
     try:
-
-
-        with open('%s/config.json'%os.path.dirname(os.path.abspath(__file__))) as data_file:
-            config = json.load(data_file)
 
         parser = argparse.ArgumentParser()
         parser.add_argument('--RPconfig', help='link to Radical Pilot related configurations file')
@@ -192,7 +208,7 @@ if __name__ == "__main__":
             project = RPconfig.ALLOCATION, #project
             queue = RPconfig.QUEUE,
             database_url = RPconfig.DBURL,
-            access_schema = config[RPconfig.REMOTE_HOST]['schema']      # This is so to support different access methods - gsissh, ssh - remove this if always running using ssh
+        #    access_schema = config[RPconfig.REMOTE_HOST]['schema']      # This is so to support different access methods - gsissh, ssh - remove this if always running using ssh
         )
 
         cluster.allocate()

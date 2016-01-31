@@ -11,28 +11,26 @@ from radical.ensemblemd import SimulationAnalysisLoop
 from radical.ensemblemd import EnsemblemdError
 from radical.ensemblemd import SimulationAnalysisLoop
 from radical.ensemblemd import SingleClusterEnvironment
+
+
+from radical.ensemblemd.engine import get_engine
+
 import sys
 import imp
 import argparse
 import os
-import json
-
-from radical.ensemblemd.engine import get_engine
-
-# ------------------------------------------------------------------------------
-# Set default verbosity
-
-if os.environ.get('RADICAL_ENMD_VERBOSE') == None:
-    os.environ['RADICAL_ENMD_VERBOSE'] = 'REPORT'
 
 # ------------------------------------------------------------------------------
 #Load all custom Kernels
 
+from kernel_defs.grompp import kernel_grompp
+get_engine().add_kernel_plugin(kernel_grompp)
+
+from kernel_defs.mdrun import kernel_mdrun
+get_engine().add_kernel_plugin(kernel_mdrun)
+
 from kernel_defs.pre_grlsd_loop import kernel_pre_grlsd_loop
 get_engine().add_kernel_plugin(kernel_pre_grlsd_loop)
-
-from kernel_defs.gromacs import kernel_gromacs
-get_engine().add_kernel_plugin(kernel_gromacs)
 
 from kernel_defs.pre_lsdmap import kernel_pre_lsdmap
 get_engine().add_kernel_plugin(kernel_pre_lsdmap)
@@ -43,15 +41,13 @@ get_engine().add_kernel_plugin(kernel_lsdmap)
 from kernel_defs.post_lsdmap import kernel_post_lsdmap
 get_engine().add_kernel_plugin(kernel_post_lsdmap)
 # ------------------------------------------------------------------------------
-
-
 # ------------------------------------------------------------------------------
 #
 class Gromacs_LSDMap(SimulationAnalysisLoop):
   # TODO Vivek: add description.
 
-    def __init__(self, maxiterations, simulation_instances=1, analysis_instances=1):
-        SimulationAnalysisLoop.__init__(self, maxiterations, simulation_instances, analysis_instances)
+    def __init__(self, iterations, simulation_instances, analysis_instances, adaptive_simulation, sim_extraction_script):
+        SimulationAnalysisLoop.__init__(self, iterations, simulation_instances, analysis_instances, adaptive_simulation, sim_extraction_script)
     
     def pre_loop(self):
         '''
@@ -65,23 +61,9 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
                             --numCUs    = number of simulation instances/ number of smaller files
         '''
         k = Kernel(name="custom.pre_grlsd_loop")
-        k.upload_input_data = [Kconfig.md_input_file,
-                               Kconfig.lsdm_config_file,
-                               Kconfig.top_file,
-                               Kconfig.mdp_file,
-                               '{0}/spliter.py'.format(Kconfig.helper_scripts),
-                               '{0}/gro.py'.format(Kconfig.helper_scripts),
-                               '{0}/run.py'.format(Kconfig.helper_scripts),
-                               '{0}/pre_analyze.py'.format(Kconfig.helper_scripts),
-                               '{0}/post_analyze.py'.format(Kconfig.helper_scripts),
-                               '{0}/selection.py'.format(Kconfig.helper_scripts),
-                               '{0}/reweighting.py'.format(Kconfig.helper_scripts)]
+        k.copy_input_data = ['$SHARED/spliter.py','$SHARED/gro.py','$SHARED/{0}'.format(os.path.basename(Kconfig.md_input_file))]
+        k.arguments = ["--inputfile={0}".format(os.path.basename(Kconfig.md_input_file))]
 
-
-        if Kconfig.ndx_file is not None:
-            k.upload_input_data.append(Kconfig.ndx_file)
-            
-        k.arguments = ["--inputfile={0}".format(os.path.basename(Kconfig.md_input_file)),"--numCUs={0}".format(Kconfig.num_CUs)]
         return k
 
     def simulation_step(self, iteration, instance):
@@ -99,29 +81,44 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
                             --topol     = topology filename
         '''
 
-        gromacs = Kernel(name="custom.gromacs")
-        gromacs.arguments = ["--grompp={0}".format(os.path.basename(Kconfig.mdp_file)),
-                             "--topol={0}".format(os.path.basename(Kconfig.top_file))]
-        gromacs.link_input_data = ['$PRE_LOOP/{0} > {0}'.format(os.path.basename(Kconfig.mdp_file)),
-                                   '$PRE_LOOP/{0} > {0}'.format(os.path.basename(Kconfig.top_file)),
-                                   '$PRE_LOOP/run.py > run.py']
+        #----------------------------------------------------------------------------------------------------------
+        # GROMPP kernel
+
+        k1 = Kernel(name="custom.grompp")
+        k1.arguments = [
+                          "--mdp={0}".format(os.path.basename(Kconfig.mdp_file)),
+                          "--gro=start.gro",
+                          "--top={0}".format(os.path.basename(Kconfig.top_file)),
+                          "--tpr=topol.tpr"
+                        ]
+
+        k1.link_input_data = ['$SHARED/{0} > {0}'.format(os.path.basename(Kconfig.mdp_file)),
+                              '$SHARED/{0} > {0}'.format(os.path.basename(Kconfig.top_file))]
+
+        k1.copy_output_data = ['topol.tpr > $SHARED/iter_{1}/topol_{0}.tpr'.format(instance-1,iteration-1)]
 
         if (iteration-1==0):
-            gromacs.link_input_data.append('$PRE_LOOP/temp/start{0}.gro > start.gro'.format(instance-1))
+            k1.link_input_data.append('$PRE_LOOP/temp/start{0}.gro > start.gro'.format(instance-1))
 
         else:
-            gromacs.link_input_data.append('$ANALYSIS_ITERATION_{0}_INSTANCE_1/temp/start{1}.gro > start.gro'.format(iteration-1,instance-1))
-
-        if Kconfig.grompp_options is not None:
-            gromacs.environment = {'grompp_options':Kconfig.grompp_options}
-        if Kconfig.mdrun_options is not None:
-            gromacs.environment = {'mdrun_options':Kconfig.mdrun_options}
-        if Kconfig.ndx_file is not None:
-            gromacs.environment = {'ndxfile',os.path.basename(Kconfig.ndx_file)}
-            gromacs.link_input_data.append('$PRE_LOOP/{0}'.format(os.path.basename(Kconfig.ndx_file)))
+            k1.link_input_data.append('$ANALYSIS_ITERATION_{0}_INSTANCE_1/temp/start{1}.gro > start.gro'.format(iteration-1,instance-1))
+        #----------------------------------------------------------------------------------------------------------
 
 
-        return gromacs
+        #----------------------------------------------------------------------------------------------------------
+        # MDRUN kernel
+
+        k2 = Kernel(name="custom.mdrun")
+        k2.arguments = [
+                          "--size=1",
+                          "--tpr=topol.tpr",
+                          "--out=out.gro"
+                        ]
+
+        k2.link_input_data = ['$SHARED/iter_{1}/topol_{0}.tpr > topol.tpr'.format(instance-1,iteration-1)]
+        #----------------------------------------------------------------------------------------------------------
+
+        return [k1,k2]
     
     def analysis_step(self, iteration, instance):
         '''
@@ -164,42 +161,40 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
         '''
 
         pre_ana = Kernel(name="custom.pre_lsdmap")
-        pre_ana.arguments = ["--numCUs={0}".format(Kconfig.num_CUs)]
-        pre_ana.link_input_data = ["$PRE_LOOP/pre_analyze.py > pre_analyze.py"]
-        for i in range(1,Kconfig.num_CUs+1):
+        pre_ana.link_input_data = ["$SHARED/pre_analyze.py > pre_analyze.py"]
+        for i in range(1,self._simulation_instances+1):
             pre_ana.link_input_data = pre_ana.link_input_data + ["$SIMULATION_ITERATION_{2}_INSTANCE_{0}/out.gro > out{1}.gro".format(i,i-1,iteration)]
-        pre_ana.copy_output_data = ['tmpha.gro > $PRE_LOOP/tmpha.gro','tmp.gro > $PRE_LOOP/tmp.gro']
+        pre_ana.copy_output_data = ['tmpha.gro > $SHARED/iter_{0}/tmpha.gro'.format(iteration-1),'tmp.gro > $SHARED/iter_{0}/tmp.gro'.format(iteration-1)]
 
-        lsdmap = Kernel(name="custom.lsdmap")
+        lsdmap = Kernel(name="md.lsdmap")
         lsdmap.arguments = ["--config={0}".format(os.path.basename(Kconfig.lsdm_config_file))]
-        lsdmap.link_input_data = ['$PRE_LOOP/{0} > {0}'.format(os.path.basename(Kconfig.lsdm_config_file)),'$PRE_LOOP/tmpha.gro > tmpha.gro']
-        lsdmap.cores = RPconfig.PILOTSIZE
+        lsdmap.link_input_data = ['$SHARED/{0} > {0}'.format(os.path.basename(Kconfig.lsdm_config_file)),'$SHARED/iter_{0}/tmpha.gro > tmpha.gro'.format(iteration-1)]
+        lsdmap.cores = 1
         if iteration > 1:
             lsdmap.link_input_data += ['$ANALYSIS_ITERATION_{0}_INSTANCE_1/weight.w > weight.w'.format(iteration-1)]
-            lsdmap.copy_output_data = ['weight.w > $PRE_LOOP/weight.w']
-        lsdmap.copy_output_data = ['tmpha.ev > $PRE_LOOP/tmpha.ev','out.nn > $PRE_LOOP/out.nn']
+            lsdmap.copy_output_data = ['weight.w > $SHARED/iter_{0}/weight.w'.format(iteration-1)]
+        lsdmap.copy_output_data = ['tmpha.ev > $SHARED/iter_{0}/tmpha.ev'.format(iteration-1),'out.nn > $SHARED/iter_{0}/out.nn'.format(iteration-1)]
         
         if(iteration%Kconfig.nsave==0):
-          lsdmap.download_output_data=['lsdmap.log > backup/iter{0}/lsdmap.log'.format(iteration),'tmpha.ev > backup/iter{0}/tmpha.ev'.format(iteration),
-          'tmpha.eg > backup/iter{0}/tmpha.eg'.format(iteration)]
+          lsdmap.download_output_data=['lsdmap.log > backup/iter{0}/lsdmap.log'.format(iteration-1)]
 
         post_ana = Kernel(name="custom.post_lsdmap")
-        post_ana.link_input_data = ["$PRE_LOOP/post_analyze.py > post_analyze.py",
-                                    "$PRE_LOOP/selection.py > selection.py",
-                                    "$PRE_LOOP/reweighting.py > reweighting.py",
-                                    "$PRE_LOOP/spliter.py > spliter.py",
-                                    "$PRE_LOOP/gro.py > gro.py",
-                                    "$PRE_LOOP/tmp.gro > tmp.gro",
-                                    "$PRE_LOOP/tmpha.ev > tmpha.ev",
-                                    "$PRE_LOOP/out.nn > out.nn",
-                                    "$PRE_LOOP/input.gro > input.gro"]
+        post_ana.link_input_data = ["$SHARED/post_analyze.py > post_analyze.py",
+                                    "$SHARED/selection.py > selection.py",
+                                    "$SHARED/reweighting.py > reweighting.py",
+                                    "$SHARED/spliter.py > spliter.py",
+                                    "$SHARED/gro.py > gro.py",
+                                    "$SHARED/iter_{0}/tmp.gro > tmp.gro".format(iteration-1),
+                                    "$SHARED/iter_{0}/tmpha.ev > tmpha.ev".format(iteration-1),
+                                    "$SHARED/iter_{0}/out.nn > out.nn".format(iteration-1),
+                                    "$SHARED/input.gro > input.gro"]
 
         post_ana.arguments = ["--num_runs={0}".format(Kconfig.num_runs),
                               "--out=out.gro",
                               "--cycle={0}".format(iteration-1),
                               "--max_dead_neighbors={0}".format(Kconfig.max_dead_neighbors),
                               "--max_alive_neighbors={0}".format(Kconfig.max_alive_neighbors),
-                              "--numCUs={0}".format(Kconfig.num_CUs)]
+                              ]
 
         if iteration > 1:
             post_ana.link_input_data += ['$ANALYSIS_ITERATION_{0}_INSTANCE_1/weight.w > weight_new.w'.format(iteration-1)]
@@ -216,6 +211,7 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
 if __name__ == "__main__":
 
   try:
+
 
       parser = argparse.ArgumentParser()
       parser.add_argument('--RPconfig', help='link to Radical Pilot related configurations file')
@@ -244,8 +240,21 @@ if __name__ == "__main__":
             username = RPconfig.UNAME, #username
             project = RPconfig.ALLOCATION, #project
             queue = RPconfig.QUEUE,
-            database_url = RPconfig.DBURL
+            database_url = RPconfig.DBURL 
       )
+
+      cluster.shared_data = [
+                                Kconfig.md_input_file,
+                                Kconfig.lsdm_config_file,
+                                Kconfig.top_file,
+                                Kconfig.mdp_file,
+                               '{0}/spliter.py'.format(Kconfig.misc_loc),
+                               '{0}/gro.py'.format(Kconfig.misc_loc),
+                               '{0}/pre_analyze.py'.format(Kconfig.misc_loc),
+                               '{0}/post_analyze.py'.format(Kconfig.misc_loc),
+                               '{0}/selection.py'.format(Kconfig.misc_loc),
+                               '{0}/reweighting.py'.format(Kconfig.misc_loc)
+                            ]
 
       cluster.allocate()
 
@@ -253,7 +262,8 @@ if __name__ == "__main__":
       # instances of the simulation are executed every iteration.
       # We set the 'instances' of the analysis step to 1. This means that only
       # one instance of the analysis is executed for each iteration
-      randomsa = Gromacs_LSDMap(maxiterations=Kconfig.num_iterations, simulation_instances=Kconfig.num_CUs, analysis_instances=1)
+      cur_path = os.path.dirname(os.path.abspath(__file__))
+      randomsa = Gromacs_LSDMap(iterations=Kconfig.num_iterations, simulation_instances=Kconfig.num_CUs, analysis_instances=1, adaptive_simulation=True, sim_extraction_script='{0}/misc_files/extract.py'.format(cur_path))
 
       cluster.run(randomsa)
 

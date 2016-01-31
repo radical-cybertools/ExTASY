@@ -17,11 +17,33 @@ import argparse
 import os
 import json
 
+from radical.ensemblemd.engine import get_engine
+
 # ------------------------------------------------------------------------------
 # Set default verbosity
 
 if os.environ.get('RADICAL_ENMD_VERBOSE') == None:
     os.environ['RADICAL_ENMD_VERBOSE'] = 'REPORT'
+
+# ------------------------------------------------------------------------------
+#Load all custom Kernels
+
+from kernel_defs.pre_grlsd_loop import kernel_pre_grlsd_loop
+get_engine().add_kernel_plugin(kernel_pre_grlsd_loop)
+
+from kernel_defs.gromacs import kernel_gromacs
+get_engine().add_kernel_plugin(kernel_gromacs)
+
+from kernel_defs.pre_lsdmap import kernel_pre_lsdmap
+get_engine().add_kernel_plugin(kernel_pre_lsdmap)
+
+from kernel_defs.lsdmap import kernel_lsdmap
+get_engine().add_kernel_plugin(kernel_lsdmap)
+
+from kernel_defs.post_lsdmap import kernel_post_lsdmap
+get_engine().add_kernel_plugin(kernel_post_lsdmap)
+# ------------------------------------------------------------------------------
+
 
 # ------------------------------------------------------------------------------
 #
@@ -42,7 +64,7 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
                 Arguments : --inputfile = file to be split
                             --numCUs    = number of simulation instances/ number of smaller files
         '''
-        k = Kernel(name="md.pre_grlsd_loop")
+        k = Kernel(name="custom.pre_grlsd_loop")
         k.upload_input_data = [Kconfig.md_input_file,
                                Kconfig.lsdm_config_file,
                                Kconfig.top_file,
@@ -58,7 +80,7 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
 
         if Kconfig.ndx_file is not None:
             k.upload_input_data.append(Kconfig.ndx_file)
-
+            
         k.arguments = ["--inputfile={0}".format(os.path.basename(Kconfig.md_input_file)),"--numCUs={0}".format(Kconfig.num_CUs)]
         return k
 
@@ -77,7 +99,7 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
                             --topol     = topology filename
         '''
 
-        gromacs = Kernel(name="md.gromacs")
+        gromacs = Kernel(name="custom.gromacs")
         gromacs.arguments = ["--grompp={0}".format(os.path.basename(Kconfig.mdp_file)),
                              "--topol={0}".format(os.path.basename(Kconfig.top_file))]
         gromacs.link_input_data = ['$PRE_LOOP/{0} > {0}'.format(os.path.basename(Kconfig.mdp_file)),
@@ -90,7 +112,6 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
         else:
             gromacs.link_input_data.append('$ANALYSIS_ITERATION_{0}_INSTANCE_1/temp/start{1}.gro > start.gro'.format(iteration-1,instance-1))
 
-
         if Kconfig.grompp_options is not None:
             gromacs.environment = {'grompp_options':Kconfig.grompp_options}
         if Kconfig.mdrun_options is not None:
@@ -98,6 +119,7 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
         if Kconfig.ndx_file is not None:
             gromacs.environment = {'ndxfile',os.path.basename(Kconfig.ndx_file)}
             gromacs.link_input_data.append('$PRE_LOOP/{0}'.format(os.path.basename(Kconfig.ndx_file)))
+
 
         return gromacs
     
@@ -141,14 +163,14 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
                             --numCUs                = number of simulation instances/ number of smaller files
         '''
 
-        pre_ana = Kernel(name="md.pre_lsdmap")
+        pre_ana = Kernel(name="custom.pre_lsdmap")
         pre_ana.arguments = ["--numCUs={0}".format(Kconfig.num_CUs)]
         pre_ana.link_input_data = ["$PRE_LOOP/pre_analyze.py > pre_analyze.py"]
         for i in range(1,Kconfig.num_CUs+1):
             pre_ana.link_input_data = pre_ana.link_input_data + ["$SIMULATION_ITERATION_{2}_INSTANCE_{0}/out.gro > out{1}.gro".format(i,i-1,iteration)]
         pre_ana.copy_output_data = ['tmpha.gro > $PRE_LOOP/tmpha.gro','tmp.gro > $PRE_LOOP/tmp.gro']
 
-        lsdmap = Kernel(name="md.lsdmap")
+        lsdmap = Kernel(name="custom.lsdmap")
         lsdmap.arguments = ["--config={0}".format(os.path.basename(Kconfig.lsdm_config_file))]
         lsdmap.link_input_data = ['$PRE_LOOP/{0} > {0}'.format(os.path.basename(Kconfig.lsdm_config_file)),'$PRE_LOOP/tmpha.gro > tmpha.gro']
         lsdmap.cores = RPconfig.PILOTSIZE
@@ -161,7 +183,7 @@ class Gromacs_LSDMap(SimulationAnalysisLoop):
           lsdmap.download_output_data=['lsdmap.log > backup/iter{0}/lsdmap.log'.format(iteration),'tmpha.ev > backup/iter{0}/tmpha.ev'.format(iteration),
           'tmpha.eg > backup/iter{0}/tmpha.eg'.format(iteration)]
 
-        post_ana = Kernel(name="md.post_lsdmap")
+        post_ana = Kernel(name="custom.post_lsdmap")
         post_ana.link_input_data = ["$PRE_LOOP/post_analyze.py > post_analyze.py",
                                     "$PRE_LOOP/selection.py > selection.py",
                                     "$PRE_LOOP/reweighting.py > reweighting.py",
@@ -195,9 +217,6 @@ if __name__ == "__main__":
 
   try:
 
-      with open('%s/config.json'%os.path.dirname(os.path.abspath(__file__))) as data_file:
-            config = json.load(data_file)
-
       parser = argparse.ArgumentParser()
       parser.add_argument('--RPconfig', help='link to Radical Pilot related configurations file')
       parser.add_argument('--Kconfig', help='link to Kernel configurations file')
@@ -225,8 +244,7 @@ if __name__ == "__main__":
             username = RPconfig.UNAME, #username
             project = RPconfig.ALLOCATION, #project
             queue = RPconfig.QUEUE,
-            database_url = RPconfig.DBURL,
-            access_schema = config[RPconfig.REMOTE_HOST]['schema']      # This is so to support different access methods - gsissh, ssh - remove this if always running using ssh
+            database_url = RPconfig.DBURL
       )
 
       cluster.allocate()
