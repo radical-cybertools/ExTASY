@@ -51,22 +51,7 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
         SimulationAnalysisLoop.__init__(self, maxiterations, simulation_instances, analysis_instances)
 
     def pre_loop(self):
-        '''
-        function : transfers input files, intermediate executables
-
-        pre_coam_loop :-
-
-                Purpose : Transfers files
-
-                Arguments : None
-        '''
-        k = Kernel(name="custom.pre_coam_loop")
-        k.upload_input_data = [Kconfig.initial_crd_file,
-                               Kconfig.md_input_file,
-                               Kconfig.minimization_input_file,
-                               Kconfig.top_file,
-                               '{0}/postexec.py'.format(Kconfig.helper_scripts)]
-        return k
+        pass
 
 
     def simulation_step(self, iteration, instance):
@@ -90,15 +75,15 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
                        "--topfile={0}".format(os.path.basename(Kconfig.top_file)),
                        "--crdfile={0}".format(os.path.basename(Kconfig.initial_crd_file)),
                        "--cycle=%s"%(iteration)]
-        k1.link_input_data = ['$PRE_LOOP/{0}'.format(os.path.basename(Kconfig.minimization_input_file)),
-                             '$PRE_LOOP/{0}'.format(os.path.basename(Kconfig.top_file)),
-                             '$PRE_LOOP/{0}'.format(os.path.basename(Kconfig.initial_crd_file))]
+        k1.link_input_data = ['$SHARED/{0}'.format(os.path.basename(Kconfig.minimization_input_file)),
+                             '$SHARED/{0}'.format(os.path.basename(Kconfig.top_file)),
+                             '$SHARED/{0}'.format(os.path.basename(Kconfig.initial_crd_file))]
         k1.cores=1
         if((iteration-1)==0):
-            k1.link_input_data = k1.link_input_data + ['$PRE_LOOP/{0} > min1.crd'.format(os.path.basename(Kconfig.initial_crd_file))]
+            k1.link_input_data = k1.link_input_data + ['$SHARED/{0} > min1.crd'.format(os.path.basename(Kconfig.initial_crd_file))]
         else:
             k1.link_input_data = k1.link_input_data + ['$PREV_ANALYSIS_INSTANCE_1/min{0}{1}.crd > min{2}.crd'.format(iteration-1,instance-1,iteration)]
-        k1.copy_output_data = ['md{0}.crd > $PRE_LOOP/md_{0}_{1}.crd'.format(iteration,instance)]
+        k1.copy_output_data = ['md{0}.crd > $SHARED/md_{0}_{1}.crd'.format(iteration,instance)]
         
 
         k2 = Kernel(name="custom.amber")
@@ -109,9 +94,9 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
                 
                         ]
         k2.link_input_data = [  
-                                "$PRE_LOOP/{0}".format(os.path.basename(Kconfig.md_input_file)),
-                                "$PRE_LOOP/{0}".format(os.path.basename(Kconfig.top_file)),
-                                "$PRE_LOOP/md_{0}_{1}.crd > md{0}.crd".format(iteration,instance),
+                                "$SHARED/{0}".format(os.path.basename(Kconfig.md_input_file)),
+                                "$SHARED/{0}".format(os.path.basename(Kconfig.top_file)),
+                                "$SHARED/md_{0}_{1}.crd > md{0}.crd".format(iteration,instance),
                             ]
         if(iteration%Kconfig.nsave==0):
             k2.download_output_data = ['md{0}.ncdf > output/iter{0}/md_{0}_{1}.ncdf'.format(iteration,instance)]
@@ -148,14 +133,14 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
         k1.cores = min(Kconfig.num_CUs,RPconfig.PILOTSIZE)
         k1.uses_mpi = True
 
-        k1.link_input_data = ['$PRE_LOOP/{0}'.format(os.path.basename(Kconfig.top_file))]
+        k1.link_input_data = ['$SHARED/{0}'.format(os.path.basename(Kconfig.top_file))]
         for iter in range(1,iteration+1):
             for i in range(1,Kconfig.num_CUs+1):
                 k1.link_input_data = k1.link_input_data + ['$SIMULATION_ITERATION_{0}_INSTANCE_{1}/md{0}.ncdf > md_{0}_{1}.ncdf'.format(iter,i)]
 
         k1.copy_output_data = list()
         for i in range(0,Kconfig.num_CUs):
-            k1.copy_output_data = k1.copy_output_data + ['pdbs{1}.pdb > $PRE_LOOP/pentaopt{0}{1}.pdb'.format(iteration,i)]
+            k1.copy_output_data = k1.copy_output_data + ['pdbs{1}.pdb > $SHARED/pentaopt{0}{1}.pdb'.format(iteration,i)]
 
         if(iteration%Kconfig.nsave==0):
             k1.download_output_data = ['coco.log > output/iter{0}/coco.log'.format(iteration,instance)]
@@ -165,9 +150,9 @@ class Extasy_CocoAmber_Static(SimulationAnalysisLoop):
         k2.arguments = ["--numofsims={0}".format(Kconfig.num_CUs),
                         "--cycle={0}".format(iteration)]
 
-        k2.link_input_data = ['$PRE_LOOP/postexec.py > postexec.py']
+        k2.link_input_data = ['$SHARED/postexec.py > postexec.py']
         for i in range(0,Kconfig.num_CUs):
-            k2.link_input_data = k2.link_input_data + ['$PRE_LOOP/pentaopt{0}{1}.pdb > pentaopt{0}{1}.pdb'.format(iteration,i)]
+            k2.link_input_data = k2.link_input_data + ['$SHARED/pentaopt{0}{1}.pdb > pentaopt{0}{1}.pdb'.format(iteration,i)]
 
         return [k1,k2]
 
@@ -210,6 +195,14 @@ if __name__ == "__main__":
             database_url = RPconfig.DBURL,
         #    access_schema = config[RPconfig.REMOTE_HOST]['schema']      # This is so to support different access methods - gsissh, ssh - remove this if always running using ssh
         )
+
+        cluster.shared_data = [
+                                Kconfig.initial_crd_file,
+                                Kconfig.md_input_file,
+                                Kconfig.minimization_input_file,
+                                Kconfig.top_file,
+                               '{0}/postexec.py'.format(Kconfig.helper_scripts)
+                            ]
 
         cluster.allocate()
 
