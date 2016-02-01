@@ -1,16 +1,23 @@
 #!/usr/bin/env python
 
-
 __author__       = "Vivek <vivek.balasubramanian@rutgers.edu>"
 __copyright__    = "Copyright 2014, http://radical.rutgers.edu"
 __license__      = "MIT"
 __example_name__ = "Multiple Simulations Instances, Multiple Analysis Instances Example (MSMA)"
 
+import sys
+import os
+import json
+
+
 from radical.ensemblemd import Kernel
 from radical.ensemblemd import SimulationAnalysisLoop
 from radical.ensemblemd import EnsemblemdError
 from radical.ensemblemd import SingleClusterEnvironment
-import os
+
+
+# ------------------------------------------------------------------------------
+# Set default verbosity
 
 if os.environ.get('RADICAL_ENMD_VERBOSE') == None:
     os.environ['RADICAL_ENMD_VERBOSE'] = 'REPORT'
@@ -49,16 +56,29 @@ class MSMA(SimulationAnalysisLoop):
 #
 if __name__ == "__main__":
 
+    # use the resource specified as argument, fall back to localhost
+    if   len(sys.argv)  > 2: 
+        print 'Usage:\t%s [resource]\n\n' % sys.argv[0]
+        sys.exit(1)
+    elif len(sys.argv) == 2: 
+        resource = sys.argv[1]
+    else: 
+        resource = 'local.localhost'
+
     try:
+
         # Create a new static execution context with one resource and a fixed
         # number of cores and runtime.
         cluster = SingleClusterEnvironment(
-            resource="localhost",
-            cores=1,
-            walltime=30,
-            username=None,
-            project=None,
-            database_url="mongodb://extasy:extasyproject@extasy-db.epcc.ed.ac.uk/radicalpilot"
+                        resource=resource,
+                        cores=1,
+                        walltime=15,
+                        #username=None,
+                        #project=None,
+                        #queue = None,
+
+                        #database_url=None,
+                        #database_name=,
         )
 
         # Allocate the resources.
