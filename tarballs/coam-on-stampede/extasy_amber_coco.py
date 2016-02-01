@@ -29,9 +29,6 @@ if os.environ.get('RADICAL_ENMD_VERBOSE') == None:
 from kernel_defs.amber import kernel_amber
 get_engine().add_kernel_plugin(kernel_amber)
 
-from kernel_defs.pre_coam_loop import kernel_pre_coam_loop
-get_engine().add_kernel_plugin(kernel_pre_coam_loop)
-
 from kernel_defs.coco import kernel_coco
 get_engine().add_kernel_plugin(kernel_coco)
 
