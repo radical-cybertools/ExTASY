@@ -131,10 +131,10 @@ if __name__ == '__main__':
 
     # create all scripts
     scripts = write_scripts(args.grofile_name, args.mdpfile_name, args.topfile_name,
-                                grompp_opts, mdrun_opts, ndxfile_opts, cores)
+                                grompp_opts, mdrun_opts, ndxfile_opts, 1)
 
     # runs scripts in a pool of size==#cores
-    run_scripts_in_pool (scripts, n=cores)
+    run_scripts_in_pool (scripts, n=1)
 
     # collect results
     os.system('cat outgro_* >> %s' % args.output_grofile_name)
