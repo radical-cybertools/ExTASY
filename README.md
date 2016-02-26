@@ -1,24 +1,8 @@
 # ExTASY Coupled Simulation-Analysis Execution
 ==============================================
 
-ExTASY is a tool to run multiple Molecular Dynamics simulations which can be 
-coupled to an Analysis stage. This forms a simulation-analysis loop which can 
-be made to iterate multiple times. It uses a pilot framework, namely Radical 
-Pilot to run a large number of these ensembles concurrently on most of the 
-commonly used supercomputers. The complications of resource allocation, data 
-management and task execution are performed using Radical Pilot and handled 
-by ExTASY.
+***NOTE:*** This repository is deprecated. Do not use the examples listed here 
+or create new issues. All up-to-date examples, documentation and issue tracking 
+has been moved to https://bitbucket.org/extasy-project/extasy-workflows.
 
-# Documentation
 
-Documentation can be found at http://extasy.readthedocs.org/en/latest/
-
-#Build Status
-
-    .. image:: http://ci.radical-project.org/buildStatus/icon?job=ExTASY-0.2
-        :target: http://ci.radical-project.org/job/ExTASY-0.2
- 
-# Mailing List
-
-* Users: https://groups.google.com/forum/#!forum/extasy-project
-* Developers: https://groups.google.com/forum/#!forum/extasy-devel
