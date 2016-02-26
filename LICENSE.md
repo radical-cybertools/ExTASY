@@ -1,4 +1,4 @@
-radical.pilot is licensed under the MIT License (MIT)
+ExTASY is licensed under the MIT License (MIT)
 -----------------------------------------------------
 
 Copyright (C) 2013-2014 by The RADICAL Group at Rutgers University 

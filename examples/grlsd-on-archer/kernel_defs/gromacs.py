@@ -50,7 +50,7 @@ _KERNEL_INFO = {
         "epsrc.archer":
         {
             "environment" : {},
-            "pre_exec" : ["module load packages-archer","module load gromacs","module load python-compute/2.7.6"],
+            "pre_exec" : ["module load packages-archer","export PATH=$PATH:/work/z01/shared/gromacs-5.1.2/bin","module load python-compute/2.7.6"],
             "executable" : ["python"],
             "uses_mpi"   : True
         },
